@@ -1,4 +1,4 @@
-# MiniShell
+# minishell
 
 <p align="center">
 
