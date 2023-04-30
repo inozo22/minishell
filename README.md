@@ -29,3 +29,10 @@
 <p>Bash Reference Manua:https://www.gnu.org/software/bash/manual/bash.html#Bourne-Shell-Builtins</p>
 <p>termcap - base de datos con características de terminales:https://manpages.ubuntu.com/manpages/impish/es/man5/termcap.5.html</p>
 <p>termcap - cursor move:https://www.gnu.org/software/termutils/manual/termcap-1.3/html_node/termcap_26.html</p>
+
+### Documents from Borja
+<p>https://www.gnu.org/software/bash/manual/bash.html</p>
+<p>https://stackoverflow.com/questions/8806643/colorized-output-breaks-linewrapping-with-readline</p>
+<p>https://github.com/zstenger93/42_minishell_tester</p>
+<p>https://pubs.opengroup.org/onlinepubs/009695399/utilities/xcu_chap02.html</p>
+<p></p>
