@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:49:51 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/04 17:12:06 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/05 17:53:16 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,31 @@
 #include <unistd.h>
 #include <sys/wait.h>
 
+
 int	main(int ac, char **av)
+{
+	int id = fork();
+	int n;
+	if (id == 0)
+	{
+		n = 1;
+	}
+	else
+	{
+		n = 6;
+	}
+
+	int i;
+	for (i = n; i < n + 5; i++)
+	{
+		printf("%d ", i);
+		fflush(stdout);
+	}
+	printf("\n");
+	return (0);
+}
+
+/* int	main(int ac, char **av)
 {
 	int	id = fork();
 
@@ -43,7 +67,7 @@ int	main(int ac, char **av)
 
 	return (0);
 }
-
+ */
 
 
 
