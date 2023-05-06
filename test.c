@@ -6,13 +6,13 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:49:51 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/05 17:53:16 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/06 13:35:13 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
-#include <readline/readline.h>
-#include <readline/history.h>
+//#include <readline/readline.h>
+//#include <readline/history.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
