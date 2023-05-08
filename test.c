@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:49:51 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/05 17:53:16 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/08 12:25:54 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,21 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include <sys/wait.h>
+#include <time.h>
 
 
 int	main(int ac, char **av)
 {
+	int	id = fork();
+	printf("Current ID: %d, parent ID: %d\n", getpid(), getppid());
+	return (0);
+}
+
+/* int	main(int ac, char **av)
+{
 	int id = fork();
 	int n;
+	int	time;
 	if (id == 0)
 	{
 		n = 1;
@@ -33,16 +42,23 @@ int	main(int ac, char **av)
 	{
 		n = 6;
 	}
-
+	if (id != 0)
+	{
+		wait(&time);
+	}
 	int i;
 	for (i = n; i < n + 5; i++)
 	{
 		printf("%d ", i);
 		fflush(stdout);
 	}
-	printf("\n");
+	if (id != 0)
+	{
+		printf("\n");
+	}
+
 	return (0);
-}
+} */
 
 /* int	main(int ac, char **av)
 {
