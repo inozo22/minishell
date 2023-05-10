@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:49:51 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/08 15:03:08 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/10 12:33:39 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,94 @@
 
 #define PROCESS_NUM 3
 
+#include <stdio.h>
+//#include <readline/readline.h>
+//#include <readline/history.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <unistd.h>
+#include <sys/wait.h>
+#include <time.h>
+
 int	main(int ac, char **av)
+{
+	int arr[] = {1, 2, 3, 4, 1, 2, 7, 7};
+	int	arrSize = sizeof(arr) / sizeof(int);
+	int start, end;
+	int fd[2];
+	int id2;
+
+	if (pipe(fd) == -1)
+	{
+		return (1);
+	}
+	int id = fork();
+	if (id == -1)
+	{
+		return (2);
+	}
+	if (id == 0)
+	{
+		;
+	}
+	else
+	{
+		id2 = fork();
+		if (id2 == -1)
+			return (5);		
+	}
+	if (id == 0 || id2 == 0)
+	{
+		start = 0;
+		end = start + arrSize / 2;
+	}
+	else
+	{
+		start = arrSize / 2;
+		end = arrSize;
+	}
+	int sum = 0;
+	int i;
+	for(i = start; i < end; i++)
+	{
+		sum += arr[i];
+	}
+
+	printf("Calculated partial sum: %d\n", sum);
+
+	if (id == 0)
+	{
+		close(fd[0]);
+		if (write(fd[1], &sum, sizeof(sum)) == -1)
+			return (3);
+		close(fd[1]);
+	}
+	else if (id2 == 0)
+	{
+		close(fd[0]);
+		if (write(fd[1], &sum, sizeof(sum)) == -1)
+			return (3);
+		close(fd[1]);
+	}
+	else
+	{
+		int sumFromChild;
+		close(fd[1]);
+		if (read(fd[0], &sumFromChild, sizeof(sumFromChild)) == -1)
+			return (4);
+		close(fd[0]);
+		int totalSume = sum + sumFromChild;
+		printf("Total sum is %d\n", totalSume);
+		wait(NULL);
+	}
+
+
+	return (0);
+}
+
+/* int	main(int ac, char **av)
 {
 	int arr[] = {1, 2, 3, 4, 1, 2};
 	int arrSize = sizeof(arr) / sizeof(int);
@@ -71,7 +158,7 @@ int	main(int ac, char **av)
 
 
 	return (0);
-}
+} */
 
 /* int main(int ac, char **av)
 {
