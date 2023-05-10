@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:49:51 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/08 12:29:08 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/08 15:03:08 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,187 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #include <time.h>
+#include <errno.h>
 
+#define PROCESS_NUM 3
 
 int	main(int ac, char **av)
 {
-	int	id = fork();
-	printf("Current ID: %d, parent ID: %d\n", getpid(), getppid());
+	int arr[] = {1, 2, 3, 4, 1, 2};
+	int arrSize = sizeof(arr) / sizeof(int);
+	int start, end;
+	int fd[2];
+	if (pipe(fd) == -1)
+	{
+		return (1);
+	}
+	int id = fork();
+	if (id == -1)
+		return (2);
+	if (id == 0)
+	{
+		start = 0;
+		end = start + arrSize / 2;
+	}
+	else
+	{
+		start = arrSize / 2;
+		end = arrSize;
+	}
+
+	int sum = 0;
+	int i;
+	for (i = start; i < end; i++)
+	{
+		sum += arr[i];
+	}
+	printf("Calculated partial sum: %d\n", sum);
+
+	if (id == 0)
+	{
+		close(fd[0]);
+		write(fd[1], &sum, sizeof(sum));
+		close(fd[1]);
+	}
+	else
+	{
+		int sumFromChild;
+		close(fd[1]);
+		read(fd[0], sumFromChild, sizeof(sumFromChild));
+	}
+
+
 	return (0);
 }
+
+/* int main(int ac, char **av)
+{
+	int fd[2];
+//	fd[0] - read
+//	fd[1] - write
+	if (pipe(fd) == -1)
+	{
+		printf("Error with opening the pipe\n");
+		return (1);
+	}
+	int id = fork();
+	if (id == -1)
+	{
+		printf("Error with fork\n");
+		return (4);
+	}
+	if (id == 0)
+	{
+		close(fd[0]);
+		int x;
+		printf("Input a number: ");	
+		scanf("%d", &x);
+		if (write(fd[1], &x, sizeof(int)) == -1)
+		{
+			printf("Error with write\n");
+			return (2);
+		}
+		close(fd[1]);
+	}
+	else
+	{
+		close(fd[1]);
+		int y;
+		if (read(fd[0], &y, sizeof(int)) == -1)
+		{
+			printf("Error with read\n");
+			return (3);			
+		}
+		y = y * 3;
+		close(fd[0]);
+		printf("Got from child process %d\n", y);
+	}
+	return (0);
+}
+ */
+/* int	main(int ac, char **av)
+{
+	int	pids[PROCESS_NUM];
+	int pipes[PROCESS_NUM + 1][2];
+	int i;
+	for (i = 0; i < PROCESS_NUM + 1; i++)
+	{
+		if (pipe(pipes[i]) == -1)
+		{
+			printf("Error with creating pipe\n");
+			return (1);
+		}
+	}
+	for (i = 0; i < PROCESS_NUM; i++)
+	{
+		pids[i] = fork();
+		if (pids[i] == -1)
+		{
+			printf("Error with creating process\n");
+			return (2);
+		}
+		if (pids[i] == 0)
+		{
+			//child process
+			return (0);
+		}
+	}
+	for (i = 0; i < PROCESS_NUM; i++)
+	{
+		wait(NULL);
+	}
+
+	return (0);
+} */
+
+/* int	main(int ac, char **av)
+{
+	int id1 = fork();
+	int id2 = fork();
+	if (id1 == 0)
+	{
+		if (id2 == 0)
+		{
+			printf("We are in process Y\n");
+		}
+		else
+		{
+			printf("We are in process X\n");
+		}		
+	}
+	else
+	{
+		if (id2 == 0)
+		{
+			printf("We are in process Z\n");
+		}
+		else
+			printf("We are in parent process\n");
+	}
+	while (wait(NULL) != -1 || errno != ECHILD)
+	{
+		printf("Waited for a child to finished\n");		
+	}
+	return (0);
+} */
+
+/* int	main(int ac, char **av)
+{
+	int	id = fork();
+	if (id == 0)
+	{
+		sleep(1);
+	}
+	printf("Current ID: %d, parent ID: %d\n", getpid(), getppid());
+	int res = wait(NULL);
+	if (res == -1)
+		printf("No children to wait for\n");
+	else
+	{
+		printf("%d finished excution\n", res);
+	}
+	return (0);
+} */
 
 /* int	main(int ac, char **av)
 {
