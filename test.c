@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:49:51 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/10 13:18:57 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/10 17:48:36 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@
 #include <time.h>
 #include <fcntl.h>
 
-int	main(int ac, char **av)
+/* int	main(int ac, char **av)
 {
 	if (mkfifo("myfifo1", 0777) == -1)
 	{
@@ -63,12 +63,12 @@ int	main(int ac, char **av)
 	close (fd);
 	printf("Closed\n");
 	return (0);
-}
+} */
 
 
 //to put 2children...
 
-/* int	main(int ac, char **av)
+int	main(int ac, char **av)
 {
 	int arr[] = {1, 2, 3, 4, 1, 2, 7, 7};
 	int	arrSize = sizeof(arr) / sizeof(int);
@@ -142,12 +142,12 @@ int	main(int ac, char **av)
 		close(fd[0]);
 		int totalSume = sum + sumFromChild;
 		printf("Total sum is %d\n", totalSume);
-		wait(NULL);
+		wait(&id2);
 	}
 
 
 	return (0);
-} */
+}
 
 /* int	main(int ac, char **av)
 {

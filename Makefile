@@ -6,7 +6,7 @@
 #    By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/16 18:53:13 by nimai             #+#    #+#              #
-#    Updated: 2023/05/10 17:02:38 by nimai            ###   ########.fr        #
+#    Updated: 2023/05/10 17:16:25 by nimai            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,15 +33,15 @@ NAME		:= minishell
 # LDFLAGS     linker flags
 # LDLIBS      libraries name
 
-LIBS		:= ft ftmem
+LIBS		:= ft #ftmem
 LIBS_TARGET	:= \
-				lib/libft/libft.a \
-				lib/ftmem_check/ftmemcheck.a
+				lib/libft/libft.a 
+#				lib/ftmem_check/ftmemcheck.a
 
 INCS		:= \
 				inc \
-				lib/libft/inc \
-				lib/ftmem_check/inc
+				lib/libft/inc 
+#				lib/ftmem_check/inc
 
 SRC_DIR		:= src
 SRCS		:= \
@@ -86,7 +86,7 @@ DIR_DUP		= mkdir -p $(@D)
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBS_TARGET)
-	$(CC) $(LDFLAGS) $(OBJS) $(LDLIBS) -v -o $(NAME)
+	$(CC) $(LDFLAGS) $(OBJS) $(LDLIBS) -o $(NAME)
 	$(info CREATED $(NAME))
 
 $(LIBS_TARGET):
