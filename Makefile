@@ -6,7 +6,7 @@
 #    By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/16 18:53:13 by nimai             #+#    #+#              #
-#    Updated: 2023/05/10 16:40:24 by nimai            ###   ########.fr        #
+#    Updated: 2023/05/10 17:02:38 by nimai            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,7 +53,7 @@ OBJS		:= $(SRCS:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
 DEPS		:= $(OBJS:.o=.d)
 
 CC			:= cc
-CFLAGS		:= -Wall -Wextra -Werror
+CFLAGS		:= -g3 -Wall -Wextra -Werror
 CPPFLAGS	:= $(addprefix -I,$(INCS)) -MMD -MP
 LDFLAGS		:= $(addprefix -L,$(dir $(LIBS_TARGET)))
 LDLIBS		:= $(addprefix -l,$(LIBS))
@@ -67,7 +67,7 @@ LDLIBS		:= $(addprefix -l,$(LIBS))
 
 RM			:= rm -f
 RF			:= rm -rf
-#MAKEFLAGS	+= --silent --no-print-directory
+MAKEFLAGS	+= --silent --no-print-directory
 DIR_DUP		= mkdir -p $(@D)
 
 #------------------------------------------------#
@@ -86,7 +86,7 @@ DIR_DUP		= mkdir -p $(@D)
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBS_TARGET)
-	$(CC) $(LDFLAGS) $(OBJS) $(LDLIBS) $(MFLAGS) -o $(NAME)
+	$(CC) $(LDFLAGS) $(OBJS) $(LDLIBS) -v -o $(NAME)
 	$(info CREATED $(NAME))
 
 $(LIBS_TARGET):
@@ -112,6 +112,9 @@ fclean: clean
 re:
 	$(MAKE) fclean
 	$(MAKE) all
+
+info-%:
+	$(MAKE) --dry-run --always-make $* | grep -v "info"
 
 #------------------------------------------------#
 #   SPEC                                         #
