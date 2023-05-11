@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 16:23:25 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/10 16:25:53 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/11 15:22:16 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <stdlib.h>
 # include <errno.h>
 # include <unistd.h>
-
-
+# include "libft.h"
+# include "mem_check.h"
 
 #endif

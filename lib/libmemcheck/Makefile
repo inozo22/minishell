@@ -6,11 +6,11 @@
 #    By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/21 11:12:31 by nimai             #+#    #+#              #
-#    Updated: 2023/05/10 16:44:09 by nimai            ###   ########.fr        #
+#    Updated: 2023/05/11 15:18:47 by nimai            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME        := ftmemcheck.a
+NAME        := libmemcheck.a
 
 # add printf to libft re-make some functions
 #------------------------------------------------#
@@ -27,15 +27,14 @@ NAME        := ftmemcheck.a
 # CFLAGS    compiler flags
 # CPPFLAGS  preprocessor flags
 
-INCS		:= inc \
+INCS		:= inc 
 
 SRC_DIR		:= src
-#put evrything I need to work printf here
 SRCS		:= \
-				ftmem_check.c \
-				ftmem_del_free.c \
-				ftmem_init.c \
-				ftmem_malloc_log.c
+				mem_check.c \
+				mem_del_free.c \
+				mem_init.c \
+				mem_malloc_log.c
 SRCS		:= $(SRCS:%=$(SRC_DIR)/%)
 
 BUILD_DIR	:= .build

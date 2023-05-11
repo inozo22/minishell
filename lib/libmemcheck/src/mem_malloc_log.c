@@ -1,33 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ftmem_check.c                                      :+:      :+:    :+:   */
+/*   mem_malloc_log.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 10:17:23 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/10 12:16:58 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/11 15:19:34 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ftmem_check.h"
-#include <stdio.h>
+#include "mem_check.h"
 
-t_mem	*ftmem_init(t_mem *mem)
+void	*mem_malloc_log(size_t size, const char *file, unsigned int line, \
+t_mem *mem)
 {
-	int	i;
+	void	*ptr;
 
-	mem = malloc(sizeof(t_mem));
-	if (!mem)
+	ptr = NULL;
+	ptr = malloc(size);
+	if (!ptr)
 		return (NULL);
-	i = -1;
-	while (++i < MAX_MEM)
-	{
-		mem->log[i].ptr = NULL;
-		mem->log[i].file = NULL;
-		mem->log[i].size = 0;
-		mem->log[i].line = 0;
-	}
-	mem->i = 0;
-	return (mem);
+	mem->log[mem->i].ptr = ptr;
+	mem->log[mem->i].file = file;
+	mem->log[mem->i].size = size;
+	mem->log[mem->i].line = line;
+	mem->i++;
+	return (ptr);
 }

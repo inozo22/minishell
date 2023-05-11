@@ -14,9 +14,29 @@
 
 int main(int ac, char **av)
 {
-    (void)ac;
-    (void)av;
-    printf("Kaixo!\n");
+	int		i;
+	char	*ptr1;
+	char	*ptr2;
+	char	*ptr3;
+	char	*ptr4;
+	char	*ptr5;
+	t_mem	*mem;
 
-    return (0);
+	mem = NULL;
+	i = 0;
+	(void)ac;
+    (void)av;
+	mem = mem_init(mem);
+	printf("Kaixo!\n");
+	i = ft_strlen("KAIXO");
+	ptr1 = mem_malloc_log((char)20, __FILE__, __LINE__, mem);
+	ptr2 = mem_malloc_log((char)30, __FILE__, __LINE__, mem);
+	ptr3 = mem_malloc_log((char)40, __FILE__, __LINE__, mem);
+	ptr4 = mem_malloc_log((char)50, __FILE__, __LINE__, mem);
+	ptr5 = mem_malloc_log((char)60, __FILE__, __LINE__, mem);
+	mem_del_free(ptr1, mem);
+	mem_del_free(ptr3, mem);
+	mem_del_free(ptr5, mem);
+	mem_check(mem);
+	return (0);
 }

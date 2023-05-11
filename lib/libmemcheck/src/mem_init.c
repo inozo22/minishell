@@ -1,31 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ftmem_check.c                                      :+:      :+:    :+:   */
+/*   mem_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 10:17:23 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/10 12:18:41 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/11 15:19:30 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ftmem_check.h"
-#include <stdio.h>
+#include "mem_check.h"
 
-void	ftmem_check(t_mem *mem)
+t_mem	*mem_init(t_mem *mem)
 {
 	int	i;
 
+	mem = malloc(sizeof(t_mem));
+	if (!mem)
+		return (NULL);
 	i = -1;
-	while (++i <= mem->i)
+	while (++i < MAX_MEM)
 	{
-		if (mem->log[i].ptr != NULL)
-		{
-			printf("=Memory leaks=\n");
-			printf("adress: %p\n", mem->log[i].ptr);
-			printf("size: %u\n", (unsigned int)mem->log[i].size);
-			printf("Leak point: %s:%u\n\n", mem->log[i].file, mem->log[i].line);
-		}
+		mem->log[i].ptr = NULL;
+		mem->log[i].file = NULL;
+		mem->log[i].size = 0;
+		mem->log[i].line = 0;
 	}
+	mem->i = 0;
+	return (mem);
 }

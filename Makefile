@@ -6,7 +6,7 @@
 #    By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/16 18:53:13 by nimai             #+#    #+#              #
-#    Updated: 2023/05/10 17:16:25 by nimai            ###   ########.fr        #
+#    Updated: 2023/05/11 15:22:55 by nimai            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,15 +33,14 @@ NAME		:= minishell
 # LDFLAGS     linker flags
 # LDLIBS      libraries name
 
-LIBS		:= ft #ftmem
-LIBS_TARGET	:= \
-				lib/libft/libft.a 
-#				lib/ftmem_check/ftmemcheck.a
+LIBS		:=  ft memcheck
+LIBS_TARGET	:=  lib/libft/libft.a \
+				lib/libmemcheck/libmemcheck.a
 
 INCS		:= \
 				inc \
-				lib/libft/inc 
-#				lib/ftmem_check/inc
+				lib/libft/inc \
+				lib/libmemcheck/inc
 
 SRC_DIR		:= src
 SRCS		:= \
@@ -67,7 +66,7 @@ LDLIBS		:= $(addprefix -l,$(LIBS))
 
 RM			:= rm -f
 RF			:= rm -rf
-MAKEFLAGS	+= --silent --no-print-directory
+MAKEFLAGS	+= --no-print-directory
 DIR_DUP		= mkdir -p $(@D)
 
 #------------------------------------------------#
@@ -113,8 +112,8 @@ re:
 	$(MAKE) fclean
 	$(MAKE) all
 
-info-%:
-	$(MAKE) --dry-run --always-make $* | grep -v "info"
+#info-%:
+#	$(MAKE) --dry-run --always-make $* | grep -v "info"
 
 #------------------------------------------------#
 #   SPEC                                         #
