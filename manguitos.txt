@@ -1,0 +1,5 @@
+-incalero: Terminó la primera parte semana pasada, su objeto es terminar la segunda parte y entregar antes del 21 de mayo.
+
+-marcealv: Terminó la primera parte semana pasada y me ha comentado hoy que ha terminado la segunda parte menos itoa y split. 
+
+-mirespin: Todavía no ha terminado la primera parte. Mañana va a venir a 42, así que vamos a hablar como está.
