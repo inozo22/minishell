@@ -11,8 +11,24 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "../inc/parse.h"
 
-int main(int ac, char **av)
+int	do_cmd(char *cmd)
+{
+	t_parse_buffer	buf;
+	t_parse_ast
+
+}
+
+int	main(int ac, char **av)
+{
+	init_shell();
+	if (ac == 3 && ft_strncmp(av[1], "-c", 3) == 0)
+		return (do_cmd(av[2]));
+
+}
+
+/* int main(int ac, char **av)
 {
 	int		i;
 	char	*ptr1;
@@ -39,4 +55,4 @@ int main(int ac, char **av)
 	mem_del_free(ptr5, mem);
 	mem_check(mem);
 	return (0);
-}
+} */

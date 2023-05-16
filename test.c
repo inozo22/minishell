@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:49:51 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/10 17:48:36 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/15 18:50:35 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,13 +87,14 @@ int	main(int ac, char **av)
 	}
 	if (id == 0)
 	{
-		;
+		printf("id %d\n", getpid());
+		printf("id %d\n", getppid());
 	}
 	else
 	{
 		id2 = fork();
 		if (id2 == -1)
-			return (5);		
+			return (5);
 	}
 	if (id == 0)
 	{
@@ -102,6 +103,8 @@ int	main(int ac, char **av)
 	}
 	else if (id2 == 0)
 	{
+		printf("id %d\n", getpid());
+		printf("id %d\n", getppid());
 		start = 0;
 		end = arrSize;
 	}
@@ -117,7 +120,7 @@ int	main(int ac, char **av)
 		sum += arr[i];
 	}
 
-	printf("Calculated partial sum: %d\n", sum);
+	printf("Calculated partial sum: %d in process %d\n", sum, getpid());
 
 	if (id == 0)
 	{
@@ -129,18 +132,23 @@ int	main(int ac, char **av)
 	else if (id2 == 0)
 	{
 		close(fd[0]);
+		sum++;
 		if (write(fd[1], &sum, sizeof(sum)) == -1)
 			return (3);
 		close(fd[1]);
 	}
 	else
 	{
-		int sumFromChild;
+		int sumFromChild = 0;
+		int sumFromChild2 = 0;
 		close(fd[1]);
+		wait(NULL);
 		if (read(fd[0], &sumFromChild, sizeof(sumFromChild)) == -1)
 			return (4);
+		if (read(fd[0], &sumFromChild2, sizeof(sumFromChild2)) == -1)
+			return (4);
 		close(fd[0]);
-		int totalSume = sum + sumFromChild;
+		int totalSume = sum + sumFromChild + sumFromChild2;
 		printf("Total sum is %d\n", totalSume);
 		wait(&id2);
 	}

@@ -6,7 +6,7 @@
 #    By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/16 18:53:13 by nimai             #+#    #+#              #
-#    Updated: 2023/05/11 15:22:55 by nimai            ###   ########.fr        #
+#    Updated: 2023/05/15 10:43:43 by nimai            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,7 @@ INCS		:= \
 
 SRC_DIR		:= src
 SRCS		:= \
-				main.c 
+				minishell.c 
 SRCS		:= $(SRCS:%=$(SRC_DIR)/%)
 
 BUILD_DIR	:= .build
@@ -70,6 +70,29 @@ MAKEFLAGS	+= --no-print-directory
 DIR_DUP		= mkdir -p $(@D)
 
 #------------------------------------------------#
+#   ASCII ART                                    #
+#------------------------------------------------#
+CLR_RMV		:= \033[0m
+RED		    := \033[1;31m
+GREEN		:= \033[1;32m
+YELLOW		:= \033[1;33m
+BLUE		:= \033[1;34m
+CYAN 		:= \033[1;36m
+
+define	ART
+$(YELLOW)
+       /^-^\         /^-----^\\
+      / o o \        V  o o  V
+     /   ▼   \        |  ▽  |
+     V \ ∧ / V         \ Q /
+       / - \\           / - \\
+      /    | ========= |    \\
+(    /     | minishell |     \\     )
+ ===/___) || ========= || (___\\====$(CLR_RMV)
+endef
+export	ART
+
+#------------------------------------------------#
 #   RECIPES                                      #
 #------------------------------------------------#
 # all       default goal
@@ -87,6 +110,7 @@ all: $(NAME)
 $(NAME): $(OBJS) $(LIBS_TARGET)
 	$(CC) $(LDFLAGS) $(OBJS) $(LDLIBS) -o $(NAME)
 	$(info CREATED $(NAME))
+	@echo "$$ART"
 
 $(LIBS_TARGET):
 	$(MAKE) -C $(@D)
