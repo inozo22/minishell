@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 12:41:32 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/16 17:05:25 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/16 17:40:44 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	lex_getc(t_parse_buffer *buf)
 		return (buf->getc(buf));
 	if (buf->cur_pos == buf->size)
 		return (EOF);
-	return (buf->buffer[buf->cur_pos++]);	
+	return (buf->buffer[buf->cur_pos++]);
 }
 
 void	lex_ungetc(t_parse_buffer *buf)
@@ -73,5 +73,8 @@ int	lex_get_token(t_parse_buffer *buf, t_token *tok)
 		ch = lex_getc(buf);
 		if (lex_get_spaces(buf, ret, ch) || lex_get_symbols(buf, tok, ch)|| lex_get_quoted(buf, tok, ch)|| lex_get_eof(tok, ch))
 			return (1);
+		tok->type = TOKTYPE_EXPANDABLE;
+		lex_ungetc(buf);
+		return (lex_read_word(buf, tok) && (lex_check_redirection_fd(buf, tok) || 1))
 	}
 }

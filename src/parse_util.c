@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:59:02 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/16 15:02:11 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/16 18:11:43 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 void	parse_die(void)
 {
-	int *ptr;
+	int	*ptr;
 
 	ptr = NULL;
 	ptr[0] = 0xD1E;

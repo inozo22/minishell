@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:15:51 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/15 17:45:40 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/16 18:18:57 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,14 @@ typedef struct s_parse_buffer
 	t_lexer_ungetc	*ungetc;
 	void			*data;
 }	t_parse_buffer;
+
+//minishell.c
+/**
+ * @brief init as empty except lex_stat and buffer.
+ * @return noting.
+ */
+void	init_buffer_string(t_parse_buffer *buf, char *str);
+
 
 typedef enum e_parse_ast_type
 {
@@ -75,17 +83,17 @@ typedef struct s_parse_node_arguments
 
 typedef struct s_parse_node_redirection
 {
-	t_parse_ast 	*string_node;
-	t_token_type 	type;
+	t_parse_ast		*string_node;
+	t_token_type	type;
 	int				fd;
 }	t_parse_node_redirection;
 
 typedef struct s_parse_node_delimiter
 {
-	t_token_type type;
+	t_token_type	type;
 }	t_parse_node_delimiter;
 
-typedef	struct s_parse_node_seqcmds
+typedef struct s_parse_node_seqcmds
 {
 	t_parse_ast	*pipcmd_node;
 	t_parse_ast	*delimiter_node;
@@ -110,7 +118,7 @@ typedef struct s_parse_ast
 	t_parse_hdoc_list	*heredocs;
 	union u_parse_ast_node_content
 	{
-		void	*void_ptr;
+		void						*void_ptr;
 		t_parse_node_redirection	*redirection;
 		t_parse_node_string			*string;
 		t_parse_node_arguments		*arguments;
@@ -119,9 +127,38 @@ typedef struct s_parse_ast
 		t_parse_node_delimiter		*delimiter;
 		t_parse_node_seqcmds		*sequential_commands;
 		t_parse_node_cmdline		*command_line;
-		t_parse_node_
-
 	}	content;
-}
+}	t_parse_ast;
+
+//parse_util.c
+/**
+ * @brief distinguish between > and <.
+ * @return NO TENGO NI IDEA QUE return.
+ */
+void	parse_die(void);
+
+
+
+
+
+/* t_parse_ast			*parse_new_ast_node(t_parse_ast_type type, void *content);
+
+t_parse_ast			*parse_redirection(t_parse_buffer *buf, t_token *tok);
+t_parse_ast			*parse_string(t_parse_buffer *buf, t_token *tok);
+t_parse_ast			*parse_arguments(t_parse_buffer *buf, t_token *tok);
+t_parse_ast			*parse_command(t_parse_buffer *buf, t_token *tok);
+t_parse_ast			*parse_piped_commands(t_parse_buffer *buf, t_token *tok);
+t_parse_ast			*parse_delimiter(t_parse_buffer *buf, t_token *tok);
+t_parse_ast			*parse_sequential_commands(
+						t_parse_buffer *buf, t_token *tok);
+t_parse_ast			*parse_command_line(t_parse_buffer *buf, t_token *tok);
+
+void				parse_die(void);
+void				parse_fatal_error(void);
+void				parse_skip_spaces(t_parse_buffer *buf, t_token *tok);
+t_parse_hdoc_list	*parse_concat_heredocs(
+						t_parse_ast *head, t_parse_ast *tail);
+t_parse_hdoc_list	*parse_new_heredocs(t_parse_node_redirection *redirection);
+void				parse_free_heredocs(t_parse_hdoc_list *list); */
 
 #endif

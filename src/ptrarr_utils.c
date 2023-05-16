@@ -6,12 +6,11 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 10:57:35 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/15 12:04:10 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/16 18:11:52 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-//#include "libft.h"
 
 size_t	ptrarr_len(void **ptrarr)
 {
