@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:49:51 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/15 18:50:35 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/16 12:12:11 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int	main(int ac, char **av)
 	else if (id2 == 0)
 	{
 		printf("id %d\n", getpid());
-		printf("id %d\n", getppid());
+		printf("pid %d\n", getppid());
 		start = 0;
 		end = arrSize;
 	}
@@ -152,8 +152,6 @@ int	main(int ac, char **av)
 		printf("Total sum is %d\n", totalSume);
 		wait(&id2);
 	}
-
-
 	return (0);
 }
 

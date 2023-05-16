@@ -13,10 +13,33 @@
 #include "minishell.h"
 #include "../inc/parse.h"
 
+void	init_buffer_string(t_parse_buffer *buf, char *str)
+{
+	size_t	len;
+
+	len = ft_strlen(str);
+	buf->cur_pos = 0;
+	buf->size = len;
+	buf->lex_stat = LEXSTAT_NOMAL;
+	ft_strlcpy(buf->buffer, str, len + 1);
+	buf->getc = NULL;
+	buf->ungetc = NULL;
+}
+
 int	do_cmd(char *cmd)
 {
 	t_parse_buffer	buf;
-	t_parse_ast
+	t_parse_ast		*cmdline;
+	t_token			tok;
+	t_parse_ast		*seqcomd;
+	size_t			len;
+
+	len = ft_strlen(cmd);
+	init_buffer_string(&buf, cmd);//no se porque me da error
+	buf.size++;
+	buf.buffer[len] = '\n';
+	lex_init_token(&tok);
+	lex_get_token(&buf, &tok);
 
 }
 

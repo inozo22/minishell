@@ -6,11 +6,11 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 16:32:34 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/15 17:38:50 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/16 12:21:06 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef	LEXER_H
+#ifndef LEXER_H
 # define LEXER_H
 
 typedef struct s_parse_buffer	t_parse_buffer;
@@ -45,7 +45,7 @@ typedef struct s_token
 	int				len;
 	int				max_len;
 	t_token_type	type;
-}
+}	t_token;
 
 
 #endif
