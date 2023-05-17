@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:15:51 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/16 18:18:57 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/17 17:21:30 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ typedef struct s_parse_buffer
  * @brief init as empty except lex_stat and buffer.
  * @return noting.
  */
-void	init_buffer_string(t_parse_buffer *buf, char *str);
+void					init_buffer_string(t_parse_buffer *buf, char *str);
 
 
 typedef enum e_parse_ast_type
@@ -79,7 +79,7 @@ typedef struct s_parse_node_arguments
 	t_parse_ast	*string_node;
 	t_parse_ast	*redirection_node;
 	t_parse_ast	*rest_node;
-}	t_parse_node_argumrnts;
+}	t_parse_node_arguments;
 
 typedef struct s_parse_node_redirection
 {
@@ -135,10 +135,40 @@ typedef struct s_parse_ast
  * @brief distinguish between > and <.
  * @return NO TENGO NI IDEA QUE return.
  */
-void	parse_die(void);
+void					parse_die(void);
+t_parse_ast				*parse_cmd_line(t_parse_buffer *buf, t_token *tok);
+
+//parse_util.c
+/**
+ * @brief if it's toktypespace, enter to lex_get_token
+ */
+void					parse_skip_spaces(t_parse_buffer *buf, t_token *tok);
+t_parse_ast				*parse_sequential_cmd(t_parse_buffer *buf, t_token *tok);
+t_parse_ast				*parse_piped_cmd(t_parse_buffer *buf, t_token *tok);
+t_parse_ast				*parse_cmd(t_parse_buffer *buf, t_token tok);
+t_parse_ast				*parse_new_ast(t_parse_ast_type type, void *content);
+
+/**
+ * @return absolutely nothing.
+ * @note doesn't free anything.
+ */
+void					parse_fatal_error(void);
+static t_parse_ast_list	*create_ast(void);
+static t_parse_ast_list	**get_ast_list(void);
+t_parse_hdoc_list		*parse_new_heredocs(t_parse_node_redirection *redirection);
+t_parse_hdoc_list		*parse_concat_heredocs(t_parse_ast *head, t_parse_ast *tail);
 
 
 
+
+
+
+
+typedef struct s_parse_ast_list
+{
+	t_parse_ast				ast;
+	struct s_parse_ast_list	*next;
+}	t_parse_ast_list;
 
 
 /* t_parse_ast			*parse_new_ast_node(t_parse_ast_type type, void *content);

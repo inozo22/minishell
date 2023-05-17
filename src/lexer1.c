@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 12:41:32 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/16 17:40:44 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/17 13:41:50 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,4 +77,11 @@ int	lex_get_token(t_parse_buffer *buf, t_token *tok)
 		lex_ungetc(buf);
 		return (lex_read_word(buf, tok) && (lex_check_redirection_fd(buf, tok) || 1))
 	}
+	if (buf->lex_stat == LEXSTAT_DOUBLE_QUOTED)
+	{
+		tok->type = TOKTYPE_EXPANDABLE_QUOTED;
+		return (lex_read_double_quoted(buf, tok));
+	}
+	tok->type = TOKTYPE_NON_EXPANDABLE;
+	return (lex_read_single_quoted(buf, tok));
 }

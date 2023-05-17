@@ -1,37 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_util.c                                       :+:      :+:    :+:   */
+/*   parse1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/16 14:59:02 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/17 16:28:06 by nimai            ###   ########.fr       */
+/*   Created: 2023/05/17 14:48:57 by nimai             #+#    #+#             */
+/*   Updated: 2023/05/17 15:16:59 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "../inc/parse.h"
 
-void	parse_die(void)
+t_parse_ast *parse_cmd_line(t_parse_buffer *buf, t_token *tok)
 {
-	int	*ptr;
+	t_parse_ast				*ret;
+	t_parse_ast				*seqcmd_node;
+	t_parse_node_cmdline	*content;
 
-	ptr = NULL;
-	ptr[0] = 0xD1E;
+	seqcmd_node = parse_sequential_cmd(buf, tok);
 }
 
-void	parse_skip_spaces(t_parse_buffer *buf, t_token *tok)
+t_parse_ast	*parse_sequential_cmd(t_parse_buffer *buf, t_token *tok)
 {
-	while (1)
-	{
-		if (tok->type != TOKTYPE_SPACE)
-			break ;
-		lex_get_token(buf, tok);
-	}
-}
+	t_parse_ast				*ret;
+	t_parse_ast				*pipcmd;
+	t_parse_ast				*rest;
+	t_parse_node_seqcmds	*content;
 
-void	parse_fatal_error(void)
-{
-	exit(1);
+	parse_skip_spaces(buf, tok);
+	pipcmd = parse_piped_cmd(buf, tok);
 }

@@ -40,6 +40,8 @@ int	do_cmd(char *cmd)
 	buf.buffer[len] = '\n';
 	lex_init_token(&tok);
 	lex_get_token(&buf, &tok);
+	cmdline = parse_cmd_line(&buf, &tok);
+
 
 }
 
@@ -48,7 +50,7 @@ int	main(int ac, char **av)
 	init_shell();
 	if (ac == 3 && ft_strncmp(av[1], "-c", 3) == 0)
 		return (do_cmd(av[2]));
-
+	return (0);
 }
 
 /* int main(int ac, char **av)
