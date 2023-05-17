@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 18:20:12 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/16 18:32:21 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/17 12:53:26 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ typedef struct s_var
 //env.c
 /**
  * @brief obtain env.
- * @return NO SE.
+ * @return current position of t_var.
  */
 t_var	*get_env(const char *env_key);
 
