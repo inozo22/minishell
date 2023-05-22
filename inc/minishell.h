@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 16:23:25 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/16 18:22:57 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/22 12:26:44 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,10 @@
 # include "parse.h"
 # include "env.h"
 # include "lexer.h"
+# include "execution.h"
+# include "path.h"
+# include "builtin.h"
+# include "util.h"
 
 /* typedef struct s_var
 {
@@ -43,18 +47,33 @@ typedef struct s_shell
 }	t_shell;
 extern	t_shell	g_shell;
 
+/**
+ * This struct is used in process
+ * that convert AST string node to exec_and_args (array of string).
+ */
+typedef struct s_cmd_str_node
+{
+	char			*text;
+	t_token_type	type;
+}	t_cmd_str_node;
+
 
 //init_shell.c
-int		init_shell(void);
-void	init_g_shell(void);
+int						init_shell(void);
+void					init_g_shell(void);
 
 //minish_error.c
 /**
  * @brief put error message and exit from the function.
  * @return doesn't return nothing.
  */
-void	minish_error_exit(int status, const char *cmd, const char *msg);
-void	minish_error(const char *cmd, const char *msg);
+void					minish_error_exit(int status, const char *cmd, const char *msg);
+void					minish_error(const char *cmd, const char *msg);
+int						invoke_sequential_commands(t_parse_ast *seqcmd);
+void					die(void);
+t_command_invocation	*cmd_ast_pipcmds2cmdinvo(t_parse_node_pipcmds *pipcmds);
+t_command_invocation	*cmd_ast_cmd2cmdinvo(t_parse_node_command *cmd);
+char					**expand_str_node(t_parse_node_string *str, bool is_ex_cmd);
 
 
 /* t_command_invocation	*cmd_ast_pipcmds2cmdinvo(t_parse_node_pipcmds *pipcmds);

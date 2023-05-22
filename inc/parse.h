@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:15:51 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/17 17:21:30 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/18 16:53:08 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef enum e_parse_ast_type
 	ASTNODE_PIPED_COMMANDS,
 	ASTNODE_DELIMITER,
 	ASTNODE_SEQ_COMMANDS,
+	ASTNODE_COMMAND_LINE,
 	ASTNODE_INVALID,
 }	t_parse_ast_type;
 
@@ -157,6 +158,7 @@ static t_parse_ast_list	*create_ast(void);
 static t_parse_ast_list	**get_ast_list(void);
 t_parse_hdoc_list		*parse_new_heredocs(t_parse_node_redirection *redirection);
 t_parse_hdoc_list		*parse_concat_heredocs(t_parse_ast *head, t_parse_ast *tail);
+t_parse_ast				*parse_delimiter(t_parse_buffer *buf, t_token *tok);
 
 
 

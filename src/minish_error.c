@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 11:30:52 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/15 11:38:33 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/22 11:37:42 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,3 +29,13 @@ void	minish_error_exit(int status, const char *cmd, const char *msg)
 	exit(status);
 }
 
+void	check_malloc(char *cmd_name, void *ptr)
+{
+	if (!ptr)
+	{
+		if (cmd_name)
+			minish_error_exit(1, cmd_name, "malloc() failed");
+		else
+			minish_error_exit(1, "malloc", "malloc() failed");
+	}
+}

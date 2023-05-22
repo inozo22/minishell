@@ -13,6 +13,16 @@
 #include "minishell.h"
 #include "../inc/parse.h"
 
+t_shell	g_shell;
+
+void	die(void)
+{
+	int	*ptr;s
+
+	ptr = NULL;
+	ptr[0xdead] = 1;
+}
+
 void	init_buffer_string(t_parse_buffer *buf, char *str)
 {
 	size_t	len;
@@ -26,12 +36,32 @@ void	init_buffer_string(t_parse_buffer *buf, char *str)
 	buf->ungetc = NULL;
 }
 
+int	invoke_sequential_commands(t_parse_ast *seqcmd)
+{
+	t_command_invocation	*inv;
+	int						status;
+
+	while (seqcmd && seqcmd->content.sequential_commands->pipcmd_node)
+	{
+		if (seqcmd->type != ASTNODE_SEQ_COMMANDS)
+			die();
+		inv = cmd_ast_cmds2cmdinvo(seqcmd->content.sequential_commands->pipcmd_node->content.piped_commands);
+		/*
+		*IM HERE 0522
+		*/
+		if (inv)
+		{
+			status = cmd_exec_commands(inv);
+		}
+	}
+}
+
 int	do_cmd(char *cmd)
 {
 	t_parse_buffer	buf;
 	t_parse_ast		*cmdline;
 	t_token			tok;
-	t_parse_ast		*seqcomd;
+	t_parse_ast		*seqcmd;
 	size_t			len;
 
 	len = ft_strlen(cmd);
@@ -41,7 +71,18 @@ int	do_cmd(char *cmd)
 	lex_init_token(&tok);
 	lex_get_token(&buf, &tok);
 	cmdline = parse_cmd_line(&buf, &tok);
-
+	free(tok.text);
+	if (cmdline)
+	{
+		seqcmd = cmdline->content.command_line->seqcmd_node;
+		return (invoke_sequential_commands(seqcmd));
+	}
+/**
+ * 
+ * hasta aquí
+ * parse_concat_heredocs done
+ * 
+*/
 
 }
 

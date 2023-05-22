@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 13:00:28 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/17 13:03:54 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/18 17:40:06 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,27 @@
 # define EXECUTION_H
 
 # include "minishell.h"
+
+typedef struct s_cmd_redirection
+{
+	const char					*filepath;
+	bool						is_append;
+	bool						is_heredoc;
+	int							fd;
+	struct s_cmd_redirection	*next;
+}	t_cmd_redirection;
+
+typedef struct s_command_invocation
+{
+	t_cmd_redirection			*output_redirections;
+	struct s_command_invocation	*piped_cmd;
+	t_cmd_redirection			*input_redirections;
+	const char					**exec_and_args;
+	pid_t						pid;	
+}	t_command_invocation;
+
+t_command_invocation	*cmd_init_cmdinvo(const char **exec_and_args);
+
 
 /* t_cmd_redirection		*cmd_copy_redirection(t_cmd_redirection *original);
 t_cmd_redirection		*cmd_redirection_add_back(t_cmd_redirection **reds,

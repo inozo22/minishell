@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 15:17:24 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/17 17:30:45 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/18 16:39:23 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,6 @@ t_parse_ast	*parse_args(t_parse_buffer *buf, t_token *tok)
 	args->error = args->error || (rest && rest->error);
 	args->heredocs = parse_concat_heredocs(redir, rest);
 	return (args);
-/**
- * 
- * hasta aquí
- * parse_concat_heredocs done
- * 
-*/
-
-
 }
 
 t_parse_ast	*parse_str(t_parse_buffer *buf, t_token *tok)
@@ -83,6 +75,25 @@ t_parse_ast	*parse_piped_cmd(t_parse_buffer *buf, t_token *tok)
 	t_parse_ast				*rest;
 
 	cmd = parse_cmd(buf, tok);
+	if (!cmd)
+		return (NULL);//free???
+	content = malloc(sizeof(t_parse_node_pipcmds));
+	ret = parse_new_ast(ASTNODE_PIPED_COMMANDS, content);
+	content->command_node = cmd;
+	rest = NULL;
+	parse_skip_spaces(buf, tok);
+	if (tok->type == TOKTYPE_PIPE)
+	{
+		lex_get_token(buf, tok);
+		parse_skip_spaces(buf, tok);
+		rest = parse_piped_cmd(buf, tok);
+		ret->error = ret->error || !rest;//PORQUE??
+	}
+	content = rest;
+	ret->error = ret->error || cmd->error;
+	ret->error = ret->error || (rest && rest->error);
+	ret->heredocs = parse_concat_heredocs(cmd, rest);
+	return (ret);
 }
 
 t_parse_ast	*parse_cmd(t_parse_buffer *buf, t_token tok)
@@ -92,6 +103,14 @@ t_parse_ast	*parse_cmd(t_parse_buffer *buf, t_token tok)
 	t_parse_ast				*args;
 
 	args = parse_args(buf, tok);
+	if (!args)
+		return (NULL);//it's not necessary mamory free?
+	content = parse_new_ast(ASTNODE_COMMAND, content);
+	content->arguments_node = args;
+	cmd->error = cmd->error || args->error;
+	cmd->heredocs = args->heredocs;
+	return (cmd);
+
 }
 
 t_parse_ast	*parse_redirection(t_parse_buffer *buf, t_token *tok)

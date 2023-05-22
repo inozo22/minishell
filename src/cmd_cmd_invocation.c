@@ -1,39 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   cmd_cmd_invocation.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/15 12:22:37 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/22 17:11:08 by nimai            ###   ########.fr       */
+/*   Created: 2023/05/18 17:33:48 by nimai             #+#    #+#             */
+/*   Updated: 2023/05/22 11:21:32 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*get_env_val(const char *env_key)
+t_command_invocation	*cmd_init_cmdinvo(const char **exec_and_args)
 {
-	t_var	*var;
+	t_command_invocation	*cmdinvo;
 
-	if (!ft_strcmp(env_key, "?"))
-		return (ft_itoa(get_status()));
-	var = get_env(env_key);
-	if (!var || !var->value)
-		return (NULL);
-	return (ft_strdup(var->value));
-}
-
-t_var	*get_env(const char *env_key)
-{
-	t_var	*cur;
-
-	cur = g_shell.vars;
-	while (cur)
-	{
-		if (!ft_strcmp(env_key, cur->key))
-			return (cur);
-		cur = cur->next;
-	}
-	return (NULL);
+	cmdinvo = malloc(sizeof(t_command_invocation));
+	if (!cmdinvo)
+		return (NULL);//free check
+	cmdinvo->exec_and_args = exec_and_args;
+	cmdinvo->input_redirections = NULL;
+	cmdinvo->output_redirections = NULL;
+	cmdinvo->piped_cmd = NULL;
+	cmdinvo->pid = 0;
+	return (cmdinvo);
 }
