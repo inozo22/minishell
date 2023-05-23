@@ -1,28 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   built.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/10 16:23:25 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/23 16:13:48 by nimai            ###   ########.fr       */
+/*   Created: 2023/05/23 16:12:28 by nimai             #+#    #+#             */
+/*   Updated: 2023/05/23 16:16:11 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef BUILT_H
+# define BUILT_H
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <errno.h>
-# include <unistd.h>
-# include "libft.h"
-# include "mem_check.h"
-# include <stdbool.h>
-# include "built.h"
+# include "minishell.h"
 
-
+int	built_exit(char **av);
+int	built_pwd(char **av);
 
 
 

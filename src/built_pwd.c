@@ -1,29 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   built_pwd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/10 16:23:25 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/23 16:13:48 by nimai            ###   ########.fr       */
+/*   Created: 2023/05/23 16:11:36 by nimai             #+#    #+#             */
+/*   Updated: 2023/05/23 16:51:39 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "minishell.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <errno.h>
-# include <unistd.h>
-# include "libft.h"
-# include "mem_check.h"
-# include <stdbool.h>
-# include "built.h"
-
-
-
-
-
-#endif
+/**
+ * @brief manage "builtin" pwd cmd.
+ * @author nimai
+ * @param **av "pwd"
+ * @return if there are sth after cmd, ignore and execute it normally. Don't manage any flags.
+ */
+int	built_pwd(char **av)
+{
+	(void)av;
+	ft_printf(getcwd(NULL, 0));
+	return (0);
+	//230523nimai: should be managed the flags? (at least give some message?)
+}
