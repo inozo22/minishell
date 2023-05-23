@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 13:05:08 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/23 15:43:32 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/23 15:45:16 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	is_numeric(char *num)
 		if (!ft_isdigit(*num))
 			return (0);
 		num++;
-	}	
+	}
 	return (1);
 }
 
