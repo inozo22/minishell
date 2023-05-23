@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 12:52:29 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/23 16:35:37 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/23 17:37:26 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,12 @@ int	main(int ac, char **av)
 	{
 		return (0);
 	}
-	if (ft_strncmp(av[1], "exit", ft_strlen(av[1])) == 0)
+	if (ft_strncmp(av[1], "echo", ft_strlen(av[1])) == 0)
+	{
+		printf("I got echo\n");//kesu
+		built_echo(av);
+	}
+	else if (ft_strncmp(av[1], "exit", ft_strlen(av[1])) == 0)
 	{
 		printf("I got exit\n");//kesu
 		built_exit(av);
