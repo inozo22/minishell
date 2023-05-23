@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 13:05:08 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/23 15:55:20 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/23 16:00:49 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ int	av_amount(char **strs)
 /**
  * @brief manage "builtin" exit cmd.
  * @author nimai
- * @return if there are more than cmd + 1 argument, return to minishell prompt, without execute any function after.
+ * @param **av "exit", "0"
+ * @return if there are more than <cmd + 1 argument>, return to minishell prompt, without execute any function after this.
  */
 int	built_exit(char **av)
 {
@@ -74,7 +75,7 @@ int	built_exit(char **av)
 	{
 		//230523nimai:give you error msg, but exit works. (as working bash)
 		ft_printf("minishell: exit: %s: numeric argument required\n", av[2]);
-	//will be eliminated
+	//230523nimai:will be eliminated
 		ft_printf("but EXIT!\n");
 		exit (1);
 	}
