@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 13:05:08 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/23 15:45:16 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/23 15:55:20 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 /**
  * @brief check if it's numeric.
+ * @author nimai
  * @note ignore the space before the number begins. also fine with boolean
  */
 int	is_numeric(char *num)
@@ -31,6 +32,7 @@ int	is_numeric(char *num)
 
 /**
  * @brief doesn't leave from the program, just return.
+ * @author nimai
  * @note maybe it's not necessary to have as a function. 
  */
 int	error_exit_msg(int ret, char *msg)
@@ -41,7 +43,8 @@ int	error_exit_msg(int ret, char *msg)
 
 /**
  * @brief to know argv's amount.
- * @return how many argvs you have in int. 
+ * @author nimai
+ * @return how many argvs you have, in int. 
  */
 int	av_amount(char **strs)
 {
@@ -57,6 +60,7 @@ int	av_amount(char **strs)
 
 /**
  * @brief manage "builtin" exit cmd.
+ * @author nimai
  * @return if there are more than cmd + 1 argument, return to minishell prompt, without execute any function after.
  */
 int	built_exit(char **av)
@@ -64,19 +68,19 @@ int	built_exit(char **av)
 	int	amount;
 
 	amount = av_amount(av);
-	printf("Line: %d\n", __LINE__);
 	if (amount == 2)
 		exit (0);
 	if (!is_numeric(av[2]))
 	{
-		//give you error msg, but exit works. (as working bash)
+		//230523nimai:give you error msg, but exit works. (as working bash)
 		ft_printf("minishell: exit: %s: numeric argument required\n", av[2]);
-	//will eliminate
+	//will be eliminated
 		ft_printf("but EXIT!\n");
 		exit (1);
 	}
 	if (amount > 3)
 	{
+		//230523nimai:when return it, it will not move to next command, but return to minishell prompt
 		return (error_exit_msg(1, "minishell: exit: too many arguments"));
 	}
 	ft_printf("EXIT!\n");
