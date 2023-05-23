@@ -1,28 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/10 16:23:25 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/23 13:13:59 by nimai            ###   ########.fr       */
+/*   Created: 2023/05/23 12:52:29 by nimai             #+#    #+#             */
+/*   Updated: 2023/05/23 13:21:31 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "minishell.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <errno.h>
-# include <unistd.h>
-# include "libft.h"
-# include "mem_check.h"
-# include <stdbool.h>
+int	main(int ac, char **av)
+{
+	if (ac < 2)
+	{
+		return (0);
+	}
+	if (ft_strncmp(av[1], "exit", 4) == 0)
+	{
+		printf("I got exit\n");
+		built_exit(av);
+	}
+	return (0);
+}
 
-int	built_exit(char **av);
-
-
-
-#endif

@@ -19,7 +19,7 @@ int	lex_read_word(t_parse_buffer *buf, t_token *tok)
 	int ch;
 
 	if (lex_escaped(buf, tok))
-		return (1);
+		return (1); 
 	pos = 0;
 	while (1)
 	{

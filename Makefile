@@ -6,7 +6,7 @@
 #    By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/16 18:53:13 by nimai             #+#    #+#              #
-#    Updated: 2023/05/15 10:43:43 by nimai            ###   ########.fr        #
+#    Updated: 2023/05/23 13:14:26 by nimai            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,23 +15,6 @@ NAME		:= minishell
 #------------------------------------------------#
 #   INGREDIENTS                                  #
 #------------------------------------------------#
-# LIBS        libraries to be used
-# LIBS_TARGET libraries to be built
-#
-# INCS        header file locations
-#
-# SRC_DIR     source directory
-# SRCS        source files
-#
-# BUILD_DIR   build directory
-# OBJS        object files
-# DEPS        dependency files
-#
-# CC          compiler
-# CFLAGS      compiler flags
-# CPPFLAGS    preprocessor flags
-# LDFLAGS     linker flags
-# LDLIBS      libraries name
 
 LIBS		:=  ft memcheck
 LIBS_TARGET	:=  lib/libft/libft.a \
@@ -44,7 +27,8 @@ INCS		:= \
 
 SRC_DIR		:= src
 SRCS		:= \
-				minishell.c 
+				main.c \
+				built_exit.c
 SRCS		:= $(SRCS:%=$(SRC_DIR)/%)
 
 BUILD_DIR	:= .build
@@ -60,13 +44,9 @@ LDLIBS		:= $(addprefix -l,$(LIBS))
 #------------------------------------------------#
 #   UTENSILS                                     #
 #------------------------------------------------#
-# RM        force remove
-# MAKEFLAGS make flags
-# DIR_DUP   duplicate directory tree
 
 RM			:= rm -f
 RF			:= rm -rf
-MAKEFLAGS	+= --no-print-directory
 DIR_DUP		= mkdir -p $(@D)
 
 #------------------------------------------------#
@@ -95,15 +75,6 @@ export	ART
 #------------------------------------------------#
 #   RECIPES                                      #
 #------------------------------------------------#
-# all       default goal
-# $(NAME)   link .o -> archive
-# $(LIBS)   build libraries
-# %.o       compilation .c -> .o
-# clean     remove .o
-# fclean    remove .o + binary
-# re        remake default goal
-# run       run the program
-# info      print the default goal recipe
 
 all: $(NAME)
 
@@ -135,9 +106,6 @@ fclean: clean
 re:
 	$(MAKE) fclean
 	$(MAKE) all
-
-#info-%:
-#	$(MAKE) --dry-run --always-make $* | grep -v "info"
 
 #------------------------------------------------#
 #   SPEC                                         #
