@@ -6,7 +6,7 @@
 #    By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/16 14:48:52 by nimai             #+#    #+#              #
-#    Updated: 2023/05/10 16:44:58 by nimai            ###   ########.fr        #
+#    Updated: 2023/05/23 14:14:32 by nimai            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,7 @@ ft_lstadd_back.c ft_lstadd_front.c ft_lstclear.c ft_lstdelone.c ft_lstiter.c \
 ft_lstlast.c ft_lstmap.c ft_lstnew.c ft_lstsize.c 
 SRCS        := $(SRCS:%=$(SRC_DIR)/%)
 
-PRINTF_DIR	:= ft_printf_for_fdf
+PRINTF_DIR	:= ft_printf
 FTPRINTF	:= $(PRINTF_DIR)/ftprintf.a
 
 BUILD_DIR   := .build

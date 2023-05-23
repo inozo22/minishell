@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 19:03:42 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/10 11:37:32 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/23 14:14:49 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdio.h>
-# include "../ft_printf_for_fdf/inc/ft_printf.h"
+# include "../ft_printf/inc/ft_printf.h"
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 10
