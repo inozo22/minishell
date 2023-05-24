@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 18:40:39 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/24 14:05:24 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/24 14:41:18 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,36 @@ bool	check_path(char *str)
 char	*get_dest_path(char *str)
 {
 	char	*ret;
+	char	*cur;
 
-	ret = NULL;
-	(void)str;
+
+	cur = getcwd(NULL, 0);
+	if (ft_strncmp(cur, str, ft_strlen(cur)) == 0)
+	{
+		printf("Maybe I have absolute path\n");
+		return (str);//maybe it's absolute path		
+	}
+	else if (ft_strncmp(getenv("HOME"), str, ft_strlen(getenv("HOME"))) == 0)
+	{
+		printf("Maybe I have absolute path, but shorter\n");
+		return (str);//maybe it's absolute path		
+	}
+	ret = ft_calloc(sizeof(char), ft_strlen(cur) + ft_strlen(str) + 1);
+	ft_strlcpy(ret, cur, ft_strlen(cur) + 1);//copy the cur string
+	ft_strlcat(ret, str, ft_strlen(cur) + ft_strlen(str) + 1);
 /* 	if (!check_path(str))
 		return (error_cd(str), NULL); */
-	ret = getenv("PATH");
 	printf("ret: %s\n", ret);
+	printf("cur: %s\n", cur);
+	printf("str: %s\n", str);
+	printf("Where am I: %s\n", getcwd(NULL, 0));
+	if (chdir(ret) == -1)
+	{
+		return (error_cd(str), NULL);
+	}
+	printf("Where am I: %s\n", getcwd(NULL, 0));
 	exit(1);
+
 	return (ret);
 }
 
@@ -96,7 +118,7 @@ int	built_cd(char **av)
 		return (0);
 	}
 	printf("current position: %s\n", cur);
-	dest = get_dest_path(av[2]);
+	dest = get_dest_path(av[2]);//230524nimai: after av[3] will be ignored.
 	if (!dest)
 		return (0);//230524nimai: if it's null, should it moves to home dir? Or just ignore it?
 	return (0);
@@ -116,5 +138,6 @@ int	built_cd(char **av)
  * printf("line: %d\n", __LINE__);
  * error message: ft_printf("No such file or directory\n");
  * how to treat "../" or "./", give message like above? Or put other message? Also fine move to old folder with $OLDPATH
+ * How to managge errors? At this moment, put in each function.
  */
 
