@@ -6,35 +6,50 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 18:40:39 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/24 12:45:43 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/24 14:05:24 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	error_cd()
+void	error_cd(char *cmd)
 {
-	
+	ft_printf("minishell: cd: %s: No such file or directory\n", cmd);
+}
+
+/**
+ * @brief check if the path exists.
+ * @author nimai
+ * @note 
+ */
+bool	check_path(char *str)
+{
+	(void)str;
+/* 	while ()
+	{
+		
+	} */
+	return (1);
 }
 
 /**
  * @brief get path length.
  * @author nimai
- * @note maybe already exist.
+ * @note will be eliminated
  */
-int	get_path_length(char *str, int i)
+/* int	get_path_length(char *str, int i)
 {
 	int	ret;
 
 	ret = 0;
-	while (str[i] && str[i] != 32)
+	while (str[i])
 	{
 		ret++;
 		i++;
 	}
 	return (ret);
 }
-
+ */
 /**
  * @brief get absolute path to move
  * @author nimai
@@ -43,17 +58,14 @@ int	get_path_length(char *str, int i)
 char	*get_dest_path(char *str)
 {
 	char	*ret;
-	int		i;
-	int		len;
 
-	i = 0;
 	ret = NULL;
-	len = get_path_length(str, i);
-	ret = (char *)ft_calloc(sizeof(char), (len + 1));
-	ft_strlcpy(ret, str, len + 1);
-	if (!check_path(ret))
-		return (error_cd(), NULL);
+	(void)str;
+/* 	if (!check_path(str))
+		return (error_cd(str), NULL); */
+	ret = getenv("PATH");
 	printf("ret: %s\n", ret);
+	exit(1);
 	return (ret);
 }
 
@@ -66,12 +78,27 @@ char	*get_dest_path(char *str)
 int	built_cd(char **av)
 {
 	char	*dest;
-	
+	char	*cur;
+
+	cur = getcwd(NULL, 0);
+	if (!cur)
+		return ((error_cd("current directory")), 0);//230524nimai: if it's null, like doesn't exit the current directory, what should I do? give error, or ignore?
+	if (!av[2])//when you don't have argument after "cd"
+	{
+		printf("Where am I: %s\n", getcwd(NULL, 0));
+		if (chdir(getenv("HOME")) == -1)
+		{
+			printf("Line: %d\n", __LINE__);
+			return (-1);
+		}
+		printf("Where am I: %s\n", getcwd(NULL, 0));
+		printf("Line: %d\n", __LINE__);
+		return (0);
+	}
+	printf("current position: %s\n", cur);
 	dest = get_dest_path(av[2]);
 	if (!dest)
-		return (0);//230524nimai: if it's null, don't have to move, so return (0)?
-
-	ft_printf("minishell: cd: %s: No such file or directory\n", av[2]);
+		return (0);//230524nimai: if it's null, should it moves to home dir? Or just ignore it?
 	return (0);
 }
 
@@ -88,6 +115,6 @@ int	built_cd(char **av)
  * 
  * printf("line: %d\n", __LINE__);
  * error message: ft_printf("No such file or directory\n");
- * how to treat "../" or "./", give message like above? Or put other message?
+ * how to treat "../" or "./", give message like above? Or put other message? Also fine move to old folder with $OLDPATH
  */
 
