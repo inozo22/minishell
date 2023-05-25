@@ -6,7 +6,7 @@
 #    By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/16 18:53:13 by nimai             #+#    #+#              #
-#    Updated: 2023/05/23 18:43:15 by nimai            ###   ########.fr        #
+#    Updated: 2023/05/25 11:29:00 by nimai            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,9 @@ SRCS		:= \
 				built_exit.c \
 				built_pwd.c \
 				built_echo.c \
-				built_cd.c
+				built_cd.c \
+				built_export.c \
+				errors.c
 SRCS		:= $(SRCS:%=$(SRC_DIR)/%)
 
 BUILD_DIR	:= .build

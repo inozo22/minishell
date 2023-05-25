@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 12:52:29 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/23 18:45:05 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/25 10:03:05 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,20 @@ int	main(int ac, char **av)
 		printf("I got cd\n");//kesu
 		built_cd(av);
 	}
-	else if (ft_strncmp(av[1], "exit", ft_strlen(av[1])) == 0)
-	{
-		printf("I got exit\n");//kesu
-		built_exit(av);
-	}
 	else if (ft_strncmp(av[1], "pwd", ft_strlen(av[1])) == 0)
 	{
 		printf("I got pwd\n");//kesu
 		built_pwd(av);
+	}
+	else if (ft_strncmp(av[1], "export", ft_strlen(av[1])) == 0)
+	{
+		printf("I got export\n");//kesu
+		built_export(av);
+	}
+	else if (ft_strncmp(av[1], "exit", ft_strlen(av[1])) == 0)
+	{
+		printf("I got exit\n");//kesu
+		built_exit(av);
 	}
 	else
 	{
