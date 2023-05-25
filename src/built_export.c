@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:18:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/25 13:02:42 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/25 14:16:46 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,26 @@ void	error_export(char *cmd)
  * @author nimai
  * @note 
  */
+t_export	*fill_list(char *str, int i)
+{
+	t_export	*ret;
+	int			len;
+	char		*tmp;
+
+	ret = (t_export *)malloc(sizeof(t_export));
+	ret->box[i].index = -1;
+	if (!str)
+		return (NULL);
+	len = 0;
+	while (str[len] && str[len] != '=')
+		len++;
+	ft_strlcpy(ret->box[i].name, str, len + 2);//230525nimai: included until '='
+	tmp = ft_substr(str, len + 1, ft_strlen(str) - len);
+	ft_strlcpy(ret->box[i].val, tmp, ft_strlen(str) - len + 1);
+	printf("name	:	%s\n", ret->box[i].name);
+	printf("val	:	%s\n", ret->box[i].val);
+	return (ret);
+}
 
 
 /**
@@ -73,15 +93,22 @@ char	**fake_env(void)
 	while (i < plen)
 	{
 		val = malloc(ft_strlen(environ[i]) + 1);
+		ret[i] = malloc(ft_strlen(environ[i]) + 1);
 		if (!val)
 			return (NULL);
 		val = environ[i];
 		if (val)
-			*ret = val;
-//		free (val);
+			ret[i] = val;
+		//free (val);
 		i++;
-		ret++;
 	}
+/* 	i = 0;
+	while (i < plen)
+	{
+		printf("Line: %d	", __LINE__);
+		printf("%s\n", ret[i]);
+		i++;
+	} */
 	return (ret);
 }
 
@@ -95,23 +122,33 @@ char	**fake_env(void)
  */
 int	built_export(char **av)
 {
-//	t_export	list[ARGLIMIT];
+	t_export	*list;
 	char		**tmp_env;
+	int			i = 0;
 
 	(void)av;
 	tmp_env = fake_env();
-	while (*tmp_env)
+	if (!tmp_env)
 	{
-		printf("%s", *tmp_env);
-		tmp_env++;
+		printf("Line: %d\n", __LINE__);
+		exit (1);
 	}
-
-
-
+	while (tmp_env[i])
+	{
+		list = fill_list(tmp_env[i], i);
+		i++;
+	}
+	i = 0;
+	while (i < 35)
+	{
+		printf("Line: %d	", __LINE__);
+		printf("i	:	%d\n", i);
+		printf("name	:	%s\n", list->box[i].name);
+		printf("val	:	%s\n", list->box[i].val);
+		i++;
+	}
+	exit (1);
     return 0;
-
-
-
 
 	
 /* 	char	*dest;

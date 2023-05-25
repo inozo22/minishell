@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:12:28 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/25 11:29:54 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/25 13:55:13 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,27 @@
 # define ARGLIMIT 501
 
 /**
- * @brief to order export list
+ * @brief smalll boxes
  * @author nimai
  * @param index the final position number.
  * @param pos the amount of the name, do letter to long.
  * @param name keep until "="
  * @param val valor of variable, I have to put " " when I output
  */
-typedef struct s_export
+typedef struct s_export_box
 {
 	int		index;
 	long	pos;
-	char	*name;
-	char	*val;
+	char	name[1024];
+	char	val[2048];
+}	t_export_box;
+
+/**
+ * @brief to order export list
+ */
+typedef struct s_export
+{
+	t_export_box	box[ARGLIMIT];
 }	t_export;
 
 int		built_exit(char **av);
