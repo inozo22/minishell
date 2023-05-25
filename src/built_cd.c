@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 18:40:39 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/25 10:02:48 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/25 18:31:23 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,6 +162,7 @@ int	built_cd(char **av)
 	dest = get_dest_path(av[2]);//230524nimai: after av[3] will be ignored.
 	if (!dest)
 		return (0);//230524nimai: if it's null, should it moves to home dir? Or just ignore it?
+	
 	if (chdir(dest) == -1)
 	{
 		free (dest);

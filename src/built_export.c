@@ -6,27 +6,16 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:18:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/25 17:47:42 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/25 18:43:09 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /**
- * @brief sort the list according to the name
+ * @brief output all list
  * @author nimai
- * @note 
- */
-/* t_export	*sort_list(t_export *list)
-{
-	list = get_pos(list);
-	return (list);
-} */
-
-/**
- * @brief obtain above path from array
- * @author nimai
- * @note 
+ * @note maybe adjust to some list too.
  */
 void	output_env(t_export *list, int len)
 {
@@ -60,13 +49,8 @@ void	output_env(t_export *list, int len)
  */
 void	error_export(char *cmd)
 {
-	ft_printf("minishell: cd: %s: No such file or directory\n", cmd);
+	ft_printf("minishell: export: %s: Dunno\n", cmd);
 }
-
-
-
-
-
 
 /**
  * @brief check if the path exists.
@@ -102,9 +86,6 @@ t_export	*fill_list(char **strs)
 	return (ret);
 }
 
-
-
-
 /**
  * @brief get absolute path to move
  * @author nimai
@@ -134,13 +115,6 @@ char	**fake_env(void)
 		//free (val);
 		i++;
 	}
-/* 	i = 0;
-	while (i < plen)
-	{
-		printf("Line: %d	", __LINE__);
-		printf("%s\n", ret[i]);
-		i++;
-	} */
 	return (ret);
 }
 
@@ -158,22 +132,28 @@ int	built_export(char **av)
 	char		**tmp_env;
 	int			i = 0;
 
-	(void)av;
-	tmp_env = fake_env();
-	if (!tmp_env)
+	if (av_amount(av) == 2)
 	{
-		return (printf("ERROR: Line: %d\n", __LINE__), 0);
+		tmp_env = fake_env();
+		if (!tmp_env)
+		{
+			return (printf("ERROR: Line: %d\n", __LINE__), 0);
+		}
+		while (tmp_env[i])
+		{
+			list = fill_list(tmp_env);
+			i++;
+		}
+		printf("Line: %d\n", __LINE__);
+		quick_sort(list->box, 0, av_amount(tmp_env) - 1, SORT_VALUE);
+		printf("Line: %d\n", __LINE__);
+		output_env(list, av_amount(tmp_env));
 	}
-	while (tmp_env[i])
+	else if (av_amount(av) == 3)
 	{
-		list = fill_list(tmp_env);
-		i++;
+		//230525nimai: add, function to add variable
 	}
-	printf("Line: %d\n", __LINE__);
-//	list = sort_list(list);
-	quick_sort(list->box, 0, av_amount(tmp_env) - 1, SORT_VALUE);
-	printf("Line: %d\n", __LINE__);
-	output_env(list, av_amount(tmp_env));
+
 //printer
 /* 	i = 0;
 	while (i < av_amount(tmp_env))

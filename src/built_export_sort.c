@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 16:17:55 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/25 18:02:55 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/25 18:09:22 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	get_pivot_value(t_export_box box[], int left, int right)
 
 void	quick_sort(t_export_box box[], int left, int right, int flag)
 {
-	int	pivot;
+	int	pivot = 0;
 
 	if (left < right)
 	{
@@ -72,6 +72,8 @@ void	quick_sort(t_export_box box[], int left, int right, int flag)
 		{
 			pivot = get_pivot_value(box, left, right);
 		}
+		else
+			;
 /* 		if (flag == SORT_ID)
 		{
 			pivot = get_pivot_id(box, left, right);
@@ -80,7 +82,6 @@ void	quick_sort(t_export_box box[], int left, int right, int flag)
 		quick_sort(box, pivot + 1, right, flag);
 	}
 }
-
 
 /**
  * qsort doesn't work, but should work...
