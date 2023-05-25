@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:12:28 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/25 13:55:13 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/25 17:14:24 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 # include "minishell.h"
 
 # define ARGLIMIT 501
+# define PATHLIMIT 4096
+# define SORT_VALUE 1
+# define SORT_ID 0
 
 /**
  * @brief smalll boxes
@@ -27,10 +30,10 @@
  */
 typedef struct s_export_box
 {
-	int		index;
+	int		id;
 	long	pos;
-	char	name[1024];
-	char	val[2048];
+	char	*name;
+	char	*val;
 }	t_export_box;
 
 /**
@@ -39,6 +42,7 @@ typedef struct s_export_box
 typedef struct s_export
 {
 	t_export_box	box[ARGLIMIT];
+	int				plen;
 }	t_export;
 
 int		built_exit(char **av);
@@ -48,6 +52,7 @@ int		built_cd(char **av);
 int		built_export(char **av);
 int		av_amount(char **strs);
 void	heap_error(int flag);
+void	quick_sort(t_export_box box[], int left, int right, int flag);
 
 
 
