@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:18:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/26 13:29:25 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/26 13:32:11 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 /**
  * @brief output all list
  * @author nimai
+ * @param flag control between env and export (230526)
  * @note maybe adjust to some list too.
  */
 void	output_env(t_export *list, int len, int flag)
