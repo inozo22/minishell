@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:18:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/26 09:37:03 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/26 13:29:25 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,27 +17,30 @@
  * @author nimai
  * @note maybe adjust to some list too.
  */
-void	output_env(t_export *list, int len)
+void	output_env(t_export *list, int len, int flag)
 {
 	int	i;
 	int	j;
 
-	i = 0;
-	j = 0;
-	while (j < len)
+	j = -1;
+	while (++j < len)
 	{
-		i = 0;
-		while (i < len)
+		i = -1;
+		while (++i < len)
 		{
-			if (list->box[i].id == j)
+			if (list->box[i].id == j && flag == FLAGEXPORT)
 			{
 				ft_printf("%d: declare -x ", __LINE__);
 				ft_printf("%s", list->box[i].name);
 				ft_printf("\"%s\"\n", list->box[i].val);
 			}
-			i++;
+			else if (flag == FLAGENV)
+				ft_printf("%s%s\n", list->box[i].name, list->box[i].val);
+			if (flag == FLAGENV && i == len - 1)
+				break ;
 		}
-		j++;
+		if (flag == FLAGENV && i == len - 1)
+			break ;
 	}
 
 }
@@ -57,19 +60,15 @@ void	error_export(char *cmd)
  * @author nimai
  * @note 
  */
-t_export	*fill_list(char **strs)
+t_export	*fill_list(char **strs, t_export *ret)
 {
-	t_export	*ret;
 	int			i;
 	int			len;
 	char		*tmp;
 
-	ret = (t_export *)malloc(sizeof(t_export));
-	if (!ret)
-		return (NULL);
 	ret->plen = av_amount(strs);
 	i = -1;
-	while (++i < ret->plen + 1)
+	while (++i < ret->plen)
 	{
 		ret->box[i].id = i;
 		if (!strs[i])
@@ -77,10 +76,10 @@ t_export	*fill_list(char **strs)
 		len = 0;
 		while (strs[i][len] && strs[i][len] != '=')
 			len++;
-		ret->box[i].name = malloc(10000);
+		ret->box[i].name = malloc(len + 2);
 		ft_strlcpy(ret->box[i].name, strs[i], len + 2);//230525nimai: included until '='
 		tmp = ft_substr(strs[i], len + 1, ft_strlen(strs[i]) - len);
-		ret->box[i].val = malloc(10000);
+		ret->box[i].val = malloc(ft_strlen(strs[i]) - len + 1);
 		ft_strlcpy(ret->box[i].val, tmp, ft_strlen(strs[i]) - len + 1);
 	}
 	return (ret);
@@ -130,7 +129,7 @@ int	built_export(char **av)
 {
 	t_export	*list;
 	char		**tmp_env;
-	int			i = 0;
+//	int			i = 0;
 
 	if (av_amount(av) == 2)
 	{
@@ -139,15 +138,19 @@ int	built_export(char **av)
 		{
 			return (printf("ERROR: Line: %d\n", __LINE__), 0);
 		}
-		while (tmp_env[i])
+/* 		while (tmp_env[i])
 		{
 			list = fill_list(tmp_env);
 			i++;
-		}
+		} */
+		list = (t_export *)malloc(sizeof(t_export));
+		if (!list)
+			return (0);
+		list = fill_list(tmp_env, list);
 		printf("Line: %d\n", __LINE__);
 		quick_sort(list->box, 0, av_amount(tmp_env) - 1, SORT_VALUE);
 		printf("Line: %d\n", __LINE__);
-		output_env(list, av_amount(tmp_env));
+		output_env(list, av_amount(tmp_env), FLAGENV);
 	}
 	else if (av_amount(av) == 3)
 	{

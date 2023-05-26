@@ -1,32 +1,13 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   built_unset.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/10 16:23:25 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/26 09:53:16 by nimai            ###   ########.fr       */
+/*   Created: 2023/05/26 09:50:35 by nimai             #+#    #+#             */
+/*   Updated: 2023/05/26 09:50:49 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/**
- * temporary header
-*/
-
-#ifndef MINISHELL_H
-# define MINISHELL_H
-
-# include <stdio.h>
-# include <stdlib.h>
-# include <errno.h>
-# include <unistd.h>
-# include "libft.h"
-# include <stdbool.h>
-# include "built.h"
-
-
-
-
-
-#endif
+#include "minishell.h"

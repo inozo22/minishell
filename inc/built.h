@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:12:28 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/25 17:14:24 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/26 13:25:17 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # define PATHLIMIT 4096
 # define SORT_VALUE 1
 # define SORT_ID 0
+# define FLAGEXPORT 1
+# define FLAGENV 0
 
 /**
  * @brief smalll boxes
@@ -45,14 +47,26 @@ typedef struct s_export
 	int				plen;
 }	t_export;
 
-int		built_exit(char **av);
-int		built_pwd(char **av);
-int		built_echo(char **av);
-int		built_cd(char **av);
-int		built_export(char **av);
-int		av_amount(char **strs);
-void	heap_error(int flag);
-void	quick_sort(t_export_box box[], int left, int right, int flag);
+int			built_exit(char **av);
+int			built_pwd(char **av);
+int			built_echo(char **av);
+int			built_cd(char **av);
+int			built_export(char **av);
+int			built_env(char **av);
+
+/**
+ * functions from export
+ */
+int			av_amount(char **strs);
+char		**fake_env(void);
+t_export	*fill_list(char **strs, t_export *ret);
+void		output_env(t_export *list, int len, int flag);
+/**
+ * functions from export
+ */
+
+void		heap_error(int flag);
+void		quick_sort(t_export_box box[], int left, int right, int flag);
 
 
 

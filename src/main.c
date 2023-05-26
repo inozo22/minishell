@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 12:52:29 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/25 10:03:05 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/26 10:14:23 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,16 @@ int	main(int ac, char **av)
 	{
 		printf("I got export\n");//kesu
 		built_export(av);
+	}
+/* 	else if (ft_strncmp(av[1], "unset", ft_strlen(av[1])) == 0)
+	{
+		printf("I got unset\n");//kesu
+		built_unset(av);
+	} */
+	else if (ft_strncmp(av[1], "env", ft_strlen(av[1])) == 0)
+	{
+		printf("I got env\n");//kesu
+		built_env(av);
 	}
 	else if (ft_strncmp(av[1], "exit", ft_strlen(av[1])) == 0)
 	{
