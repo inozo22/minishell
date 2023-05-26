@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:18:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/26 15:23:37 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/26 15:56:36 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,6 @@ t_export	*fill_list(char **strs, t_export *ret)
 char	**fake_env(void)
 {
 	extern char	**environ;
-	char		*val;
 	char		**ret;
 	int			i;
 	int			plen;
@@ -132,15 +131,21 @@ char	**fake_env(void)
 	ret = malloc(sizeof(char *) * (plen + 1));
 	while (i < plen)
 	{
-		val = malloc(ft_strlen(environ[i]) + 1);
+		ret[i] = malloc(ft_strlen(environ[i]) + 1);
+		if (!ret[i])
+			return (NULL);
+		ret[i] = environ[i];
+	//	free (val);
+		i++;
+/* 		val = malloc(ft_strlen(environ[i]) + 1);
 		ret[i] = malloc(ft_strlen(environ[i]) + 1);
 		if (!val)
 			return (NULL);
 		val = environ[i];
 		if (val)
 			ret[i] = val;
-		//free (val);
-		i++;
+		free (val);
+		i++; */
 	}
 	return (ret);
 }

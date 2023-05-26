@@ -6,7 +6,7 @@
 #    By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/16 18:53:13 by nimai             #+#    #+#              #
-#    Updated: 2023/05/26 10:06:04 by nimai            ###   ########.fr        #
+#    Updated: 2023/05/26 15:47:54 by nimai            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,8 @@ SRCS		:= \
 				built_export_sort.c \
 				built_env.c \
 				built_unset.c \
-				errors.c
+				errors.c \
+				free.c
 SRCS		:= $(SRCS:%=$(SRC_DIR)/%)
 
 BUILD_DIR	:= .build

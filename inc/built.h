@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:12:28 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/26 14:46:31 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/26 16:54:17 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int			built_echo(char **av);
 int			built_cd(char **av);
 int			built_export(char **av);
 int			built_env(char **av);
+int			built_unset(char **av);
 
 /**
  * functions from export
@@ -67,6 +68,8 @@ void		output_env(t_export *list, int len, int flag);
 
 void		heap_error(int flag);
 void		quick_sort(t_export_box box[], int left, int right);
+
+void		**ptr_free(void **ptr);
 
 
 

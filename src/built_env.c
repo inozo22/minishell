@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 09:50:16 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/26 13:33:00 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/26 16:31:46 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,29 +30,37 @@ void	error_env(char *cmd)
  */
 int	built_env(char **av)
 {
-	t_export	*list;
 	char		**tmp_env;
+	int			i;
+	int			len;
 
-	if (av_amount(av) == 2)
+	(void)av;
+	tmp_env = fake_env();
+	if (!tmp_env)
 	{
-		tmp_env = fake_env();
-		if (!tmp_env)
-		{
-			return (printf("ERROR: Line: %d\n", __LINE__), 0);
-		}
-		list = (t_export *)malloc(sizeof(t_export));
-		if (!list)
-			return (0);
-		list = fill_list(tmp_env, list);
-		output_env(list, av_amount(tmp_env), FLAGENV);
+		return (printf("ERROR: Line: %d\n", __LINE__), 0);
 	}
-
-    return 0;
+	i = 0;
+	len = av_amount(tmp_env);
+	while (i < len)
+	{
+		ft_printf("%s\n", tmp_env[i]);
+//		free (tmp_env[i]);
+		i++;
+	}
+//	ptr_free((void **)tmp_env);
+	//	free (tmp_env[i]);
+	//	free (tmp_env);
+    return (0);
 }
 
 /**
  * BEHAVIOUR IN BASH
  * when execute env, the list is not ordered 
  * 
+ * 
+ * MEMORY LEAKS
+ * 230526nimai: When I try free it, receive errors say that I'm trying free memory which is not allocated.
+ * But yes, allocated.
  * 
  */
