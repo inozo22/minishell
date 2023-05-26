@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 18:40:39 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/25 18:31:23 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/26 09:36:11 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /**
  * @brief temporary error management
  * @author nimai
- * @note when dicided error management, chang it.
+ * @note when decided error management, merge it.
  */
 void	error_cd(char *cmd)
 {

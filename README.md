@@ -1,15 +1,27 @@
-# minishell
+# minishell(work-in-progress)
 
 <p align="center">
-
+	<img alt="GitHub code size in bytes" src="https://img.shields.io/github/languages/code-size/inozo22/minishell?color=lightblue" />
+	<img alt="Number of lines of code" src="https://img.shields.io/tokei/lines/github/inozo22/minishell?color=critical" />
+	<img alt="Code language count" src="https://img.shields.io/github/languages/count/inozo22/minishell?color=yellow" />
+	<img alt="GitHub top language" src="https://img.shields.io/github/languages/top/inozo22/minishell?color=blue" />
+	<img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/inozo22/minishell?color=green" />
 </p>
 
 <p align="center">
-	
+	This project is about creating a simple shell🐚
 </p>
 
 
 ## Documents
+
+<p>cd behaiviour(JP):   https://qiita.com/ToYeah0102/items/1e81b2c1d5ce40268eed</p>
+<p>cd behaiviour2(JP):  https://teratail.com/questions/100122</p>
+<p>index: bash.git: http://git.savannah.gnu.org/cgit/bash.git/tree/builtins/</p>
+<p>GNU Bash:    https://www.gnu.org/software/bash/</p>
+<p>Shell builtin commands:  https://www.gnu.org/software/bash/manual/bash.html#Bourne-Shell-Builtins</p>
+<p></p>
+
 
 <p>Writing your own Shell: https://www.cs.purdue.edu/homes/grr/SystemsProgrammingBook/Book/Chapter5-WritingYourOwnShell.pdf</p>
 <p>Basic Unix Shell: https://github.com/Swoorup/mysh</p>
@@ -27,12 +39,5 @@
 <p>Bash Parser:https://mywiki.wooledge.org/BashParser</p>
 <p>Bash Bible:http://mywiki.wooledge.org/BashGuide</p>
 <p>Bash Reference Manua:https://www.gnu.org/software/bash/manual/bash.html#Bourne-Shell-Builtins</p>
-<p>termcap - base de datos con características de terminales:https://manpages.ubuntu.com/manpages/impish/es/man5/termcap.5.html</p>
-<p>termcap - cursor move:https://www.gnu.org/software/termutils/manual/termcap-1.3/html_node/termcap_26.html</p>
 
-### Documents from Borja
-<p>https://www.gnu.org/software/bash/manual/bash.html</p>
-<p>https://stackoverflow.com/questions/8806643/colorized-output-breaks-linewrapping-with-readline</p>
-<p>https://github.com/zstenger93/42_minishell_tester</p>
-<p>https://pubs.opengroup.org/onlinepubs/009695399/utilities/xcu_chap02.html</p>
-<p></p>
+

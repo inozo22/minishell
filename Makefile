@@ -6,7 +6,7 @@
 #    By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/16 18:53:13 by nimai             #+#    #+#              #
-#    Updated: 2023/05/25 18:18:36 by nimai            ###   ########.fr        #
+#    Updated: 2023/05/26 09:29:08 by nimai            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,14 +16,12 @@ NAME		:= minishell
 #   INGREDIENTS                                  #
 #------------------------------------------------#
 
-LIBS		:=  ft memcheck
-LIBS_TARGET	:=  lib/libft/libft.a \
-				lib/libmemcheck/libmemcheck.a
+LIBS		:=  ft 
+LIBS_TARGET	:=  lib/libft/libft.a 
 
 INCS		:= \
 				inc \
-				lib/libft/inc \
-				lib/libmemcheck/inc
+				lib/libft/inc 
 
 SRC_DIR		:= src
 SRCS		:= \

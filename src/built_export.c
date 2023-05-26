@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:18:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/25 18:43:09 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/26 09:37:03 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	output_env(t_export *list, int len)
 /**
  * @brief temporary error management
  * @author nimai
- * @note when dicided error management, chang it.
+ * @note when decided error management, merge it.
  */
 void	error_export(char *cmd)
 {
@@ -89,7 +89,7 @@ t_export	*fill_list(char **strs)
 /**
  * @brief get absolute path to move
  * @author nimai
- * @param environ I think grab extern char **environ is ilegal, talk to Borja
+ * @param environ I think grab extern char **environ is ilegal, confirmation required
  * @return destination path as string
  */
 char	**fake_env(void)
