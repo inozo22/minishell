@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:18:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/26 13:32:11 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/26 15:23:37 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,39 @@ void	error_export(char *cmd)
 	ft_printf("minishell: export: %s: Dunno\n", cmd);
 }
 
+t_export	*fill_list(char **strs, t_export *ret)
+{
+	int			i;
+	int			len;
+	char		*tmp;
+
+	ret->plen = av_amount(strs);
+	i = -1;
+	while (++i < ret->plen)
+	{
+		ret->box[i].id = i;
+		if (!strs[i])
+			return (NULL);
+		len = 0;
+		while (strs[i][len] != '=')/* strs[i][len] &&  */
+			len++;
+		ret->box[i].name = malloc(2000);
+		ft_strlcpy(ret->box[i].name, strs[i], len + 2);//230525nimai: included until '='
+		tmp = ft_substr(strs[i], len + 1, ft_strlen(strs[i]) - len);
+		ret->box[i].val = malloc(2000);
+		ft_strlcpy(ret->box[i].val, tmp, ft_strlen(strs[i]) - len + 1);
+	}
+	return (ret);
+}
+
+
+
 /**
  * @brief check if the path exists.
  * @author nimai
  * @note 
  */
-t_export	*fill_list(char **strs, t_export *ret)
+/* t_export	*fill_list(char **strs, t_export *ret)
 {
 	int			i;
 	int			len;
@@ -84,7 +111,7 @@ t_export	*fill_list(char **strs, t_export *ret)
 		ft_strlcpy(ret->box[i].val, tmp, ft_strlen(strs[i]) - len + 1);
 	}
 	return (ret);
-}
+} */
 
 /**
  * @brief get absolute path to move
@@ -148,9 +175,7 @@ int	built_export(char **av)
 		if (!list)
 			return (0);
 		list = fill_list(tmp_env, list);
-		printf("Line: %d\n", __LINE__);
-		quick_sort(list->box, 0, av_amount(tmp_env) - 1, SORT_VALUE);
-		printf("Line: %d\n", __LINE__);
+		quick_sort(list->box, 0, av_amount(tmp_env) - 1);
 		output_env(list, av_amount(tmp_env), FLAGENV);
 	}
 	else if (av_amount(av) == 3)

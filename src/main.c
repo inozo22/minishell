@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 12:52:29 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/26 10:14:23 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/26 13:40:08 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,9 @@ int	main(int ac, char **av)
 	{
 		return (0);
 	}
+	/**
+	 * 230526nimai: should be controled both length, av and command 
+	 */
 	if (ft_strncmp(av[1], "echo", ft_strlen(av[1])) == 0)
 	{
 		printf("I got echo\n");//kesu
