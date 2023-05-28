@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:18:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/26 15:56:36 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/28 09:26:29 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ void	output_env(t_export *list, int len, int flag)
 				ft_printf("%s", list->box[i].name);
 				ft_printf("\"%s\"\n", list->box[i].val);
 			}
-			else if (flag == FLAGENV)
+/* 			else if (flag == FLAGENV)
 				ft_printf("%s%s\n", list->box[i].name, list->box[i].val);
 			if (flag == FLAGENV && i == len - 1)
-				break ;
+				break ; */
 		}
 		if (flag == FLAGENV && i == len - 1)
 			break ;
@@ -181,7 +181,7 @@ int	built_export(char **av)
 			return (0);
 		list = fill_list(tmp_env, list);
 		quick_sort(list->box, 0, av_amount(tmp_env) - 1);
-		output_env(list, av_amount(tmp_env), FLAGENV);
+		output_env(list, av_amount(tmp_env), FLAGEXPORT);
 	}
 	else if (av_amount(av) == 3)
 	{
