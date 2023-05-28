@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 18:40:39 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/26 09:36:11 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/28 21:18:15 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,13 +111,10 @@ char	*get_dest_path(char *str)
 	ft_strlcat(ret, str, ft_strlen(cur) + ft_strlen(str) + 1);
 /* 	if (!check_path(str))
 		return (error_cd(str), NULL); */
-	printf("ret: %s\n", ret);
-	printf("cur: %s\n", cur);
-	printf("str: %s\n", str);
-	printf("Where am I: %s\n", getcwd(NULL, 0));
+	printf("Where am I(before chdir): %s\n", getcwd(NULL, 0));
 	if (chdir(ret) == -1)
 		return (error_cd(str), NULL);
-	printf("Where am I: %s\n", getcwd(NULL, 0));
+	printf("Where am I(after chdir): %s\n", getcwd(NULL, 0));
 	if (ret)
 		free (ret);
 	exit(1);
@@ -146,7 +143,8 @@ int	built_cd(char **av)
 		free (test);
 		if (chdir(getenv("HOME")) == -1)
 		{
-			printf("Line: %d\n", __LINE__);
+			printf("Line: %d, failed chdir\n", __LINE__);
+		//	return (error_cd(str), NULL)
 			return (-1);
 		}
 		printf("Where am I: %s\n", test = getcwd(NULL, 0));
