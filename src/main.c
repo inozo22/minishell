@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 12:52:29 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/29 10:50:40 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/29 14:01:07 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
  * @param **av whatever receive, it's changeble.
  * @note to check cmd, I will put a function instead of this main.
  */
-int	main(int ac, char **av)
+int	main(int ac, char **av, char const **envp)
 {
 //230523nimai: I don't think I will receive ac, so when I know what I receive, change it.
 //Hope coming sth like **strs.
@@ -27,10 +27,13 @@ int	main(int ac, char **av)
 	{
 		return (0);
 	}
+	(void)av;
 	/**
 	 * 230526nimai: should be controled both length, av and command 
 	 */
-	if (ft_strncmp(av[1], "echo", ft_strlen(av[1])) == 0)
+
+	/* 230529nimai: he comentado para probar */
+/* 	if (ft_strncmp(av[1], "echo", ft_strlen(av[1])) == 0)
 	{
 		printf("I got echo\n");//kesu
 		built_echo(av);
@@ -68,7 +71,17 @@ int	main(int ac, char **av)
 	else
 	{
 		ft_printf("minishell: %s: command not found\n", av[1]);
+	} */
+
+	int	i = 0;
+
+	while (envp[i])
+	{
+		printf("%d: %s\n", i, envp[i]);
+		i++;
 	}
+
+	
 	return (0);
 }
 

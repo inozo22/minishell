@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:18:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/29 11:06:49 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/29 14:07:27 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void	output_env(t_export *list, int len, int flag)
 		if (flag == FLAGENV && i == len - 1)
 			break ;
 	}
-
 }
 
 /**
@@ -52,6 +51,11 @@ void	error_export(char *cmd)
 	ft_printf("minishell: export: %s: Dunno\n", cmd);
 }
 
+/**
+ * @brief initiation t_export
+ * @author nimai
+ * @note It's not beautiful to allocate 2000 each box[i].name and val, but it's necessary to sort.
+ */
 t_export	*fill_list(char **strs, t_export *ret)
 {
 	int			i;
@@ -77,43 +81,12 @@ t_export	*fill_list(char **strs, t_export *ret)
 	return (ret);
 }
 
-
-
-/**
- * @brief check if the path exists.
- * @author nimai
- * @note 
- */
-/* t_export	*fill_list(char **strs, t_export *ret)
-{
-	int			i;
-	int			len;
-	char		*tmp;
-
-	ret->plen = av_amount(strs);
-	i = -1;
-	while (++i < ret->plen)
-	{
-		ret->box[i].id = i;
-		if (!strs[i])
-			return (NULL);
-		len = 0;
-		while (strs[i][len] && strs[i][len] != '=')
-			len++;
-		ret->box[i].name = malloc(len + 2);
-		ft_strlcpy(ret->box[i].name, strs[i], len + 2);//230525nimai: included until '='
-		tmp = ft_substr(strs[i], len + 1, ft_strlen(strs[i]) - len);
-		ret->box[i].val = malloc(ft_strlen(strs[i]) - len + 1);
-		ft_strlcpy(ret->box[i].val, tmp, ft_strlen(strs[i]) - len + 1);
-	}
-	return (ret);
-} */
-
 /**
  * @brief get absolute path to move
  * @author nimai
  * @param environ I think grab extern char **environ is ilegal, confirmation required
  * @return destination path as string
+ * @note no sé que está pasando aquí
  */
 char	**fake_env(void)
 {
@@ -128,20 +101,11 @@ char	**fake_env(void)
 	while (i < plen)
 	{
 		ret[i] = malloc(ft_strlen(environ[i]) + 1);
+		free (ret[i]);//no se de verdad que está pasando aquí
 		if (!ret[i])
 			return (NULL);
 		ret[i] = environ[i];
-	//	free (val);
 		i++;
-/* 		val = malloc(ft_strlen(environ[i]) + 1);
-		ret[i] = malloc(ft_strlen(environ[i]) + 1);
-		if (!val)
-			return (NULL);
-		val = environ[i];
-		if (val)
-			ret[i] = val;
-		free (val);
-		i++; */
 	}
 	return (ret);
 }
@@ -176,9 +140,7 @@ int	built_export(char **av)
 		if (!list)
 			return (0);
 		list = fill_list(tmp_env, list);
-		printf("Line: %d	\n", __LINE__);
 		quick_sort(list->box, 0, av_amount(tmp_env) - 1);
-		printf("Line: %d	\n", __LINE__);
 		output_env(list, av_amount(tmp_env), FLAGEXPORT);
 	}
 	else if (av_amount(av) == 3)
@@ -205,5 +167,7 @@ int	built_export(char **av)
  * when execute export, the list should be ascending order, 
  * separated by capital letter and small letter
  * 
+ * ??? Is it OK if we control in the minishell?
+ * For example, it's ok if do sth in bash, but doesn't affect to the minishell?
  * 
  */

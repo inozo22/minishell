@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 09:50:16 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/26 16:31:46 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/29 13:53:21 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,13 @@ int	built_env(char **av)
 	while (i < len)
 	{
 		ft_printf("%s\n", tmp_env[i]);
-//		free (tmp_env[i]);
+	//	free (tmp_env[i]);
+	//	system ("leaks minishell");
 		i++;
 	}
-//	ptr_free((void **)tmp_env);
+	//ptr_free((void **)tmp_env);
 	//	free (tmp_env[i]);
-	//	free (tmp_env);
+	//free (tmp_env);
     return (0);
 }
 

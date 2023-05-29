@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:11:36 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/28 09:33:57 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/29 12:54:43 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int	built_pwd(char **av)
 	(void)av;
 	ft_printf(getcwd(NULL, 0));
 	ft_printf("\n");
-	system("leaks minishell");
 	return (0);
 	//230523nimai: should be managed the flags? (at least give some message?)
 }
