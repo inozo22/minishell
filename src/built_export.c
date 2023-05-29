@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:18:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/28 09:26:29 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/29 11:06:49 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,10 @@ void	output_env(t_export *list, int len, int flag)
 		{
 			if (list->box[i].id == j && flag == FLAGEXPORT)
 			{
-				ft_printf("%d: declare -x ", __LINE__);
+				ft_printf("declare -x ");
 				ft_printf("%s", list->box[i].name);
 				ft_printf("\"%s\"\n", list->box[i].val);
 			}
-/* 			else if (flag == FLAGENV)
-				ft_printf("%s%s\n", list->box[i].name, list->box[i].val);
-			if (flag == FLAGENV && i == len - 1)
-				break ; */
 		}
 		if (flag == FLAGENV && i == len - 1)
 			break ;
@@ -180,7 +176,9 @@ int	built_export(char **av)
 		if (!list)
 			return (0);
 		list = fill_list(tmp_env, list);
+		printf("Line: %d	\n", __LINE__);
 		quick_sort(list->box, 0, av_amount(tmp_env) - 1);
+		printf("Line: %d	\n", __LINE__);
 		output_env(list, av_amount(tmp_env), FLAGEXPORT);
 	}
 	else if (av_amount(av) == 3)

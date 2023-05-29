@@ -20,6 +20,7 @@
 <p>index: bash.git: http://git.savannah.gnu.org/cgit/bash.git/tree/builtins/</p>
 <p>GNU Bash:    https://www.gnu.org/software/bash/</p>
 <p>Shell builtin commands:  https://www.gnu.org/software/bash/manual/bash.html#Bourne-Shell-Builtins</p>
+<p>tester: https://github.com/we-sh/42ShellTester</p>
 <p></p>
 
 
