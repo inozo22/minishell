@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:18:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/29 14:07:27 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/29 17:43:03 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ t_export	*fill_list(char **strs, t_export *ret)
 /**
  * @brief get absolute path to move
  * @author nimai
- * @param environ I think grab extern char **environ is ilegal, confirmation required
+ * @param environ I think grab extern char **environ is illegal, confirmation required
  * @return destination path as string
  * @note no sé que está pasando aquí
  */
@@ -167,7 +167,7 @@ int	built_export(char **av)
  * when execute export, the list should be ascending order, 
  * separated by capital letter and small letter
  * 
- * ??? Is it OK if we control in the minishell?
- * For example, it's ok if do sth in bash, but doesn't affect to the minishell?
+ * ??? Is it OK if we control in the minishell?	-> OK!
+ * For example, it's ok if do sth in bash, but doesn't affect to the minishell? ->OK!
  * 
  */

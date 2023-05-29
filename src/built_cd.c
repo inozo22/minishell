@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 18:40:39 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/28 21:18:15 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/29 17:37:01 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ char	*get_dest_path(char *str)
 	else if (ft_strncmp(cur, str, ft_strlen(cur)) == 0)
 	{
 		printf("Maybe I have absolute path\n");
-		return (str);//maybe it's absolute path		
+		return (str);//maybe it's absolute path
 	}
 	else if (ft_strncmp(getenv("HOME"), str, ft_strlen(getenv("HOME"))) == 0)
 	{
@@ -149,6 +149,7 @@ int	built_cd(char **av)
 		}
 		printf("Where am I: %s\n", test = getcwd(NULL, 0));
 		free (test);
+//		execl("/bin/ls", "/bin/ls", getcwd(NULL, 0));
 		printf("Line: %d\n", __LINE__);
 		free (cur);
 		return (0);

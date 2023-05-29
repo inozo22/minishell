@@ -1,30 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   test-env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/29 14:11:50 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/29 16:10:01 by nimai            ###   ########.fr       */
+/*   Created: 2023/05/29 17:12:29 by nimai             #+#    #+#             */
+/*   Updated: 2023/05/29 17:15:17 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include <stdio.h>
 
-void	set_signal_action(void)
+int	main(int argc, char *argv[], char *envp[])
 {
-	struct sigaction	sa;
-
-    ft_bzero(&sa, sizeof(sa));
-	sa.sa
-
+	while (*envp)
+	{
+		printf("%s\n", *envp);
+		envp++;
+	}
 }
-
-/**
- * rl_clear_history
- * rl_on_new_line
- * rl_replace_line
- * rl_redisplay
- * 
-*/
