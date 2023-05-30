@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:54:13 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/24 09:32:23 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/30 12:25:35 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	built_echo(char **av)
 	{
 		flag[1] = is_flag(av[i]);
 		if (flag[1] > 1 || flag[1] == 0)
-			ft_printf("%s", av[i]);
+			ft_putstr_fd(av[i], STDERR_FILENO);
 		if (i < amount - 1 && flag[1] != 1)//230523nimai: has to skip when flag[1]==1
 			ft_printf(" ");
 		i++;

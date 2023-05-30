@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 16:23:25 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/26 09:53:16 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/30 12:07:59 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,12 @@
 # include <stdbool.h>
 # include "built.h"
 
-
+typedef struct s_temp
+{
+	char *const	*envp;
+	char *const	*argv;
+	int			i;
+}	t_temp;
 
 
 
