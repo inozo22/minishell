@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 09:50:35 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/26 17:15:13 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/30 12:46:18 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,12 @@ int	unset_env(char *str)
  * @param **av "unset", "ABC", "DEF"
  * @return 
  */
-int	built_unset(char **av)
+int	built_unset(t_temp *temp)
 {
-	int	i;
+	int		i;
+	char	**av;
 
+	av = (char **)temp->argv;
 	i = 2;
 	while (av[i])
 	{

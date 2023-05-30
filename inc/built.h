@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:12:28 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/26 16:54:17 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/30 12:44:43 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # define SORT_ID 0
 # define FLAGEXPORT 1
 # define FLAGENV 0
+
+typedef struct s_temp	t_temp;
 
 /**
  * @brief smalll boxes
@@ -51,9 +53,9 @@ int			built_exit(char **av);
 int			built_pwd(char **av);
 int			built_echo(char **av);
 int			built_cd(char **av);
-int			built_export(char **av);
+int			built_export(t_temp *temp);
 int			built_env(char **av);
-int			built_unset(char **av);
+int			built_unset(t_temp *temp);
 
 /**
  * functions from export

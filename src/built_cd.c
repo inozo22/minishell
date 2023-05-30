@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 18:40:39 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/29 17:37:01 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/30 12:30:27 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,18 +139,17 @@ int	built_cd(char **av)
 		return ((error_cd("current directory")), 0);//230524nimai: if it's null, like doesn't exit the current directory, what should I do? give error, or ignore?
 	if (!av[2])//when you don't have argument after "cd"
 	{
-		printf("Where am I: %s\n", test = getcwd(NULL, 0));
-		free (test);
+/* 		printf("Where am I: %s\n", test = getcwd(NULL, 0));
+		free (test); */
 		if (chdir(getenv("HOME")) == -1)
 		{
 			printf("Line: %d, failed chdir\n", __LINE__);
 		//	return (error_cd(str), NULL)
 			return (-1);
 		}
-		printf("Where am I: %s\n", test = getcwd(NULL, 0));
-		free (test);
+/* 		printf("Where am I: %s\n", test = getcwd(NULL, 0));
+		free (test); */
 //		execl("/bin/ls", "/bin/ls", getcwd(NULL, 0));
-		printf("Line: %d\n", __LINE__);
 		free (cur);
 		return (0);
 	}
