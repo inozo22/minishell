@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 16:23:25 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/30 12:41:12 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/30 17:59:07 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include "libft.h"
 # include <stdbool.h>
 # include "built.h"
+
 
 /**
  * @brief temporary structure until we make main structure 

@@ -6,11 +6,15 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 12:52:29 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/30 17:31:08 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/30 18:01:27 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+#include <readline/history.h>
+#include <stdio.h>
+#include <readline/readline.h>
 
 t_temp	*init_temp(char *av[], char *envp[], t_temp *temp)
 {
@@ -30,6 +34,9 @@ t_temp	*init_temp(char *av[], char *envp[], t_temp *temp)
 int	main(int ac, char *av[], char *envp[])
 {
 	t_temp	*temp;
+	char	read;
+	read = rl_on_new_line();
+	rl_clear_history();
 
 	if (ac < 2)
 		return (0);

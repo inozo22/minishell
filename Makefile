@@ -6,7 +6,7 @@
 #    By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/16 18:53:13 by nimai             #+#    #+#              #
-#    Updated: 2023/05/30 17:31:13 by nimai            ###   ########.fr        #
+#    Updated: 2023/05/30 18:04:15 by nimai            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,10 +42,10 @@ BUILD_DIR	:= .build
 OBJS		:= $(SRCS:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
 DEPS		:= $(OBJS:.o=.d)
 
-CC			:= cc
+CC			:= clang
 CFLAGS		:= -g3 -Wall -Wextra -Werror
 CPPFLAGS	:= $(addprefix -I,$(INCS)) -MMD -MP
-LDFLAGS		:= $(addprefix -L,$(dir $(LIBS_TARGET)))
+LDFLAGS		:= $(addprefix -L,$(dir $(LIBS_TARGET))) 
 LDLIBS		:= $(addprefix -l,$(LIBS))
 
 #------------------------------------------------#
@@ -86,7 +86,7 @@ export	ART
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBS_TARGET)
-	$(CC) $(LDFLAGS) $(OBJS) $(LDLIBS) -o $(NAME)
+	$(CC) $(LDFLAGS) $(OBJS) $(LDLIBS) -lreadline -L .brew/opt/readline/lib -I .brew/opt/readline/include -o $(NAME)
 	$(info CREATED $(NAME))
 	@echo "$$ART"
 
