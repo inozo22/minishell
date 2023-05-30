@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 13:05:08 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/23 16:11:20 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/30 16:08:09 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,17 +64,17 @@ int	av_amount(char **strs)
  * @param **av "exit", "0"
  * @return if there are more than <cmd + 1 argument>, return to minishell prompt, without execute any function after this.
  */
-int	built_exit(char **av)
+int	built_exit(t_temp *temp)
 {
 	int	amount;
 
-	amount = av_amount(av);
+	amount = av_amount((char **)temp->argv);
 	if (amount == 2)
 		exit (0);
-	if (!is_numeric(av[2]))
+	if (!is_numeric(temp->argv[2]))
 	{
 		//230523nimai:give you error msg, but exit works. (as working bash)
-		ft_printf("minishell: exit: %s: numeric argument required\n", av[2]);
+		ft_printf("minishell: exit: %s: numeric argument required\n", temp->argv[2]);
 	//230523nimai:will be eliminated
 		ft_printf("but EXIT!\n");
 		exit (1);
@@ -85,6 +85,6 @@ int	built_exit(char **av)
 		return (error_exit_msg(1, "minishell: exit: too many arguments"));
 	}
 	ft_printf("EXIT!\n");
-	exit (ft_atoi(av[2]));
+	exit (ft_atoi(temp->argv[2]));
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 18:40:39 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/30 12:30:27 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/30 16:05:09 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ char	*get_dest_path(char *str)
  * @param **av "cd", "path".
  * @return 
  */
-int	built_cd(char **av)
+int	built_cd(t_temp *temp)
 {
 	char	*dest;
 	char	*cur;
@@ -137,7 +137,7 @@ int	built_cd(char **av)
 	cur = getcwd(NULL, 0);
 	if (!cur)
 		return ((error_cd("current directory")), 0);//230524nimai: if it's null, like doesn't exit the current directory, what should I do? give error, or ignore?
-	if (!av[2])//when you don't have argument after "cd"
+	if (!temp->argv[2])//when you don't have argument after "cd"
 	{
 /* 		printf("Where am I: %s\n", test = getcwd(NULL, 0));
 		free (test); */
@@ -153,11 +153,11 @@ int	built_cd(char **av)
 		free (cur);
 		return (0);
 	}
-	if (ft_strncmp("./", av[2], ft_strlen(av[2])) == 0)
+	if (ft_strncmp("./", temp->argv[2], ft_strlen(temp->argv[2])) == 0)
 		return (0);
 	printf("Line: %d\n", __LINE__);
 	printf("current position: %s\n", cur);
-	dest = get_dest_path(av[2]);//230524nimai: after av[3] will be ignored.
+	dest = get_dest_path(temp->argv[2]);//230524nimai: after av[3] will be ignored.
 	if (!dest)
 		return (0);//230524nimai: if it's null, should it moves to home dir? Or just ignore it?
 	
@@ -165,7 +165,7 @@ int	built_cd(char **av)
 	{
 		free (dest);
 		free (cur);
-		return (error_cd(av[2]), 1);
+		return (error_cd(temp->argv[2]), 1);
 	}
 	free (dest);
 	free (cur);

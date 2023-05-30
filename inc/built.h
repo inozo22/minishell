@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:12:28 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/30 12:44:43 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/30 16:03:10 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,12 @@ typedef struct s_export
 	int				plen;
 }	t_export;
 
-int			built_exit(char **av);
-int			built_pwd(char **av);
-int			built_echo(char **av);
-int			built_cd(char **av);
+int			built_exit(t_temp *temp);
+int			built_pwd(t_temp *temp);
+int			built_echo(t_temp *temp);
+int			built_cd(t_temp	*temp);
 int			built_export(t_temp *temp);
-int			built_env(char **av);
+int			built_env(t_temp *temp);
 int			built_unset(t_temp *temp);
 
 /**

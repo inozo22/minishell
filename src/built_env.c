@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 09:50:16 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/30 14:40:36 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/30 16:09:04 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,20 +28,19 @@ void	error_env(char *cmd)
  * @param **av "env", no flags, no arguments
  * @return 
  */
-int	built_env(char **av)
+int	built_env(t_temp *temp)
 {
-	char		**tmp_env = NULL;
+	char		**tmp_env;
 	int			i;
 	int			len;
 
-	(void)av;
-//	tmp_env = fake_env();
+	tmp_env = (char **)temp->envp;
 	if (!tmp_env)
 	{
 		return (printf("ERROR: Line: %d\n", __LINE__), 0);
 	}
 	i = 0;
-	len = av_amount(tmp_env);
+	len = av_amount((char **)tmp_env);
 	while (i < len)
 	{
 		ft_printf("%s\n", tmp_env[i]);

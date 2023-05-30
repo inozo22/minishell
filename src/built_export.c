@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:18:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/30 14:45:58 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/30 15:52:44 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ int	check_av_add_envp(char *str)
  * @return t_temp pointer
  * @note 230530nimai: better use calloc instead of malloc
  */
-t_temp	*envp_join(t_temp *t, t_export *list)
+t_export	*envp_join(t_temp *t, t_export *list)
 {
 	//char	*pmem;
 	int		i;
@@ -175,14 +175,16 @@ t_temp	*envp_join(t_temp *t, t_export *list)
 			list->box[amount].id = amount;
 			list->box[amount].name = malloc(2000);
 			list->box[amount].val = malloc(2000);
-			if (!list->box[amount].name || list->box[amount].val)
+			if (!list->box[amount].name || !list->box[amount].val)
+			{
 				return (NULL);
+			}
 			ft_strlcpy(list->box[amount].name, t->argv[i], len + 2);
 			tmp = ft_substr(t->argv[i], len + 1, ft_strlen(t->argv[i]) - len);
 			ft_strlcpy(list->box[amount].val, tmp, ft_strlen(t->argv[i]) - len + 1);
 		}
 	}
-	return (t);
+	return (list);
 }
 
 
@@ -221,12 +223,15 @@ int	built_export(t_temp *temp)
 	}
 	else//230525nimai: add, function to add variable
 	{
-		if (!envp_join(temp, list))
+		list = envp_join(temp, list);
+		if (!list)
 			return (printf("ERROR: Line: %d\n", __LINE__));
+		printf("\n===TEST PRINT===\n");
+		quick_sort(list->box, 0, av_amount(tmp_env) - 1);
+		output_env(list, av_amount(tmp_env) + av_amount(av), FLAGEXPORT);
+		printf("===TEST PRINT===\n");
 	}
-	printf("\n===TEST PRINT===\n");
-	quick_sort(list->box, 0, av_amount(tmp_env) + av_amount(av) - 1);
-	output_env(list, av_amount(tmp_env), FLAGEXPORT);
+
 	return (0);
 }
 

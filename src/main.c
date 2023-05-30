@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 12:52:29 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/30 12:45:07 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/30 16:10:44 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,44 +40,44 @@ int	main(int ac, char *av[], char *envp[])
 	if (ft_strncmp(av[1], "echo", ft_strlen(av[1])) == 0 && \
 	ft_strncmp(av[1], "echo", 4) == 0)
 	{
-		printf("I got echo\n");//kesu
-		built_echo(av);
+		printf("🐚I got echo🐚\n");//kesu
+		built_echo(temp);
 	}
 	else if (ft_strncmp(av[1], "cd", ft_strlen(av[1])) == 0 \
 	&& ft_strncmp(av[1], "cd", 2) == 0)
 	{
-		printf("I got cd\n");//kesu
-		built_cd(av);
+		printf("🐚I got cd🐚\n");//kesu
+		built_cd(temp);
 	}
 	else if (ft_strncmp(av[1], "pwd", ft_strlen(av[1])) == 0 \
 	&& ft_strncmp(av[1], "pwd", 3) == 0)
 	{
-		printf("I got pwd\n");//kesu
-		built_pwd(av);
+		printf("🐚I got pwd🐚\n");//kesu
+		built_pwd(temp);
 	}
 	else if (ft_strncmp(av[1], "export", ft_strlen(av[1])) == 0 \
 	&&  ft_strncmp(av[1], "export", 6) == 0)
 	{
-		printf("I got export\n");//kesu
+		printf("🐚I got export🐚\n");//kesu
 		built_export(temp);
 	}
 	else if (ft_strncmp(av[1], "unset", ft_strlen(av[1])) == 0 \
 	&& ft_strncmp(av[1], "unset", 5) == 0)
 	{
-		printf("I got unset\n");//kesu
+		printf("🐚I got unset🐚\n");//kesu
 		built_unset(temp);
 	}
 	else if (ft_strncmp(av[1], "env", ft_strlen(av[1])) == 0 \
-	&& ft_strncmp(av[1], "env", 3))
+	&& ft_strncmp(av[1], "env", 3) == 0)
 	{
-		printf("I got env\n");//kesu
-		built_env(av);
+		printf("🐚I got env🐚\n");//kesu
+		built_env(temp);
 	}
 	else if (ft_strncmp(av[1], "exit", ft_strlen(av[1])) == 0 \
 	&& ft_strncmp(av[1], "exit", 4) == 0)
 	{
-		printf("I got exit\n");//kesu
-		built_exit(av);
+		printf("🐚I got exit🐚\n");//kesu
+		built_exit(temp);
 	}
 	else
 	{
