@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 15:44:25 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/26 16:31:07 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/30 17:24:45 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,22 +19,22 @@ void	**ptr_free(void **ptr)
 	if (!ptr)
 		return (NULL);
 	i = 0;
-	while (ptr[i])
+	while (i < av_amount((char **)ptr))
 	{
-		free(ptr[i]);
+		//free(ptr[i]);
 		ptr[i] = NULL;
 		i++;
 	}
-	free (ptr);
+	//free (ptr);
 	return (NULL);
 }
 
-/* void	all_free(t_box *stack_a, t_box *stack_b, t_bunch *ps)
+void	*all_tmp_free(t_temp *temp)
 {
-	if (ps->len)
-		strs_clear(ps->strs, ps->len);
-	list_clear(ps->answer);
-	free(ps);
-	list_clear(stack_a);
-	list_clear(stack_b);
-} */
+	if (temp->argv)
+		ptr_free((void **)temp->argv);
+	if (temp->envp)
+		ptr_free((void **)temp->envp);
+	free (temp);
+	return (NULL);
+}

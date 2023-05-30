@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 12:52:29 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/30 16:10:44 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/30 17:31:08 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,12 @@ t_temp	*init_temp(char *av[], char *envp[], t_temp *temp)
 int	main(int ac, char *av[], char *envp[])
 {
 	t_temp	*temp;
+
 	if (ac < 2)
 		return (0);
 	/**
 	 * 230526nimai: should be controled both length, av and command 
+
 	 */
 	temp = (t_temp *)malloc(sizeof(t_temp));
 	temp = init_temp(av, envp, temp);
@@ -91,8 +93,6 @@ int	main(int ac, char *av[], char *envp[])
 		printf("%d: %s\n", i, envp[i]);
 		i++;
 	} */
-
-	
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:12:28 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/30 16:03:10 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/30 17:28:52 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void		heap_error(int flag);
 void		quick_sort(t_export_box box[], int left, int right);
 
 void		**ptr_free(void **ptr);
+void		*all_tmp_free(t_temp *temp);
 
 
 

@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:18:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/30 15:52:44 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/30 17:46:40 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,9 @@ void	output_env(t_export *list, int len, int flag)
 			{
 				ft_printf("declare -x ");
 				ft_printf("%s", list->box[i].name);
-				ft_printf("\"%s\"\n", list->box[i].val);
+				if (ft_strlen(list->box[i].val) >= 1)
+					ft_printf("\"%s\"", list->box[i].val);
+				ft_printf("\n");
 			}
 		}
 		if (flag == FLAGENV && i == len - 1)
@@ -72,13 +74,12 @@ t_export	*fill_list(char **strs, t_export *ret)
 		len = 0;
 		while (strs[i][len] != '=')/* strs[i][len] &&  */
 			len++;
-		ret->box[i].name = malloc(2000);
-		ret->box[i].val = malloc(2000);
+		ret->box[i].name = ft_calloc(1, 2000);
+		ret->box[i].val = ft_calloc(1, 2000);
 		if (!ret->box[i].name || !ret->box[i].val)
 			return (NULL);
 		ft_strlcpy(ret->box[i].name, strs[i], len + 2);//230525nimai: included until '='
 		tmp = ft_substr(strs[i], len + 1, ft_strlen(strs[i]) - len);
-		ret->box[i].val = malloc(2000);
 		ft_strlcpy(ret->box[i].val, tmp, ft_strlen(strs[i]) - len + 1);
 	}
 	return (ret);
@@ -147,9 +148,9 @@ int	check_av_add_envp(char *str)
  * @brief add environment according to av
  * @author nimai
  * @return t_temp pointer
- * @note 230530nimai: better use calloc instead of malloc
+ * @note 230530nimai: I will throw it away
  */
-t_export	*envp_join(t_temp *t, t_export *list)
+/* t_export	*envp_join(t_temp *t, t_export *list)
 {
 	//char	*pmem;
 	int		i;
@@ -186,6 +187,59 @@ t_export	*envp_join(t_temp *t, t_export *list)
 	}
 	return (list);
 }
+ */
+
+int	new_amount(t_temp *temp)
+{
+	int	ret;
+
+	ret = 0;
+	while (temp->argv[ret])
+	{
+		ret++;
+	}
+	ret += av_amount((char **)temp->envp);
+	return (ret);
+}
+
+/**
+ * @brief add environment according to av in **
+ * @author nimai
+ * @return ** pointer, then free 
+ * @note 230530nimai: I will throw it away
+ */
+char	**envp_strs_join(t_temp *temp)
+{
+	char	**ret;
+	int		i;
+	int		j;
+
+	ret = (char **)malloc(sizeof(char *) * (av_amount((char **)temp->argv) + \
+	av_amount((char **)temp->envp))) - 2;//minus for "./minishell" and "export"
+	if (!ret)
+		return (heap_error(1), NULL);
+	i = 0;
+	j = 2;
+	while (temp->envp[i])
+	{
+		ret[i] = malloc(2000);
+		if (!ret)
+			return (NULL);
+		ret[i] = temp->envp[i];
+		i++;
+	}
+	i--;
+	while (temp->argv[j])
+	{
+		ret[i] = malloc(2000);
+		if (!ret)
+			return (NULL);
+		ret[i] = temp->argv[j];
+		j++;
+		ret++;
+	}
+	return (ret);
+}
 
 
 /**
@@ -196,24 +250,26 @@ t_export	*envp_join(t_temp *t, t_export *list)
  */
 int	built_export(t_temp *temp)
 {
-	t_export	*list;
-	char		**tmp_env;
-	char		**av;
+	t_export	*list = NULL;
+	char		**tmp_env = NULL;
+	char		**av = NULL;
+	char		**new_envp = NULL;
+//	int i = 0;
 
-	av = (char **)temp->argv;
-	tmp_env = (char **)temp->envp;
-	if (!tmp_env || !av)
-		return (printf("ERROR: Line: %d\n", __LINE__), 0);
-	list = (t_export *)malloc(sizeof(t_export));
-	if (!list)
-		return (heap_error(1), 0);
-	list = fill_list(tmp_env, list);
-	if (av_amount(av) == 2)
+	if (av_amount((char **)temp->argv) == 2)
 	{
+		av = (char **)temp->argv;
+		tmp_env = (char **)temp->envp;
+		if (!tmp_env || !av)
+			return (printf("ERROR: Line: %d\n", __LINE__), 0);
+		list = (t_export *)malloc(sizeof(t_export));
+		if (!list)
+			return (heap_error(1), 0);
+		list = fill_list(tmp_env, list);
 		quick_sort(list->box, 0, av_amount(tmp_env) - 1);
 		output_env(list, av_amount(tmp_env), FLAGEXPORT);
 	}
-	else if (av_amount(av) > 2 && av[2][1] == '$')
+	else if (av_amount((char **)temp->argv) > 2 && temp->argv[2][1] == '$')
 	{
 		//=>I have to print the variavle, if doesn't ex
 /* 		if ()//match to some variable, print
@@ -223,22 +279,30 @@ int	built_export(t_temp *temp)
 	}
 	else//230525nimai: add, function to add variable
 	{
-		list = envp_join(temp, list);
-		if (!list)
+		new_envp = envp_strs_join(temp);
+		if (!new_envp)
 			return (printf("ERROR: Line: %d\n", __LINE__));
-		printf("\n===TEST PRINT===\n");
+		//ptr_free((void **)temp->envp);
+		temp->envp = new_envp;
+		tmp_env = (char **)temp->envp;
+		list = (t_export *)malloc(sizeof(t_export));
+		if (!list)
+			return (heap_error(1), 0);
+		list = fill_list(tmp_env, list);
 		quick_sort(list->box, 0, av_amount(tmp_env) - 1);
-		output_env(list, av_amount(tmp_env) + av_amount(av), FLAGEXPORT);
+		printf("Line: %d\n", __LINE__);
+		output_env(list, av_amount(tmp_env), FLAGEXPORT);
+		printf("Line: %d\n", __LINE__);
 		printf("===TEST PRINT===\n");
 	}
-
+	all_tmp_free (temp);
 	return (0);
 }
 
 /**
  * BEHAVIOUR IN BASH
  * when execute export, the list should be ascending order, 
- * separated by capital letter and small letter
+ * separated by capital letter and small letter-> done
  * If there is more than one argument after command, add as a variable, 
  * except if there is no space
  * 
