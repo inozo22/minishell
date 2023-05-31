@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 15:44:25 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/31 11:28:16 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/31 15:32:46 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ void	*arr_free(t_export *list)
 	i = 0;
 	while (list->box[i].name)
 	{
-		free (list->box[i].name);
+		if (list->box[i].name)
+			free (list->box[i].name);
 		list->box[i].name = NULL;
-		printf("list->box[i].name: %p	", list->box[i].name);
-		free (list->box[i].val);
+		if (list->box[i].val)
+			free (list->box[i].val);
 		list->box[i].val = NULL;
-		printf("list->box[i].val: %p\n", list->box[i].val);
 		//list->box[i] = NULL;
 		i++;
 	}
@@ -40,12 +40,11 @@ char	**strs_free(char **strs)
 	len = av_amount(strs);
 	while (i < len)
 	{
-		printf("strs[%d]: %s\n", i, strs[i]);
 		free (strs[i]);
 		strs[i] = NULL;
 		i++;
 	}
-	//free (strs);
+	free (strs);
 	return (NULL);
 }
 
@@ -58,11 +57,11 @@ void	**ptr_free(void **ptr)
 	i = 0;
 	while (i < av_amount((char **)ptr))
 	{
-		//free(ptr[i]);
+		free(ptr[i]);
 		ptr[i] = NULL;
 		i++;
 	}
-	//free (ptr);
+	free (ptr);
 	return (NULL);
 }
 

@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 12:52:29 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/31 10:14:38 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/31 15:43:05 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,14 +105,8 @@ int	main(int ac, char *av[], char *envp[])
 	{
 		ft_printf("minishell: %s: command not found\n", av[1]);
 	}
-
-	/* int	i = 0;
-
-	while (envp[i])
-	{
-		printf("%d: %s\n", i, envp[i]);
-		i++;
-	} */
+	//system ("leaks minishell");
+	all_tmp_free(temp);
 	return (0);
 }
 

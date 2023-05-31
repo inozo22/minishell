@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:18:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/31 11:28:50 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/31 15:56:03 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ t_export	*fill_list(char **strs, t_export *ret)
 		ft_strlcpy(ret->box[i].name, strs[i], len + 2);//230525nimai: included until '='
 		tmp = ft_substr(strs[i], len + 1, ft_strlen(strs[i]) - len);
 		ft_strlcpy(ret->box[i].val, tmp, ft_strlen(strs[i]) - len + 1);
+		free (tmp);
 	}
 	return (ret);
 }
@@ -224,22 +225,18 @@ char	**envp_strs_join(t_temp *temp)
 	while (temp->envp[i])
 	{
 		ret[i] = ft_calloc(1, 2000);
-		if (!ret)
+		if (!ret[i])
 			return (NULL);
 		ret[i] = temp->envp[i];
-		free (ret[i]);
-		system ("leaks minishell");
 		i++;
-		exit(1);
 	}
 	i--;
 	while (temp->argv[j])
 	{
 		ret[i] = ft_calloc(1, 2000);
-		if (!ret)
+		if (!ret[i])
 			return (NULL);
 		ret[i] = temp->argv[j];
-		system ("leaks minishell");
 		j++;
 		ret++;
 	}
@@ -273,6 +270,8 @@ int	built_export(t_temp *temp)
 		list = fill_list(tmp_env, list);
 		quick_sort(list->box, 0, av_amount(tmp_env) - 1);
 		output_env(list, av_amount(tmp_env), FLAGEXPORT);
+		arr_free(list);
+		free (list);
 	}
 	else if (av_amount((char **)temp->argv) > 2 && temp->argv[2][1] == '$')
 	{
@@ -289,13 +288,11 @@ int	built_export(t_temp *temp)
 		//41 leaks
 		if (!new_envp)
 			return (printf("ERROR: Line: %d\n", __LINE__));
-		strs_free((char **)temp->envp);
+		//strs_free((char **)temp->envp);
 		temp->envp = new_envp;
-		strs_free(new_envp);
-		system ("leaks minishell");
-		exit (1);
-		tmp_env = (char **)temp->envp;
+		//new_envp = strs_free(new_envp);
 		//check printer
+		tmp_env = (char **)temp->envp;
 		printf("		===TEST PRINT===\n");
 		list = (t_export *)malloc(sizeof(t_export));
 		if (!list)
@@ -303,13 +300,18 @@ int	built_export(t_temp *temp)
 		list = fill_list(tmp_env, list);
 		quick_sort(list->box, 0, av_amount(tmp_env) - 1);
 		output_env(list, av_amount(tmp_env), FLAGEXPORT);
+		strs_free(new_envp);
+		free (new_envp);
+		new_envp = NULL;
+		printf("new_envp: %p\n", new_envp);
 		arr_free(list);
-		system ("leaks minishell");
+		free (list);
 	//	ptr_free ((void **)tmp_env);
 		printf("		===TEST PRINT===		after system\n");
 		//check printer
+
 	}
-	all_tmp_free (temp);
+	//all_tmp_free (temp);
 	return (0);
 }
 
