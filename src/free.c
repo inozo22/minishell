@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 15:44:25 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/31 15:32:46 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/31 16:34:18 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,9 @@ char	**strs_free(char **strs)
 
 	i = 0;
 	len = av_amount(strs);
-	while (i < len)
+	while (i < len - 1)
 	{
+		printf("strs[%d]: %s\n", i, strs[i]);
 		free (strs[i]);
 		strs[i] = NULL;
 		i++;
@@ -68,9 +69,9 @@ void	**ptr_free(void **ptr)
 void	*all_tmp_free(t_temp *temp)
 {
 	if (temp->argv)
-		ptr_free((void **)temp->argv);
+		strs_free((char **)temp->argv);
 	if (temp->envp)
-		ptr_free((void **)temp->envp);
+		strs_free((char **)temp->envp);
 	free (temp);
 	return (NULL);
 }
