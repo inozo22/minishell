@@ -6,7 +6,7 @@
 #    By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/16 18:53:13 by nimai             #+#    #+#              #
-#    Updated: 2023/05/30 18:04:15 by nimai            ###   ########.fr        #
+#    Updated: 2023/05/31 11:27:44 by nimai            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,12 +16,16 @@ NAME		:= minishell
 #   INGREDIENTS                                  #
 #------------------------------------------------#
 
-LIBS		:=  ft 
-LIBS_TARGET	:=  lib/libft/libft.a 
+LIBS		:=  ft readline history
+LIBS_TARGET	:= \
+				lib/libft/libft.a \
+				/Users/$(USER)/.brew/opt/readline/lib/libreadline.a \
+				/Users/$(USER)/.brew/opt/readline/lib/libhistory.a
 
 INCS		:= \
 				inc \
-				lib/libft/inc 
+				lib/libft/inc \
+				/Users/$(USER)/.brew/opt/readline/include/
 
 SRC_DIR		:= src
 SRCS		:= \
@@ -42,7 +46,7 @@ BUILD_DIR	:= .build
 OBJS		:= $(SRCS:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
 DEPS		:= $(OBJS:.o=.d)
 
-CC			:= clang
+CC			:= cc
 CFLAGS		:= -g3 -Wall -Wextra -Werror
 CPPFLAGS	:= $(addprefix -I,$(INCS)) -MMD -MP
 LDFLAGS		:= $(addprefix -L,$(dir $(LIBS_TARGET))) 
@@ -86,7 +90,7 @@ export	ART
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBS_TARGET)
-	$(CC) $(LDFLAGS) $(OBJS) $(LDLIBS) -lreadline -L .brew/opt/readline/lib -I .brew/opt/readline/include -o $(NAME)
+	$(CC) $(LDFLAGS) $(OBJS) $(LDLIBS) -o $(NAME)
 	$(info CREATED $(NAME))
 	@echo "$$ART"
 
@@ -101,11 +105,11 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
 -include $(DEPS)
 
 clean:
-	for f in $(dir $(LIBS_TARGET)); do $(MAKE) -C $$f clean; done
+	$(MAKE) -C lib/libft clean
 	$(RM) $(OBJS) $(DEPS)
 
 fclean: clean
-	for f in $(dir $(LIBS_TARGET)); do $(MAKE) -C $$f fclean; done
+	$(MAKE) -C lib/libft fclean
 	$(RM) $(NAME)
 	$(RF) ./minishell.dSYM
 	$(RF) $(BUILD_DIR)

@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:18:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/30 17:46:40 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/31 11:28:50 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,25 +216,30 @@ char	**envp_strs_join(t_temp *temp)
 
 	ret = (char **)malloc(sizeof(char *) * (av_amount((char **)temp->argv) + \
 	av_amount((char **)temp->envp))) - 2;//minus for "./minishell" and "export"
+	//system ("leaks minishell");
 	if (!ret)
 		return (heap_error(1), NULL);
 	i = 0;
 	j = 2;
 	while (temp->envp[i])
 	{
-		ret[i] = malloc(2000);
+		ret[i] = ft_calloc(1, 2000);
 		if (!ret)
 			return (NULL);
 		ret[i] = temp->envp[i];
+		free (ret[i]);
+		system ("leaks minishell");
 		i++;
+		exit(1);
 	}
 	i--;
 	while (temp->argv[j])
 	{
-		ret[i] = malloc(2000);
+		ret[i] = ft_calloc(1, 2000);
 		if (!ret)
 			return (NULL);
 		ret[i] = temp->argv[j];
+		system ("leaks minishell");
 		j++;
 		ret++;
 	}
@@ -279,21 +284,30 @@ int	built_export(t_temp *temp)
 	}
 	else//230525nimai: add, function to add variable
 	{
+		//no leaks
 		new_envp = envp_strs_join(temp);
+		//41 leaks
 		if (!new_envp)
 			return (printf("ERROR: Line: %d\n", __LINE__));
-		//ptr_free((void **)temp->envp);
+		strs_free((char **)temp->envp);
 		temp->envp = new_envp;
+		strs_free(new_envp);
+		system ("leaks minishell");
+		exit (1);
 		tmp_env = (char **)temp->envp;
+		//check printer
+		printf("		===TEST PRINT===\n");
 		list = (t_export *)malloc(sizeof(t_export));
 		if (!list)
 			return (heap_error(1), 0);
 		list = fill_list(tmp_env, list);
 		quick_sort(list->box, 0, av_amount(tmp_env) - 1);
-		printf("Line: %d\n", __LINE__);
 		output_env(list, av_amount(tmp_env), FLAGEXPORT);
-		printf("Line: %d\n", __LINE__);
-		printf("===TEST PRINT===\n");
+		arr_free(list);
+		system ("leaks minishell");
+	//	ptr_free ((void **)tmp_env);
+		printf("		===TEST PRINT===		after system\n");
+		//check printer
 	}
 	all_tmp_free (temp);
 	return (0);

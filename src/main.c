@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 12:52:29 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/30 18:01:27 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/31 10:14:38 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,22 @@ t_temp	*init_temp(char *av[], char *envp[], t_temp *temp)
 int	main(int ac, char *av[], char *envp[])
 {
 	t_temp	*temp;
-	char	read;
-	read = rl_on_new_line();
-	rl_clear_history();
+/* 	char	*line = NULL;
+
+	while (1)
+	{
+		line = readline ("🐚 > ");
+		if (!line || ft_strlen(line) == 0)
+		{
+			free (line);
+			break ;
+		}
+		printf ("line: '%s'\n", line);
+		add_history(line);
+		free(line);
+	}
+	printf("exit\n");
+	exit (1); */
 
 	if (ac < 2)
 		return (0);
