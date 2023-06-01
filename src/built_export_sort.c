@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 16:17:55 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/29 17:42:35 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/01 11:02:30 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	swap_pairs(t_export_box *first, t_export_box *second)
 {
 	char	*tmp_val;
 	char	*tmp_name;
-
 
 	tmp_val = first->val;
 	tmp_name = first->name;

@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:18:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/31 15:56:03 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/01 11:48:37 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ int	check_av_add_envp(char *str)
 	int	i;
 
 	i = 0;
-	if (!ft_isalpha(str[i]))
+	if (!(ft_isalpha(str[i]) || str[i] == '_'))
 		return (0);
 	while (++i < (int)ft_strlen(str))
 	{
