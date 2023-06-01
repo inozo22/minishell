@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 12:52:29 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/31 16:36:12 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/01 10:47:34 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	main(int ac, char *av[], char *envp[])
 	else if (ft_strncmp(av[1], "pwd", ft_strlen(av[1])) == 0 \
 	&& ft_strncmp(av[1], "pwd", 3) == 0)
 	{
-		printf("🐚I got pwd🏠\n");//kesu
+		//printf("🐚I got pwd🏠\n");//kesu
 		built_pwd(temp);
 	}
 	else if (ft_strncmp(av[1], "export", ft_strlen(av[1])) == 0 \
@@ -105,8 +105,8 @@ int	main(int ac, char *av[], char *envp[])
 	{
 		ft_printf("minishell: %s: command not found\n", av[1]);
 	}
-	//system ("leaks minishell");
-	all_tmp_free(temp);
+	system ("leaks minishell");
+	free (temp);
 	return (0);
 }
 

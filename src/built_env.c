@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 09:50:16 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/30 16:09:04 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/01 10:53:22 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	built_env(t_temp *temp)
 /**
  * BEHAVIOUR IN BASH
  * when execute env, the list is not ordered 
- * 
+ * 230601nimai: there is no "OLDPWD"?
  * 
  * MEMORY LEAKS
  * 230526nimai: When I try free it, receive errors say that I'm trying free memory which is not allocated.

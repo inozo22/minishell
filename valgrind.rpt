@@ -1,285 +1,216 @@
-==6006== Memcheck, a memory error detector
-==6006== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
-==6006== Using Valgrind-3.21.0.GIT-lbmacos and LibVEX; rerun with -h for copyright info
-==6006== Command: ./minishell export test=
-==6006== Parent PID: 98055
-==6006== 
---6006-- run: /usr/bin/dsymutil "./minishell"
-==6006== Invalid write of size 8
-==6006==    at 0x100001D93: envp_strs_join (built_export.c:227)
-==6006==    by 0x100002027: built_export (built_export.c:287)
-==6006==    by 0x100000CC4: main (main.c:84)
-==6006==  Address 0x1008c26d0 is 16 bytes before a block of size 352 alloc'd
-==6006==    at 0x100124545: malloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==6006==    by 0x100001D2B: envp_strs_join (built_export.c:218)
-==6006==    by 0x100002027: built_export (built_export.c:287)
-==6006==    by 0x100000CC4: main (main.c:84)
-==6006== 
-==6006== Invalid read of size 8
-==6006==    at 0x100001D9F: envp_strs_join (built_export.c:228)
-==6006==    by 0x100002027: built_export (built_export.c:287)
-==6006==    by 0x100000CC4: main (main.c:84)
-==6006==  Address 0x1008c26d0 is 16 bytes before a block of size 352 alloc'd
-==6006==    at 0x100124545: malloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==6006==    by 0x100001D2B: envp_strs_join (built_export.c:218)
-==6006==    by 0x100002027: built_export (built_export.c:287)
-==6006==    by 0x100000CC4: main (main.c:84)
-==6006== 
-==6006== Invalid write of size 8
-==6006==    at 0x100001DCE: envp_strs_join (built_export.c:230)
-==6006==    by 0x100002027: built_export (built_export.c:287)
-==6006==    by 0x100000CC4: main (main.c:84)
-==6006==  Address 0x1008c26d0 is 16 bytes before a block of size 352 alloc'd
-==6006==    at 0x100124545: malloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==6006==    by 0x100001D2B: envp_strs_join (built_export.c:218)
-==6006==    by 0x100002027: built_export (built_export.c:287)
-==6006==    by 0x100000CC4: main (main.c:84)
-==6006== 
-==6006== Invalid read of size 8
-==6006==    at 0x100000F67: av_amount (built_exit.c:54)
-==6006==    by 0x1000019C8: fill_list (built_export.c:67)
-==6006==    by 0x1000020B4: built_export (built_export.c:300)
-==6006==    by 0x100000CC4: main (main.c:84)
-==6006==  Address 0x1008c26d8 is 8 bytes before a block of size 352 alloc'd
-==6006==    at 0x100124545: malloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==6006==    by 0x100001D2B: envp_strs_join (built_export.c:218)
-==6006==    by 0x100002027: built_export (built_export.c:287)
-==6006==    by 0x100000CC4: main (main.c:84)
-==6006== 
-==6006== Conditional jump or move depends on uninitialised value(s)
-==6006==    at 0x100000F6C: av_amount (built_exit.c:54)
-==6006==    by 0x1000019C8: fill_list (built_export.c:67)
-==6006==    by 0x1000020B4: built_export (built_export.c:300)
-==6006==    by 0x100000CC4: main (main.c:84)
-==6006== 
-==6006== Invalid read of size 8
-==6006==    at 0x100001A0F: fill_list (built_export.c:72)
-==6006==    by 0x1000020B4: built_export (built_export.c:300)
-==6006==    by 0x100000CC4: main (main.c:84)
-==6006==  Address 0x1008c26d8 is 8 bytes before a block of size 352 alloc'd
-==6006==    at 0x100124545: malloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==6006==    by 0x100001D2B: envp_strs_join (built_export.c:218)
-==6006==    by 0x100002027: built_export (built_export.c:287)
-==6006==    by 0x100000CC4: main (main.c:84)
-==6006== 
-==6006== Invalid read of size 8
-==6006==    at 0x100001A36: fill_list (built_export.c:75)
-==6006==    by 0x1000020B4: built_export (built_export.c:300)
-==6006==    by 0x100000CC4: main (main.c:84)
-==6006==  Address 0x1008c26d8 is 8 bytes before a block of size 352 alloc'd
-==6006==    at 0x100124545: malloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==6006==    by 0x100001D2B: envp_strs_join (built_export.c:218)
-==6006==    by 0x100002027: built_export (built_export.c:287)
-==6006==    by 0x100000CC4: main (main.c:84)
-==6006== 
-==6006== Invalid read of size 8
-==6006==    at 0x100001AF9: fill_list (built_export.c:81)
-==6006==    by 0x1000020B4: built_export (built_export.c:300)
-==6006==    by 0x100000CC4: main (main.c:84)
-==6006==  Address 0x1008c26d8 is 8 bytes before a block of size 352 alloc'd
-==6006==    at 0x100124545: malloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==6006==    by 0x100001D2B: envp_strs_join (built_export.c:218)
-==6006==    by 0x100002027: built_export (built_export.c:287)
-==6006==    by 0x100000CC4: main (main.c:84)
-==6006== 
-==6006== Invalid read of size 8
-==6006==    at 0x100001B13: fill_list (built_export.c:82)
-==6006==    by 0x1000020B4: built_export (built_export.c:300)
-==6006==    by 0x100000CC4: main (main.c:84)
-==6006==  Address 0x1008c26d8 is 8 bytes before a block of size 352 alloc'd
-==6006==    at 0x100124545: malloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==6006==    by 0x100001D2B: envp_strs_join (built_export.c:218)
-==6006==    by 0x100002027: built_export (built_export.c:287)
-==6006==    by 0x100000CC4: main (main.c:84)
-==6006== 
-==6006== Invalid read of size 8
-==6006==    at 0x100001B27: fill_list (built_export.c:82)
-==6006==    by 0x1000020B4: built_export (built_export.c:300)
-==6006==    by 0x100000CC4: main (main.c:84)
-==6006==  Address 0x1008c26d8 is 8 bytes before a block of size 352 alloc'd
-==6006==    at 0x100124545: malloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==6006==    by 0x100001D2B: envp_strs_join (built_export.c:218)
-==6006==    by 0x100002027: built_export (built_export.c:287)
-==6006==    by 0x100000CC4: main (main.c:84)
-==6006== 
-==6006== Invalid read of size 8
-==6006==    at 0x100001B78: fill_list (built_export.c:83)
-==6006==    by 0x1000020B4: built_export (built_export.c:300)
-==6006==    by 0x100000CC4: main (main.c:84)
-==6006==  Address 0x1008c26d8 is 8 bytes before a block of size 352 alloc'd
-==6006==    at 0x100124545: malloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==6006==    by 0x100001D2B: envp_strs_join (built_export.c:218)
-==6006==    by 0x100002027: built_export (built_export.c:287)
-==6006==    by 0x100000CC4: main (main.c:84)
-==6006== 
-==6006== Invalid read of size 8
-==6006==    at 0x100000F67: av_amount (built_exit.c:54)
-==6006==    by 0x1000020CC: built_export (built_export.c:301)
-==6006==    by 0x100000CC4: main (main.c:84)
-==6006==  Address 0x1008c26d8 is 8 bytes before a block of size 352 alloc'd
-==6006==    at 0x100124545: malloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==6006==    by 0x100001D2B: envp_strs_join (built_export.c:218)
-==6006==    by 0x100002027: built_export (built_export.c:287)
-==6006==    by 0x100000CC4: main (main.c:84)
-==6006== 
-==6006== Conditional jump or move depends on uninitialised value(s)
-==6006==    at 0x100000F6C: av_amount (built_exit.c:54)
-==6006==    by 0x1000020CC: built_export (built_export.c:301)
-==6006==    by 0x100000CC4: main (main.c:84)
-==6006== 
-==6006== Invalid read of size 8
-==6006==    at 0x100000F67: av_amount (built_exit.c:54)
-==6006==    by 0x1000020F0: built_export (built_export.c:302)
-==6006==    by 0x100000CC4: main (main.c:84)
-==6006==  Address 0x1008c26d8 is 8 bytes before a block of size 352 alloc'd
-==6006==    at 0x100124545: malloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==6006==    by 0x100001D2B: envp_strs_join (built_export.c:218)
-==6006==    by 0x100002027: built_export (built_export.c:287)
-==6006==    by 0x100000CC4: main (main.c:84)
-==6006== 
-==6006== Conditional jump or move depends on uninitialised value(s)
-==6006==    at 0x100000F6C: av_amount (built_exit.c:54)
-==6006==    by 0x1000020F0: built_export (built_export.c:302)
-==6006==    by 0x100000CC4: main (main.c:84)
-==6006== 
-==6006== Invalid read of size 8
-==6006==    at 0x100000F67: av_amount (built_exit.c:54)
-==6006==    by 0x10000283B: strs_free (free.c:40)
-==6006==    by 0x100002109: built_export (built_export.c:303)
-==6006==    by 0x100000CC4: main (main.c:84)
-==6006==  Address 0x1008c26d8 is 8 bytes before a block of size 352 alloc'd
-==6006==    at 0x100124545: malloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==6006==    by 0x100001D2B: envp_strs_join (built_export.c:218)
-==6006==    by 0x100002027: built_export (built_export.c:287)
-==6006==    by 0x100000CC4: main (main.c:84)
-==6006== 
-==6006== Conditional jump or move depends on uninitialised value(s)
-==6006==    at 0x100000F6C: av_amount (built_exit.c:54)
-==6006==    by 0x10000283B: strs_free (free.c:40)
-==6006==    by 0x100002109: built_export (built_export.c:303)
-==6006==    by 0x100000CC4: main (main.c:84)
-==6006== 
-==6006== Invalid read of size 8
-==6006==    at 0x100002853: strs_free (free.c:43)
-==6006==    by 0x100002109: built_export (built_export.c:303)
-==6006==    by 0x100000CC4: main (main.c:84)
-==6006==  Address 0x1008c26d8 is 8 bytes before a block of size 352 alloc'd
-==6006==    at 0x100124545: malloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==6006==    by 0x100001D2B: envp_strs_join (built_export.c:218)
-==6006==    by 0x100002027: built_export (built_export.c:287)
-==6006==    by 0x100000CC4: main (main.c:84)
-==6006== 
-==6006== Invalid free() / delete / delete[] / realloc()
-==6006==    at 0x10012491D: free (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==6006==    by 0x10000285B: strs_free (free.c:43)
-==6006==    by 0x100002109: built_export (built_export.c:303)
-==6006==    by 0x100000CC4: main (main.c:84)
-==6006==  Address 0x1049157d8 is on thread 1's stack
-==6006== 
-==6006== Invalid write of size 8
-==6006==    at 0x100002864: strs_free (free.c:44)
-==6006==    by 0x100002109: built_export (built_export.c:303)
-==6006==    by 0x100000CC4: main (main.c:84)
-==6006==  Address 0x1008c26d8 is 8 bytes before a block of size 352 alloc'd
-==6006==    at 0x100124545: malloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==6006==    by 0x100001D2B: envp_strs_join (built_export.c:218)
-==6006==    by 0x100002027: built_export (built_export.c:287)
-==6006==    by 0x100000CC4: main (main.c:84)
-==6006== 
-==6006== Invalid free() / delete / delete[] / realloc()
-==6006==    at 0x10012491D: free (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==6006==    by 0x100002885: strs_free (free.c:47)
-==6006==    by 0x100002109: built_export (built_export.c:303)
-==6006==    by 0x100000CC4: main (main.c:84)
-==6006==  Address 0x1008c26d8 is 8 bytes before a block of size 352 alloc'd
-==6006==    at 0x100124545: malloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==6006==    by 0x100001D2B: envp_strs_join (built_export.c:218)
-==6006==    by 0x100002027: built_export (built_export.c:287)
-==6006==    by 0x100000CC4: main (main.c:84)
-==6006== 
-==6006== Invalid free() / delete / delete[] / realloc()
-==6006==    at 0x10012491D: free (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==6006==    by 0x100002119: built_export (built_export.c:304)
-==6006==    by 0x100000CC4: main (main.c:84)
-==6006==  Address 0x1008c26d8 is 8 bytes before a block of size 352 alloc'd
-==6006==    at 0x100124545: malloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==6006==    by 0x100001D2B: envp_strs_join (built_export.c:218)
-==6006==    by 0x100002027: built_export (built_export.c:287)
-==6006==    by 0x100000CC4: main (main.c:84)
-==6006== 
-==6006== Conditional jump or move depends on uninitialised value(s)
-==6006==    at 0x100002767: arr_free (free.c:20)
-==6006==    by 0x10000213F: built_export (built_export.c:307)
-==6006==    by 0x100000CC4: main (main.c:84)
-==6006== 
-==6006== Invalid free() / delete / delete[] / realloc()
-==6006==    at 0x10012491D: free (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==6006==    by 0x1000028E5: ptr_free (free.c:60)
-==6006==    by 0x100002957: all_tmp_free (free.c:71)
-==6006==    by 0x100000E7A: main (main.c:109)
-==6006==  Address 0x1049157a7 is on thread 1's stack
-==6006== 
-==6006== Invalid free() / delete / delete[] / realloc()
-==6006==    at 0x10012491D: free (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==6006==    by 0x10000290F: ptr_free (free.c:64)
-==6006==    by 0x100002957: all_tmp_free (free.c:71)
-==6006==    by 0x100000E7A: main (main.c:109)
-==6006==  Address 0x104915610 is on thread 1's stack
-==6006== 
-==6006== Invalid read of size 8
-==6006==    at 0x100000F67: av_amount (built_exit.c:54)
-==6006==    by 0x1000028C9: ptr_free (free.c:58)
-==6006==    by 0x100002971: all_tmp_free (free.c:73)
-==6006==    by 0x100000E7A: main (main.c:109)
-==6006==  Address 0x1008c26d8 is 8 bytes before a block of size 352 alloc'd
-==6006==    at 0x100124545: malloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==6006==    by 0x100001D2B: envp_strs_join (built_export.c:218)
-==6006==    by 0x100002027: built_export (built_export.c:287)
-==6006==    by 0x100000CC4: main (main.c:84)
-==6006== 
-==6006== Invalid free() / delete / delete[] / realloc()
-==6006==    at 0x10012491D: free (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==6006==    by 0x10000290F: ptr_free (free.c:64)
-==6006==    by 0x100002971: all_tmp_free (free.c:73)
-==6006==    by 0x100000E7A: main (main.c:109)
-==6006==  Address 0x1008c26d8 is 8 bytes before a block of size 352 alloc'd
-==6006==    at 0x100124545: malloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==6006==    by 0x100001D2B: envp_strs_join (built_export.c:218)
-==6006==    by 0x100002027: built_export (built_export.c:287)
-==6006==    by 0x100000CC4: main (main.c:84)
-==6006== 
-==6006== 
-==6006== HEAP SUMMARY:
-==6006==     in use at exit: 102,484 bytes in 205 blocks
-==6006==   total heap usage: 342 allocs, 181 frees, 284,529 bytes allocated
-==6006== 
-==6006== 352 bytes in 1 blocks are definitely lost in loss record 30 of 40
-==6006==    at 0x100124545: malloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==6006==    by 0x100001D2B: envp_strs_join (built_export.c:218)
-==6006==    by 0x100002027: built_export (built_export.c:287)
-==6006==    by 0x100000CC4: main (main.c:84)
-==6006== 
-==6006== 2,000 bytes in 1 blocks are definitely lost in loss record 35 of 40
-==6006==    at 0x100124545: malloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==6006==    by 0x100003500: ft_calloc (in ./minishell)
-==6006==    by 0x100001E0E: envp_strs_join (built_export.c:236)
-==6006==    by 0x100002027: built_export (built_export.c:287)
-==6006==    by 0x100000CC4: main (main.c:84)
-==6006== 
-==6006== 82,000 bytes in 41 blocks are definitely lost in loss record 40 of 40
-==6006==    at 0x100124545: malloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==6006==    by 0x100003500: ft_calloc (in ./minishell)
-==6006==    by 0x100001D8A: envp_strs_join (built_export.c:227)
-==6006==    by 0x100002027: built_export (built_export.c:287)
-==6006==    by 0x100000CC4: main (main.c:84)
-==6006== 
-==6006== LEAK SUMMARY:
-==6006==    definitely lost: 84,352 bytes in 43 blocks
-==6006==    indirectly lost: 0 bytes in 0 blocks
-==6006==      possibly lost: 0 bytes in 0 blocks
-==6006==    still reachable: 0 bytes in 0 blocks
-==6006==         suppressed: 18,132 bytes in 162 blocks
-==6006== 
-==6006== Use --track-origins=yes to see where uninitialised values come from
-==6006== For lists of detected and suppressed errors, rerun with: -s
-==6006== ERROR SUMMARY: 75 errors from 30 contexts (suppressed: 5 from 5)
+==5911== Memcheck, a memory error detector
+==5911== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==5911== Using Valgrind-3.21.0.GIT-lbmacos and LibVEX; rerun with -h for copyright info
+==5911== Command: ./minishell exit
+==5911== Parent PID: 99416
+==5911== 
+--5911-- run: /usr/bin/dsymutil "./minishell"
+==5911== 
+==5911== HEAP SUMMARY:
+==5911==     in use at exit: 18,170 bytes in 164 blocks
+==5911==   total heap usage: 178 allocs, 14 frees, 22,914 bytes allocated
+==5911== 
+==5911== 24 bytes in 1 blocks are still reachable in loss record 5 of 43
+==5911==    at 0x100124545: malloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==5911==    by 0x100000ADC: main (main.c:60)
+==5911== 
+==5911== 32 bytes in 1 blocks are definitely lost in loss record 15 of 43
+==5911==    at 0x100124BA0: calloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==5911==    by 0x1007985F3: objc::DenseMap<objc_class*, objc_class*, objc::DenseMapValueInfo<objc_class*>, objc::DenseMapInfo<objc_class*>, objc::detail::DenseMapPair<objc_class*, objc_class*> >::grow(unsigned int) (in /usr/lib/libobjc.A.dylib)
+==5911==    by 0x10079869F: objc_class::mangledName() (in /usr/lib/libobjc.A.dylib)
+==5911==    by 0x100784406: objc_opt::objc_stringhash_t::getIndex(char const*) const (in /usr/lib/libobjc.A.dylib)
+==5911==    by 0x1007942D0: unmap_image (in /usr/lib/libobjc.A.dylib)
+==5911==    by 0x100015667: dyld::notifyBatchPartial(dyld_image_states, bool, char const* (*)(dyld_image_states, unsigned int, dyld_image_info const*), bool, bool) (in /usr/lib/dyld)
+==5911==    by 0x100015808: dyld::registerObjCNotifiers(void (*)(unsigned int, char const* const*, mach_header const* const*), void (*)(char const*, mach_header const*), void (*)(char const*, mach_header const*)) (in /usr/lib/dyld)
+==5911==    by 0x10035DAD0: _dyld_objc_notify_register (in /usr/lib/system/libdyld.dylib)
+==5911==    by 0x100782DAF: map_images_nolock (in /usr/lib/libobjc.A.dylib)
+==5911==    by 0x1002DFF38: _os_object_init (in /usr/lib/system/libdispatch.dylib)
+==5911==    by 0x1002EC0E7: libdispatch_init (in /usr/lib/system/libdispatch.dylib)
+==5911==    by 0x10018B790: libSystem_initializer (in /usr/lib/libSystem.B.dylib)
+==5911== 
+==5911== 32 bytes in 1 blocks are definitely lost in loss record 16 of 43
+==5911==    at 0x100124BA0: calloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==5911==    by 0x1007985F3: objc::DenseMap<objc_class*, objc_class*, objc::DenseMapValueInfo<objc_class*>, objc::DenseMapInfo<objc_class*>, objc::detail::DenseMapPair<objc_class*, objc_class*> >::grow(unsigned int) (in /usr/lib/libobjc.A.dylib)
+==5911==    by 0x1007986C6: objc_class::mangledName() (in /usr/lib/libobjc.A.dylib)
+==5911==    by 0x10079869F: objc_class::mangledName() (in /usr/lib/libobjc.A.dylib)
+==5911==    by 0x100784406: objc_opt::objc_stringhash_t::getIndex(char const*) const (in /usr/lib/libobjc.A.dylib)
+==5911==    by 0x1007942D0: unmap_image (in /usr/lib/libobjc.A.dylib)
+==5911==    by 0x100015667: dyld::notifyBatchPartial(dyld_image_states, bool, char const* (*)(dyld_image_states, unsigned int, dyld_image_info const*), bool, bool) (in /usr/lib/dyld)
+==5911==    by 0x100015808: dyld::registerObjCNotifiers(void (*)(unsigned int, char const* const*, mach_header const* const*), void (*)(char const*, mach_header const*), void (*)(char const*, mach_header const*)) (in /usr/lib/dyld)
+==5911==    by 0x10035DAD0: _dyld_objc_notify_register (in /usr/lib/system/libdyld.dylib)
+==5911==    by 0x100782DAF: map_images_nolock (in /usr/lib/libobjc.A.dylib)
+==5911==    by 0x1002DFF38: _os_object_init (in /usr/lib/system/libdispatch.dylib)
+==5911==    by 0x1002EC0E7: libdispatch_init (in /usr/lib/system/libdispatch.dylib)
+==5911== 
+==5911== 64 bytes in 1 blocks are indirectly lost in loss record 21 of 43
+==5911==    at 0x100124545: malloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==5911==    by 0x10047CFB5: _owned_ptr_alloc (in /usr/lib/system/libsystem_c.dylib)
+==5911==    by 0x10047D675: setenv (in /usr/lib/system/libsystem_c.dylib)
+==5911==    by 0x10071F346: _libxpc_initializer (in /usr/lib/system/libxpc.dylib)
+==5911==    by 0x10018B7A0: libSystem_initializer (in /usr/lib/libSystem.B.dylib)
+==5911==    by 0x10002B352: ImageLoaderMachO::doModInitFunctions(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
+==5911==    by 0x10002B75D: ImageLoaderMachO::doInitialization(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
+==5911==    by 0x10002617A: ImageLoader::recursiveInitialization(ImageLoader::LinkContext const&, unsigned int, char const*, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
+==5911==    by 0x1000260E5: ImageLoader::recursiveInitialization(ImageLoader::LinkContext const&, unsigned int, char const*, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
+==5911==    by 0x100024233: ImageLoader::processInitializers(ImageLoader::LinkContext const&, unsigned int, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
+==5911==    by 0x1000242D3: ImageLoader::runInitializers(ImageLoader::LinkContext const&, ImageLoader::InitializerTimingList&) (in /usr/lib/dyld)
+==5911==    by 0x100012661: dyld::initializeMainExecutable() (in /usr/lib/dyld)
+==5911== 
+==5911== 80 (16 direct, 64 indirect) bytes in 1 blocks are definitely lost in loss record 22 of 43
+==5911==    at 0x100124545: malloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==5911==    by 0x10047CFA3: _owned_ptr_alloc (in /usr/lib/system/libsystem_c.dylib)
+==5911==    by 0x10047D675: setenv (in /usr/lib/system/libsystem_c.dylib)
+==5911==    by 0x10071F346: _libxpc_initializer (in /usr/lib/system/libxpc.dylib)
+==5911==    by 0x10018B7A0: libSystem_initializer (in /usr/lib/libSystem.B.dylib)
+==5911==    by 0x10002B352: ImageLoaderMachO::doModInitFunctions(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
+==5911==    by 0x10002B75D: ImageLoaderMachO::doInitialization(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
+==5911==    by 0x10002617A: ImageLoader::recursiveInitialization(ImageLoader::LinkContext const&, unsigned int, char const*, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
+==5911==    by 0x1000260E5: ImageLoader::recursiveInitialization(ImageLoader::LinkContext const&, unsigned int, char const*, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
+==5911==    by 0x100024233: ImageLoader::processInitializers(ImageLoader::LinkContext const&, unsigned int, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
+==5911==    by 0x1000242D3: ImageLoader::runInitializers(ImageLoader::LinkContext const&, ImageLoader::InitializerTimingList&) (in /usr/lib/dyld)
+==5911==    by 0x100012661: dyld::initializeMainExecutable() (in /usr/lib/dyld)
+==5911== 
+==5911== 128 bytes in 1 blocks are definitely lost in loss record 26 of 43
+==5911==    at 0x100124BA0: calloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==5911==    by 0x100787667: objc_msgSend_stret (in /usr/lib/libobjc.A.dylib)
+==5911==    by 0x1002DFFEC: _os_object_alloc_realized (in /usr/lib/system/libdispatch.dylib)
+==5911==    by 0x1002E4BC5: _dispatch_lane_create_with_target (in /usr/lib/system/libdispatch.dylib)
+==5911==    by 0x1006E75F5: _libtrace_init (in /usr/lib/system/libsystem_trace.dylib)
+==5911==    by 0x10018B7B0: libSystem_initializer (in /usr/lib/libSystem.B.dylib)
+==5911==    by 0x10002B352: ImageLoaderMachO::doModInitFunctions(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
+==5911==    by 0x10002B75D: ImageLoaderMachO::doInitialization(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
+==5911==    by 0x10002617A: ImageLoader::recursiveInitialization(ImageLoader::LinkContext const&, unsigned int, char const*, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
+==5911==    by 0x1000260E5: ImageLoader::recursiveInitialization(ImageLoader::LinkContext const&, unsigned int, char const*, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
+==5911==    by 0x100024233: ImageLoader::processInitializers(ImageLoader::LinkContext const&, unsigned int, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
+==5911==    by 0x1000242D3: ImageLoader::runInitializers(ImageLoader::LinkContext const&, ImageLoader::InitializerTimingList&) (in /usr/lib/dyld)
+==5911== 
+==5911== 288 bytes in 6 blocks are indirectly lost in loss record 29 of 43
+==5911==    at 0x100124BA0: calloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==5911==    by 0x100787667: objc_msgSend_stret (in /usr/lib/libobjc.A.dylib)
+==5911==    by 0x1002DFFEC: _os_object_alloc_realized (in /usr/lib/system/libdispatch.dylib)
+==5911==    by 0x10073BD06: _xpc_string_create (in /usr/lib/system/libxpc.dylib)
+==5911==    by 0x10071F82F: xpc_dictionary_set_string (in /usr/lib/system/libxpc.dylib)
+==5911==    by 0x10071F685: _xpc_collect_environment (in /usr/lib/system/libxpc.dylib)
+==5911==    by 0x10071F292: _libxpc_initializer (in /usr/lib/system/libxpc.dylib)
+==5911==    by 0x10018B7A0: libSystem_initializer (in /usr/lib/libSystem.B.dylib)
+==5911==    by 0x10002B352: ImageLoaderMachO::doModInitFunctions(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
+==5911==    by 0x10002B75D: ImageLoaderMachO::doInitialization(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
+==5911==    by 0x10002617A: ImageLoader::recursiveInitialization(ImageLoader::LinkContext const&, unsigned int, char const*, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
+==5911==    by 0x1000260E5: ImageLoader::recursiveInitialization(ImageLoader::LinkContext const&, unsigned int, char const*, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
+==5911== 
+==5911== 300 bytes in 6 blocks are indirectly lost in loss record 30 of 43
+==5911==    at 0x100124545: malloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==5911==    by 0x10071FC06: _xpc_malloc (in /usr/lib/system/libxpc.dylib)
+==5911==    by 0x10071FAE1: _xpc_dictionary_insert (in /usr/lib/system/libxpc.dylib)
+==5911==    by 0x10071F840: xpc_dictionary_set_string (in /usr/lib/system/libxpc.dylib)
+==5911==    by 0x10071F685: _xpc_collect_environment (in /usr/lib/system/libxpc.dylib)
+==5911==    by 0x10071F292: _libxpc_initializer (in /usr/lib/system/libxpc.dylib)
+==5911==    by 0x10018B7A0: libSystem_initializer (in /usr/lib/libSystem.B.dylib)
+==5911==    by 0x10002B352: ImageLoaderMachO::doModInitFunctions(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
+==5911==    by 0x10002B75D: ImageLoaderMachO::doInitialization(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
+==5911==    by 0x10002617A: ImageLoader::recursiveInitialization(ImageLoader::LinkContext const&, unsigned int, char const*, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
+==5911==    by 0x1000260E5: ImageLoader::recursiveInitialization(ImageLoader::LinkContext const&, unsigned int, char const*, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
+==5911==    by 0x100024233: ImageLoader::processInitializers(ImageLoader::LinkContext const&, unsigned int, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
+==5911== 
+==5911== 324 bytes in 6 blocks are indirectly lost in loss record 31 of 43
+==5911==    at 0x100124545: malloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==5911==    by 0x100474CE5: strdup (in /usr/lib/system/libsystem_c.dylib)
+==5911==    by 0x10071F85D: xpc_string_create (in /usr/lib/system/libxpc.dylib)
+==5911==    by 0x10071F82F: xpc_dictionary_set_string (in /usr/lib/system/libxpc.dylib)
+==5911==    by 0x10071F685: _xpc_collect_environment (in /usr/lib/system/libxpc.dylib)
+==5911==    by 0x10071F292: _libxpc_initializer (in /usr/lib/system/libxpc.dylib)
+==5911==    by 0x10018B7A0: libSystem_initializer (in /usr/lib/libSystem.B.dylib)
+==5911==    by 0x10002B352: ImageLoaderMachO::doModInitFunctions(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
+==5911==    by 0x10002B75D: ImageLoaderMachO::doInitialization(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
+==5911==    by 0x10002617A: ImageLoader::recursiveInitialization(ImageLoader::LinkContext const&, unsigned int, char const*, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
+==5911==    by 0x1000260E5: ImageLoader::recursiveInitialization(ImageLoader::LinkContext const&, unsigned int, char const*, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
+==5911==    by 0x100024233: ImageLoader::processInitializers(ImageLoader::LinkContext const&, unsigned int, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
+==5911== 
+==5911== 356 bytes in 2 blocks are indirectly lost in loss record 32 of 43
+==5911==    at 0x100124545: malloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==5911==    by 0x10071FC06: _xpc_malloc (in /usr/lib/system/libxpc.dylib)
+==5911==    by 0x10071FAE1: _xpc_dictionary_insert (in /usr/lib/system/libxpc.dylib)
+==5911==    by 0x10071FE87: _xpc_dyld_image_callback (in /usr/lib/system/libxpc.dylib)
+==5911==    by 0x10001499C: dyld::registerBulkLoadCallback(void (*)(unsigned int, mach_header const**, char const**)) (in /usr/lib/dyld)
+==5911==    by 0x10071FD1A: _xpc_collect_images (in /usr/lib/system/libxpc.dylib)
+==5911==    by 0x10071F297: _libxpc_initializer (in /usr/lib/system/libxpc.dylib)
+==5911==    by 0x10018B7A0: libSystem_initializer (in /usr/lib/libSystem.B.dylib)
+==5911==    by 0x10002B352: ImageLoaderMachO::doModInitFunctions(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
+==5911==    by 0x10002B75D: ImageLoaderMachO::doInitialization(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
+==5911==    by 0x10002617A: ImageLoader::recursiveInitialization(ImageLoader::LinkContext const&, unsigned int, char const*, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
+==5911==    by 0x1000260E5: ImageLoader::recursiveInitialization(ImageLoader::LinkContext const&, unsigned int, char const*, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
+==5911== 
+==5911== 452 (96 direct, 356 indirect) bytes in 1 blocks are definitely lost in loss record 33 of 43
+==5911==    at 0x100124BA0: calloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==5911==    by 0x100787667: objc_msgSend_stret (in /usr/lib/libobjc.A.dylib)
+==5911==    by 0x1002DFFEC: _os_object_alloc_realized (in /usr/lib/system/libdispatch.dylib)
+==5911==    by 0x10071F7D7: xpc_dictionary_create (in /usr/lib/system/libxpc.dylib)
+==5911==    by 0x10071FE02: _xpc_dyld_image_callback (in /usr/lib/system/libxpc.dylib)
+==5911==    by 0x10001499C: dyld::registerBulkLoadCallback(void (*)(unsigned int, mach_header const**, char const**)) (in /usr/lib/dyld)
+==5911==    by 0x10071FD1A: _xpc_collect_images (in /usr/lib/system/libxpc.dylib)
+==5911==    by 0x10071F297: _libxpc_initializer (in /usr/lib/system/libxpc.dylib)
+==5911==    by 0x10018B7A0: libSystem_initializer (in /usr/lib/libSystem.B.dylib)
+==5911==    by 0x10002B352: ImageLoaderMachO::doModInitFunctions(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
+==5911==    by 0x10002B75D: ImageLoaderMachO::doInitialization(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
+==5911==    by 0x10002617A: ImageLoader::recursiveInitialization(ImageLoader::LinkContext const&, unsigned int, char const*, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
+==5911== 
+==5911== 896 bytes in 28 blocks are definitely lost in loss record 36 of 43
+==5911==    at 0x100124BA0: calloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==5911==    by 0x1007985F3: objc::DenseMap<objc_class*, objc_class*, objc::DenseMapValueInfo<objc_class*>, objc::DenseMapInfo<objc_class*>, objc::detail::DenseMapPair<objc_class*, objc_class*> >::grow(unsigned int) (in /usr/lib/libobjc.A.dylib)
+==5911==    by 0x100784406: objc_opt::objc_stringhash_t::getIndex(char const*) const (in /usr/lib/libobjc.A.dylib)
+==5911==    by 0x1007942D0: unmap_image (in /usr/lib/libobjc.A.dylib)
+==5911==    by 0x100015667: dyld::notifyBatchPartial(dyld_image_states, bool, char const* (*)(dyld_image_states, unsigned int, dyld_image_info const*), bool, bool) (in /usr/lib/dyld)
+==5911==    by 0x100015808: dyld::registerObjCNotifiers(void (*)(unsigned int, char const* const*, mach_header const* const*), void (*)(char const*, mach_header const*), void (*)(char const*, mach_header const*)) (in /usr/lib/dyld)
+==5911==    by 0x10035DAD0: _dyld_objc_notify_register (in /usr/lib/system/libdyld.dylib)
+==5911==    by 0x100782DAF: map_images_nolock (in /usr/lib/libobjc.A.dylib)
+==5911==    by 0x1002DFF38: _os_object_init (in /usr/lib/system/libdispatch.dylib)
+==5911==    by 0x1002EC0E7: libdispatch_init (in /usr/lib/system/libdispatch.dylib)
+==5911==    by 0x10018B790: libSystem_initializer (in /usr/lib/libSystem.B.dylib)
+==5911==    by 0x10002B352: ImageLoaderMachO::doModInitFunctions(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
+==5911== 
+==5911== 896 bytes in 28 blocks are definitely lost in loss record 37 of 43
+==5911==    at 0x100124BA0: calloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==5911==    by 0x1007985F3: objc::DenseMap<objc_class*, objc_class*, objc::DenseMapValueInfo<objc_class*>, objc::DenseMapInfo<objc_class*>, objc::detail::DenseMapPair<objc_class*, objc_class*> >::grow(unsigned int) (in /usr/lib/libobjc.A.dylib)
+==5911==    by 0x1007986C6: objc_class::mangledName() (in /usr/lib/libobjc.A.dylib)
+==5911==    by 0x100784406: objc_opt::objc_stringhash_t::getIndex(char const*) const (in /usr/lib/libobjc.A.dylib)
+==5911==    by 0x1007942D0: unmap_image (in /usr/lib/libobjc.A.dylib)
+==5911==    by 0x100015667: dyld::notifyBatchPartial(dyld_image_states, bool, char const* (*)(dyld_image_states, unsigned int, dyld_image_info const*), bool, bool) (in /usr/lib/dyld)
+==5911==    by 0x100015808: dyld::registerObjCNotifiers(void (*)(unsigned int, char const* const*, mach_header const* const*), void (*)(char const*, mach_header const*), void (*)(char const*, mach_header const*)) (in /usr/lib/dyld)
+==5911==    by 0x10035DAD0: _dyld_objc_notify_register (in /usr/lib/system/libdyld.dylib)
+==5911==    by 0x100782DAF: map_images_nolock (in /usr/lib/libobjc.A.dylib)
+==5911==    by 0x1002DFF38: _os_object_init (in /usr/lib/system/libdispatch.dylib)
+==5911==    by 0x1002EC0E7: libdispatch_init (in /usr/lib/system/libdispatch.dylib)
+==5911==    by 0x10018B790: libSystem_initializer (in /usr/lib/libSystem.B.dylib)
+==5911== 
+==5911== 1,008 (96 direct, 912 indirect) bytes in 1 blocks are definitely lost in loss record 38 of 43
+==5911==    at 0x100124BA0: calloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==5911==    by 0x100787667: objc_msgSend_stret (in /usr/lib/libobjc.A.dylib)
+==5911==    by 0x1002DFFEC: _os_object_alloc_realized (in /usr/lib/system/libdispatch.dylib)
+==5911==    by 0x10071F7D7: xpc_dictionary_create (in /usr/lib/system/libxpc.dylib)
+==5911==    by 0x10071F659: _xpc_collect_environment (in /usr/lib/system/libxpc.dylib)
+==5911==    by 0x10071F292: _libxpc_initializer (in /usr/lib/system/libxpc.dylib)
+==5911==    by 0x10018B7A0: libSystem_initializer (in /usr/lib/libSystem.B.dylib)
+==5911==    by 0x10002B352: ImageLoaderMachO::doModInitFunctions(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
+==5911==    by 0x10002B75D: ImageLoaderMachO::doInitialization(ImageLoader::LinkContext const&) (in /usr/lib/dyld)
+==5911==    by 0x10002617A: ImageLoader::recursiveInitialization(ImageLoader::LinkContext const&, unsigned int, char const*, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
+==5911==    by 0x1000260E5: ImageLoader::recursiveInitialization(ImageLoader::LinkContext const&, unsigned int, char const*, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
+==5911==    by 0x100024233: ImageLoader::processInitializers(ImageLoader::LinkContext const&, unsigned int, ImageLoader::InitializerTimingList&, ImageLoader::UninitedUpwards&) (in /usr/lib/dyld)
+==5911== 
+==5911== 4,096 bytes in 1 blocks are definitely lost in loss record 43 of 43
+==5911==    at 0x100124545: malloc (in /System/Volumes/Data/sgoinfre/goinfre/Perso/nimai/homebrew/Cellar/valgrind/HEAD-73c9e41/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==5911==    by 0x10045A367: __smakebuf (in /usr/lib/system/libsystem_c.dylib)
+==5911==    by 0x10046DC4D: __swsetup (in /usr/lib/system/libsystem_c.dylib)
+==5911==    by 0x10048694E: __v2printf (in /usr/lib/system/libsystem_c.dylib)
+==5911==    by 0x10045F2B1: vfprintf_l (in /usr/lib/system/libsystem_c.dylib)
+==5911==    by 0x10045D41D: printf (in /usr/lib/system/libsystem_c.dylib)
+==5911==    by 0x100000E22: main (main.c:101)
+==5911== 
+==5911== LEAK SUMMARY:
+==5911==    definitely lost: 6,288 bytes in 63 blocks
+==5911==    indirectly lost: 1,332 bytes in 21 blocks
+==5911==      possibly lost: 0 bytes in 0 blocks
+==5911==    still reachable: 24 bytes in 1 blocks
+==5911==         suppressed: 10,526 bytes in 79 blocks
+==5911== 
+==5911== For lists of detected and suppressed errors, rerun with: -s
+==5911== ERROR SUMMARY: 9 errors from 9 contexts (suppressed: 5 from 5)

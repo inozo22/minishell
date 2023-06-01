@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 13:05:08 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/30 16:08:09 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/01 10:57:09 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ int	built_exit(t_temp *temp)
 		return (error_exit_msg(1, "minishell: exit: too many arguments"));
 	}
 	ft_printf("EXIT!\n");
+	free (temp);
 	exit (ft_atoi(temp->argv[2]));
 	return (0);
 }
