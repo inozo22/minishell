@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 18:40:39 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/30 16:05:09 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/01 17:38:53 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,43 +82,34 @@ bool	check_path(char *str)
  */
 char	*get_dest_path(char *str)
 {
-	char	*ret = NULL;
+	char	*ret;
 	char	*cur;
 	int		cut;
 
+	ret = NULL;
 	cur = getcwd(NULL, 0);
 	if (ft_strncmp("../", str, 3) == 0)
 	{
-		cut = get_pos_above_path(getcwd(NULL, 0));
-		ret = malloc(sizeof(char) * cut + 1);
+		cut = get_pos_above_path(cur);
+		ret = malloc(sizeof(char) * (cut + 1));
 		if (!ret)
 			return (heap_error(1), NULL);
-		ft_strlcpy(ret, getcwd(NULL, 0), cut + 1);
+		ft_strlcpy(ret, cur, cut + 1);
+		chdir(ret);
+		free (cur);
 		return (ret);
 	}
-	else if (ft_strncmp(cur, str, ft_strlen(cur)) == 0)
+	else
 	{
-		printf("Maybe I have absolute path\n");
-		return (str);//maybe it's absolute path
+		if (chdir(str) == -1)
+		{
+			error_cd(str);
+			free (cur);
+			return (NULL);
+		}
+		free (cur);
+		return (str);
 	}
-	else if (ft_strncmp(getenv("HOME"), str, ft_strlen(getenv("HOME"))) == 0)
-	{
-		printf("Maybe I have absolute path, but shorter\n");
-		return (str);//maybe it's absolute path		
-	}
-	ret = ft_calloc(sizeof(char), ft_strlen(cur) + ft_strlen(str) + 1);
-	ft_strlcpy(ret, cur, ft_strlen(cur) + 1);//copy the cur string
-	ft_strlcat(ret, str, ft_strlen(cur) + ft_strlen(str) + 1);
-/* 	if (!check_path(str))
-		return (error_cd(str), NULL); */
-	printf("Where am I(before chdir): %s\n", getcwd(NULL, 0));
-	if (chdir(ret) == -1)
-		return (error_cd(str), NULL);
-	printf("Where am I(after chdir): %s\n", getcwd(NULL, 0));
-	if (ret)
-		free (ret);
-	exit(1);
-
 	return (ret);
 }
 
@@ -137,40 +128,32 @@ int	built_cd(t_temp *temp)
 	cur = getcwd(NULL, 0);
 	if (!cur)
 		return ((error_cd("current directory")), 0);//230524nimai: if it's null, like doesn't exit the current directory, what should I do? give error, or ignore?
-	if (!temp->argv[2])//when you don't have argument after "cd"
+	if (!temp->argv[2])//when you don't have argument after "cd", move to $HOME
 	{
-/* 		printf("Where am I: %s\n", test = getcwd(NULL, 0));
-		free (test); */
 		if (chdir(getenv("HOME")) == -1)
 		{
 			printf("Line: %d, failed chdir\n", __LINE__);
-		//	return (error_cd(str), NULL)
 			return (-1);
 		}
-/* 		printf("Where am I: %s\n", test = getcwd(NULL, 0));
-		free (test); */
-//		execl("/bin/ls", "/bin/ls", getcwd(NULL, 0));
 		free (cur);
 		return (0);
 	}
-	if (ft_strncmp("./", temp->argv[2], ft_strlen(temp->argv[2])) == 0)
+	if (ft_strncmp("./", temp->argv[2], 2) == 0)//don't move, but if it's not exist?
 		return (0);
-	printf("Line: %d\n", __LINE__);
+	printf("Line: %d:	", __LINE__);
 	printf("current position: %s\n", cur);
 	dest = get_dest_path(temp->argv[2]);//230524nimai: after av[3] will be ignored.
+//230601nimai: I should log the path to env	-> should be absolute path
 	if (!dest)
 		return (0);//230524nimai: if it's null, should it moves to home dir? Or just ignore it?
-	
-	if (chdir(dest) == -1)
-	{
-		free (dest);
-		free (cur);
-		return (error_cd(temp->argv[2]), 1);
-	}
-	free (dest);
 	free (cur);
-	printf("Where am I: %s\n", test = getcwd(NULL, 0));
+	free (dest);
+//printer
+	test = getcwd(NULL, 0);
+	printf("Line: %d:	", __LINE__);
+	printf("current position: %s\n", test);
 	free (test);
+//printer
 	return (0);
 }
 

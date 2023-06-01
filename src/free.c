@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 15:44:25 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/01 13:38:36 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/01 16:42:39 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char	**strs_free(char **strs)
 	return (NULL);
 }
 
-void	**ptr_free(void **ptr)
+/* void	**ptr_free(void **ptr)
 {
 	int	i;
 
@@ -67,3 +67,4 @@ void	**ptr_free(void **ptr)
 	free (ptr);
 	return (NULL);
 }
+ */
