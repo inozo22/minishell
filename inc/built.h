@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:12:28 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/01 09:53:15 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/01 15:49:48 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,12 @@ int			av_amount(char **strs);
 char		**fake_env(void);
 t_export	*fill_list(char **strs, t_export *ret);
 void		output_env(t_export *list, int len, int flag);
+int			check_valid(char *str, char *cmd);
 /**
  * functions from export
  */
 
+void		error_built(char *cmd, char *av, char *comment);
 void		heap_error(int flag);
 void		quick_sort(t_export_box box[], int left, int right);
 

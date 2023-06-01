@@ -6,43 +6,37 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 09:50:35 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/01 13:31:37 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/01 16:32:41 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /**
- * @brief temporary error management
- * @author nimai
- * @note when decided error management, merge it.
- */
-void	error_unset(char *cmd, char *comment)
-{
-	ft_printf("minishell: unset: `%s': %s\n", cmd, comment);
-}
-
-/**
- * @brief string checker.
+ * @brief string checker for variable.
  * @author nimai
  * @return 1 if it's valid, otherwise 0.
- * @note doesn't work, CHECK
+ * @note in built_unset.
+ * @note builtin global function
  */
-int	check_valid(char *str)
+int	check_valid(char *str, char *cmd)
 {
 	int	i;
 
 	i = 0;
 	if (!(ft_isalpha(str[i]) || str[i] == '_'))
 	{
-		error_unset(str, "not a valid identifier");
+		error_built(cmd, str, "not a valid identifier");
 		return (0);
 	}
 	while (str[++i])
 	{
-		if (!(ft_isalnum(str[i]) || str[i] == '_'))
+		if (ft_isalnum(str[i]) || str[i] == '_' || (str[i] == '=' && \
+		ft_strncmp(cmd, "export", 6) == 0))
+			;
+		else
 		{
-			error_unset(str, "not a valid identifier");
+			error_built(cmd, str, "not a valid identifier");
 			return (0);
 		}
 	}
@@ -76,7 +70,6 @@ t_temp	*unset_env(t_temp *temp, char *str)
 		printf("env[%d]: %s\n", i, env[i]);
 		i++;
 	}
-	exit (1);
 	temp->envp = NULL;
 	temp->envp = env;
 	return (temp);
@@ -98,7 +91,7 @@ int	built_unset(t_temp *temp)
 	while (av[i])
 	{
 //		printf("Line: %d\n", __LINE__);
-		if (check_valid(av[i]) == 1)
+		if (check_valid(av[i], "unset") == 1)
 			temp = unset_env(temp, av[i]);
 		i++;
 //		printf("Line: %d\n", __LINE__);
@@ -114,10 +107,6 @@ int	built_unset(t_temp *temp)
  * BEHAVIOUR IN BASH
  * when execute env, the list is not ordered 
  * 
- * 
- * MEMORY LEAKS
- * 230526nimai: When I try free it, receive errors say that I'm trying free memory which is not allocated.
- * But yes, allocated.
  * 
  * 
  * 230601nimai: 
