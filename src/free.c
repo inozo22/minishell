@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 15:44:25 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/01 09:52:57 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/01 13:38:36 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	*arr_free(t_export *list)
 			free (list->box[i].val);
 			list->box[i].val = NULL;
 		}
-		//list->box[i] = NULL;
 		i++;
 	}
 	return (NULL);
@@ -44,7 +43,6 @@ char	**strs_free(char **strs)
 	len = av_amount(strs);
 	while (i < len - 1)
 	{
-		printf("strs[%d]: %s\n", i, strs[i]);
 		free (strs[i]);
 		strs[i] = NULL;
 		i++;
@@ -69,13 +67,3 @@ void	**ptr_free(void **ptr)
 	free (ptr);
 	return (NULL);
 }
-
-/* void	*all_tmp_free(t_temp *temp)
-{
-	if (temp->argv)
-		strs_free((char **)temp->argv);
-	if (temp->envp)
-		strs_free((char **)temp->envp);
-	free (temp);
-	return (NULL);
-} */

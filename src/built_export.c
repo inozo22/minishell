@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:18:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/01 11:48:37 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/01 13:52:26 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,18 +224,18 @@ char	**envp_strs_join(t_temp *temp)
 	j = 2;
 	while (temp->envp[i])
 	{
-		ret[i] = ft_calloc(1, 2000);
+/* 		ret[i] = ft_calloc(1, 2000);
 		if (!ret[i])
-			return (NULL);
+			return (NULL); */
 		ret[i] = temp->envp[i];
 		i++;
 	}
 	i--;
 	while (temp->argv[j])
 	{
-		ret[i] = ft_calloc(1, 2000);
+/* 		ret[i] = ft_calloc(1, 2000);
 		if (!ret[i])
-			return (NULL);
+			return (NULL); */
 		ret[i] = temp->argv[j];
 		j++;
 		ret++;
@@ -300,14 +300,12 @@ int	built_export(t_temp *temp)
 		list = fill_list(tmp_env, list);
 		quick_sort(list->box, 0, av_amount(tmp_env) - 1);
 		output_env(list, av_amount(tmp_env), FLAGEXPORT);
-		strs_free(new_envp);
-		free (new_envp);
-		new_envp = NULL;
-		printf("new_envp: %p\n", new_envp);
+		//strs_free(new_envp);
+		//free (new_envp);
 		arr_free(list);
 		free (list);
 	//	ptr_free ((void **)tmp_env);
-		printf("		===TEST PRINT===		after system\n");
+		printf("		===TEST PRINT===\n");
 		//check printer
 
 	}
@@ -316,7 +314,7 @@ int	built_export(t_temp *temp)
 }
 
 /**
- * BEHAVIOUR IN BASH
+ * BEHAVIOUR ON BASH
  * when execute export, the list should be ascending order, 
  * separated by capital letter and small letter-> done
  * If there is more than one argument after command, add as a variable, 

@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:11:36 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/01 10:46:47 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/01 13:42:59 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
  * @author nimai
  * @param **av "pwd"
  * @return if there are sth after cmd, ignore and execute it normally. Don't manage any flags.
+ * @note getcwd allocate mamory when it's executed, so it should be freed
  */
 int	built_pwd(t_temp *temp)
 {

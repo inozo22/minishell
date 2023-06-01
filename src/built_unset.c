@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 09:50:35 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/01 13:22:12 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/01 13:31:37 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,8 @@ int	built_unset(t_temp *temp)
  * 
  * 
  * 230601nimai: 
+ * unset: kind of did it, but should be started over after it've been decided on the structure."
+[main b02d1eb] unset: kind of did it, but should be started over after it've been decided on the structure
  * env[0]: SECURITYSESSIONID=186f0
 env[1]: USER=nimai
 env[2]: MallocNanoZone=0
@@ -141,7 +143,7 @@ env[16]: PWD=/Users/nimai/42/42cursus/minishell
 env[17]: OLDPWD=/Users/nimai/42/42cursus/minishell
 env[18]: ZSH=/Users/nimai/.oh-my-zsh
 env[19]: PAGER=less
-env[20]: (null)
+env[20]: (null) <= as I have null here, will not move to next when I copy it
 env[21]: LSCOLORS=Gxfxcxdxbxegedabagacad
 env[22]: LS_COLORS=di=1;36:ln=35:so=32:pi=33:ex=31:bd=34;46:cd=34;43:su=30;41:sg=30;46:tw=30;42:ow=30;43
 env[23]: HOMEBREW_CACHE=/tmp/nimai/Homebrew/Caches
