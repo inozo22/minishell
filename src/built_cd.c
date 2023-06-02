@@ -6,11 +6,23 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 18:40:39 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/01 17:38:53 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/02 10:20:46 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/**
+ * @brief add environment according to av in **
+ * @author nimai
+ * @return ** pointer, then free 
+ * @note 230530nimai: I will throw it away
+ */
+void	envp_strs_mod(temp, dest)
+{
+	
+}
+
 
 /**
  * @brief temporary error management
@@ -126,6 +138,10 @@ int	built_cd(t_temp *temp)
 	char	*test;
 
 	cur = getcwd(NULL, 0);
+//printer
+	printf("Line: %d:	", __LINE__);
+	printf("position before	:	%s\n", cur);
+//printer
 	if (!cur)
 		return ((error_cd("current directory")), 0);//230524nimai: if it's null, like doesn't exit the current directory, what should I do? give error, or ignore?
 	if (!temp->argv[2])//when you don't have argument after "cd", move to $HOME
@@ -135,23 +151,27 @@ int	built_cd(t_temp *temp)
 			printf("Line: %d, failed chdir\n", __LINE__);
 			return (-1);
 		}
-		free (cur);
-		return (0);
 	}
-	if (ft_strncmp("./", temp->argv[2], 2) == 0)//don't move, but if it's not exist?
-		return (0);
-	printf("Line: %d:	", __LINE__);
-	printf("current position: %s\n", cur);
-	dest = get_dest_path(temp->argv[2]);//230524nimai: after av[3] will be ignored.
+	else if (ft_strncmp("./", temp->argv[2], 2) == 0)//don't move, but if it's not exist?
+		;
+	else
+	{
+		dest = get_dest_path(temp->argv[2]);//230524nimai: after av[3] will be ignored.
 //230601nimai: I should log the path to env	-> should be absolute path
-	if (!dest)
-		return (0);//230524nimai: if it's null, should it moves to home dir? Or just ignore it?
+		if (!dest)
+		{
+			free (cur);
+			return (-1);//230524nimai: if it's null, should it moves to home dir? Or just ignore it?
+		}
+		envp_strs_mod(temp, dest);
+		if (ft_strncmp(dest, temp->argv[2], ft_strlen(dest)) != 0)
+			free (dest);
+	}
 	free (cur);
-	free (dest);
 //printer
 	test = getcwd(NULL, 0);
 	printf("Line: %d:	", __LINE__);
-	printf("current position: %s\n", test);
+	printf("position after	:	%s\n", test);
 	free (test);
 //printer
 	return (0);
