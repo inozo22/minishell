@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 09:50:35 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/01 16:32:41 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/02 13:56:28 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,13 +90,10 @@ int	built_unset(t_temp *temp)
 	i = 2;
 	while (av[i])
 	{
-//		printf("Line: %d\n", __LINE__);
 		if (check_valid(av[i], "unset") == 1)
 			temp = unset_env(temp, av[i]);
 		i++;
-//		printf("Line: %d\n", __LINE__);
 	}
-//	printf("Line: %d\n", __LINE__);
 	printf("\n		===TEST ENV===\n");
 	built_env(temp);
 	printf("		===TEST ENV===\n");
@@ -132,7 +129,7 @@ env[16]: PWD=/Users/nimai/42/42cursus/minishell
 env[17]: OLDPWD=/Users/nimai/42/42cursus/minishell
 env[18]: ZSH=/Users/nimai/.oh-my-zsh
 env[19]: PAGER=less
-env[20]: (null) <= as I have null here, will not move to next when I copy it
+env[20]: (null) <= as I have null here, will not move to next when I print it
 env[21]: LSCOLORS=Gxfxcxdxbxegedabagacad
 env[22]: LS_COLORS=di=1;36:ln=35:so=32:pi=33:ex=31:bd=34;46:cd=34;43:su=30;41:sg=30;46:tw=30;42:ow=30;43
 env[23]: HOMEBREW_CACHE=/tmp/nimai/Homebrew/Caches

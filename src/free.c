@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 15:44:25 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/01 16:42:39 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/02 13:07:58 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,21 +50,3 @@ char	**strs_free(char **strs)
 	free (strs);
 	return (NULL);
 }
-
-/* void	**ptr_free(void **ptr)
-{
-	int	i;
-
-	if (!ptr)
-		return (NULL);
-	i = 0;
-	while (i < av_amount((char **)ptr))
-	{
-		free(ptr[i]);
-		ptr[i] = NULL;
-		i++;
-	}
-	free (ptr);
-	return (NULL);
-}
- */

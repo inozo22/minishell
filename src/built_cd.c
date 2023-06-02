@@ -6,23 +6,39 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 18:40:39 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/02 10:20:46 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/02 17:45:11 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /**
- * @brief add environment according to av in **
+ * @brief add environment according to dest in **
  * @author nimai
  * @return ** pointer, then free 
- * @note 230530nimai: I will throw it away
+ * @note t
  */
-void	envp_strs_mod(temp, dest)
+void	envp_strs_mod(t_temp *temp, char *dest)
 {
-	
-}
+	int		i;
+	char	**tmp;
+	int		x;
 
+	i = 0;
+	tmp = (char **)temp->envp;
+	while (tmp[i])
+	{
+		if (ft_strncmp(tmp[i], "PWD", 3) == 0)
+		{
+			tmp[i] = NULL;
+			tmp[i] = ft_strjoin("PWD=", dest);
+			x = i;
+		}
+		i++;
+	}
+	temp->envp = tmp;
+	free (tmp[x]);
+}
 
 /**
  * @brief temporary error management
@@ -55,44 +71,11 @@ int	get_pos_above_path(char *str)
 }
 
 /**
- * @brief check if the path exists.
- * @author nimai
- * @note 
- */
-bool	check_path(char *str)
-{
-	(void)str;
-/* 	while ()
-	{
-		
-	} */
-	return (1);
-}
-
-/**
- * @brief get path length.
- * @author nimai
- * @note will be eliminated
- */
-/* int	get_path_length(char *str, int i)
-{
-	int	ret;
-
-	ret = 0;
-	while (str[i])
-	{
-		ret++;
-		i++;
-	}
-	return (ret);
-}
- */
-/**
  * @brief get absolute path to move
  * @author nimai
  * @return destination path as string
  */
-char	*get_dest_path(char *str)
+/* char	*get_dest_path(char *str)
 {
 	char	*ret;
 	char	*cur;
@@ -120,6 +103,37 @@ char	*get_dest_path(char *str)
 			return (NULL);
 		}
 		free (cur);
+		return (str);
+	}
+	return (ret);
+} */
+char	*get_dest_path(char *str)
+{
+	char	*ret;
+	char	*cur;
+	int		cut;
+
+	ret = NULL;
+	cur = NULL;
+	if (ft_strncmp("../", str, ft_strlen(str)) == 0)
+	{
+		cur = getcwd(NULL, 0);
+		cut = get_pos_above_path(cur);
+		ret = malloc(sizeof(char) * (cut + 1));
+		if (!ret)
+			return (heap_error(1), NULL);
+		ft_strlcpy(ret, cur, cut + 1);
+		chdir(ret);
+		free (cur);
+		return (ret);
+	}
+/* 	else if ()//case relative path
+	{
+	} */
+	else//case absolute path
+	{
+		if (chdir(str) == -1)
+			return (error_cd(str), NULL);
 		return (str);
 	}
 	return (ret);
@@ -164,6 +178,9 @@ int	built_cd(t_temp *temp)
 			return (-1);//230524nimai: if it's null, should it moves to home dir? Or just ignore it?
 		}
 		envp_strs_mod(temp, dest);
+		printf("\n		===TEST CD===\n");
+//		built_env(temp);
+		printf("		===TEST CD===\n");
 		if (ft_strncmp(dest, temp->argv[2], ft_strlen(dest)) != 0)
 			free (dest);
 	}
