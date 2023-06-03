@@ -6,15 +6,15 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 12:52:29 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/02 16:51:05 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/03 16:30:05 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-#include <readline/history.h>
+//#include <readline/history.h>
 #include <stdio.h>
-#include <readline/readline.h>
+//#include <readline/readline.h>
 
 t_temp	*init_temp(char *av[], char *envp[], t_temp *temp)
 {

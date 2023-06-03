@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 18:40:39 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/02 17:45:11 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/03 17:22:59 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
  * @brief add environment according to dest in **
  * @author nimai
  * @return ** pointer, then free 
- * @note t
+ * @note 230603nimai: Doesn't show PWD on Ubuntu (moji bake)
  */
 void	envp_strs_mod(t_temp *temp, char *dest)
 {
@@ -115,6 +115,7 @@ char	*get_dest_path(char *str)
 
 	ret = NULL;
 	cur = NULL;
+	printf("Line: %d\n", __LINE__);
 	if (ft_strncmp("../", str, ft_strlen(str)) == 0)
 	{
 		cur = getcwd(NULL, 0);
@@ -127,13 +128,24 @@ char	*get_dest_path(char *str)
 		free (cur);
 		return (ret);
 	}
-/* 	else if ()//case relative path
+	else if (chdir(str) && ft_strncmp(str, getenv("HOME"), ft_strlen(getenv("HOME"))) != 0)//case relative path
 	{
-	} */
+		printf("Line: %d\n", __LINE__);
+		cur = getcwd(NULL, 0);
+		return (cur);
+		/**
+		doesn't work with relative path like "cd lib", check on MacOS
+		
+		  */
+	}
 	else//case absolute path
 	{
+		printf("Line: %d\n", __LINE__);
 		if (chdir(str) == -1)
+		{
+			printf("Line: %d\n", __LINE__);
 			return (error_cd(str), NULL);
+		}
 		return (str);
 	}
 	return (ret);
@@ -170,6 +182,7 @@ int	built_cd(t_temp *temp)
 		;
 	else
 	{
+		printf("Line: %d\n", __LINE__);
 		dest = get_dest_path(temp->argv[2]);//230524nimai: after av[3] will be ignored.
 //230601nimai: I should log the path to env	-> should be absolute path
 		if (!dest)
@@ -179,7 +192,7 @@ int	built_cd(t_temp *temp)
 		}
 		envp_strs_mod(temp, dest);
 		printf("\n		===TEST CD===\n");
-//		built_env(temp);
+		built_env(temp);
 		printf("		===TEST CD===\n");
 		if (ft_strncmp(dest, temp->argv[2], ft_strlen(dest)) != 0)
 			free (dest);

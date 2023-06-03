@@ -6,7 +6,7 @@
 #    By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/16 18:53:13 by nimai             #+#    #+#              #
-#    Updated: 2023/06/02 16:35:05 by nimai            ###   ########.fr        #
+#    Updated: 2023/06/03 16:28:56 by nimai            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,16 +16,16 @@ NAME		:= minishell
 #   INGREDIENTS                                  #
 #------------------------------------------------#
 
-LIBS		:=  ft readline history
+LIBS		:=  ft #readline history
 LIBS_TARGET	:= \
 				lib/libft/libft.a \
-				/Users/$(USER)/.brew/opt/readline/lib/libreadline.a \
+#				/Users/$(USER)/.brew/opt/readline/lib/libreadline.a \
 				/Users/$(USER)/.brew/opt/readline/lib/libhistory.a
 
 INCS		:= \
 				inc \
 				lib/libft/inc \
-				/Users/$(USER)/.brew/opt/readline/include/
+#				/Users/$(USER)/.brew/opt/readline/include/
 
 SRC_DIR		:= src
 SRCS		:= \
