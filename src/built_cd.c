@@ -6,87 +6,11 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 18:40:39 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/05 16:09:23 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/05 16:27:16 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/* char	*ft_strlower(char *str)
-{
-	int		i;
-	char	*tmp;
-
-	i = 0;
-	tmp = str;
-	while (tmp[i])
-	{
-		tmp[i] = ft_tolower(str[i]);
-		i++;
-	}
-	return (tmp);
-} */
-
-/* char	*str_mod(char *cur, char *str, int i)
-{
-	int	j;
-
-	j = 0;
-	while (cur[i])
-	{
-		cur[i] = str[j];
-		i++;
-		j++;
-	}
-	return (cur);
-} */
-
-/* char	*path_modify(char *cur, char *str)
-{
-	int		i;
-	char	*tmp;
-
-	tmp = malloc(ft_strlen(str) + 1);
-	ft_strlcpy(tmp, str, ft_strlen(str) + 1);
-	ft_strlower(tmp);
-//	printf("str: %s\n", str);
-//	printf("tmp: %s\n", tmp);
-	i = ft_strnstr_int(cur, tmp, ft_strlen(cur));
-	cur = str_mod(cur, str, i);
-	free (tmp);
-//	printf("cur: %s\n", cur);
-//	exit (1);
-	return (cur);
-} */
-
-
-/**
- * @brief add environment according to dest in **
- * @author nimai
- * @return ** pointer, then free 
- * @note 230603nimai: Doesn't show PWD on Ubuntu (moji bake)
- */
-/* void	envp_pwd_mod(t_temp *temp, char *dest)
-{
-	int		i;
-	char	**tmp;
-	int		x;
-
-	i = 0;
-	tmp = (char **)temp->envp;
-	while (tmp[i])
-	{
-		if (ft_strncmp(tmp[i], "PWD", 3) == 0)
-		{
-			tmp[i] = NULL;
-			tmp[i] = ft_strjoin("PWD=", dest);
-			x = i;
-		}
-		i++;
-	}
-	temp->envp = tmp;
-	free (tmp[x]);
-} */
 
 /**
  * @brief temporary error management
@@ -118,23 +42,32 @@ int	get_pos_above_path(char *str)
 	return (len);
 }
 
+char	*get_above_path(char *cur)
+{
+	int		cut;
+	char	*ret;
+
+	cut = get_pos_above_path(cur);
+	ret = malloc(sizeof(char) * (cut + 1));
+	if (!ret)
+		return (heap_error(1), NULL);
+	ft_strlcpy(ret, cur, cut + 1);
+	if (chdir(ret) == -1)
+		return (error_cd(ret), NULL);
+	return (ret);
+}
+
 char	*get_dest_path(char *str)
 {
 	char	*ret;
 	char	*cur;
-	int		cut;
 
 	ret = NULL;
 	cur = NULL;
 	if (ft_strncmp("../", str, ft_strlen(str)) == 0)
 	{
 		cur = getcwd(NULL, 0);
-		cut = get_pos_above_path(cur);
-		ret = malloc(sizeof(char) * (cut + 1));
-		if (!ret)
-			return (heap_error(1), NULL);
-		ft_strlcpy(ret, cur, cut + 1);
-		chdir(ret);
+		ret = get_above_path(cur);
 		return (free (cur), ret);
 	}
 	else//case absolute path
@@ -157,6 +90,7 @@ char	*get_dest_path(char *str)
  * @author nimai
  * @param **av "cd", "path".
  * @return 
+ * @note line amount ok if the printer are omitted
  */
 int	built_cd(t_temp *temp)
 {

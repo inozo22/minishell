@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:12:28 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/05 16:06:34 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/05 16:24:13 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,9 @@ void		envp_pwd_mod(t_temp *temp, char *dest);
 char		*ft_strlower(char *str);
 char		*str_mod(char *cur, char *str, int i);
 char		*path_modify(char *cur, char *str);
+int			get_pos_above_path(char *str);
+char		*get_above_path(char *cur);
+void		error_cd(char *cmd);
 /**
  * functions from cd
   */
