@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 18:40:39 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/05 16:27:16 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/05 16:36:58 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ char	*get_dest_path(char *str)
 			cur = path_modify(cur, str);
 			return (cur);
 		}
-		return (free (cur), str);		//str is an absolute path, so pass it directory
+		return (free (cur), str);		//seems that str is an absolute path, so pass it directory
 	}
 	return (ret);
 }
@@ -148,10 +148,10 @@ int	built_cd(t_temp *temp)
  * printf("line: %d\n", __LINE__);
  * error message: ft_printf("No such file or directory\n");
  * how to treat "../" or "./", give message like above? -> treat how does work bash
+ * 
  * How to managge errors? At this moment, put in each function.
  * 
  * TODO list
- * - change env!
- * - check if it has / or not.
+ * 230605 OLDPWD hasn't added yet, add when you know the structure(more or less)
  */
 
