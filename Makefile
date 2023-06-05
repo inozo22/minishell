@@ -6,7 +6,7 @@
 #    By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/16 18:53:13 by nimai             #+#    #+#              #
-#    Updated: 2023/06/03 16:28:56 by nimai            ###   ########.fr        #
+#    Updated: 2023/06/05 16:06:53 by nimai            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,7 @@ SRCS		:= \
 				built_pwd.c \
 				built_echo.c \
 				built_cd.c \
+				built_cd_path.c \
 				built_export.c \
 				built_export_sort.c \
 				built_env.c \

@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:12:28 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/01 15:49:48 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/05 16:06:34 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,17 @@ int			check_valid(char *str, char *cmd);
 /**
  * functions from export
  */
+
+/**
+ * functions from cd
+  */
+void		envp_pwd_mod(t_temp *temp, char *dest);
+char		*ft_strlower(char *str);
+char		*str_mod(char *cur, char *str, int i);
+char		*path_modify(char *cur, char *str);
+/**
+ * functions from cd
+  */
 
 void		error_built(char *cmd, char *av, char *comment);
 void		heap_error(int flag);

@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 19:03:42 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/23 14:14:49 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/05 14:57:02 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,11 @@ int			ft_strncmp(const char *s1, const char *s2, size_t len);
 void		*ft_memchr(const void *s, int c, size_t n);
 int			ft_memcmp(const void *s1, const void *s2, size_t n);
 char		*ft_strnstr(const char *big, const char *little, size_t len);
+/**
+ * @brief copy of strnstr but return int
+ * @note made for minishell
+ */
+int			ft_strnstr_int(const char *s1, const char *s2, size_t len);
 void		*ft_calloc(size_t count, size_t size);
 char		*ft_strdup(const char *s);
 char		*ft_substr(char const *s, unsigned int start, size_t len);
