@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:11:50 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/06 16:31:09 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/06 17:01:19 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,17 @@
 #include <unistd.h>
 #include <string.h> */
 
-
-
-
-
-
-
-
 void	sig_int_input(int code)
 {
 	(void)code;
 	ft_putstr_fd("\b\b  \b\n", STDERR_FILENO);
+	ft_printf("minishell🐚 > ");
 }
 
 void	sig_quit_input(int code)
 {
 	(void)code;
+	printf("Line: %d, File: %s\n", __LINE__, __FILE__);
 	ft_putstr_fd("\b\b \b\n", STDERR_FILENO);
 }
 
@@ -86,4 +81,20 @@ void	set_signal_action(void)
 		pause ();
 	return (0);
 } */
+
+/**
+ * speed 38400 baud; 31 rows; 217 columns;
+lflags: icanon isig iexten echo echoe echok echoke -echonl echoctl
+        -echoprt -altwerase -noflsh -tostop -flusho pendin -nokerninfo
+        -extproc
+iflags: -istrip icrnl -inlcr -igncr ixon -ixoff ixany imaxbel iutf8
+        -ignbrk brkint -inpck -ignpar -parmrk
+oflags: opost onlcr -oxtabs -onocr -onlret
+cflags: cread cs8 -parenb -parodd hupcl -clocal -cstopb -crtscts -dsrflow
+        -dtrflow -mdmbuf
+cchars: discard = ^O; dsusp = ^Y; eof = ^D; eol = <undef>;
+        eol2 = <undef>; erase = ^?; intr = ^C; kill = ^U; lnext = ^V;
+        min = 1; quit = ^\; reprint = ^R; start = ^Q; status = ^T;
+        stop = ^S; susp = ^Z; time = 0; werase = ^W;
+  */
 

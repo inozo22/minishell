@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 14:23:03 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/06 16:39:45 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/06 17:08:04 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	minishell(char **envp)
 	(void)envp;
 	while (1)
 	{
-		line = readline ("minishell🐚 > ");
 		if (signal(SIGINT, &sig_int_input) == SIG_ERR)
 		{
 			ft_printf("Line: %d, ERROR\n", __LINE__);
@@ -36,14 +35,13 @@ void	minishell(char **envp)
 			ft_printf("Line: %d, ERROR\n", __LINE__);
 			exit (1);
 		}
-		if (!line || ft_strlen(line) == 0)
+		line = readline ("minishell🐚 > ");
+		if (line && ft_strlen(line) > 0)
 		{
+			ft_printf ("%s\n", line);
+			add_history(line);
 			free (line);
-			break ;
 		}
-		ft_printf ("%s\n", line);
-		add_history(line);
-		free(line);
 	}
 	printf("exit\n");
 	exit (1);
