@@ -6,7 +6,7 @@
 #    By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/16 18:53:13 by nimai             #+#    #+#              #
-#    Updated: 2023/06/05 16:26:25 by nimai            ###   ########.fr        #
+#    Updated: 2023/06/06 16:28:33 by nimai            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,20 +16,21 @@ NAME		:= minishell
 #   INGREDIENTS                                  #
 #------------------------------------------------#
 
-LIBS		:=  ft #readline history
+LIBS		:=  ft readline history
 LIBS_TARGET	:= \
 				lib/libft/libft.a \
-#				/Users/$(USER)/.brew/opt/readline/lib/libreadline.a \
+				/Users/$(USER)/.brew/opt/readline/lib/libreadline.a \
 				/Users/$(USER)/.brew/opt/readline/lib/libhistory.a
 
 INCS		:= \
 				inc \
 				lib/libft/inc \
-#				/Users/$(USER)/.brew/opt/readline/include/
+				/Users/$(USER)/.brew/opt/readline/include/
 
 SRC_DIR		:= src
 SRCS		:= \
 				main.c \
+				built_main.c \
 				built_exit.c \
 				built_pwd.c \
 				built_echo.c \
@@ -39,6 +40,7 @@ SRCS		:= \
 				built_export_sort.c \
 				built_env.c \
 				built_unset.c \
+				signals.c \
 				errors.c \
 				free.c
 SRCS		:= $(SRCS:%=$(SRC_DIR)/%)

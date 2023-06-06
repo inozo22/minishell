@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:12:14 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/29 14:16:08 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/06 16:27:11 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,33 +24,32 @@
  * @param name keep until "="
  * @param val valor of variable, I have to put " " when I output
  */
-typedef struct s_export_box
+/* typedef struct s_export_box
 {
 	int		id;
 	long	pos;
 	char	*name;
 	char	*val;
-}	t_export_box;
+}	t_export_box; */
 
 /**
  * @brief to order export list
  */
-typedef struct s_export
+/* typedef struct s_export
 {
 	t_export_box	box[ARGLIMIT];
 	int				plen;
 }	t_export;
-
+ */
 /**
  * functions from export
  */
 
 /**
  * functions from export
- */
+ */ 
 
-
-
-
+void	sig_quit_input(int code);
+void	sig_int_input(int code);
 
 #endif
