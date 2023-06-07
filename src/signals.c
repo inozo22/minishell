@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:11:50 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/06 17:01:19 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/07 13:27:06 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@
 void	sig_int_input(int code)
 {
 	(void)code;
-	ft_putstr_fd("\b\b  \b\n", STDERR_FILENO);
+	ft_putstr_fd("\b\b  ",2);
+	ft_putstr_fd("\n", 2);
 	ft_printf("minishell🐚 > ");
 }
 

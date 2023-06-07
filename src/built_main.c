@@ -6,19 +6,19 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 12:52:29 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/06 16:14:44 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/07 12:34:41 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_temp	*init_temp(char *av[], char *envp[], t_temp *temp)
+/* t_temp	*init_temp(char *av[], char *envp[], t_temp *temp)
 {
 	temp->i = 0;
 	temp->argv = av;
 	temp->envp = envp;
 	return (temp);
-}
+} */
 
 
 /**
@@ -27,34 +27,18 @@ t_temp	*init_temp(char *av[], char *envp[], t_temp *temp)
  * @param **av whatever receive, it's changeble.
  * @note to check cmd, I will put a function instead of this main.
  */
-int	built_main(int ac, char *av[], char *envp[])
+int	built_main(char **av, t_temp *temp)
 {
-	t_temp	*temp;
-/* 	char	*line = NULL;
-
-	while (1)
-	{
-		line = readline ("🐚 > ");
-		if (!line || ft_strlen(line) == 0)
-		{
-			free (line);
-			break ;
-		}
-		printf ("line: '%s'\n", line);
-		add_history(line);
-		free(line);
-	}
-	printf("exit\n");
-	exit (1); */
+/* 	t_temp	*temp;
 
 	if (ac < 2)
-		return (0);
+		return (0); */
 	/**
 	 * 230526nimai: should be controled both length, av and command 
 
 	 */
-	temp = (t_temp *)malloc(sizeof(t_temp));
-	temp = init_temp(av, envp, temp);
+/* 	temp = (t_temp *)malloc(sizeof(t_temp));
+	temp = init_temp(av, envp, temp); */
 	if (ft_strncmp(av[1], "echo", ft_strlen(av[1])) == 0 && \
 	ft_strncmp(av[1], "echo", 4) == 0)
 	{
