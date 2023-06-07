@@ -6,7 +6,7 @@
 #    By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/16 18:53:13 by nimai             #+#    #+#              #
-#    Updated: 2023/06/06 16:28:33 by nimai            ###   ########.fr        #
+#    Updated: 2023/06/07 15:25:28 by nimai            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,6 @@ INCS		:= \
 SRC_DIR		:= src
 SRCS		:= \
 				main.c \
-				built_main.c \
 				built_exit.c \
 				built_pwd.c \
 				built_echo.c \

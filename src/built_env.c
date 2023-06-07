@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 09:50:16 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/02 13:25:23 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/07 14:58:56 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,6 @@ int	built_env(t_temp *temp)
  * 
  * MEMORY LEAKS
  * 230526nimai: When I try free it, receive errors say that I'm trying free memory which is not allocated.
- * But yes, allocated.
+ * But yes, allocated.->done
  * 
  */

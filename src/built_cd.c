@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 18:40:39 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/05 16:36:58 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/07 15:45:18 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,15 +103,20 @@ int	built_cd(t_temp *temp)
 	printf("Line: %d:	", __LINE__);
 	printf("position before	:	%s\n", cur);
 //printer
-	if (!cur)
-		return ((error_cd("current directory")), 0);//230524nimai: if it's null, like doesn't exit the current directory, what should I do? give error, or ignore?
-	if (!temp->argv[2])//when you don't have argument after "cd", move to $HOME
+//	if (!cur)
+//		return ((error_cd("current directory")), 0);//230524nimai: if it's null, like doesn't exit the current directory, what should I do? give error, or ignore?
+	if (cur && !temp->argv[2])//when you don't have argument after "cd", move to $HOME
 	{
 		if (chdir(getenv("HOME")) == -1)
 			return (printf("Line: %d, failed chdir\n", __LINE__), -1);
 	}
-	else if (ft_strncmp("./", temp->argv[2], 2) == 0)//don't move, but if it's not exist
+	else if (cur && ft_strncmp("./", temp->argv[2], 2) == 0)//don't move, but if it's not exist
 		chdir(cur);
+	else if (!cur && ft_strncmp("./", temp->argv[2], 2) == 0)
+	{
+		ft_printf("cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory");//temporary error control
+		return (0);//it should be return (0), as bash works
+	}
 	else
 	{
 		dest = get_dest_path(temp->argv[2]);//230524nimai: after av[3] will be ignored.

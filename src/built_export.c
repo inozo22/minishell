@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:18:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/01 16:24:31 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/07 14:59:26 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ int	built_export(t_temp *temp)
 	}
 	else if (av_amount((char **)temp->argv) > 2 && temp->argv[2][1] == '$')
 	{
-		//=>I have to print the variavle, if doesn't ex
+		//=>I have to print the variable, if doesn't ex
 /* 		if ()//match to some variable, print
 			;
 		else */
