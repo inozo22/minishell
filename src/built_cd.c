@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 18:40:39 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/07 16:02:35 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/07 17:37:14 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,9 @@ int	built_cd(t_temp *temp)
 		chdir(cur);
 	else if (!cur && ft_strncmp("./", temp->argv[2], 2) == 0)
 	{
+		dest = ft_strjoin(getenv("PWD"), temp->argv[2]);
+		envp_pwd_mod(temp, dest);
+		free (dest);
 		ft_printf("cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory");//temporary error control
 		return (0);//it should be return (0), as bash works
 	}
@@ -119,7 +122,7 @@ int	built_cd(t_temp *temp)
 	{
 		dest = get_dest_path(temp->argv[2]);//230524nimai: after av[3] will be ignored.
 		if (!dest)
-			return (free (cur), -1);	//230524nimai: if it's null, should it moves to home dir? Or just ignore it?
+			return (free (cur), 1);	//230524nimai: if it's null, should it moves to home dir? Or just ignore it?
 		envp_pwd_mod(temp, dest);
 		printf("\n		===TEST CD===\n");
 		built_env(temp);
@@ -156,5 +159,12 @@ int	built_cd(t_temp *temp)
  * 
  * TODO list
  * 230605 OLDPWD hasn't added yet, add when you know the structure(more or less)
+ * 
+ * cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory
+ * bash-3.2$ echo $?
+ * 0
+ * bash-3.2$ pwd
+ * /Users/nimai/test_bash/./
+ * 
  */
 
