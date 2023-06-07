@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 18:40:39 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/07 15:45:18 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/07 16:02:35 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ char	*get_dest_path(char *str)
  * @author nimai
  * @param **av "cd", "path".
  * @return 
- * @note line amount ok if the printer are omitted
+ * @note 
  */
 int	built_cd(t_temp *temp)
 {
@@ -103,8 +103,6 @@ int	built_cd(t_temp *temp)
 	printf("Line: %d:	", __LINE__);
 	printf("position before	:	%s\n", cur);
 //printer
-//	if (!cur)
-//		return ((error_cd("current directory")), 0);//230524nimai: if it's null, like doesn't exit the current directory, what should I do? give error, or ignore?
 	if (cur && !temp->argv[2])//when you don't have argument after "cd", move to $HOME
 	{
 		if (chdir(getenv("HOME")) == -1)
