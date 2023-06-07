@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 14:23:03 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/07 13:18:25 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/07 17:40:39 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,7 @@ void	minishell(int ac, char **av, char **envp)
 		line = readline ("minishell🐚 > ");
 		if (line && ft_strlen(line) > 0)
 		{
-			printf("Line: %d\n", __LINE__);
 			built_main(av, temp);
-			printf("Line: %d\n", __LINE__);
 			ft_printf ("%s\n", line);
 			add_history(line);
 			free (line);
