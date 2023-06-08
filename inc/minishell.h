@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 16:23:25 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/07 16:13:32 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/08 11:39:14 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
+# define MYPROMPT "minishell🐚 > "
 
 /**
  * @brief temporary structure until we make main structure 
@@ -39,6 +40,6 @@ typedef struct s_temp
 	int			i;
 }	t_temp;
 
-int	built_main(char **av, t_temp *temp);
+int	built_main(t_temp *temp);
 
 #endif
