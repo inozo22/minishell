@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:18:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/07 14:59:26 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/08 12:20:52 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ int	built_export(t_temp *temp)
 	char		**av = NULL;
 	char		**new_envp = NULL;
 
-	if (av_amount((char **)temp->argv) == 2)
+	if (av_amount((char **)temp->argv) == 1)
 	{
 		av = (char **)temp->argv;
 		tmp_env = (char **)temp->envp;
@@ -138,7 +138,7 @@ int	built_export(t_temp *temp)
 		quick_sort(list->box, 0, av_amount(tmp_env) - 1);
 		output_env(list, av_amount(tmp_env), FLAGEXPORT);
 	}
-	else if (av_amount((char **)temp->argv) > 2 && temp->argv[2][1] == '$')
+	else if (av_amount((char **)temp->argv) > 1 && temp->argv[1][0] == '$')
 	{
 		//=>I have to print the variable, if doesn't ex
 /* 		if ()//match to some variable, print
@@ -157,17 +157,18 @@ int	built_export(t_temp *temp)
 		temp->envp = new_envp;
 		tmp_env = (char **)temp->envp;
 //printer 
-		printf("		===TEST PRINT===\n");
+/* 		printf("		===TEST PRINT===\n");
 		list = (t_export *)malloc(sizeof(t_export));
 		if (!list)
 			return (heap_error(1), 0);
 		list = fill_list(tmp_env, list);
 		quick_sort(list->box, 0, av_amount(tmp_env) - 1);
 		output_env(list, av_amount(tmp_env), FLAGEXPORT);
-		printf("		===TEST PRINT===\n");
+		printf("		===TEST PRINT===\n"); */
 //printer 
 	}
-	arr_free(list);
+	if (list)
+		arr_free(list);
 	free (list);
 	free (new_envp);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 16:23:25 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/08 11:39:14 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/08 13:47:42 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct s_temp
 	int			i;
 }	t_temp;
 
-int	built_main(t_temp *temp);
+int		built_main(t_temp *temp);
+void	set_signal_handlers(void);
 
 #endif

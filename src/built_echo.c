@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:54:13 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/02 13:50:35 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/08 12:02:43 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,9 @@ int	built_echo(t_temp *temp)
 	int	amount;
 
 	amount = av_amount((char **)temp->argv);
-	if (amount < 3)
+	if (amount < 2)
 		return (ft_printf("\n"), 0);
-	i = 2;//230523nimai: start from 2 to look for flags.
+	i = 1;//230523nimai: start from 2 to look for flags.
 	flag[0] = is_flag(temp->argv[i]);
 	if (flag[0] == 1)
 		i++;

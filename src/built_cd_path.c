@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 16:00:17 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/05 16:04:43 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/08 13:02:52 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,11 @@
  * @return ** pointer, then free 
  * @note 230603nimai: Doesn't show PWD on Ubuntu (moji bake)
  */
-void	envp_pwd_mod(t_temp *temp, char *dest)
+t_temp	*envp_pwd_mod(t_temp *temp, char *dest)
 {
 	int		i;
 	char	**tmp;
+	char	*str;
 	int		x;
 
 	i = 0;
@@ -31,13 +32,18 @@ void	envp_pwd_mod(t_temp *temp, char *dest)
 		if (ft_strncmp(tmp[i], "PWD", 3) == 0)
 		{
 			tmp[i] = NULL;
-			tmp[i] = ft_strjoin("PWD=", dest);
+			printf("Line: %d	tmp[%d]: %s\n", __LINE__, i, tmp[i]);
+			str = ft_strjoin("PWD=", dest);
+			tmp[i] = str;
+			printf("Line: %d	tmp[%d]: %s\n", __LINE__, i, tmp[i]);
 			x = i;
 		}
 		i++;
 	}
 	temp->envp = tmp;
-	free (tmp[x]);
+	free (str);
+//	free (tmp[x]);
+	return (temp);
 }
 
 char	*ft_strlower(char *str)

@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:11:50 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/07 13:27:06 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/08 15:27:50 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,22 @@
 #include <unistd.h>
 #include <string.h> */
 
-void	sig_int_input(int code)
+/* 		if (signal(SIGINT, &sig_int_input) == SIG_ERR)
+		{
+			ft_printf("Line: %d, ERROR\n", __LINE__);
+			exit (1);
+		}
+		else if (signal(SIGQUIT, &sig_quit_input) == SIG_ERR)
+		{
+			ft_printf("Line: %d, ERROR\n", __LINE__);
+			exit (1);
+		} */
+
+/* void	sig_int_input(int code)
 {
 	(void)code;
 	ft_putstr_fd("\b\b  ",2);
 	ft_putstr_fd("\n", 2);
-	ft_printf("minishell🐚 > ");
 }
 
 void	sig_quit_input(int code)
@@ -29,6 +39,26 @@ void	sig_quit_input(int code)
 	(void)code;
 	printf("Line: %d, File: %s\n", __LINE__, __FILE__);
 	ft_putstr_fd("\b\b \b\n", STDERR_FILENO);
+} */
+
+void	sigint_sighandler(int sig)
+{
+//	printf("sig: %d\n", sig);
+	(void)sig;
+	rl_on_new_line();
+	write(STDOUT_FILENO, "\n", 1);
+	rl_replace_line("", 0);
+	rl_redisplay();
+}
+
+
+void	set_signal_handlers(void)
+{
+	if (signal(SIGINT, &sigint_sighandler) == SIG_ERR || signal(SIGQUIT, SIG_IGN) == SIG_ERR)
+	{
+		ft_printf("Line: %d, ERROR\n", __LINE__);
+		exit (1);
+	}
 }
 
 /* void	action(int signal, siginfo_t *info, void *ucontext)
@@ -84,6 +114,7 @@ void	set_signal_action(void)
 } */
 
 /**
+ * $ stty -a
  * speed 38400 baud; 31 rows; 217 columns;
 lflags: icanon isig iexten echo echoe echok echoke -echonl echoctl
         -echoprt -altwerase -noflsh -tostop -flusho pendin -nokerninfo

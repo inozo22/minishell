@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 18:40:39 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/07 17:37:14 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/08 13:01:45 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,32 +102,34 @@ int	built_cd(t_temp *temp)
 //printer
 	printf("Line: %d:	", __LINE__);
 	printf("position before	:	%s\n", cur);
+	printf("Line: %d:	av[0]: %s, av[1]: %s\n", __LINE__, temp->argv[0], temp->argv[1]);
 //printer
-	if (cur && !temp->argv[2])//when you don't have argument after "cd", move to $HOME
+	if (cur && !temp->argv[1])//when you don't have argument after "cd", move to $HOME
 	{
 		if (chdir(getenv("HOME")) == -1)
 			return (printf("Line: %d, failed chdir\n", __LINE__), -1);
+		envp_pwd_mod(temp, getenv("HOME"));
 	}
-	else if (cur && ft_strncmp("./", temp->argv[2], 2) == 0)//don't move, but if it's not exist
+	else if (cur && ft_strncmp("./", temp->argv[1], 2) == 0)//don't move, but if it's not exist
 		chdir(cur);
-	else if (!cur && ft_strncmp("./", temp->argv[2], 2) == 0)
+	else if (!cur && ft_strncmp("./", temp->argv[1], 2) == 0)
 	{
-		dest = ft_strjoin(getenv("PWD"), temp->argv[2]);
-		envp_pwd_mod(temp, dest);
+		dest = ft_strjoin(getenv("PWD"), temp->argv[1]);
+		temp = envp_pwd_mod(temp, dest);
 		free (dest);
 		ft_printf("cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory");//temporary error control
 		return (0);//it should be return (0), as bash works
 	}
 	else
 	{
-		dest = get_dest_path(temp->argv[2]);//230524nimai: after av[3] will be ignored.
+		dest = get_dest_path(temp->argv[1]);//230524nimai: after av[3] will be ignored.
 		if (!dest)
 			return (free (cur), 1);	//230524nimai: if it's null, should it moves to home dir? Or just ignore it?
 		envp_pwd_mod(temp, dest);
-		printf("\n		===TEST CD===\n");
+/* 		printf("\n		===TEST CD===\n");
 		built_env(temp);
-		printf("		===TEST CD===\n");
-		if (ft_strncmp(dest, temp->argv[2], ft_strlen(dest)) != 0)
+		printf("		===TEST CD===\n"); */
+		if (ft_strncmp(dest, temp->argv[1], ft_strlen(dest)) != 0)
 			free (dest);
 	}
 	free (cur);

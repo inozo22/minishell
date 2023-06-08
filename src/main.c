@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 14:23:03 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/08 11:58:33 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/08 15:14:33 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,19 +48,10 @@ void	minishell(char **envp)
 	if (!temp)
 		return ;
 	temp = init_temp(envp, temp);
+	set_signal_handlers();
 	line = readline ("minishell🐚 > ");
 	while (line)
 	{
-		if (signal(SIGINT, &sig_int_input) == SIG_ERR)
-		{
-			ft_printf("Line: %d, ERROR\n", __LINE__);
-			exit (1);
-		}
-		if (signal(SIGQUIT, &sig_quit_input) == SIG_ERR)
-		{
-			ft_printf("Line: %d, ERROR\n", __LINE__);
-			exit (1);
-		}
 		if (*line)
 		{
 			add_history(line);
@@ -94,6 +85,7 @@ void	minishell(char **envp)
 	} */
 	free (temp);
 	write (1, "exit\n", 5);
+	system ("leaks minishell");
 	exit (0);
 }
 
