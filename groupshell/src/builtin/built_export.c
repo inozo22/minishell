@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:18:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/09 15:36:55 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/09 16:12:22 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,19 +192,7 @@ int	built_export(char **input, t_data *data)
 /* 	if (list)
 		arr_free(list); */
 	free (list);
-	int i = 0;
-	while (i < av_amount(data->env))
-	{
-		ft_printf("env %d: %s\n", i, data->env[i]);
-		i++;
-	}
 //	free (new_envp);
-/* 	i = 0;
-	while (i < av_amount(data->env))
-	{
-		ft_printf("env %d: %s\n", i, data->env[i]);
-		i++;
-	} */
 	return (0);
 }
 

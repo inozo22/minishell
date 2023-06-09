@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:32:33 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/06/08 18:51:34 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/06/09 16:06:35 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,12 +118,20 @@ int	minishell(t_data *data)
 	prompt = get_prompt(data);
 	while (1)
 	{
+		int x= 0;
+
+		while (x < av_amount(data->env))
+		{
+			ft_printf("env %d: %s\n", x, data->env[x]);
+			x++;
+		}
 		line_read = readline(prompt);
 		if (line_read && *line_read)
 			add_history(line_read);
 		if (process_input(line_read, data) == INT_MAX)
 			break ;
 		free(line_read);
+
 	}
 	free(prompt);
 	rl_redisplay();
