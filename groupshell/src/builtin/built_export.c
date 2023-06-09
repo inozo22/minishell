@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:18:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/09 11:59:53 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/09 15:36:55 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ char	**envp_strs_join(char **input, t_data *data)
 	if (!ret)
 		return (heap_error(1), NULL);
 	i = 0;
-	j = 1;
+	j = 0;
 	while (data->env[i])
 	{
 		ret[i] = data->env[i];
@@ -164,7 +164,7 @@ int	built_export(char **input, t_data *data)
 		if (!new_envp)
 			return (printf("ERROR: Line: %d\n", __LINE__));
 		data->env = new_envp;
-		tmp_env = data->env;
+//		tmp_env = data->env;
 //printer 
 /* 		printf("		===TEST PRINT===\n");
 		list = (t_data *)malloc(sizeof(t_data));
@@ -174,13 +174,37 @@ int	built_export(char **input, t_data *data)
 		quick_sort(list->box, 0, av_amount(tmp_env) - 1);
 		output_env(list, av_amount(tmp_env), FLAGEXPORT);
 		printf("		===TEST PRINT===\n"); */
-//printer 
+/* 		int i = 0;
+		while (i < av_amount(data->env))
+		{
+			ft_printf("env %d: %s\n", i, data->env[i]);
+			i++;
+		} */
+/* 		i = -1;
+		while (input[++i])
+			ft_printf("input %d: %s\n", i, input[i]); */
+		
+//printer
 	}
+
+
 //230609comment to check
 /* 	if (list)
 		arr_free(list); */
 	free (list);
-	free (new_envp);
+	int i = 0;
+	while (i < av_amount(data->env))
+	{
+		ft_printf("env %d: %s\n", i, data->env[i]);
+		i++;
+	}
+//	free (new_envp);
+/* 	i = 0;
+	while (i < av_amount(data->env))
+	{
+		ft_printf("env %d: %s\n", i, data->env[i]);
+		i++;
+	} */
 	return (0);
 }
 
