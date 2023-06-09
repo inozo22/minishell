@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_export_sort.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 16:17:55 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/08 17:17:51 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/06/09 10:48:39 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,30 @@ int	get_pivot(t_export_box box[], int left, int right)
 	pivot = left;
 	while (i < j)
 	{
+		while (i < j && box[++i].name && box[pivot].name && \
+		(ft_strncmp(box[i].name, box[pivot].name, ft_strlen(box[i].name)) < 0))
+			;
+		while (j && box[pivot].name && box[--j].name && \
+		ft_strncmp(box[pivot].name, box[j].name, ft_strlen(box[pivot].name)) < 0)
+			;
+		if (i < j)
+			swap_pairs(&box[i], &box[j]);
+	}
+	swap_pairs(&box[pivot], &box[j]);
+	return (j);
+}
+
+/* int	get_pivot(t_export_box box[], int left, int right)
+{
+	int	pivot;
+	int	i;
+	int	j;
+
+	i = left;
+	j = right + 1;
+	pivot = left;
+	while (i < j)
+	{
 		while (i < j && box[i + 1].name && box[pivot].name && \
 		(ft_strncmp(box[++i].name, box[pivot].name, 2000) < 0))
 			;
@@ -47,7 +71,7 @@ int	get_pivot(t_export_box box[], int left, int right)
 	}
 	swap_pairs(&box[pivot], &box[j]);
 	return (j);
-}
+} */
 
 void	quick_sort(t_export_box box[], int left, int right)
 {

@@ -6,7 +6,7 @@
 #    By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/16 18:53:13 by nimai             #+#    #+#              #
-#    Updated: 2023/06/07 16:14:51 by nimai            ###   ########.fr        #
+#    Updated: 2023/06/09 11:00:28 by nimai            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,8 @@ INCS		:= \
 				inc \
 				lib/libft/inc \
 				/Users/$(USER)/.brew/opt/readline/include/
+
+LNK			:= -g3 -O0 -fsanitize=address 
 
 SRC_DIR		:= src
 SRCS		:= \
@@ -50,7 +52,7 @@ OBJS		:= $(SRCS:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
 DEPS		:= $(OBJS:.o=.d)
 
 CC			:= cc
-CFLAGS		:= -g3 -Wall -Wextra -Werror
+CFLAGS		:= -Wall -Wextra -Werror
 CPPFLAGS	:= $(addprefix -I,$(INCS)) -MMD -MP
 LDFLAGS		:= $(addprefix -L,$(dir $(LIBS_TARGET))) 
 LDLIBS		:= $(addprefix -l,$(LIBS))
@@ -93,7 +95,7 @@ export	ART
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBS_TARGET)
-	$(CC) $(LDFLAGS) $(OBJS) $(LDLIBS) -o $(NAME)
+	$(CC) $(LDFLAGS) $(OBJS) $(LDLIBS) $(LNK) -o $(NAME)
 	$(info CREATED $(NAME))
 	@echo "$$ART"
 

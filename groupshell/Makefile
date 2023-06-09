@@ -6,7 +6,7 @@
 #    By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/30 13:14:38 by bde-mada          #+#    #+#              #
-#    Updated: 2023/06/09 09:16:37 by nimai            ###   ########.fr        #
+#    Updated: 2023/06/09 11:12:18 by nimai            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,14 +20,14 @@ define ASCIIART
                     \ \ (  c  )
                      \ \ \ = /            ____
                       |──|█──|           ||   \_
-                      |  |█  |           ||     |         $(YELLOW)/^-^\         /^-----^\\\x1b[31m
-                      |  |█  |       ....||__/|-"        $(YELLOW)/ o o \        V  o o  V\x1b[31m
-                      |______|    ╔══|═════════|══╗     $(YELLOW)/   ▼   \        |  ▽  |\x1b[31m
-                       |░|░|      ╚═══════════════╝     $(YELLOW)V \ ∧ / V         \ Q / \x1b[31m
-                       |░|░|       ▒  ▒      ▒  ▒         $(YELLOW)/ - \\           / - \\\x1b[31m
-                       |░|░|       ▒  ▒      ▒  ▒        $(YELLOW)/    | ========= |    \\\x1b[31m
-───────────────────────|░|░|───────▒──▒──────▒──▒──$(YELLOW)("   /     | minishell |     \\     )"\x1b[31m
-                       |_____>     ▒         ▒      $(YELLOW)===/___) || ========= || (___\\====\033[0m
+                      |  |█  |           ||     |         \033[1;33m/^-^\         /^-----^\\\x1b[31m
+                      |  |█  |       ....||__/|-"        \033[1;33m/ o o \        V  o o  V\x1b[31m
+                      |______|    ╔══|═════════|══╗     \033[1;33m/   ▼   \        |  ▽  |\x1b[31m
+                       |░|░|      ╚═══════════════╝     \033[1;33mV \ ∧ / V         \ Q / \x1b[31m
+                       |░|░|       ▒  ▒      ▒  ▒         \033[1;33m/ - \\           / - \\\x1b[31m
+                       |░|░|       ▒  ▒      ▒  ▒        \033[1;33m/    | ========= |    \\\x1b[31m
+───────────────────────|░|░|───────▒──▒──────▒──▒──\033[1;33m("   /     | minishell |     \\     )"\x1b[31m
+                       |_____>     ▒         ▒      \033[1;33m===/___) || ========= || (___\\====\033[0m
 						
 endef
 export ASCIIART
@@ -38,7 +38,7 @@ CFLAGS		= -Wall -Wextra -Werror -pedantic
 OS			= $(shell uname)
 
 #Optimization and valgrind debugging flags:
-LNK			:= -g3 -O0 #-fsanitize=address 
+LNK			:= -g3 -O0 -fsanitize=address 
 #change -O0 with -O1 or -O2 for faster execution but worse info
 
 LDFLAGS		= $(addprefix -L, $(LIBS_DIR)) -L/Users/$(USER)/.brew/opt/readline/lib
@@ -67,7 +67,7 @@ INCLUDES	:= $(addprefix $(INC_DIR), $(INCLUDE))
 
 NONE		:= "\033[0m"
 GREEN		:= "\033[32m"
-YELLOW		:= \033[1;33m
+YELLOW		:= "\033[1;33m"
 GRAY		:= "\033[2;37m"
 CURSIVE		:= "\033[3m"
 RED			:= "\x1b[31m"

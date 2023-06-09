@@ -18,3 +18,11 @@
 ### pwd
 
 ### unset
+
+
+
+
+# changes
+
+1. SHELL_NAME
+2. ascii art

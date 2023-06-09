@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 19:10:38 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/06/08 18:23:40 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/06/09 10:17:29 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ enum e_state
 	GENERAL,
 }; */
 
-# define SHELL_NAME "minihell🤪"
+//# define SHELL_NAME "minihell🤪"
+# define SHELL_NAME "minishell🐚"
 # define BUILTIN builtin[] = {"echo", "cd", "pwd", "export", "unset", "env", "exit", NULL}
 
 typedef struct s_tokens

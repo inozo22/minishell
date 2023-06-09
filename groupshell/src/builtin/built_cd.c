@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 18:40:39 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/09 09:25:51 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/09 10:10:54 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,9 +110,9 @@ int	built_cd(char **input, t_data *data)
 			return (printf("Line: %d, failed chdir\n", __LINE__), -1);
 		envp_pwd_mod(data, getenv("HOME"));
 	}
-	else if (cur && ft_strncmp("./", input[1], 2) == 0)//don't move, but if it's not exist
+	else if (cur && ft_strncmp("./", input[1], 2) == 0)//move to where you are, you will get OLDPWD
 		chdir(cur);
-	else if (!cur && ft_strncmp("./", input[1], 2) == 0)
+	else if (!cur && ft_strncmp("./", input[1], 2) == 0)//move to where you are, but if it's not exist
 	{
 		dest = ft_strjoin(getenv("PWD"), input[1]);
 		data = envp_pwd_mod(data, dest);
@@ -126,9 +126,6 @@ int	built_cd(char **input, t_data *data)
 		if (!dest)
 			return (free (cur), 1);	//230524nimai: if it's null, should it moves to home dir? Or just ignore it?
 		envp_pwd_mod(data, dest);
-/* 		printf("\n		===TEST CD===\n");
-		built_env(temp);
-		printf("		===TEST CD===\n"); */
 		if (ft_strncmp(dest, input[1], ft_strlen(dest)) != 0)
 			free (dest);
 	}

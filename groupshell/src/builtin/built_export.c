@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_export.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:18:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/08 19:02:19 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/06/09 11:59:53 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ int	built_export(char **input, t_data *data)
 		if (!list)
 			return (heap_error(1), 0);
 		list = fill_list(tmp_env, list);
-		quick_sort(list->box, 0, av_amount(tmp_env) - 1);
+//		quick_sort(list->box, 0, av_amount(tmp_env) - 1);
 		output_env(list, av_amount(tmp_env), FLAGEXPORT);
 	}
 	else if (av_amount(input) > 1 && input[1][0] == '$')
@@ -176,8 +176,9 @@ int	built_export(char **input, t_data *data)
 		printf("		===TEST PRINT===\n"); */
 //printer 
 	}
-	if (list)
-		arr_free(list);
+//230609comment to check
+/* 	if (list)
+		arr_free(list); */
 	free (list);
 	free (new_envp);
 	return (0);
