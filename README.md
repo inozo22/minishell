@@ -12,6 +12,9 @@
 	This project is about creating a simple shell🐚
 </p>
 
+<p>groupshell -> group work</p>
+<p>mishell -> mine</p>
+
 
 ## Documents
 
