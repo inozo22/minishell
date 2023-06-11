@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_exit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 13:05:08 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/08 15:57:49 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/06/11 17:56:19 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	av_amount(char **strs)
  * @author nimai
  * @param **av "exit", "0"
  * @return if there are more than <cmd + 1 argument>, return to minishell prompt, without execute any function after this.
- * @note as get out from process, you have to free everything here!!
+ * @note 230611nimai: free in the main, so don't have to free memory here.
  */
 int	built_exit(char **input)
 {
@@ -86,9 +86,6 @@ int	built_exit(char **input)
 		return (error_exit_msg(1, "minishell: exit: too many arguments"));
 	}
 	ft_printf("EXIT!\n");
-//	free (temp);//
-
-//PUT SUPER FREE
 
 	exit (ft_atoi(input[1]));
 	return (0);
