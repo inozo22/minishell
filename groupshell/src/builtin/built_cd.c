@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 18:40:39 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/09 10:10:54 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/13 17:28:01 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ int	built_cd(char **input, t_data *data)
 	char	*dest;
 	char	*cur;
 	char	*test;
+//	char	*str;
 
 	cur = getcwd(NULL, 0);
 //printer

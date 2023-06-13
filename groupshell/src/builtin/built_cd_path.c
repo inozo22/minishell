@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_cd_path.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 16:00:17 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/08 18:11:45 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/06/13 17:30:19 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,28 +20,16 @@
  */
 t_data	*envp_pwd_mod(t_data *data, char *dest)
 {
-	int		i;
 	char	*str;
-	int		x;
 
 	str = NULL;
-	i = 0;
-	ft_printf("DEST: %s\n", dest);
-	while (data->env[i])
-	{
-		if (ft_strcmp(data->env[i], "PWD") == 0)
-		{
-			data->env[i] = NULL;
-			printf("Line: %d	tmp[%d]: %s\n", __LINE__, i, data->env[i]);
-			str = ft_strjoin("PWD=", dest);
-			data->env[i] = str;
-			printf("Line: %d	tmp[%d]: %s\n", __LINE__, i, data->env[i]);
-			x = i;
-		}
-		i++;
-	}
+	str = ft_calloc(ft_strlen(dest) + 5, sizeof(char));
+	if (!str)
+		return (NULL);
+	ft_strlcpy(str, "PWD=", 5);
+	ft_strcat(str, dest);
+	envp_strs_mod(str, data);
 	free (str);
-//	free (tmp[x]);
 	return (data);
 }
 
