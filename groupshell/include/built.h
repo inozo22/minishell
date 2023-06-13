@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:12:28 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/13 12:50:28 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/13 15:59:41 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ t_export	*fill_list(char **strs, t_export *ret);
 void		output_env(t_export *data, int len, int flag);
 int			check_valid(char *str, char *cmd);
 int			output_export(t_data *data);
+void		envp_strs_mod(char *input, t_data *data);
+int			check_input(char *input, t_data *data);
 /**
  * functions from export
  */
@@ -90,6 +92,14 @@ void		error_cd(char *cmd);
 /**
  * functions from cd
   */
+
+/**
+ * functions from utils
+ */
+int	check_valid(char *str, char *cmd);
+/**
+ * functions from utils
+ */
 
 void		error_built(char *cmd, char *av, char *comment);
 void		heap_error(int flag);

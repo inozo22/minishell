@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_unset.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 09:50:35 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/08 17:20:37 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/06/13 15:22:58 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
  * @note in built_unset.
  * @note builtin global function
  */
-int	check_valid(char *str, char *cmd)
+/* int	check_valid(char *str, char *cmd)
 {
 	int	i;
 
@@ -41,7 +41,7 @@ int	check_valid(char *str, char *cmd)
 		}
 	}
 	return (1);
-}
+} */
 
 /**
  * @brief manage "builtin" unset cmd.

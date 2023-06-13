@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:18:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/13 16:42:05 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/13 15:37:21 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,39 +81,34 @@
  * @brief add environment according to av in **
  * @author nimai
  * @return ** pointer, then free 
- * @note 230613nimai: if change the input style, modify here
+ * @note 230530nimai: I will throw it away
  */
-void	envp_strs_mod(char *input, t_data *data)
+/* char	*envp_strs_mod(char *input, t_data *data)
 {
-//	char	**ret;
-	char	*tmp;
+	char	**ret;
 	int		i;
 	int		j;
-	int		c;
 
+	ret = (char **)malloc(sizeof(char *) * (av_amount(input) + av_amount(data->env)));
+	if (!ret)
+		return (heap_error(1), NULL);
 	i = 0;
 	j = 0;
-	c = check_input(input, data);
-	if (input[c] == '=')
+	while (data->env[i])
 	{
-		while (data->env[i])
+		ret[i] = data->env[i];
+		i++;
+	}
+	while (input[++j])
+	{
+		if (check_valid(input[j], "export"))
 		{
-			if (ft_strncmp(data->env[i], input, c) == 0)
-			{
-				free (data->env[i]);
-				tmp = ft_calloc(ft_strlen(input) + 1, sizeof(char));
-				ft_strlcpy(tmp, input, c + 2);
-				ft_strcat(tmp, (input + c + 1));
-				data->env[i] = tmp;
-			}
+			ret[i] = input[j];
 			i++;
 		}
 	}
-	else if (input[c] == '\0')//何もしない
-	{
-		;
-	}
-}
+	return (ret);
+} */
 
 /**
  * @brief add environment according to av in **
@@ -201,7 +196,7 @@ int	check_input(char *input, t_data *data)
 			j++;
 		}
 		if (input[c] == '=' || input[c] == '\0')
-			return (c);
+			return (1);
 		i++;
 	}
 	return (0);
@@ -221,6 +216,16 @@ int	built_export(char **input, t_data *data)
 	int			i;
 	int			j;
 
+//------------------------------------------------------
+/* 	int i = -1;
+	while (data->env[++i])
+		ft_printf("env %d: %s\n", i, data->env[i]);
+	i = -1;
+	while (input[++i])
+		ft_printf("input %d: %s\n", i, input[i]); */
+
+//----------------------------------------------------
+
 	if (av_amount(input) == 1)
 	{
 		if (!output_export(data))
@@ -237,29 +242,87 @@ int	built_export(char **input, t_data *data)
 			printf("Line: %d, File: %s\n", __LINE__, __FILE__);
 			new_envp = envp_strs_join(input[j], data);
 			if (!new_envp)
-				return (printf("ERROR: Line: %d\n", __LINE__), 1);
+				return (printf("ERROR: Line: %d\n", __LINE__));
 			data->env = new_envp;
-			return (0);
 		}
 		else//mod
 		{
 			printf("This is a old one!\n");
-			envp_strs_mod(input[j], data);
-			i = 0;
-			while (data->env[i])
-			{
-				printf("mod %d: %s\n", i, data->env[i]);
-				i++;
-			}
-	//		exit (0);
-			return (0);
+			exit (0);
 		}
+/* 		while (data->env[++i])
+		{
+			if (ft_strnstr(data->env[i], input[j], ft_strlen(input[j])))
+			{
+				printf("data->env[%d]: %s, input[%d]: %s\n", i, data->env[i], j, input[j]);
+				free (data->env[i]);
+			}
 
+		} */
 
 	}
-//If none of the above apply
-	if (!output_export(data))
-		return (printf("Error: output_export\n"), 1);
+
+
+
+
+//	while (data->env[++i])
+//	{
+//		if (ft_strnstr(data->env[i], input[j], ft_strlen(input[j])))
+//		{
+//			break ;
+//		}
+//		printf("Line: %d, File: %s\n", __LINE__, __FILE__);
+//		j++;
+//	}
+//	printf("Line: %d, File: %s\n", __LINE__, __FILE__);
+//	if (av_amount(input) > 1 && input[1][0] == '$')
+//	{
+		//=>I have to print the variable, if doesn't ex
+/* 		if ()//match to some variable, print
+			;
+		else */
+	//	output_env(list, av_amount(tmp_env), FLAGEXPORT);
+		/**
+		 * 230601nimai: it's required to have some flag to know if it's a given path
+		 */
+		;
+//	}
+//	else
+//	{
+//		printf("Line: %d, File: %s\n", __LINE__, __FILE__);
+//		new_envp = envp_strs_join(input, data);
+//		if (!new_envp)
+//			return (printf("ERROR: Line: %d\n", __LINE__));
+//		data->env = new_envp;
+//		tmp_env = data->env;
+//printer 
+/* 		printf("		===TEST PRINT===\n");
+		list = (t_data *)malloc(sizeof(t_data));
+		if (!list)
+			return (heap_error(1), 0);
+		list = fill_list(tmp_env, list);
+		quick_sort(list->box, 0, av_amount(tmp_env) - 1);
+		output_env(list, av_amount(tmp_env), FLAGEXPORT);
+		printf("		===TEST PRINT===\n"); */
+/* 		int i = 0;
+		while (i < av_amount(data->env))
+		{
+			ft_printf("env %d: %s\n", i, data->env[i]);
+			i++;
+		} */
+/* 		i = -1;
+		while (input[++i])
+			ft_printf("input %d: %s\n", i, input[i]); */
+		
+//printer
+//	}
+
+
+//230609comment to check
+/* 	if (list)
+		arr_free(list); */
+//	free (list);
+//	free (new_envp);
 	return (0);
 }
 
