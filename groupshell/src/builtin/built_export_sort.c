@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 16:17:55 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/09 10:48:39 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/13 11:18:00 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,10 @@ int	get_pivot(t_export_box box[], int left, int right)
 	while (i < j)
 	{
 		while (i < j && box[++i].name && box[pivot].name && \
-		(ft_strncmp(box[i].name, box[pivot].name, ft_strlen(box[i].name)) < 0))
+		(ft_strncmp(box[i].name, box[pivot].name, ft_strlen(box[i].name) - 1) < 0))
 			;
 		while (j && box[pivot].name && box[--j].name && \
-		ft_strncmp(box[pivot].name, box[j].name, ft_strlen(box[pivot].name)) < 0)
+		ft_strncmp(box[pivot].name, box[j].name, ft_strlen(box[pivot].name) - 1) < 0)
 			;
 		if (i < j)
 			swap_pairs(&box[i], &box[j]);

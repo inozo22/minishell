@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:18:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/13 09:55:29 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/13 11:14:10 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,7 @@ char	**envp_strs_join(char **input, t_data *data)
 	int		i;
 	int		j;
 
-	ret = (char **)malloc(sizeof(char *) * (av_amount(input) + \
-							av_amount(data->env) - 2));
+	ret = (char **)malloc(sizeof(char *) * (av_amount(input) + av_amount(data->env)));
 	if (!ret)
 		return (heap_error(1), NULL);
 	i = 0;
@@ -100,7 +99,6 @@ char	**envp_strs_join(char **input, t_data *data)
 		ret[i] = data->env[i];
 		i++;
 	}
-	i--;
 	while (input[++j])
 	{
 		if (check_valid(input[j], "export"))
@@ -134,6 +132,7 @@ int	built_export(char **input, t_data *data)
 		ft_printf("input %d: %s\n", i, input[i]); */
 
 //----------------------------------------------------
+
 	if (av_amount(input) == 1)
 	{
 		av = input;
@@ -144,7 +143,7 @@ int	built_export(char **input, t_data *data)
 		if (!list)
 			return (heap_error(1), 0);
 		list = fill_list(tmp_env, list);
-//		quick_sort(list->box, 0, av_amount(tmp_env) - 1);
+		quick_sort(list->box, 0, av_amount(tmp_env) - 1);
 		output_env(list, av_amount(tmp_env), FLAGEXPORT);
 	}
 	else if (av_amount(input) > 1 && input[1][0] == '$')
