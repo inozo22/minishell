@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 12:44:12 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/13 14:25:03 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/13 17:08:08 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	output_env(t_export *list, int len, int flag)
 			{
 				ft_printf("declare -x ");
 				ft_printf("%s", list->box[i].name);
-				if (ft_strlen(list->box[i].val) >= 1)
+				if (list->box[i].name[ft_strlen(list->box[i].name) - 1] == '=')
 					ft_printf("\"%s\"", list->box[i].val);
 				ft_printf("\n");
 			}

@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:18:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/13 16:42:05 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/13 17:11:55 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,9 @@ void	envp_strs_mod(char *input, t_data *data)
 	{
 		while (data->env[i])
 		{
-			if (ft_strncmp(data->env[i], input, c) == 0)
+			if (ft_strncmp(data->env[i], input, c + 1) == 0)
 			{
+				printf("input: %s\n", input);
 				free (data->env[i]);
 				tmp = ft_calloc(ft_strlen(input) + 1, sizeof(char));
 				ft_strlcpy(tmp, input, c + 2);
@@ -194,11 +195,10 @@ int	check_input(char *input, t_data *data)
 	while (data->env[i])
 	{
 		c = 0;
-		j = 0;
-		while (data->env[i][j] == input[c])
+		j = -1;
+		while (data->env[i][++j] == input[c] && input[c] != '=' && input[c] != '\0')
 		{
 			c++;
-			j++;
 		}
 		if (input[c] == '=' || input[c] == '\0')
 			return (c);
@@ -233,29 +233,15 @@ int	built_export(char **input, t_data *data)
 	{
 		if (!check_input(input[j], data))//add
 		{
-			printf("This is a new one!\n");
-			printf("Line: %d, File: %s\n", __LINE__, __FILE__);
 			new_envp = envp_strs_join(input[j], data);
 			if (!new_envp)
 				return (printf("ERROR: Line: %d\n", __LINE__), 1);
 			data->env = new_envp;
-			return (0);
 		}
 		else//mod
 		{
-			printf("This is a old one!\n");
 			envp_strs_mod(input[j], data);
-			i = 0;
-			while (data->env[i])
-			{
-				printf("mod %d: %s\n", i, data->env[i]);
-				i++;
-			}
-	//		exit (0);
-			return (0);
 		}
-
-
 	}
 //If none of the above apply
 	if (!output_export(data))
@@ -275,4 +261,12 @@ int	built_export(char **input, t_data *data)
  * ??? Is it OK if we control in the minishell?	-> OK!
  * For example, it's ok if do sth in bash, but doesn't affect to the minishell? ->OK!
  * 
+ * ******************************************************************
+ * 230613nimai:
+ * export OLDPWD: do nothing
+ * export OLDPWD=aaa: overwrite
+ * export OLDPWD="aaa": doesn't work (ask how will I receive)
+ * export OLDPWA: add in export, but doesn't print with env command
+ * export OLDPWA=aaa: add new variable
+ * export OLDPWA="aaa": doesn't work (ask how will I receive)
  */
