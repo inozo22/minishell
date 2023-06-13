@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:18:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/13 17:11:55 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/13 17:44:13 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@
  */
 void	envp_strs_mod(char *input, t_data *data)
 {
-//	char	**ret;
 	char	*tmp;
 	int		i;
 	int		j;
@@ -110,44 +109,11 @@ void	envp_strs_mod(char *input, t_data *data)
 			i++;
 		}
 	}
-	else if (input[c] == '\0')//何もしない
+/* 	else if (input[c] == '\0')//Do nothing
 	{
 		;
-	}
+	} */
 }
-
-/**
- * @brief add environment according to av in **
- * @author nimai
- * @return ** pointer, then free 
- * @note 230530nimai: I will throw it away 230613hozon
- */
-/* char	**envp_strs_join(char **input, t_data *data)
-{
-	char	**ret;
-	int		i;
-	int		j;
-
-	ret = (char **)malloc(sizeof(char *) * (av_amount(input) + av_amount(data->env)));
-	if (!ret)
-		return (heap_error(1), NULL);
-	i = 0;
-	j = 0;
-	while (data->env[i])
-	{
-		ret[i] = data->env[i];
-		i++;
-	}
-	while (input[++j])
-	{
-		if (check_valid(input[j], "export"))
-		{
-			ret[i] = input[j];
-			i++;
-		}
-	}
-	return (ret);
-} */
 
 /**
  * @brief add environment according to av in **
@@ -173,14 +139,6 @@ char	**envp_strs_join(char *input, t_data *data)
 	}
 	if (check_valid(input, "export"))
 		ret[i] = input;
-/* 	while (input[++j])
-	{
-		if (check_valid(input[j], "export"))
-		{
-			ret[i] = input[j];
-			i++;
-		}
-	} */
 	return (ret);
 }
 
@@ -244,8 +202,8 @@ int	built_export(char **input, t_data *data)
 		}
 	}
 //If none of the above apply
-	if (!output_export(data))
-		return (printf("Error: output_export\n"), 1);
+/* 	if (!output_export(data))
+		return (printf("Error: output_export\n"), 1); */
 	return (0);
 }
 
@@ -256,7 +214,7 @@ int	built_export(char **input, t_data *data)
  * If there is more than one argument after command, add as a variable, 
  * except if there is no space
  * 
- * 230601nimai: I have doubt with $<variable name>
+ * 230601nimai: I have doubt with $<variable name> ->treate as I have received a path
  * 
  * ??? Is it OK if we control in the minishell?	-> OK!
  * For example, it's ok if do sth in bash, but doesn't affect to the minishell? ->OK!
