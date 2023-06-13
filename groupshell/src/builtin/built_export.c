@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:18:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/13 12:06:54 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/13 13:06:22 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
  * @param flag control between env and export (230526)
  * @note maybe adjust to some list too.
  */
-void	output_env(t_export *list, int len, int flag)
+/* void	output_env(t_export *list, int len, int flag)
 {
 	int	i;
 	int	j;
@@ -41,7 +41,7 @@ void	output_env(t_export *list, int len, int flag)
 		if (flag == FLAGENV && i == len - 1)
 			break ;
 	}
-}
+} */
 
 /**
  * @brief initiation t_data
@@ -49,7 +49,7 @@ void	output_env(t_export *list, int len, int flag)
  * @param name it will include until "="
  * @note It's not beautiful to allocate 2000 each box[i].name and val, but it's necessary to sort.
  */
-t_export	*fill_list(char **strs, t_export *ret)
+/* t_export	*fill_list(char **strs, t_export *ret)
 {
 	int			i;
 	int			len;
@@ -75,7 +75,7 @@ t_export	*fill_list(char **strs, t_export *ret)
 		free (tmp);
 	}
 	return (ret);
-}
+} */
 
 /**
  * @brief add environment according to av in **
@@ -118,10 +118,11 @@ char	**envp_strs_join(char **input, t_data *data)
  */
 int	built_export(char **input, t_data *data)
 {
-	t_export	*list = NULL;
-	char		**tmp_env = NULL;
-	char		**av = NULL;
+//	char		**tmp_env = NULL;
+//	char		**av = NULL;
 	char		**new_envp = NULL;
+	int			i;
+	int			j;
 
 //------------------------------------------------------
 /* 	int i = -1;
@@ -135,30 +136,38 @@ int	built_export(char **input, t_data *data)
 
 	if (av_amount(input) == 1)
 	{
-		av = input;
-		tmp_env = data->env;
-		if (!tmp_env || !av)
-			return (heap_error(1), 0);
-		list = (t_export *)malloc(sizeof(t_export));
-		if (!list)
-			return (heap_error(1), 0);
-		list = fill_list(tmp_env, list);
-		quick_sort(list->box, 0, av_amount(tmp_env) - 1);
-		output_env(list, av_amount(tmp_env), FLAGEXPORT);
+		if (!output_export(data))
+			return (printf("Error: output_export\n"), 1);
+		return (0);
 	}
-	else if (av_amount(input) > 1 && input[1][0] == '$')
+	i = -1;
+	j = 0;
+/* 	printf("Line: %d, File: %s\n", __LINE__, __FILE__);
+	while (data->env[++i])
+	{
+		if (ft_strnstr(data->env[i], input[j], ft_strlen(input[j])))
+		{
+			break ;
+		}
+		printf("Line: %d, File: %s\n", __LINE__, __FILE__);
+		j++;
+	} */
+	printf("Line: %d, File: %s\n", __LINE__, __FILE__);
+	if (av_amount(input) > 1 && input[1][0] == '$')
 	{
 		//=>I have to print the variable, if doesn't ex
 /* 		if ()//match to some variable, print
 			;
 		else */
-		output_env(list, av_amount(tmp_env), FLAGEXPORT);
+	//	output_env(list, av_amount(tmp_env), FLAGEXPORT);
 		/**
 		 * 230601nimai: it's required to have some flag to know if it's a given path
 		 */
+		;
 	}
 	else
 	{
+		printf("Line: %d, File: %s\n", __LINE__, __FILE__);
 		new_envp = envp_strs_join(input, data);
 		if (!new_envp)
 			return (printf("ERROR: Line: %d\n", __LINE__));
@@ -190,7 +199,7 @@ int	built_export(char **input, t_data *data)
 //230609comment to check
 /* 	if (list)
 		arr_free(list); */
-	free (list);
+//	free (list);
 //	free (new_envp);
 	return (0);
 }

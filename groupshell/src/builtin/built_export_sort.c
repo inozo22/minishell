@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 16:17:55 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/13 11:42:39 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/13 12:44:22 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void	quick_sort(t_export_box box[], int left, int right)
 		quick_sort(box, pivot + 1, right);
 	}
 }
+
 
 /**
  * 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:12:28 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/08 17:25:34 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/06/13 12:50:28 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ char		**fake_env(void);
 t_export	*fill_list(char **strs, t_export *ret);
 void		output_env(t_export *data, int len, int flag);
 int			check_valid(char *str, char *cmd);
+int			output_export(t_data *data);
 /**
  * functions from export
  */
