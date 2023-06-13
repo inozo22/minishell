@@ -3,14 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_main.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 12:52:29 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/08 15:36:52 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/06/13 09:34:33 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/**
+ * 230613nimai: I left this just in case, but it's rubbish 
+ */
+
 
 /* t_data	*init_data(char *av[], char *envp[], t_data *temp)
 {

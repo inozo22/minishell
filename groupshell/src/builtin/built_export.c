@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:18:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/09 16:12:22 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/13 09:55:29 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ int	built_export(char **input, t_data *data)
 		av = input;
 		tmp_env = data->env;
 		if (!tmp_env || !av)
-			return (printf("ERROR: Line: %d\n", __LINE__), 0);
+			return (heap_error(1), 0);
 		list = (t_export *)malloc(sizeof(t_export));
 		if (!list)
 			return (heap_error(1), 0);
