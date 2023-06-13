@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 09:50:16 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/08 15:53:38 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/06/13 11:46:00 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,10 @@ int	built_env(t_data *data)
 	len = av_amount((char **)tmp_env);
 	while (i < len)
 	{
-		ft_printf("%s\n", tmp_env[i]);
+		if (ft_strrchr(tmp_env[i], '='))
+		{
+			ft_printf("%s\n", tmp_env[i]);
+		}
 		i++;
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 16:17:55 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/13 11:18:00 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/13 11:42:39 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,12 @@ void	swap_pairs(t_export_box *first, t_export_box *second)
 	second->name = tmp_name;
 }
 
+/**
+ * @brief manage "builtin" export cmd.
+ * @author nimai
+ * @param **av "export", "ABC=abc".
+ * @note qsort works except numbers, if the string is shorter, ignore the number 
+ */
 int	get_pivot(t_export_box box[], int left, int right)
 {
 	int	pivot;
@@ -48,30 +54,6 @@ int	get_pivot(t_export_box box[], int left, int right)
 	swap_pairs(&box[pivot], &box[j]);
 	return (j);
 }
-
-/* int	get_pivot(t_export_box box[], int left, int right)
-{
-	int	pivot;
-	int	i;
-	int	j;
-
-	i = left;
-	j = right + 1;
-	pivot = left;
-	while (i < j)
-	{
-		while (i < j && box[i + 1].name && box[pivot].name && \
-		(ft_strncmp(box[++i].name, box[pivot].name, 2000) < 0))
-			;
-		while (j && box[pivot].name && box[j - 1].name && \
-		ft_strncmp(box[pivot].name, box[--j].name, 2000) < 0)
-			;
-		if (i < j)
-			swap_pairs(&box[i], &box[j]);
-	}
-	swap_pairs(&box[pivot], &box[j]);
-	return (j);
-} */
 
 void	quick_sort(t_export_box box[], int left, int right)
 {
