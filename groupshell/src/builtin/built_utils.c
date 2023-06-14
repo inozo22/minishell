@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 11:52:54 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/13 15:29:01 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/14 16:05:44 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,17 @@ int	check_valid(char *str, char *cmd)
 	return (1);
 }
 
-/* static char	*get_env(char **env, char *type)
+/**
+ * @brief get_env, especially it's for 
+ * @author nimai
+ * @param **av "cd", "path".
+ * @return 
+ * @note 
+ */
+/* char	*get_env(char **env, char *type)
 {
-	int	i;
+	char	*ret;
+	int		i;
 
 	i = -1;
 	while (env[++i])
@@ -55,4 +63,5 @@ int	check_valid(char *str, char *cmd)
 		return (ft_strdup(env[i] + ft_strlen(type)));
 	else
 		return (NULL);
-} */
+}
+ */

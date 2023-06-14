@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 16:00:17 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/13 17:30:19 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/14 16:07:08 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,31 @@
 /**
  * @brief add environment according to dest in **
  * @author nimai
+ * @param path PWD is 1, OLDPWD is 2
  * @return ** pointer, then free 
  * @note 230603nimai: Doesn't show PWD on Ubuntu (moji bake)
  */
-t_data	*envp_pwd_mod(t_data *data, char *dest)
+t_data	*envp_cd_mod(t_data *data, char *dest, int path)
 {
 	char	*str;
 
 	str = NULL;
-	str = ft_calloc(ft_strlen(dest) + 5, sizeof(char));
-	if (!str)
-		return (NULL);
-	ft_strlcpy(str, "PWD=", 5);
-	ft_strcat(str, dest);
+	if (path == 1)
+	{
+		str = ft_calloc(ft_strlen(dest) + 5, sizeof(char));
+		if (!str)
+			return (NULL);
+		ft_strlcpy(str, "PWD=", 5);
+		ft_strcat(str, dest);
+	}
+	else if (path == 2)
+	{
+		str = ft_calloc(ft_strlen(dest) + 8, sizeof(char));
+		if (!str)
+			return (NULL);
+		ft_strlcpy(str, "OLDPWD=", 8);
+		ft_strcat(str, dest);
+	}
 	envp_strs_mod(str, data);
 	free (str);
 	return (data);

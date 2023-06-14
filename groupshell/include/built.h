@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:12:28 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/14 12:41:36 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/14 15:45:33 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int			check_input(char *input, t_data *data);
 /**
  * functions from cd
   */
-t_data		*envp_pwd_mod(t_data *data, char *dest);
+t_data		*envp_cd_mod(t_data *data, char *dest, int path);
 char		*ft_strlower(char *str);
 char		*str_mod(char *cur, char *str, int i);
 char		*path_modify(char *cur, char *str);

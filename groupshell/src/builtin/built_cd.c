@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 18:40:39 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/13 17:28:01 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/14 16:05:19 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,18 +105,22 @@ int	built_cd(char **input, t_data *data)
 	printf("position before	:	%s\n", cur);
 	printf("Line: %d:	av[0]: %s, av[1]: %s\n", __LINE__, input[0], input[1]);
 //printer
+	if (cur)
+		data = envp_cd_mod(data, cur, 2);
+	else
+		data = envp_cd_mod(data, getenv("PWD"), 2);
 	if (cur && !input[1])//when you don't have argument after "cd", move to $HOME
 	{
 		if (chdir(getenv("HOME")) == -1)
 			return (printf("Line: %d, failed chdir\n", __LINE__), -1);
-		envp_pwd_mod(data, getenv("HOME"));
+		envp_cd_mod(data, getenv("HOME"), 1);
 	}
 	else if (cur && ft_strncmp("./", input[1], 2) == 0)//move to where you are, you will get OLDPWD
 		chdir(cur);
 	else if (!cur && ft_strncmp("./", input[1], 2) == 0)//move to where you are, but if it's not exist
 	{
 		dest = ft_strjoin(getenv("PWD"), input[1]);
-		data = envp_pwd_mod(data, dest);
+		data = envp_cd_mod(data, dest, 1);
 		free (dest);
 		ft_printf("cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory");//temporary error control
 		return (0);//it should be return (0), as bash works
@@ -126,7 +130,7 @@ int	built_cd(char **input, t_data *data)
 		dest = get_dest_path(input[1]);//230524nimai: after av[3] will be ignored.
 		if (!dest)
 			return (free (cur), 1);	//230524nimai: if it's null, should it moves to home dir? Or just ignore it?
-		envp_pwd_mod(data, dest);
+		envp_cd_mod(data, dest, 1);
 		if (ft_strncmp(dest, input[1], ft_strlen(dest)) != 0)
 			free (dest);
 	}

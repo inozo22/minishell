@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:18:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/14 14:59:36 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/14 15:05:22 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,7 +174,7 @@ int	check_input(char *input, t_data *data)
 		{
 			c++;
 		}
-		if ((input[c] == '=' && data->env[i][j] == '\0') || (data->env[i][j] == '=' && input[c] == '\0'))
+		if ((input[c] == '=' && data->env[i][j] == '\0') || (data->env[i][j] == '=' && input[c] == '\0') || (data->env[i][j] == input[c]))
 			return (c);
 		i++;
 	}
@@ -239,7 +239,7 @@ int	built_export(char **input, t_data *data)
  * 230613nimai:
  * export OLDPWD: do nothing
  * export OLDPWD=aaa: overwrite
- * export OLDPWD="aaa": doesn't work (ask how will I receive)
+ * export OLDPWD="aaa": doesn't work (ask how will I receive) <- 230614nimai: I think will receive as a string
  * export OLDPWA: add in export, but doesn't print with env command
  * export OLDPWA=aaa: add new variable
  * export OLDPWA="aaa": doesn't work (ask how will I receive)
