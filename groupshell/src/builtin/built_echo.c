@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:54:13 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/14 12:04:18 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/14 12:10:01 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,4 +118,6 @@ int	built_echo(char **input)
  * 
  * 	printf("Line: %d\n", __LINE__);
  * 	printf("str[ret]: %c\n", str[ret]);
+ * 
+ * 230614nimai: is there possibility to failure command echo??
  */

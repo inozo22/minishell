@@ -6,11 +6,36 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 12:44:12 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/13 17:08:08 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/14 12:53:21 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/**
+ * @brief check oldpwd and if not add
+ * @author nimai
+ * @param 
+ * @note if there is no "OLDPWD", add without value
+ */
+void	check_oldpwd(t_data *data)
+{
+	int			i;
+	char		**new_envp;
+
+	new_envp = NULL;
+	i = -1;
+	while (data->env[++i])
+	{
+		if (ft_strncmp(data->env[i], "OLDPWD=", 7) == 0 || ft_strncmp(data->env[i], "OLDPWD", 6) == 0)
+			return ;
+	}
+	new_envp = envp_strs_join("OLDPWD", data);
+	if (!new_envp)
+		return ;
+	data->env = new_envp;
+//	strs_free(new_envp);
+}
 
 /**
  * @brief output all list
@@ -87,6 +112,7 @@ int	output_export(t_data *data)
 	char		**tmp_env;
 	t_export	*list;
 
+	check_oldpwd(data);
 	tmp_env = data->env;
 	list = NULL;
 	if (!tmp_env)

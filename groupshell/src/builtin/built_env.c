@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 09:50:16 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/13 11:46:00 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/14 12:27:49 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	error_env(char *cmd)
  * @author nimai
  * @param **av "env", no flags, no arguments
  * @return 
+ * @note if there is no '=', understand that without value, and not will print it
  */
 int	built_env(t_data *data)
 {
