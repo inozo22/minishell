@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:18:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/14 13:28:39 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/14 14:59:36 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,21 +87,40 @@ void	envp_strs_mod(char *input, t_data *data)
 {
 	char	*tmp;
 	int		i;
+	int		j;
+	int		k;
 	int		c;
 
 	i = 0;
+
 	c = check_input(input, data);
 	if (input[c] == '=')
 	{
 		while (data->env[i])
 		{
-			if (ft_strncmp(data->env[i], input, c + 1) == 0 || ft_strncmp(data->env[i], input, c) == 0)
+			j = -1;
+			k = -1;
+			if (ft_strncmp(data->env[i], input, c + 1) == 0/*  || ft_strncmp(data->env[i], input, c) == 0 */)//with '='
 			{
 			//	free (data->env[i]);
 				tmp = ft_calloc(ft_strlen(input) + 1, sizeof(char));
 				ft_strlcpy(tmp, input, c + 2);
 				ft_strcat(tmp, (input + c + 1));
 				data->env[i] = tmp;
+				break ;
+			}
+			else if (ft_strncmp(data->env[i], input, c) == 0)
+			{
+				while (data->env[i][++j] == input[++k])
+					;
+				if (data->env[i][j] == '\0' && input[k] == '=')
+				{
+					tmp = ft_calloc(ft_strlen(input) + 2, sizeof(char));
+					ft_strlcpy(tmp, input, c + 2);
+					ft_strcat(tmp, (input + c + 1));
+					data->env[i] = tmp;
+					break ;
+				}
 			}
 			i++;
 		}
@@ -155,7 +174,7 @@ int	check_input(char *input, t_data *data)
 		{
 			c++;
 		}
-		if ((input[c] == '=' && data->env[i][j] == '\0') || data->env[i][j] == '\0')
+		if ((input[c] == '=' && data->env[i][j] == '\0') || (data->env[i][j] == '=' && input[c] == '\0'))
 			return (c);
 		i++;
 	}
