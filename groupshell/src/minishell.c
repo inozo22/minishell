@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:32:33 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/06/13 09:43:37 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/15 10:28:31 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,18 @@ int	check_exit(char **input, t_data *data)
 	return (INT_MAX);
 }
 
+/**
+ * @note 230615nimai: add protect for input null
+ */
 static int	check_builtin(char **input, t_data *data)
 {
 /* 	int i = -1;
 	while (data->env[++i])
 		ft_printf("env %d: %s\n", i, data->env[i]); */
+	//proteccion
+	if (!input)
+		return (-1);
+	//proteccion
 	ft_printf("Input0: %s\n", input[0]);
 	if (!ft_strcmp(input[0], "echo"))
 		return(built_echo(input));
@@ -94,7 +101,7 @@ static int process_input(char *line_read, t_data *data)
 /* 	lexer();
 	parser();
 	expanser(); */
-	
+
 	input = split_input(line_read);
 	j = -1;
 	while (input && input[++j])
@@ -129,10 +136,9 @@ int	minishell(t_data *data)
 		line_read = readline(prompt);
 		if (line_read && *line_read)
 			add_history(line_read);
-		if (process_input(line_read, data) == INT_MAX)
+		if (line_read && process_input(line_read, data) == INT_MAX)
 			break ;
 		free(line_read);
-
 	}
 	free(prompt);
 	rl_redisplay();

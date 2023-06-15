@@ -6,15 +6,16 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 18:22:41 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/06/14 12:26:07 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/15 10:14:38 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /**
- * @brief initialization main structure
+ * @brief main structure initialization 
  * @note 230614nimai: maybe better put "OLDPWD" without value here (at the moment put in export)
+ * with cmd env will not be shown until doesn't have value, but with cmd export yes.
  */
 static t_data	*init_data(char *envp[])
 {
