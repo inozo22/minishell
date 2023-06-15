@@ -6,42 +6,11 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 09:50:35 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/13 15:22:58 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/15 11:32:09 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/**
- * @brief string checker for variable.
- * @author nimai
- * @return 1 if it's valid, otherwise 0.
- * @note in built_unset.
- * @note builtin global function
- */
-/* int	check_valid(char *str, char *cmd)
-{
-	int	i;
-
-	i = 0;
-	if (!(ft_isalpha(str[i]) || str[i] == '_'))
-	{
-		error_built(cmd, str, "not a valid identifier");
-		return (0);
-	}
-	while (str[++i])
-	{
-		if (ft_isalnum(str[i]) || str[i] == '_' || (str[i] == '=' && \
-		ft_strncmp(cmd, "export", 6) == 0))
-			;
-		else
-		{
-			error_built(cmd, str, "not a valid identifier");
-			return (0);
-		}
-	}
-	return (1);
-} */
 
 /**
  * @brief manage "builtin" unset cmd.
@@ -52,26 +21,25 @@
 t_data	*unset_env(t_data *data, char *str)
 {
 	int		i;
-	int		len;
-	char	**env;
+	int		j;
+	char	**tmp;
 
-	i = 0;
-	env = data->env;
-	while (env[i])
+	i = -1;
+	j = -1;
+	tmp = (char **)malloc(sizeof(char *) * (av_amount(data->env) + 1));
+	if (!tmp)
+		return (NULL);
+	while (data->env[++i])
 	{
-		len = 0;
-		while (env[i][len] != '=' && env[i][len])
-			len++;
-		if (ft_strncmp(str, env[i], ft_strlen(str)) == 0 && \
-		ft_strncmp(str, env[i], len) == 0)
+		if (ft_strncmp(data->env[i], str, ft_strlen(str)) || \
+		ft_strncmp(str, data->env[i], ft_strlen(str)))
 		{
-			env[i] = NULL;
+			tmp[++j] = data->env[i];
 		}
-		printf("env[%d]: %s\n", i, env[i]);
-		i++;
+		data->env[i] = NULL;
 	}
-	data->env = NULL;
-	data->env = env;
+	free (data->env);
+	data->env = tmp;
 	return (data);
 }
 
@@ -79,22 +47,19 @@ t_data	*unset_env(t_data *data, char *str)
  * @brief manage "builtin" unset cmd.
  * @author nimai
  * @param **av "unset", "ABC", "DEF"
- * @return 
+ * @note if it's not valid, receive error message, but if it's valid and doesn't exist will not receive anything
  */
 int	built_unset(char **input, t_data *data)
 {
 	int		i;
 
-	i = 2;
+	i = 1;
 	while (input[i])
 	{
 		if (check_valid(input[i], "unset") == 1)
 			data = unset_env(data, input[i]);
 		i++;
 	}
-	printf("\n		===TEST ENV===\n");
-	built_env(data);
-	printf("		===TEST ENV===\n");
 	return (0);
 }
 
