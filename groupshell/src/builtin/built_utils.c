@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 11:52:54 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/15 16:48:25 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/15 17:30:40 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ int	check_valid(char *str, char *cmd)
 		error_av_built(cmd, str, "not a valid identifier");
 		return (0);
 	}
-	while (str[++i])
+	i++;
+	while (str[i] != '=' && str[i])
 	{
 		if (ft_isalnum(str[i]) || str[i] == '_' || (str[i] == '=' && \
 		ft_strncmp(cmd, "export", 6) == 0))
@@ -38,6 +39,21 @@ int	check_valid(char *str, char *cmd)
 		{
 			error_av_built(cmd, str, "not a valid identifier");
 			return (0);
+		}
+		i++;
+	}
+	if (str[i] == '=')
+	{
+		while (str[i])
+		{
+			if (ft_isprint(str[i]))
+				;
+			else
+			{
+				error_av_built(cmd, str, "not a valid identifier");
+				return (0);
+			}
+			i++;
 		}
 	}
 	return (1);

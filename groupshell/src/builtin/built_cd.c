@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 18:40:39 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/15 16:48:46 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/15 17:40:41 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,15 +105,18 @@ int	built_cd(char **input, t_data *data)
 	printf("position before	:	%s\n", cur);
 	printf("Line: %d:	av[0]: %s, av[1]: %s\n", __LINE__, input[0], input[1]);
 //printer
-	if (cur && ft_strcmp("-", input[1]) == 0)
+	if (cur && ft_strcmp("-", input[1]) == 0)//you have to obtain OLDPWD to move
 	{
 		dest = get_env(data->env, "OLDPWD");
+		printf("dest: %s\n", dest);
 		if (!dest)
 			return (error_notset(input[0], "OLDPWD"));
 		if (chdir(dest) == -1)
 			return (printf("Line: %d, failed chdir\n", __LINE__), -1);
 		data = envp_cd_mod(data, cur, 2);
+		data = envp_cd_mod(data, dest, 1);
 		free (dest);
+		free (cur);
 		return (0);
 	}
 	if (cur)//maybe better obtain from PWD
