@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 17:20:27 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/13 09:27:03 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/15 16:30:51 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,64 @@ void	heap_error(int flag)
 }
 
 /**
- * @brief temporary error management
+ * @brief error message in builtin with argument
  * @author nimai
  * @note when decided error management, merge it.
  * @note builtin global function
  */
-void	error_built(char *cmd, char *av, char *comment)
+void	error_av_built(char *cmd, char *av, char *comment)
 {
-	ft_printf("minishell: %s: `%s': %s\n", cmd, av, comment);
+	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(cmd, 2);
+	ft_putstr_fd(": `", 2);
+	ft_putstr_fd(av, 2);
+	ft_putstr_fd("': ", 2);
+/* 	if (errno == 13)
+	{
+		ft_putendl_fd(": Permission denied", 2);
+		return (127);
+	} */
+	ft_putendl_fd(comment, 2);
+}
+
+/**
+ * @brief error message in builtin with argument
+ * @author nimai
+ * @note when decided error management, merge it.
+ * @note builtin global function
+ */
+void	error_built(char *cmd, char *comment)
+{
+	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(cmd, 2);
+	ft_putstr_fd(": ", 2);
+	if (errno == 13)
+	{
+		ft_putendl_fd(": Permission denied", 2);
+		//return (127);
+	}
+	ft_putendl_fd(comment, 2);
+}
+
+/**
+ * @brief error message in builtin with argument
+ * @author nimai
+ * @note when decided error management, merge it.
+ * @note builtin global function
+ */
+int	error_notset(char *cmd, char *input)
+{
+	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(cmd, 2);
+	ft_putstr_fd(": ", 2);
+	if (errno == 13)
+	{
+		ft_putendl_fd(": Permission denied", 2);
+		return (127);
+	}
+	ft_putstr_fd(input, 2);
+	ft_putendl_fd(" not set", 2);
+	return (1);
 }
 
 /* {

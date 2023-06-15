@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 11:52:54 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/14 16:05:44 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/15 16:48:25 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	check_valid(char *str, char *cmd)
 	i = 0;
 	if (!(ft_isalpha(str[i]) || str[i] == '_'))
 	{
-		error_built(cmd, str, "not a valid identifier");
+		error_av_built(cmd, str, "not a valid identifier");
 		return (0);
 	}
 	while (str[++i])
@@ -36,7 +36,7 @@ int	check_valid(char *str, char *cmd)
 			;
 		else
 		{
-			error_built(cmd, str, "not a valid identifier");
+			error_av_built(cmd, str, "not a valid identifier");
 			return (0);
 		}
 	}
@@ -50,18 +50,18 @@ int	check_valid(char *str, char *cmd)
  * @return 
  * @note 
  */
-/* char	*get_env(char **env, char *type)
+char	*get_env(char **env, char *type)
 {
-	char	*ret;
+//	char	*ret;
 	int		i;
 
 	i = -1;
 	while (env[++i])
 		if (ft_strnstr(env[i], type, ft_strlen(type)))
 			break ;
-	if (env[i])
-		return (ft_strdup(env[i] + ft_strlen(type)));
+	if (env[i] && ft_strrchr(env[i], '='))
+		return (ft_strdup(env[i] + ft_strlen(type) + 1));
 	else
-		return (NULL);
+		return (NULL);//not set coco?
 }
- */
+

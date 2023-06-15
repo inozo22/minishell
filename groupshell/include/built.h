@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:12:28 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/15 11:56:27 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/15 16:30:02 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ int			check_input(char *input, t_data *data);
 /**
  * functions from cd
   */
+
 t_data		*envp_cd_mod(t_data *data, char *dest, int path);
 char		*ft_strlower(char *str);
 char		*str_mod(char *cur, char *str, int i);
@@ -98,14 +99,19 @@ void		error_cd(char *cmd);
 /**
  * functions from utils
  */
-int	check_valid(char *str, char *cmd);
+
+int			check_valid(char *str, char *cmd);
+char		*get_env(char **env, char *type);
 /**
  * functions from utils
  */
 
-void		error_built(char *cmd, char *av, char *comment);
+void		error_av_built(char *cmd, char *av, char *comment);
+void		error_built(char *cmd, char *comment);
+int			error_notset(char *cmd, char *input);
 void		heap_error(int flag);
 void		quick_sort(t_export_box box[], int left, int right);
+
 
 void		**ptr_free(void **ptr);
 void		*arr_free(t_export *list);

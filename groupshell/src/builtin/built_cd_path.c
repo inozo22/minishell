@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 16:00:17 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/14 16:07:08 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/15 14:17:13 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /**
  * @brief add environment according to dest in **
  * @author nimai
- * @param path PWD is 1, OLDPWD is 2
+ * @param path 1 is PWD, 2 is OLDPWD
  * @return ** pointer, then free 
  * @note 230603nimai: Doesn't show PWD on Ubuntu (moji bake)
  */

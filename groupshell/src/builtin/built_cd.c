@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 18:40:39 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/14 16:05:19 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/15 16:48:46 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,16 +105,28 @@ int	built_cd(char **input, t_data *data)
 	printf("position before	:	%s\n", cur);
 	printf("Line: %d:	av[0]: %s, av[1]: %s\n", __LINE__, input[0], input[1]);
 //printer
-	if (cur)
+	if (cur && ft_strcmp("-", input[1]) == 0)
+	{
+		dest = get_env(data->env, "OLDPWD");
+		if (!dest)
+			return (error_notset(input[0], "OLDPWD"));
+		if (chdir(dest) == -1)
+			return (printf("Line: %d, failed chdir\n", __LINE__), -1);
+		data = envp_cd_mod(data, cur, 2);
+		free (dest);
+		return (0);
+	}
+	if (cur)//maybe better obtain from PWD
 		data = envp_cd_mod(data, cur, 2);
 	else
-		data = envp_cd_mod(data, getenv("PWD"), 2);
+		data = envp_cd_mod(data, get_env(data->env, "PWD"), 2);
 	if (cur && !input[1])//when you don't have argument after "cd", move to $HOME
 	{
-		if (chdir(getenv("HOME")) == -1)
-			return (printf("Line: %d, failed chdir\n", __LINE__), -1);
-		envp_cd_mod(data, getenv("HOME"), 1);
+		if (chdir(get_env(data->env, "HOME")) == -1)
+			return (error_notset(input[0], "HOME"));
+		envp_cd_mod(data, get_env(data->env, "HOME"), 1);
 	}
+
 	else if (cur && ft_strncmp("./", input[1], 2) == 0)//move to where you are, you will get OLDPWD
 		chdir(cur);
 	else if (!cur && ft_strncmp("./", input[1], 2) == 0)//move to where you are, but if it's not exist
@@ -169,6 +181,12 @@ int	built_cd(char **input, t_data *data)
  * 0
  * bash-3.2$ pwd
  * /Users/nimai/test_bash/./
+ * 
+ * bash-3.2$ cd -
+ * bash: cd: OLDPWD not set
+ * bash-3.2$ echo $?
+ * 1
+ * bash-3.2$
  * 
  */
 
