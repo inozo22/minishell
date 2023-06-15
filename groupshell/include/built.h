@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:12:28 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/14 15:45:33 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/15 11:56:27 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,10 @@ typedef struct s_data
 typedef struct s_export_box
 {
 	int		id;
-	long	pos;
+//	long	pos;
 	char	*name;
 	char	*val;
+	int		equal;
 }	t_export_box;
 
 /**

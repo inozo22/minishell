@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 16:17:55 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/15 11:42:28 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/15 13:00:26 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,17 @@ void	swap_pairs(t_export_box *first, t_export_box *second)
 {
 	char	*tmp_val;
 	char	*tmp_name;
+	int		tmp_equal;
 
 	tmp_val = first->val;
 	tmp_name = first->name;
+	tmp_equal = first->equal;
 	first->val = second->val;
 	first->name = second->name;
+	first->equal = second -> equal;
 	second->val = tmp_val;
 	second->name = tmp_name;
+	second -> equal = tmp_equal;
 }
 
 /**
@@ -40,13 +44,14 @@ int	get_pivot(t_export_box box[], int left, int right)
 	i = left;
 	j = right + 1;
 	pivot = left;
+
 	while (i < j)
 	{
 		while (i < j && box[++i].name && box[pivot].name && \
-		(ft_strncmp(box[i].name, box[pivot].name, ft_strlen(box[i].name) - 1) < 0))
+		ft_strcmp(box[i].name, box[pivot].name) < 0)
 			;
 		while (j && box[pivot].name && box[--j].name && \
-		ft_strncmp(box[pivot].name, box[j].name, ft_strlen(box[pivot].name) - 1) < 0)
+		ft_strcmp(box[pivot].name, box[j].name) < 0)
 			;
 		if (i < j)
 			swap_pairs(&box[i], &box[j]);
