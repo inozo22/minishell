@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 12:44:12 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/15 12:04:39 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/15 13:07:09 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ t_export	*fill_list(char **strs, t_export *ret)
 	int			len;
 	char		*tmp;
 
-	printf("Line: %d\n", __LINE__);
 	ret->plen = av_amount(strs);
 	i = -1;
 	while (++i < ret->plen)
@@ -94,19 +93,15 @@ t_export	*fill_list(char **strs, t_export *ret)
 			len++;
 		if (strs[i][len] == '=')
 			ret->box[i].equal = 1;
-		printf("Line: %d ret->box[%d].equal: %d\n", __LINE__, i, ret->box[i].equal);
 		ret->box[i].name = ft_calloc(1, 2000);
 		ret->box[i].val = ft_calloc(1, 2000);
 		if (!ret->box[i].name || !ret->box[i].val)
 			return (NULL);
 		ft_strlcpy(ret->box[i].name, strs[i], len + 1);
-		printf("ret->box[%d].name: %s\n", i, ret->box[i].name);
 		tmp = ft_substr(strs[i], len + 1, ft_strlen(strs[i]) - len);
 		ft_strlcpy(ret->box[i].val, tmp, ft_strlen(strs[i]) - len + 1);
-		printf("ret->box[%d].val: %s\n", i, ret->box[i].val);
 		free (tmp);
 	}
-	printf("Line: %d\n", __LINE__);
 	return (ret);
 }
 
@@ -129,9 +124,7 @@ int	output_export(t_data *data)
 	if (!list)
 		return (heap_error(1), 0);
 	list = fill_list(tmp_env, list);
-	printf("Line: %d\n", __LINE__);
 	quick_sort(list->box, 0, av_amount(tmp_env) - 1);
-	printf("Line: %d\n", __LINE__);
 	output_env(list, av_amount(tmp_env), FLAGEXPORT);
 //	free (list);
 	return (1);
