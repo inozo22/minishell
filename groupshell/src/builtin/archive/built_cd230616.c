@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 18:40:39 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/16 16:43:33 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/16 14:12:13 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,7 @@ char	*get_above_path(char *cur)
 	return (ret);
 }
 
-/**
- * @brief obtain destination path
- * @author nimai
- * @note first try to obtain PWD by get_env, if doesn't, try getcwd
- */
-char	*get_dest_path(char *dest, t_data *data)
+char	*get_dest_path(char *dest)
 {
 	char	*ret;
 	char	*cur;
@@ -71,9 +66,7 @@ char	*get_dest_path(char *dest, t_data *data)
 	cur = NULL;
 	if (ft_strncmp("../", dest, ft_strlen(dest)) == 0)
 	{
-		cur = get_env(data->env, "PWD");
-		if (!cur)
-			cur = getcwd(NULL, 0);
+		cur = getcwd(NULL, 0);
 		ret = get_above_path(cur);
 		return (free (cur), ret);
 	}
@@ -149,7 +142,7 @@ int	built_cd(char **input, t_data *data)
 	}
 	else
 	{
-		dest = get_dest_path(input[1], data);//230524nimai: after av[3] will be ignored.
+		dest = get_dest_path(input[1]);//230524nimai: after av[3] will be ignored.
 		if (!dest)
 			return (free (cur), 1);	//230524nimai: if it's null, should it moves to home dir? Or just ignore it?
 		envp_cd_mod(data, dest, 1);
