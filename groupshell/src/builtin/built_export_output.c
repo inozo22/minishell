@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 12:44:12 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/15 13:07:09 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/16 12:04:54 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	check_oldpwd(t_data *data)
 	i = -1;
 	while (data->env[++i])
 	{
-		if (ft_strncmp(data->env[i], "OLDPWD=", 7) == 0 || ft_strncmp(data->env[i], "OLDPWD", 6) == 0)
+		if (ft_strncmp(data->env[i], "OLDPWD", 6) == 0)
 			return ;
 	}
 	new_envp = envp_strs_join("OLDPWD", data);
@@ -79,8 +79,14 @@ t_export	*fill_list(char **strs, t_export *ret)
 	int			i;
 	int			len;
 	char		*tmp;
+	int			c;
 
-	ret->plen = av_amount(strs);
+	c = 0;
+	while (strs[c])
+		c++;
+	ret->plen = c;
+//	ret->plen = av_amount(strs);
+	
 	i = -1;
 	while (++i < ret->plen)
 	{

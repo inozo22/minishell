@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 09:50:35 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/15 11:33:18 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/16 11:57:32 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ t_data	*unset_env(t_data *data, char *str)
 		}
 		data->env[i] = NULL;
 	}
+	tmp[j] = NULL;
 	free (data->env);
 	data->env = tmp;
 	return (data);

@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:18:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/15 13:08:49 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/16 11:56:13 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ char	**envp_strs_join(char *input, t_data *data)
 	}
 	if (check_valid(input, "export"))
 		ret[i] = input;
+	ret[++i] = NULL;
 	return (ret);
 }
 
@@ -106,9 +107,7 @@ int	check_input(char *input, t_data *data)
 		c = 0;
 		j = -1;
 		while (data->env[i][++j] == input[c] && input[c] != '=' && input[c] != '\0' && data->env[i][j])
-		{
 			c++;
-		}
 		if ((input[c] == '=' && data->env[i][j] == '\0') || (data->env[i][j] == '=' && input[c] == '\0') || (data->env[i][j] == input[c]))
 			return (c);
 		i++;
