@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:12:28 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/17 10:36:01 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/17 11:43:43 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ char		*get_env(char **env, char *type);
  */
 
 void		error_av_built(char *cmd, char *av, char *comment);
+void		error_id_built(char *cmd, char *av, char *comment);
 void		error_built(char *cmd, char *comment);
 int			error_notset(char *cmd, char *input);
 void		heap_error(int flag);

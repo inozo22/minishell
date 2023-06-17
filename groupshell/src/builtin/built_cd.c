@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 18:40:39 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/17 11:11:20 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/17 11:39:35 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,16 @@ char	*get_dest_path(char *dest, t_data *data)
 {
 	char	*ret;
 	char	*cur;
+	int		i;
 
 	ret = NULL;
 	cur = NULL;
+	i = 1;
 	if (ft_strcmp("../", dest) == 0 || ft_strncmp("..//", dest, 4) == 0)
 	{
-		printf("Line: %d	dest: %s\n", __LINE__, dest);
+		while (dest[++i])
+			if (dest[i] != '/')
+				return (NULL);
 		cur = get_env(data->env, "PWD");
 		if (!cur)
 			cur = getcwd(NULL, 0);
@@ -100,7 +104,8 @@ char	*get_dest_path(char *dest, t_data *data)
 /**
  * @brief manage "builtin" cd cmd.
  * @author nimai
- * @param **av "cd", "path".
+ * @param input[0] "cd"
+ * @param input[1] "path".
  * @return 
  * @note 
  */
@@ -125,7 +130,7 @@ int	built_cd(char **input, t_data *data)
 	{
 		dest = get_dest_path(input[1], data);//230524nimai: after av[3] will be ignored.
 		if (!dest)
-			return (free (cur), 1);	//230524nimai: if it's null, should it moves to home dir? Or just ignore it?
+			return (free (cur), error_av_built("cd", input[1], "No such file or directory"), 1);	//230524nimai: if it's null, should it moves to home dir? Or just ignore it?
 	}
 	envp_cd_mod(data, dest, 1);
 	free (dest);

@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 17:20:27 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/15 16:30:51 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/17 11:44:28 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,34 @@ void	heap_error(int flag)
  * @note when decided error management, merge it.
  * @note builtin global function
  */
-void	error_av_built(char *cmd, char *av, char *comment)
+void	error_id_built(char *cmd, char *av, char *comment)
 {
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(cmd, 2);
 	ft_putstr_fd(": `", 2);
 	ft_putstr_fd(av, 2);
 	ft_putstr_fd("': ", 2);
+/* 	if (errno == 13)
+	{
+		ft_putendl_fd(": Permission denied", 2);
+		return (127);
+	} */
+	ft_putendl_fd(comment, 2);
+}
+
+/**
+ * @brief error message in builtin with argument
+ * @author nimai
+ * @note when decided error management, merge it.
+ * @note builtin global function
+ */
+void	error_av_built(char *cmd, char *av, char *comment)
+{
+	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(cmd, 2);
+	ft_putstr_fd(": ", 2);
+	ft_putstr_fd(av, 2);
+	ft_putstr_fd(": ", 2);
 /* 	if (errno == 13)
 	{
 		ft_putendl_fd(": Permission denied", 2);

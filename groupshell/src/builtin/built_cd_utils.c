@@ -6,12 +6,19 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 09:43:46 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/17 10:39:01 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/17 11:24:01 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/**
+ * @brief manage "builtin" cd cmd.
+ * @author nimai
+ * @param **av "cd", "path".
+ * @return 
+ * @note 
+ */
 char	*get_dest_path_wl_sign(t_data *data, char *cur)
 {
 	char	*ret;
@@ -32,6 +39,13 @@ char	*get_dest_path_wl_sign(t_data *data, char *cur)
 	return (ret);
 }
 
+/**
+ * @brief manage "builtin" cd cmd.
+ * @author nimai
+ * @param envtype HOME or OLDPWD
+ * @return 
+ * @note 
+ */
 char	*get_dest_path_env(t_data *data, char *envtype)
 {
 	char	*ret;
