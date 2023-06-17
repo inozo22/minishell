@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 18:40:39 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/17 12:23:24 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/17 17:20:56 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ char	*get_dest_path(char *dest, t_data *data)
 	}
 	else
 	{
+		printf("Line: %d\n", __LINE__);
 		if (chdir(dest) == -1)
 			return (error_cd(dest), NULL);
 		cur = getcwd(NULL, 0);
@@ -110,6 +111,8 @@ int	built_cd(char **input, t_data *data)
 	cur = getcwd(NULL, 0);
 	if (cur && ft_strcmp("-", input[1]) == 0)//you have to obtain OLDPWD to move before change it
 		dest = get_dest_path_env(data, "OLDPWD");
+	if (!dest)
+		return (1);
 	if (cur)//maybe better obtain from PWD
 		data = envp_cd_mod(data, cur, 2);
 	else
@@ -124,10 +127,7 @@ int	built_cd(char **input, t_data *data)
 		if (!dest)
 			return (free (cur), error_av_built("cd", input[1], "No such file or directory"), 1);	//230524nimai: if it's null, should it moves to home dir? Or just ignore it?
 	}
-	envp_cd_mod(data, dest, 1);
-	free (dest);
-	free (cur); 
-	return (0);
+	return (envp_cd_mod(data, dest, 1), free (dest), free (cur), 0);
 }
 
 /**

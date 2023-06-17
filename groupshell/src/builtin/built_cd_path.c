@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 16:00:17 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/17 12:05:31 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/17 17:18:15 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@ t_data	*envp_cd_mod(t_data *data, char *dest, int path)
 	char	*tmp;
 
 	tmp = NULL;
-	if (path == 1)
+	if (!dest)
+		return (data);
+	else if (path == 1)
 	{
 		tmp = ft_calloc(ft_strlen(dest) + 5, sizeof(char));
 		if (!tmp)
