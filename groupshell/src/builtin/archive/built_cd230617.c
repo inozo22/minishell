@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 18:40:39 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/17 11:11:20 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/16 16:43:33 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,8 @@ char	*get_dest_path(char *dest, t_data *data)
 
 	ret = NULL;
 	cur = NULL;
-	if (ft_strcmp("../", dest) == 0 || ft_strncmp("..//", dest, 4) == 0)
+	if (ft_strncmp("../", dest, ft_strlen(dest)) == 0)
 	{
-		printf("Line: %d	dest: %s\n", __LINE__, dest);
 		cur = get_env(data->env, "PWD");
 		if (!cur)
 			cur = getcwd(NULL, 0);
@@ -81,14 +80,10 @@ char	*get_dest_path(char *dest, t_data *data)
 	else
 	{
 		if (chdir(dest) == -1)
-		{
 			return (error_cd(dest), NULL);
-		}
-		printf("Line: %d	dest: %s\n", __LINE__, dest);
 		cur = getcwd(NULL, 0);
 		if (ft_strlen(cur) > ft_strlen(dest))
 		{
-			printf("Line: %d	cur: %s\n", __LINE__, cur);
 			cur = path_modify(cur, dest);
 			return (cur);
 		}
@@ -106,30 +101,68 @@ char	*get_dest_path(char *dest, t_data *data)
  */
 int	built_cd(char **input, t_data *data)
 {
-	char	*dest;
+	char	*dest = NULL;
 	char	*cur;
+	char	*test;
+//	char	*str;
 
-	dest = NULL;
 	cur = getcwd(NULL, 0);
+//printer
+	printf("Line: %d:	", __LINE__);
+	printf("position before	:	%s\n", cur);
+	printf("Line: %d:	av[0]: %s, av[1]: %s\n", __LINE__, input[0], input[1]);
+//printer
+
 	if (cur && ft_strcmp("-", input[1]) == 0)//you have to obtain OLDPWD to move before change it
-		dest = get_dest_path_env(data, "OLDPWD");
+	{
+		dest = get_env(data->env, "OLDPWD");
+		if (!dest)
+			return (error_notset(input[0], "OLDPWD"));
+		if (chdir(dest) == -1)
+			return (printf("Line: %d, failed chdir\n", __LINE__), -1);
+		data = envp_cd_mod(data, cur, 2);
+		data = envp_cd_mod(data, dest, 1);
+		return (free (dest), free (cur), 0);
+	}
 	if (cur)//maybe better obtain from PWD
 		data = envp_cd_mod(data, cur, 2);
 	else
 		data = envp_cd_mod(data, get_env(data->env, "PWD"), 2);
 	if (cur && !input[1])//when you don't have argument after "cd", move to $HOME
-		dest = get_dest_path_env(data, "HOME");
-	else if (ft_strcmp("./", input[1]) == 0)//move to where you are, you will get OLDPWD
-		dest = get_dest_path_wl_sign(data, cur);
-	else if (ft_strcmp("-", input[1]) != 0)
+	{
+		if (chdir(get_env(data->env, "HOME")) == -1)
+			return (error_notset(input[0], "HOME"));
+		envp_cd_mod(data, get_env(data->env, "HOME"), 1);
+	}
+	else if (cur && ft_strncmp("./", input[1], 2) == 0)//move to where you are, you will get OLDPWD
+	{
+		chdir(cur);
+		data = envp_cd_mod(data, cur, 1);
+	}
+	else if (!cur && ft_strncmp("./", input[1], 2) == 0)//move to where you are, but if it's not exist
+	{
+		dest = ft_strjoin(getenv("PWD"), input[1]);
+		data = envp_cd_mod(data, dest, 1);
+		free (dest);
+		ft_printf("cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory");//temporary error control
+		return (0);//it should be return (0), as bash works
+	}
+	else
 	{
 		dest = get_dest_path(input[1], data);//230524nimai: after av[3] will be ignored.
 		if (!dest)
 			return (free (cur), 1);	//230524nimai: if it's null, should it moves to home dir? Or just ignore it?
+		envp_cd_mod(data, dest, 1);
+		if (ft_strncmp(dest, input[1], ft_strlen(dest)) != 0)
+			free (dest);
 	}
-	envp_cd_mod(data, dest, 1);
-	free (dest);
-	free (cur); 
+	free (cur);
+//printer
+	test = getcwd(NULL, 0);
+	printf("Line: %d:	", __LINE__);
+	printf("position after	:	%s\n", test);
+	free (test);
+//printer
 	return (0);
 }
 
