@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:18:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/16 11:56:13 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/17 15:43:52 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	envp_strs_mod(char *input, t_data *data)
 			k = -1;
 			if (ft_strncmp(data->env[i], input, c + 1) == 0)//with '='
 			{
-			//	free (data->env[i]);
+				free (data->env[i]);
 				tmp = ft_calloc(ft_strlen(input) + 1, sizeof(char));
 				ft_strlcpy(tmp, input, c + 2);
 				ft_strcat(tmp, (input + c + 1));
@@ -78,7 +78,7 @@ char	**envp_strs_join(char *input, t_data *data)
 	int		i;
 	int		j;
 
-	ret = (char **)malloc(sizeof(char *) * (av_amount(data->env) + 2));
+	ret = ft_calloc(av_amount(data->env) + 2, sizeof(char *));
 	if (!ret)
 		return (heap_error(1), NULL);
 	i = 0;
@@ -86,8 +86,11 @@ char	**envp_strs_join(char *input, t_data *data)
 	while (data->env[i])
 	{
 		ret[i] = data->env[i];
+		data->env[i] = NULL;
 		i++;
 	}
+	free (data->env);
+	data->env = NULL;
 	if (check_valid(input, "export"))
 		ret[i] = input;
 	ret[++i] = NULL;

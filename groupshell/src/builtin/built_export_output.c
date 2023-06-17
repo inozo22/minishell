@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 12:44:12 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/16 12:04:54 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/17 15:24:35 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void	check_oldpwd(t_data *data)
 	if (!new_envp)
 		return ;
 	data->env = new_envp;
-//	strs_free(new_envp);
 }
 
 /**
@@ -85,8 +84,6 @@ t_export	*fill_list(char **strs, t_export *ret)
 	while (strs[c])
 		c++;
 	ret->plen = c;
-//	ret->plen = av_amount(strs);
-	
 	i = -1;
 	while (++i < ret->plen)
 	{
@@ -126,12 +123,19 @@ int	output_export(t_data *data)
 	list = NULL;
 	if (!tmp_env)
 		return (printf("Error: failure obtain env\n"), 0);
-	list = (t_export *)malloc(sizeof(t_export));
+	list = (t_export *)ft_calloc(1, sizeof(t_export));
 	if (!list)
 		return (heap_error(1), 0);
 	list = fill_list(tmp_env, list);
 	quick_sort(list->box, 0, av_amount(tmp_env) - 1);
 	output_env(list, av_amount(tmp_env), FLAGEXPORT);
-//	free (list);
+	int i = 0;
+	while (i < av_amount(tmp_env))
+	{
+		free (list->box[i].name);
+		free (list->box[i].val);
+		i++;
+	}
+	free (list);
 	return (1);
 }

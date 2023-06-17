@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 18:40:39 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/17 11:39:35 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/17 12:23:24 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char	*get_above_path(char *cur)
 /**
  * @brief obtain destination path
  * @author nimai
- * @note first try to obtain PWD by get_env, if doesn't, try getcwd
+ * @note first try to obtain PWD by get_env, if it doesn't succeed, try getcwd
  */
 char	*get_dest_path(char *dest, t_data *data)
 {
@@ -85,20 +85,12 @@ char	*get_dest_path(char *dest, t_data *data)
 	else
 	{
 		if (chdir(dest) == -1)
-		{
 			return (error_cd(dest), NULL);
-		}
-		printf("Line: %d	dest: %s\n", __LINE__, dest);
 		cur = getcwd(NULL, 0);
 		if (ft_strlen(cur) > ft_strlen(dest))
-		{
-			printf("Line: %d	cur: %s\n", __LINE__, cur);
-			cur = path_modify(cur, dest);
-			return (cur);
-		}
+			return (cur = path_modify(cur, dest), cur);
 		return (free (cur), dest);
 	}
-	return (ret);
 }
 
 /**

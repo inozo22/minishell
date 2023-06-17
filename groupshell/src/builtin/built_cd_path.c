@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 16:00:17 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/17 11:08:19 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/17 12:05:31 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,27 +21,27 @@
  */
 t_data	*envp_cd_mod(t_data *data, char *dest, int path)
 {
-	char	*str;
+	char	*tmp;
 
-	str = NULL;
+	tmp = NULL;
 	if (path == 1)
 	{
-		str = ft_calloc(ft_strlen(dest) + 5, sizeof(char));
-		if (!str)
+		tmp = ft_calloc(ft_strlen(dest) + 5, sizeof(char));
+		if (!tmp)
 			return (NULL);
-		ft_strlcpy(str, "PWD=", 5);
-		ft_strcat(str, dest);
+		ft_strlcpy(tmp, "PWD=", 5);
+		ft_strcat(tmp, dest);
 	}
 	else if (path == 2)
 	{
-		str = ft_calloc(ft_strlen(dest) + 8, sizeof(char));
-		if (!str)
+		tmp = ft_calloc(ft_strlen(dest) + 8, sizeof(char));
+		if (!tmp)
 			return (NULL);
-		ft_strlcpy(str, "OLDPWD=", 8);
-		ft_strcat(str, dest);
+		ft_strlcpy(tmp, "OLDPWD=", 8);
+		ft_strcat(tmp, dest);
 	}
-	envp_strs_mod(str, data);
-	free (str);
+	envp_strs_mod(tmp, data);
+	free (tmp);
 	return (data);
 }
 
