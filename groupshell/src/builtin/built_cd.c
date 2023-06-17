@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 18:40:39 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/17 17:20:56 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/17 17:24:56 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,12 +107,13 @@ int	built_cd(char **input, t_data *data)
 	char	*dest;
 	char	*cur;
 
-	dest = NULL;
 	cur = getcwd(NULL, 0);
 	if (cur && ft_strcmp("-", input[1]) == 0)//you have to obtain OLDPWD to move before change it
+	{
 		dest = get_dest_path_env(data, "OLDPWD");
-	if (!dest)
-		return (1);
+		if (!dest)
+			return (1);
+	}
 	if (cur)//maybe better obtain from PWD
 		data = envp_cd_mod(data, cur, 2);
 	else
