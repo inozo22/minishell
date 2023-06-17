@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 11:52:54 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/17 11:43:19 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/17 12:00:46 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,34 +25,35 @@ int	check_valid(char *str, char *cmd)
 
 	i = 0;
 	if (!(ft_isalpha(str[i]) || str[i] == '_'))
-	{
-		error_id_built(cmd, str, "not a valid identifier");
-		return (0);
-	}
+		return (error_id_built(cmd, str, "not a valid identifier"), 0);
 	i++;
 	while (str[i] != '=' && str[i])
 	{
-		if (ft_isalnum(str[i]) || str[i] == '_' || (str[i] == '=' && \
+/* 		if (ft_isalnum(str[i]) || str[i] == '_' || (str[i] == '=' && \
 		ft_strncmp(cmd, "export", 6) == 0))
 			;
 		else
 		{
 			error_id_built(cmd, str, "not a valid identifier");
 			return (0);
-		}
+		} */
+		if (!ft_isalnum(str[i]) && str[i] != '_' && (str[i] != '=' && \
+		ft_strncmp(cmd, "export", 6) == 0))
+			return (error_id_built(cmd, str, "not a valid identifier"), 0);
 		i++;
 	}
 	if (str[i] == '=')
 	{
 		while (str[i])
 		{
-			if (ft_isprint(str[i]))
-				;
+			if (!ft_isprint(str[i]))				
+				return (error_id_built(cmd, str, "not a valid identifier"), 0);
+/* 				;
 			else
 			{
 				error_id_built(cmd, str, "not a valid identifier");
 				return (0);
-			}
+			} */
 			i++;
 		}
 	}
@@ -62,13 +63,12 @@ int	check_valid(char *str, char *cmd)
 /**
  * @brief get_env, especially it's for 
  * @author nimai
- * @param **av "cd", "path".
+ * @param
  * @return 
  * @note 
  */
 char	*get_env(char **env, char *type)
 {
-//	char	*ret;
 	int		i;
 
 	i = -1;
