@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 12:44:12 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/17 15:24:35 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/19 18:29:56 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
  * @param 
  * @note if there is no "OLDPWD", add without value
  */
-void	check_oldpwd(t_data *data)
+/* void	check_oldpwd(t_data *data)
 {
 	int			i;
 	char		**new_envp;
@@ -34,7 +34,7 @@ void	check_oldpwd(t_data *data)
 	if (!new_envp)
 		return ;
 	data->env = new_envp;
-}
+} */
 
 /**
  * @brief output all list
@@ -118,7 +118,7 @@ int	output_export(t_data *data)
 	char		**tmp_env;
 	t_export	*list;
 
-	check_oldpwd(data);
+//	check_oldpwd(data);
 	tmp_env = data->env;
 	list = NULL;
 	if (!tmp_env)
