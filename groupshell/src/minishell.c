@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:32:33 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/06/15 10:28:31 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/19 16:16:44 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ int	check_exit(char **input, t_data *data)
 
 /**
  * @note 230615nimai: add protect for input null
+ * @note 230619nimai: add input as a parametor for built_env
  */
 static int	check_builtin(char **input, t_data *data)
 {
@@ -83,7 +84,7 @@ static int	check_builtin(char **input, t_data *data)
 	else if (!ft_strcmp(input[0], "unset"))
 		return(built_unset(input, data));
 	else if (!ft_strcmp(input[0], "env"))
-		return(built_env(data));
+		return(built_env(input, data));
 	else if (!ft_strcmp(input[0], "exit"))
 	{
 		ft_printf("Exit found!\n");
@@ -124,6 +125,7 @@ int	minishell(t_data *data)
 	prompt = get_prompt(data);
 	while (1)
 	{
+		set_signal_handlers();
 //------------------------------------------------------
 /* 		int x= 0;
 
@@ -134,6 +136,8 @@ int	minishell(t_data *data)
 		} */
 //------------------------------------------------------
 		line_read = readline(prompt);
+		if (!line_read)
+			sig_eof();
 		if (line_read && *line_read)
 			add_history(line_read);
 		if (line_read && process_input(line_read, data) == INT_MAX)

@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:12:28 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/17 11:43:43 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/19 16:17:36 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int			built_pwd(t_data *data);
 int			built_echo(char **input);
 int			built_cd(char **input, t_data *data);
 int			built_export(char **input, t_data *data);
-int			built_env(t_data *data);
+int			built_env(char **input, t_data *data);
 int			built_unset(char **input, t_data *data);
 
 /**

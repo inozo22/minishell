@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 09:50:16 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/14 15:34:15 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/19 16:33:23 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,30 @@ void	error_env(char *cmd)
 }
 
 /**
+ * @brief temporary error management
+ * @author nimai
+ * @note in bash, treat another way, but as it doesn't ask to conrol neither option nor flags, I have invented an error
+ */
+void	error_input(char *input, char *msg)
+{
+	ft_printf("minishell: %s: %s\n", input, msg);
+}
+
+/**
  * @brief manage "builtin" env cmd.
  * @author nimai
  * @param **av "env", no flags, no arguments
  * @return 
  * @note if there is no '=', understand that without value, and not will print it
  */
-int	built_env(t_data *data)
+int	built_env(char **input, t_data *data)
 {
 	char		**tmp_env;
 	int			i;
 	int			len;
 
+	if (av_amount(input) > 1)
+		return (error_input(input[0], "with no options or arguments"), 1);
 	tmp_env = (char **)data->env;
 	if (!tmp_env)
 	{

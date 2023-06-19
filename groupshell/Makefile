@@ -6,7 +6,7 @@
 #    By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/30 13:14:38 by bde-mada          #+#    #+#              #
-#    Updated: 2023/06/17 14:13:49 by nimai            ###   ########.fr        #
+#    Updated: 2023/06/19 14:26:01 by nimai            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,9 +54,10 @@ INCLUDE		:= minishell.h
 SRC_FILES	:= main.c minishell.c terminate.c error_msgs.c utils.c cmd_split.c \
 				builtin/built_cd_path.c builtin/built_cd.c builtin/built_cd_utils.c builtin/built_echo.c \
 				builtin/built_env.c builtin/built_exit.c builtin/built_export.c \
-				builtin/built_export_output.c builtin/built_utils.c\
+				builtin/built_export_output.c builtin/built_utils.c \
 				builtin/built_export_sort.c builtin/built_pwd.c builtin/built_unset.c \
-				builtin/errors.c builtin/free.c
+				builtin/errors.c builtin/free.c \
+				signals.c
 
 OBJ_FILES	:= $(SRC_FILES:.c=.o)
 
