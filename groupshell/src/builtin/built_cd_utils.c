@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 09:43:46 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/17 17:19:43 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/19 17:45:58 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,10 @@ char	*get_dest_path_wl_sign(t_data *data, char *cur)
 	if (cur)//move to where you are, you will get OLDPWD
 	{
 		if (chdir(cur) == -1)
-			return (error_built("cd", "failuer to move to current directory\n"), NULL);//
+		{
+			data->return_val = 1;
+			return (error_built("cd", "failuer to move to current directory\n"), NULL);
+		}
 		ret = ft_strdup(cur);
 	}
 	else if (!cur)//move to where you are, but if it's not exist
@@ -52,8 +55,14 @@ char	*get_dest_path_env(t_data *data, char *envtype)
 
 	ret = get_env(data->env, envtype);
 	if (!ret)
+	{
+		data->return_val = 1;
 		return (error_notset("cd", envtype), NULL);//INT 帰ってるところ、無理にNULLで戻してる。要修正
+	}
 	if (chdir(ret) == -1)
+	{
+		data->return_val = 1;
 		return (error_built("cd", "failed chdir"), NULL);
+	}
 	return (ret);
 }

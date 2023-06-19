@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:12:28 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/19 16:17:36 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/19 18:08:29 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,8 @@ char		*ft_strlower(char *str);
 char		*str_mod(char *cur, char *str, int i);
 char		*path_modify(char *cur, char *str);
 int			get_pos_above_path(char *str);
-char		*get_above_path(char *cur);
-void		error_cd(char *cmd);
+char		*get_above_path(char *cur, t_data *data);
+void		error_cd(char *cmd, t_data *data);
 char		*get_dest_path_wl_sign(t_data *data, char *cur);
 char		*get_dest_path_env(t_data *data, char *envtype);
 /**
@@ -114,6 +114,7 @@ void		error_built(char *cmd, char *comment);
 int			error_notset(char *cmd, char *input);
 void		heap_error(int flag);
 void		quick_sort(t_export_box box[], int left, int right);
+
 
 
 void		**ptr_free(void **ptr);
