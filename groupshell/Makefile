@@ -6,7 +6,7 @@
 #    By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/30 13:14:38 by bde-mada          #+#    #+#              #
-#    Updated: 2023/06/19 14:26:01 by nimai            ###   ########.fr        #
+#    Updated: 2023/06/20 13:09:24 by nimai            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,7 @@ CFLAGS		= -Wall -Wextra -Werror -pedantic
 OS			= $(shell uname)
 
 #Optimization and valgrind debugging flags:
-LNK			:= -g3 -O0 #-fsanitize=address 
+LNK			:= -g3 -O0 -fsanitize=address 
 #change -O0 with -O1 or -O2 for faster execution but worse info
 
 LDFLAGS		= $(addprefix -L, $(LIBS_DIR)) -L/Users/$(USER)/.brew/opt/readline/lib

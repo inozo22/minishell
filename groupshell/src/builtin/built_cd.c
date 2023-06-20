@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 18:40:39 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/20 11:53:00 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/20 13:15:38 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,12 @@ char	*get_dest_path(char *dest, t_data *data)
 	return (envp_cd_mod(data, dest, 1), free (dest), free (cur), 0);
 } */
 
+static char	*mod_pwd(char *pwd, char *dest)
+{
+	free (pwd);
+	return (ft_strdup(dest));
+}
+
 static char	*init_pwd(t_data *data)
 {
 	char	*ret;
@@ -160,10 +166,10 @@ int	built_cd(char **input, t_data *data)
 	static char	*pwd = NULL;
 
 	data->return_val = 0;
-	printf("Line: %d	pwd: %s\n", __LINE__, pwd);
 	if (!pwd)
 		pwd = init_pwd(data);
-	printf("Line: %d	pwd: %s\n", __LINE__, pwd);
+	if (!input)
+		return (ft_printf("%s\n", pwd), 0);
 	cur = getcwd(NULL, 0);
 	if (cur && ft_strcmp("-", input[1]) == 0)//you have to obtain OLDPWD to move before change it
 	{
@@ -171,7 +177,6 @@ int	built_cd(char **input, t_data *data)
 		if (!dest)
 			return (free (cur), 1);
 	}
-	printf("Line: %d	pwd: %s\n", __LINE__, pwd);
 	data = envp_cd_mod(data, pwd, 2);//write OLDPWD
 	if (cur && !input[1])//when you don't have argument after "cd", move to $HOME
 		dest = get_dest_path_env(data, "HOME");
@@ -179,12 +184,8 @@ int	built_cd(char **input, t_data *data)
 		dest = get_dest_path_wl_sign(data, pwd);
 	else if (ft_strcmp("-", input[1]) != 0)
 		dest = get_dest_path(input[1], data);//230524nimai: after av[3] will be ignored.
-	free (pwd);
-	pwd = ft_calloc(ft_strlen(dest), sizeof(char *));
-	ft_strcpy(pwd, dest);
-	if (data->return_val != 0)
-		return (envp_cd_mod(data, dest, 1), free (dest), free (cur), data->return_val);
-	return (envp_cd_mod(data, dest, 1), free (dest), free (cur), 0);
+	pwd = mod_pwd(pwd, dest);
+	return (envp_cd_mod(data, dest, 1), free (dest), free (cur), data->return_val);
 }
 
 /**
