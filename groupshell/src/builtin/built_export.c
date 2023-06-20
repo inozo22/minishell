@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:18:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/17 15:43:52 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/20 16:57:15 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,54 @@ void	envp_strs_mod(char *input, t_data *data)
 	} */
 }
 
+int	check_quotes(char *input, int i, int flag)
+{
+	printf("Line: %d\n", __LINE__);
+	if (flag == 2)
+	{
+		if ((i > 2 && input[i - 1] == '=' && input[i] == '\"') || (input[i] == '\"' && input[i + 1] == '\0'))
+			return (1);
+		else if ((i > 2 && input[i - 1] == '=' && input[i] == '\'') || (input[i] == '\'' && input[i + 1] == '\0'))
+			return (1);
+	}
+	printf("Line: %d\n", __LINE__);
+	return (0);
+}
+
+/**
+ * @param i[0] counter for input
+ * @param i[1] counter for ret
+ * @param i[2] flag if there is quotes
+ */
+char	*mod_path(char *input)
+{
+	int		i[3];
+	char	*ret;
+
+	ft_bzero(i, 3);
+	while (input[i[0]])
+	{
+		if (input[i[0]] == '=' && (input[i[0] + 1] == '\"'))
+			i[2] = 2;
+		i[0]++;
+	}
+	ret = ft_calloc(ft_strlen(input) + 1 - i[2], sizeof(char *));
+	if (!ret)
+		return (NULL);
+	i[0] = 0;
+	while (input[i[0]])
+	{
+/* 		if (i[2] && ((i[0] > 2 && input[i[0] - 1] == '=' && input[i[0]] == '\"') || (input[i[0]] == '\"' && input[i[0] + 1] == '\0')))
+			; */
+		if (!check_quotes(input, i[0], i[2]))
+			ret[i[1]++] = input[i[0]];
+		i[0]++;
+	}
+	ret[i[1]] = '\0';
+	free (input);
+	return (ret);
+}
+
 /**
  * @brief add environment according to av in **
  * @author nimai
@@ -91,6 +139,7 @@ char	**envp_strs_join(char *input, t_data *data)
 	}
 	free (data->env);
 	data->env = NULL;
+	input = mod_path(input);
 	if (check_valid(input, "export"))
 		ret[i] = input;
 	ret[++i] = NULL;
@@ -126,8 +175,6 @@ int	check_input(char *input, t_data *data)
  */
 int	built_export(char **input, t_data *data)
 {
-//	char		**tmp_env = NULL;
-//	char		**av = NULL;
 	char		**new_envp = NULL;
 	int			i;
 	int			j;
@@ -154,9 +201,6 @@ int	built_export(char **input, t_data *data)
 			envp_strs_mod(input[j], data);
 		}
 	}
-//If none of the above apply
-/* 	if (!output_export(data))
-		return (printf("Error: output_export\n"), 1); */
 	return (0);
 }
 
