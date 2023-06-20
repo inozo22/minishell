@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:54:13 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/14 12:10:01 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/20 17:25:12 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	built_echo(char **input)
 	int	amount;
 
 	amount = av_amount(input);
-	ft_bzero(flag, 2);
+	ft_bzero(flag, 2 * sizeof(int));
 	if (amount < 2)
 		return (ft_printf("\n"), 0);
 	i = 1;//230523nimai: start from 2 to look for flags.

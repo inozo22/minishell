@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:18:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/20 16:57:15 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/20 17:33:10 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,23 +60,22 @@ void	envp_strs_mod(char *input, t_data *data)
 			i++;
 		}
 	}
-/* 	else if (input[c] == '\0')//Do nothing
-	{
-		;
-	} */
 }
 
+/**
+ * @return 1, when it's quotes 
+ */
 int	check_quotes(char *input, int i, int flag)
 {
-	printf("Line: %d\n", __LINE__);
-	if (flag == 2)
+	if (flag)
 	{
-		if ((i > 2 && input[i - 1] == '=' && input[i] == '\"') || (input[i] == '\"' && input[i + 1] == '\0'))
+		if ((i > 2 && input[i - 1] == '=' && input[i] == '\"') || \
+		(input[i] == '\"' && input[i + 1] == '\0'))
 			return (1);
-		else if ((i > 2 && input[i - 1] == '=' && input[i] == '\'') || (input[i] == '\'' && input[i + 1] == '\0'))
+		else if ((i > 2 && input[i - 1] == '=' && input[i] == '\'') || \
+		(input[i] == '\'' && input[i + 1] == '\0'))
 			return (1);
 	}
-	printf("Line: %d\n", __LINE__);
 	return (0);
 }
 
@@ -90,10 +89,12 @@ char	*mod_path(char *input)
 	int		i[3];
 	char	*ret;
 
-	ft_bzero(i, 3);
+	ft_bzero(i, 3 * sizeof(int));
 	while (input[i[0]])
 	{
-		if (input[i[0]] == '=' && (input[i[0] + 1] == '\"'))
+		if (input[i[0]] == '=' && input[i[0] + 1] == '\"')
+			i[2] = 2;
+		else if (input[i[0]] == '=' && input[i[0] + 1] == '\'')
 			i[2] = 2;
 		i[0]++;
 	}
@@ -103,8 +104,6 @@ char	*mod_path(char *input)
 	i[0] = 0;
 	while (input[i[0]])
 	{
-/* 		if (i[2] && ((i[0] > 2 && input[i[0] - 1] == '=' && input[i[0]] == '\"') || (input[i[0]] == '\"' && input[i[0] + 1] == '\0')))
-			; */
 		if (!check_quotes(input, i[0], i[2]))
 			ret[i[1]++] = input[i[0]];
 		i[0]++;
