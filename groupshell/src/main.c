@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 18:22:41 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/06/20 10:40:17 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/20 11:14:20 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static t_data	*init_data(char *envp[])
 		errors(12, data);
 	while (envp[++len])
 	{
-		if (ft_strncmp(envp[len], "OLDPWD", 6) == 0)
+		if (ft_strncmp(envp[len], "OLDPWD=", 7) == 0)
 			flag = 0;
 	}
 	data->env = (char **)ft_calloc(len + (flag + 1), sizeof(char *));

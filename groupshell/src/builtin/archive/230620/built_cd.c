@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 18:40:39 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/20 11:53:00 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/20 11:02:03 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ char	*get_dest_path(char *dest, t_data *data)
  * @return 
  * @note 230620 hozon
  */
-/* int	built_cd(char **input, t_data *data)
+int	built_cd(char **input, t_data *data)
 {
 	char	*dest;
 	char	*cur;
@@ -131,61 +131,8 @@ char	*get_dest_path(char *dest, t_data *data)
 	if (data->return_val != 0)
 		return (envp_cd_mod(data, dest, 1), free (dest), free (cur), data->return_val);
 	return (envp_cd_mod(data, dest, 1), free (dest), free (cur), 0);
-} */
-
-static char	*init_pwd(t_data *data)
-{
-	char	*ret;
-	int		i;
-
-	i = 0;
-	while (data->env[i])
-	{
-		if (ft_strnstr(data->env[i], "PWD=", 4))
-			break ;
-		i++;
-	}
-	if (!data->env[i])
-	{
-		ret = getcwd(NULL, 0);
-		return (ret);
-	}
-	return (ft_strdup(data->env[i] + 4));
 }
 
-int	built_cd(char **input, t_data *data)
-{
-	char		*dest;
-	char		*cur;
-	static char	*pwd = NULL;
-
-	data->return_val = 0;
-	printf("Line: %d	pwd: %s\n", __LINE__, pwd);
-	if (!pwd)
-		pwd = init_pwd(data);
-	printf("Line: %d	pwd: %s\n", __LINE__, pwd);
-	cur = getcwd(NULL, 0);
-	if (cur && ft_strcmp("-", input[1]) == 0)//you have to obtain OLDPWD to move before change it
-	{
-		dest = get_dest_path_env(data, "OLDPWD");
-		if (!dest)
-			return (free (cur), 1);
-	}
-	printf("Line: %d	pwd: %s\n", __LINE__, pwd);
-	data = envp_cd_mod(data, pwd, 2);//write OLDPWD
-	if (cur && !input[1])//when you don't have argument after "cd", move to $HOME
-		dest = get_dest_path_env(data, "HOME");
-	else if (ft_strcmp("./", input[1]) == 0)//move to where you are, you will get OLDPWD
-		dest = get_dest_path_wl_sign(data, pwd);
-	else if (ft_strcmp("-", input[1]) != 0)
-		dest = get_dest_path(input[1], data);//230524nimai: after av[3] will be ignored.
-	free (pwd);
-	pwd = ft_calloc(ft_strlen(dest), sizeof(char *));
-	ft_strcpy(pwd, dest);
-	if (data->return_val != 0)
-		return (envp_cd_mod(data, dest, 1), free (dest), free (cur), data->return_val);
-	return (envp_cd_mod(data, dest, 1), free (dest), free (cur), 0);
-}
 
 /**
  * if there are more than 1 path, it will ignore after the first.

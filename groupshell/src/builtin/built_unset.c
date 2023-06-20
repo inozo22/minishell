@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 09:50:35 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/16 11:57:32 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/20 12:52:08 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@
  * @brief manage "builtin" unset cmd.
  * @author nimai
  * @param **av "unset", "ABC", "DEF"
- * @note how to delete a variable??? 
  */
 t_data	*unset_env(t_data *data, char *str)
 {
 	int		i;
 	int		j;
+	int		len;
 	char	**tmp;
 
 	i = -1;
@@ -29,16 +29,17 @@ t_data	*unset_env(t_data *data, char *str)
 	tmp = (char **)malloc(sizeof(char *) * (av_amount(data->env) + 1));
 	if (!tmp)
 		return (NULL);
+	len = ft_strlen(str);
 	while (data->env[++i])
 	{
-		if (ft_strncmp(data->env[i], str, ft_strlen(str)) || \
-		ft_strncmp(str, data->env[i], ft_strlen(str)))
-		{
+		if (ft_strnstr(data->env[i], str, len) && (data->env[i][len] == '=' || \
+		data->env[i][len] == '\0'))
+			;
+		else
 			tmp[++j] = data->env[i];
-		}
 		data->env[i] = NULL;
 	}
-	tmp[j] = NULL;
+	tmp[++j] = NULL;
 	free (data->env);
 	data->env = tmp;
 	return (data);

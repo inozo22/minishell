@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 16:00:17 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/20 12:02:57 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/19 17:36:56 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,12 @@ t_data	*envp_cd_mod(t_data *data, char *path, int type)
 	tmp = NULL;
 	if (!path)
 		return (data);
-	if (type == 1)
+	else if (type == 1)
 	{
 		tmp = ft_calloc(ft_strlen(path) + 5, sizeof(char));
 		if (!tmp)
 			return (heap_error(1), NULL);
-		ft_strcpy(tmp, "PWD=");
+		ft_strlcpy(tmp, "PWD=", 5);
 		ft_strcat(tmp, path);
 	}
 	else if (type == 2)
@@ -40,7 +40,7 @@ t_data	*envp_cd_mod(t_data *data, char *path, int type)
 		tmp = ft_calloc(ft_strlen(path) + 8, sizeof(char));
 		if (!tmp)
 			return (heap_error(1), NULL);
-		ft_strcpy(tmp, "OLDPWD=");
+		ft_strlcpy(tmp, "OLDPWD=", 8);
 		ft_strcat(tmp, path);
 	}
 	envp_strs_mod(tmp, data);
