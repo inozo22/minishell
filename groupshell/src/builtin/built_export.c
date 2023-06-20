@@ -6,17 +6,18 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:18:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/20 17:33:10 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/20 17:42:04 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /**
- * @brief add environment according to av in **
+ * @brief modify environment according to av in **
  * @author nimai
- * @return ** pointer, then free 
+ * @return nothing, it's a void function
  * @note 230613nimai: if change the input style, modify here
+ * @note 230620nimai: it's required to control here
  */
 void	envp_strs_mod(char *input, t_data *data)
 {

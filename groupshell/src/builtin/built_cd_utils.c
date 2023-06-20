@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 09:43:46 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/19 17:45:58 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/20 17:53:55 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ char	*get_dest_path_env(t_data *data, char *envtype)
 	char	*ret;
 
 	ret = get_env(data->env, envtype);
+	printf("ret: %s\n", ret);
 	if (!ret)
 	{
 		data->return_val = 1;

@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 18:40:39 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/20 13:15:38 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/20 17:50:27 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,8 +135,12 @@ char	*get_dest_path(char *dest, t_data *data)
 
 static char	*mod_pwd(char *pwd, char *dest)
 {
-	free (pwd);
-	return (ft_strdup(dest));
+	if (dest)
+	{
+		free (pwd);
+		return (ft_strdup(dest));
+	}
+	return (pwd);
 }
 
 static char	*init_pwd(t_data *data)
