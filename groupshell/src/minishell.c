@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:32:33 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/06/21 13:44:56 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/21 15:31:51 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,10 @@ int	minishell(t_data *data)
 //------------------------------------------------------
 		line_read = readline(prompt);
 		if (!line_read)
+		{
 			sig_eof();
+			break ;
+		}
 		if (line_read && *line_read)
 			add_history(line_read);
 		if (line_read && process_input(line_read, data) == INT_MAX)

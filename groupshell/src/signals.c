@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:11:50 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/21 14:04:06 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/21 16:24:14 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@
  * @brief when push Ctrl + D, exit 
  * 
  * 
- * @note 
+ * @note as the super free after the while, only write "exit" and break the loop
  */
 void	sig_eof(void)
 {
 	write(STDOUT_FILENO, "exit\n", 5);
-	exit (0);
+//	exit (0);
 }
 
 void	action(int sig)
