@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 11:52:54 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/21 10:30:47 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/21 11:47:19 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
  * @brief string checker for variable.
  * @author nimai
  * @return 1 if it's valid, otherwise 0.
- * @note in built_utils.
  * @note builtin global function
+ * @note after the '=' there is no protection to accept all characters
  */
 int	check_valid(char *str, char *cmd)
 {
@@ -29,33 +29,10 @@ int	check_valid(char *str, char *cmd)
 	i++;
 	while (str[i] != '=' && str[i])
 	{
-/* 		if (ft_isalnum(str[i]) || str[i] == '_' || (str[i] == '=' && \
-		ft_strncmp(cmd, "export", 6) == 0))
-			;
-		else
-		{
-			error_id_built(cmd, str, "not a valid identifier");
-			return (0);
-		} */
 		if (!ft_isalnum(str[i]) && str[i] != '_' && (str[i] != '=' && \
 		ft_strncmp(cmd, "export", 6) == 0))
 			return (error_id_built(cmd, str, "not a valid identifier"), 0);
 		i++;
-	}
-	if (str[i] == '=')
-	{
-		while (str[i])
-		{
-			if (!ft_isprint(str[i]))				
-				return (error_id_built(cmd, str, "not a valid identifier"), 0);
-/* 				;
-			else
-			{
-				error_id_built(cmd, str, "not a valid identifier");
-				return (0);
-			} */
-			i++;
-		}
 	}
 	return (1);
 }

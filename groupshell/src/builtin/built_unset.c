@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 09:50:35 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/20 12:52:08 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/21 10:41:35 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,6 @@ int	built_unset(char **input, t_data *data)
 
 /**
  * BEHAVIOUR IN BASH
- * when execute env, the list is not ordered 
- * 
  * 
  * 
  * 230601nimai: 

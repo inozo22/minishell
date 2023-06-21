@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:18:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/20 17:42:04 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/21 11:04:38 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,36 +170,33 @@ int	check_input(char *input, t_data *data)
 /**
  * @brief manage "builtin" export cmd.
  * @author nimai
- * @param **av "export", "ABC=abc".
+ * @param **input "export", "ABC=abc". *data
  * @return 
  */
 int	built_export(char **input, t_data *data)
 {
-	char		**new_envp = NULL;
+	char		**new_envp;
 	int			i;
-	int			j;
 
+	new_envp = NULL;
 	if (av_amount(input) == 1)
 	{
 		if (!output_export(data))
 			return (printf("Error: output_export\n"), 1);
 		return (0);
 	}
-	i = -1;
-	j = 0;
-	while (input[++j])//input[1]start
+	i = 0;
+	while (input[++i])
 	{
-		if (!check_input(input[j], data))//add
+		if (!check_input(input[i], data))
 		{
-			new_envp = envp_strs_join(input[j], data);
+			new_envp = envp_strs_join(input[i], data);
 			if (!new_envp)
 				return (printf("ERROR: Line: %d\n", __LINE__), 1);
 			data->env = new_envp;
 		}
-		else//mod
-		{
-			envp_strs_mod(input[j], data);
-		}
+		else
+			envp_strs_mod(input[i], data);
 	}
 	return (0);
 }
