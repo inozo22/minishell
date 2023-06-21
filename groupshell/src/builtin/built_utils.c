@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 11:52:54 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/17 12:00:46 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/21 10:30:47 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,23 +61,28 @@ int	check_valid(char *str, char *cmd)
 }
 
 /**
- * @brief get_env, especially it's for 
+ * @brief get_env, get value of env
  * @author nimai
  * @param
  * @return 
- * @note 
+ * @note if there is no value (or variable) return NULL
  */
 char	*get_env(char **env, char *type)
 {
 	int		i;
+	int		j;
 
 	i = -1;
 	while (env[++i])
-		if (ft_strnstr(env[i], type, ft_strlen(type)))
+	{
+		j = 0;
+		while (env[i][j] && type[j] && env[i][j] == type[j])
+			j++;
+		if (env[i][j] == '=' && type[j] == '\0')
 			break ;
+	}
 	if (env[i] && ft_strrchr(env[i], '='))
 		return (ft_strdup(env[i] + ft_strlen(type) + 1));
 	else
-		return (NULL);//not set coco?
+		return (NULL);//not set error coco?
 }
-
