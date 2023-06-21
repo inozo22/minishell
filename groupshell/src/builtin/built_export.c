@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:18:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/21 11:04:38 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/21 12:04:18 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ char	**envp_strs_join(char *input, t_data *data)
 	free (data->env);
 	data->env = NULL;
 	input = mod_path(input);
-	if (check_valid(input, "export"))
+	if (check_valid(input, "export", data))
 		ret[i] = input;
 	ret[++i] = NULL;
 	return (ret);

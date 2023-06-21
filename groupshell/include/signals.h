@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 14:21:14 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/19 15:38:43 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/21 13:43:49 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,5 +17,6 @@
 
 void	set_signal_handlers(void);
 void	sig_eof(void);
+void	action(int sig);
 
 #endif

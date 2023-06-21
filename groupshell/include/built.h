@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:12:28 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/20 13:13:43 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/21 12:12:28 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ int			av_amount(char **strs);
 char		**fake_env(void);
 t_export	*fill_list(char **strs, t_export *ret);
 void		output_env(t_export *data, int len, int flag);
-int			check_valid(char *str, char *cmd);
 int			output_export(t_data *data);
 char		**envp_strs_join(char *input, t_data *data);
 void		envp_strs_mod(char *input, t_data *data);
@@ -102,7 +101,7 @@ char		*get_dest_path_env(t_data *data, char *envtype);
  * functions from utils
  */
 
-int			check_valid(char *str, char *cmd);
+int			check_valid(char *str, char *cmd, t_data *data);
 char		*get_env(char **env, char *type);
 /**
  * functions from utils

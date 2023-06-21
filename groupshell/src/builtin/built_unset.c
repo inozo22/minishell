@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 09:50:35 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/21 10:41:35 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/21 12:13:13 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	built_unset(char **input, t_data *data)
 	i = 1;
 	while (input[i])
 	{
-		if (check_valid(input[i], "unset") == 1)
+		if (check_valid(input[i], "unset", data) == 1)
 			data = unset_env(data, input[i]);
 		i++;
 	}
