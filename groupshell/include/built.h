@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:12:28 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/21 12:12:28 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/22 11:36:18 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ char		*path_modify(char *cur, char *str);
 int			get_pos_above_path(char *str);
 char		*get_above_path(char *cur, t_data *data);
 void		error_cd(char *cmd, t_data *data);
-char		*get_dest_path_wl_sign(t_data *data, char *cur);
+char		*get_dest_path_wl_sign(t_data *data, char *cur, char *pwd);
 char		*get_dest_path_env(t_data *data, char *envtype);
 /**
  * functions from cd

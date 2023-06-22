@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 18:40:39 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/22 11:06:09 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/22 11:34:29 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ char	*get_dest_path(char *dest, char *pwd, t_data *data)
 		}
 		cur = getcwd(NULL, 0);
 		if (ft_strlen(cur) > ft_strlen(dest))
-			return (cur = path_modify(cur, dest), cur);
+			return (path_modify(cur, dest));
 		return (free (cur), dest);
 	}
 }
@@ -147,7 +147,7 @@ int	built_cd(char **input, t_data *data)
 	if (cur && !input[1])//when you don't have argument after "cd", move to $HOME
 		dest = get_dest_path_env(data, "HOME");
 	else if (ft_strcmp("./", input[1]) == 0)//move to where you are, you will get OLDPWD
-		dest = get_dest_path_wl_sign(data, pwd);
+		dest = get_dest_path_wl_sign(data, cur, pwd);
 	else if (ft_strcmp("-", input[1]) != 0)
 		dest = get_dest_path(input[1], pwd, data);//230524nimai: after av[3] will be ignored.
 	pwd = mod_pwd(pwd, dest);
@@ -184,7 +184,7 @@ int	built_cd(char **input, t_data *data)
  * bash: cd: OLDPWD not set
  * bash-3.2$ echo $?
  * 1
- * bash-3.2$
+ * bash-3.2$ -> done
  * 
  */
 

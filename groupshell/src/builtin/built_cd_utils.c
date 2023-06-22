@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 09:43:46 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/20 17:53:55 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/22 12:04:29 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
  * @return 
  * @note 
  */
-char	*get_dest_path_wl_sign(t_data *data, char *cur)
+char	*get_dest_path_wl_sign(t_data *data, char *cur, char *pwd)
 {
 	char	*ret;
 
@@ -36,7 +36,7 @@ char	*get_dest_path_wl_sign(t_data *data, char *cur)
 	}
 	else if (!cur)//move to where you are, but if it's not exist
 	{
-		ret = ft_strjoin(getenv("PWD"), "./");
+		ret = ft_strjoin(pwd, "./");
 		ft_printf("cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory");//temporary error control
 	}
 	return (ret);
@@ -54,11 +54,10 @@ char	*get_dest_path_env(t_data *data, char *envtype)
 	char	*ret;
 
 	ret = get_env(data->env, envtype);
-	printf("ret: %s\n", ret);
 	if (!ret)
 	{
 		data->return_val = 1;
-		return (error_notset("cd", envtype), NULL);//INT 帰ってるところ、無理にNULLで戻してる。要修正
+		return (error_notset("cd", envtype), NULL);
 	}
 	if (chdir(ret) == -1)
 	{

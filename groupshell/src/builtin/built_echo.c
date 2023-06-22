@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:54:13 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/20 17:25:12 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/22 12:07:38 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,42 +39,6 @@ int	is_flag(char *str)
 }
 
 /**
- * @brief OLD ONE manage "builtin" echo cmd.
- * @author nimai
- * @param **av "echo", "-n", "str (could be in large numbers as 10,000 byte)"
- * @param flag[0] the first flag check
- * @param flag[1] from second flag
- * @return anyway print what you put after cmd, if there is no argument put "\n".
- */
-/* int	built_echo(char **input)
-{
-	int	i;
-	int	flag[2];
-	int	amount;
-
-	amount = av_amount(input);
-	if (amount < 2)
-		return (ft_printf("\n"), 0);
-	i = 1;//230523nimai: start from 2 to look for flags.
-	flag[0] = is_flag(input[i]);
-	if (flag[0] == 1)
-		i++;
-	while (i < amount)
-	{
-		flag[1] = is_flag(input[i]);
-		if (flag[1] > 1 || flag[1] == 0 || (flag[1] == 1 && flag[0] == 1))
-			ft_printf(input[i]);
-		//230523nimai: has to skip when flag[1]==1
-		if (i < amount - 1 && flag[1] != 1)
-			ft_printf(" ");
-		i++;
-	}
-	if (flag[0] != 1)
-		ft_printf("\n");
-	return (0);
-} */
-
-/**
  * @brief manage "builtin" echo cmd.
  * @author nimai
  * @param **av "echo", "-n", "str (could be in large numbers as 10,000 byte)"
@@ -92,7 +56,7 @@ int	built_echo(char **input)
 	ft_bzero(flag, 2 * sizeof(int));
 	if (amount < 2)
 		return (ft_printf("\n"), 0);
-	i = 1;//230523nimai: start from 2 to look for flags.
+	i = 1;//230523nimai: start from 1 to look for flags.
 	flag[0] = is_flag(input[i]);
 	if (flag[0] == 1 && input[i++])
 		flag[1] = 1;
