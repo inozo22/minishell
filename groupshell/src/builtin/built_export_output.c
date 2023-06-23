@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 12:44:12 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/19 18:29:56 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/23 13:22:16 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,22 @@
 	data->env = new_envp;
 } */
 
+void	print_export(char	*str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '\\' || str[i] == '"')
+		{
+			ft_putchar_fd('\\', 1);
+		}
+		ft_putchar_fd(str[i], 1);
+		i++;
+	}
+}
+
 /**
  * @brief output all list
  * @author nimai
@@ -58,7 +74,11 @@ void	output_env(t_export *list, int len, int flag)
 				ft_printf("declare -x ");
 				ft_printf("%s", list->box[i].name);
 				if (list->box[i].equal == 1)
-					ft_printf("=\"%s\"", list->box[i].val);
+				{
+					ft_printf("=\"");
+					print_export(list->box[i].val);
+					ft_printf("\"");
+				}
 				ft_printf("\n");
 			}
 		}
