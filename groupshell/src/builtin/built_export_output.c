@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 12:44:12 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/23 13:22:16 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/23 13:25:00 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,9 @@
 	data->env = new_envp;
 } */
 
+/**
+ * @note Add '\' when the value string has '\' or '"'
+ */
 void	print_export(char	*str)
 {
 	int	i;
