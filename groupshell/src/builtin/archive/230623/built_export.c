@@ -6,16 +6,13 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:18:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/23 17:47:50 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/23 17:38:47 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/**
- * 
- * @param flag if there is no '=', you will put one more length to memory
- */
+
 char	*envp_str_mod(char *str, char *input, int i, int flag)
 {
 	free (str);
@@ -48,19 +45,82 @@ void	envp_strs_mod(char *input, t_data *data)
 		{
 			i[1] = -1;
 			if (ft_strncmp(data->env[i[0]], input, i[2] + 1) == 0)//with '='
+			{
 				data->env[i[0]] = envp_str_mod(data->env[i[0]], input, i[2], 0);
+/* 				free (data->env[i[0]]);
+				data->env[i[0]] = ft_calloc(ft_strlen(input) + 1, sizeof(char));
+				ft_strlcpy(data->env[i[0]], input, i[2] + 2);
+				ft_strcat(data->env[i[0]], (input + i[2] + 1)); */
+				break ;
+			}
 			else if (ft_strncmp(data->env[i[0]], input, i[2]) == 0)
 			{
 				while (data->env[i[0]][++i[1]] == input[i[1]])
 					;
 				if (data->env[i[0]][i[1]] == '\0' && input[i[1]] == '=')
-					data->env[i[0]] = envp_str_mod(data->env[i[0]], \
-					input, i[2], 1);
+				{
+					data->env[i[0]] = envp_str_mod(data->env[i[0]], input, i[2], 1);
+/* 					data->env[i[0]] = ft_calloc(ft_strlen(input) + 2, 1);
+					ft_strlcpy(data->env[i[0]], input, i[2] + 2);
+					ft_strcat(data->env[i[0]], (input + i[2] + 1)); */
+					break ;
+				}
 			}
 			i[0]++;
 		}
 	}
 }
+
+/**
+ * @brief modify environment according to av in **
+ * @author nimai
+ * @return nothing, it's a void function
+ * @note 230613nimai: if change the input style, modify here
+ * @note 230620nimai: it's required to control here
+ */
+/* void	envp_strs_mod(char *input, t_data *data)
+{
+	char	*tmp;
+	int		i;
+	int		j;
+	int		k;
+	int		c;
+
+	i = 0;
+
+	c = check_input(input, data);
+	if (input[c] == '=')
+	{
+		while (data->env[i])
+		{
+			j = -1;
+			k = -1;
+			if (ft_strncmp(data->env[i], input, c + 1) == 0)//with '='
+			{
+				free (data->env[i]);
+				tmp = ft_calloc(ft_strlen(input) + 1, sizeof(char));
+				ft_strlcpy(tmp, input, c + 2);
+				ft_strcat(tmp, (input + c + 1));
+				data->env[i] = tmp;
+				break ;
+			}
+			else if (ft_strncmp(data->env[i], input, c) == 0)
+			{
+				while (data->env[i][++j] == input[++k])
+					;
+				if (data->env[i][j] == '\0' && input[k] == '=')
+				{
+					tmp = ft_calloc(ft_strlen(input) + 2, sizeof(char));
+					ft_strlcpy(tmp, input, c + 2);
+					ft_strcat(tmp, (input + c + 1));
+					data->env[i] = tmp;
+					break ;
+				}
+			}
+			i++;
+		}
+	}
+} */
 
 /**
  * @return 1, when it's quotes 
