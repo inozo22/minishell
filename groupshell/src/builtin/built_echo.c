@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:54:13 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/22 12:07:38 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/26 12:20:54 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,7 @@ int	is_flag(char *str)
 			break ;
 	}
 	if (str[ret] != '\0')
-	{
 		return (ret);
-	}
 	return (1);
 }
 
@@ -83,5 +81,9 @@ int	built_echo(char **input)
  * 	printf("Line: %d\n", __LINE__);
  * 	printf("str[ret]: %c\n", str[ret]);
  * 
- * 230614nimai: is there possibility to failure command echo??
+ * 230614nimai: is there possibility to failure command echo?? 
+ * 230626nimai: not found yet
+ * 230626nimai: cannot print well with above
+ * echo "%/()=?¿OP^*Ç¨ÑLK_:;M"
+ * 
  */
