@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 18:40:39 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/22 11:34:29 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/26 11:34:26 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ char	*get_above_path(char *cur, t_data *data)
  * @brief obtain destination path
  * @author nimai
  * @note first try to obtain PWD by get_env, if it doesn't succeed, try getcwd
+ * @note check the condition required when it's merged with lexor part
  */
 char	*get_dest_path(char *dest, char *pwd, t_data *data)
 {
@@ -70,16 +71,13 @@ char	*get_dest_path(char *dest, char *pwd, t_data *data)
 	int		i;
 
 	i = 1;
-	if (ft_strcmp("../", dest) == 0 || ft_strncmp("..//", dest, 4) == 0)
+	if (ft_strcmp("..", dest) == 0/*  || ft_strcmp("../", dest) == 0 */ || ft_strncmp("..//", dest, 4) == 0)
 	{
 		while (dest[++i])
 			if (dest[i] != '/')
 				return (error_cd(dest, data), NULL);
-//		cur = get_env(data->env, "PWD");
-//		if (!cur)
-//			cur = getcwd(NULL, 0);
 		ret = get_above_path(pwd, data);
-		return (/* free (cur),  */ret);
+		return (ret);
 	}
 	else
 	{
@@ -125,6 +123,10 @@ static char	*init_pwd(t_data *data)
 	return (ft_strdup(data->env[i] + 4));
 }
 
+
+/**
+ * @note should be modified, but yet IDK if it's work with the current directory absense, so after merge check and modify
+ */
 int	built_cd(char **input, t_data *data)
 {
 	char		*dest;
@@ -146,7 +148,7 @@ int	built_cd(char **input, t_data *data)
 	data = envp_cd_mod(data, pwd, 2);//write OLDPWD
 	if (cur && !input[1])//when you don't have argument after "cd", move to $HOME
 		dest = get_dest_path_env(data, "HOME");
-	else if (ft_strcmp("./", input[1]) == 0)//move to where you are, you will get OLDPWD
+	else if (ft_strcmp("./", input[1]) == 0 || ft_strncmp(".", input[1], 1 == 0))
 		dest = get_dest_path_wl_sign(data, cur, pwd);
 	else if (ft_strcmp("-", input[1]) != 0)
 		dest = get_dest_path(input[1], pwd, data);//230524nimai: after av[3] will be ignored.

@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 09:43:46 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/22 12:04:29 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/26 11:29:12 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
  * @author nimai
  * @param **av "cd", "path".
  * @return 
- * @note 
+ * @note you will get OLDPWD
  */
 char	*get_dest_path_wl_sign(t_data *data, char *cur, char *pwd)
 {
@@ -36,6 +36,7 @@ char	*get_dest_path_wl_sign(t_data *data, char *cur, char *pwd)
 	}
 	else if (!cur)//move to where you are, but if it's not exist
 	{
+		// I think I should put input instead of "./" because could be any string
 		ret = ft_strjoin(pwd, "./");
 		ft_printf("cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory");//temporary error control
 	}
@@ -47,7 +48,7 @@ char	*get_dest_path_wl_sign(t_data *data, char *cur, char *pwd)
  * @author nimai
  * @param envtype HOME or OLDPWD
  * @return 
- * @note 
+ * @note if there is no value, receive "??? not set" message
  */
 char	*get_dest_path_env(t_data *data, char *envtype)
 {
