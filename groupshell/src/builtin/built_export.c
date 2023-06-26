@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:18:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/23 17:47:50 by nimai            ###   ########.fr       */
+/*   Updated: 2023/06/23 17:52:25 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /**
  * 
- * @param flag if there is no '=', you will put one more length to memory
+ * @param flag if there is no '=', you will put one more length to allocate memory
  */
 char	*envp_str_mod(char *str, char *input, int i, int flag)
 {
@@ -31,10 +31,6 @@ char	*envp_str_mod(char *str, char *input, int i, int flag)
 
 /**
  * 
- * @param i[0] : i
- * @param i[1] : j
- * @param i[2] : k
- * @param i[3] : c
  */
 void	envp_strs_mod(char *input, t_data *data)
 {
