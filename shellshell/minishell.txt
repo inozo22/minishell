@@ -1,0 +1,14 @@
+[92;3;4;1mminishell🐚[0m[1;34m@nimai[0m$ cd ..
+Input split 0: cd
+Input split 1: ..
+Input0: cd
+Check builtin return: 0
+[92;3;4;1mminishell🐚[0m[1;34m@nimai[0m$  pwd
+Input split 0: pwd
+Input0: pwd
+/Users/nimai/42/42cursus/minishell
+Check builtin return: 0
+[92;3;4;1mminishell🐚[0m[1;34m@nimai[0m$ exit
+
+
+Bye 🗑

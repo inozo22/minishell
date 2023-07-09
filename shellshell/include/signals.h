@@ -1,42 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   terminate.c                                        :+:      :+:    :+:   */
+/*   signals.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/30 14:24:59 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/07/09 11:07:14 by nimai            ###   ########.fr       */
+/*   Created: 2023/06/19 14:21:14 by nimai             #+#    #+#             */
+/*   Updated: 2023/06/21 13:43:49 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef SIGNALS_H
+# define SIGNALS_H
 
-void	*free_list(char **list)
-{
-	int	i;
+# include <signal.h>
 
-	i = -1;
-	while (list[++i])
-	{
-		free(list[i]);
-		list[i] = NULL;
-	}
-	free(list);
-	list = NULL;
-	return (list);
-}
+void	set_signal_handlers(void);
+void	sig_eof(void);
+void	action(int sig);
 
-void	*free_alloc(t_data *data)
-{
-	free_list(data->env);
-	exit(EXIT_SUCCESS);
-}
-
-void	errors(int error_id, t_data *data)
-{
-	perror("minishell:");
-	if (error_id == 12)
-		ft_printf("Mem error\n");
-	free_alloc(data);
-}
+#endif
