@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 15:43:39 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/07/09 11:31:20 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/09 13:24:02 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,10 @@ static int	count_args(char *str)
 		}
 		if (i[0] == 0 && ft_isquote(*str))
 			i[0] = ft_isquote(*str);
+		if (*str == '$' && i[0] < 39)//if quotes flag is smaller than ''(39), get the path
+		{
+			;
+		}
 		if (*str && *str != ' ' && i[1] == 0)
 		{
 			i[1] = 1;
@@ -118,6 +122,8 @@ char	**split_input(char *str)
 	int		*pos;
 
 	i = ft_calloc(2, sizeof(int));
+	if (!i)
+		return (NULL);
 	len = count_args(str);
 	if (len == 0)
 		return (NULL);

@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:32:33 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/07/09 11:29:13 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/09 12:48:48 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,6 @@ static int process_input(char *line_read, t_data *data)
 	j = -1;
 	while (input && input[++j])
 		ft_printf("Input split %d: %s\n", j, input[j]);
-	exit (1);
 	i = check_builtin(input, data);
 	ft_printf("Check builtin return: %d\n", i);
 	if (i == -1)
