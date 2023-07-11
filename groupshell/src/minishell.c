@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:32:33 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/06/21 15:31:51 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/11 15:45:18 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ int	minishell(t_data *data)
 	prompt = get_prompt(data);
 	while (1)
 	{
-		set_signal_handlers();
+		set_signal_handlers(13);
 //------------------------------------------------------
 /* 		int x= 0;
 

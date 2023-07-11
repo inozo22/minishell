@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:11:50 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/09 10:56:35 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/11 15:28:32 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,17 @@ void	sig_eof(void)
  */
 void	action(int sig)
 {
-	char	*str;
-	char	*str2;
-
-	str = "\t\t\t\b\b\b\b\b                                                        ";
-	str2 = "                             \n";
-	(void)sig;
-	rl_on_new_line();
-	write(1, str, 54);
-	write(1, str2, 30);
-	rl_replace_line("", 0);
-	rl_redisplay();
+	if (sig == SIGINT)
+	{
+		rl_on_new_line();
+		write(STDOUT_FILENO, "\n", 1);
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
+	else if (sig == SIGQUIT)
+	{
+		write (1, "\n", 1);
+	}
 }
 
 void	sigquit_ignore(void)
@@ -48,12 +48,35 @@ void	sigquit_ignore(void)
 	sigaction(SIGQUIT, &sa, NULL);
 }
 
-void	set_signal_handlers(void)
+void	set_signal_handlers(pid_t pid)
 {
 	struct sigaction	sa;
 
-	sigquit_ignore();
 	ft_bzero(&sa, sizeof(struct sigaction));
-	sa.sa_handler = &action;
-	sigaction(SIGINT, &sa, NULL);
+	if (pid)
+	{
+		sigquit_ignore();
+		sa.sa_handler = &action;
+		sigaction(SIGINT, &sa, NULL);
+	}
+	else
+	{
+		sa.sa_handler = &action;
+		sigaction(SIGINT, &sa, NULL);
+		sigaction(SIGQUIT, &sa, NULL);
+	}
 }
+
+/* void	set_signal_exacuting_handlers(void)
+{
+	struct sigaction	sa;
+
+	if (pid == 0)
+	{
+		sigquit_ignore();
+		ft_bzero(&sa, sizeof(struct sigaction));
+		sa.sa_handler = &action;
+		sigaction(SIGINT, &sa, NULL);
+	}
+}
+ */
