@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:11:50 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/11 15:28:32 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/11 16:10:47 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /**
  * @brief when push Ctrl + D, exit 
- * @note as the super free after the while, only write "exit" and break the loop
+ * @note How 
  */
 void	sig_eof(void)
 {
@@ -53,7 +53,7 @@ void	set_signal_handlers(pid_t pid)
 	struct sigaction	sa;
 
 	ft_bzero(&sa, sizeof(struct sigaction));
-	if (pid)
+	if (pid)//230711nimai: I think I can remove this (at this moment let it how is to check things)
 	{
 		sigquit_ignore();
 		sa.sa_handler = &action;
