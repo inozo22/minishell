@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 18:57:34 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/07/20 17:05:00 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/20 18:11:13 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,26 @@
 #define GREEN "\033[1;32m"
 #define CLEAR "\033[0m"
 
+/**
+ * @brief to free ** array
+ * @note I couldn't find where is, it should be replaced (if there is)
+ * 
+  */
+void	myfree_array(char **tab)
+{
+	int	i;
+
+	i = 0;
+	while (tab[i])
+	{
+		free(tab[i]);
+		tab[i] = NULL;
+		i++;
+	}
+	free(tab);
+	tab = NULL;
+}
+
 int	valid_wildcard(char *input, char *dirname)
 {
 	int		i;
@@ -32,45 +52,30 @@ int	valid_wildcard(char *input, char *dirname)
 	int		t;
 	int		ret;
 
-//	(void)dirname;
-//	printf("Line: %d	input: %s dirname: %s\n", __LINE__, input, &dirname[0]);
 	i = -1;
 	counter = 0;
-	t = 0;
 	ret = 0;
+	//count how many letters there are
 	while (input[++i])
 	{
 		if (input[i] != '*')
 			counter++;
 	}
-//	printf("Line: %d	input: %s dirname: %s\n", __LINE__, input, &dirname[0]);
-//	printf("counter: %d\n", counter);
 	tab = ft_split(input, '*');
-	while (tab[t])
-	{
-//		printf("tab[%d]: %s\n", t, tab[t]);
-		t++;
-	}
-//	printf("Line: %d	input: %s dirname: %s\n", __LINE__, input, &dirname[0]);
 	t = 0;
 	j = 0;
 	i = 0;
 	while (input[i] && input[i] == '*')
 		i++;
-//	printf("Line: %d	input: %s dirname: %s\n", __LINE__, input, &dirname[j]);
 	while (dirname[j] && input[i] && j < (int)ft_strlen(dirname))
 	{
-//		printf("Line: %d	input: %s dirname: %s\n", __LINE__, input, &dirname[j]);
-//		printf("Line: %d\n", __LINE__);
 		if (input[i - 1] == '*')
 		{
 			while (dirname[j] && (input[i] != dirname[j]))
 				j++;
 		}
-//		printf("Line: %d\n", __LINE__);
 		if (ft_strlen(tab[t]) == 1)
 		{
-			printf("Line: %d	tab[%d]: %s &dirname[%d]: %s &input[%d]: %s\n", __LINE__, t, tab[t], j, &dirname[j], i, &input[i]);
 			if (tab[t][0] == dirname[j])
 			{
 				ret++;
@@ -79,47 +84,35 @@ int	valid_wildcard(char *input, char *dirname)
 				t++;
 			}
 		}
-		else if (ft_strncmp(tab[t], &dirname[j], ft_strlen(tab[t])) == 0)
+		else if (ft_strncmp(tab[t], &dirname[j], (int)ft_strlen(tab[t])) == 0)
 		{
-			printf("Line: %d	tab[%d]: %s &dirname[%d]: %s &input[%d]: %s\n", __LINE__, t, tab[t], j, &dirname[j], i, &input[i]);
 			ret += ft_strlen(tab[t]);
-			printf("ret: %d\n", ret);
 			i += ret - 1;
 			j += ret - 1;
 			t++;
-			printf("Line: %d	tab[%d]: %s &dirname[%d]: %s &input[%d]: %s ret: %d\n", __LINE__, t, tab[t], j, &dirname[j], i, &input[i], ret);
-			if ((!tab[t] && /* input[i] == '*'  &&*/ j >= (int)ft_strlen(dirname)))
+			if (!tab[t] && ((j >= (int)ft_strlen(dirname)) || (ret == counter && input[i + 1] == '*')))
 			{
-				printf("input: %s	no tab, no dirname\n", &input[i]);
+				myfree_array(tab);
 				return (1);
 			}
-			if ((!tab[t] && ret == counter && input[i + 1] == '*'))
-			{
-				printf("no tab, complete ret and inpnut is *\n");
-				return (1);
-			}
-			else if (!tab[t] && input[i] != '*' && j >= (int)ft_strlen(dirname))
-				return (0);
 			else if (!tab[t])
 				break ;
-//			printf("Line: %d	input: %s dirname: %s\n", __LINE__, input, &dirname[j]);
 		}
 		else
 			j++;
-//		printf("Line: %d	input: %s dirname: %s j: %d\n", __LINE__, input, &dirname[j], j);
 		while (input[i] && input[i] == '*')
 			i++;
-//		printf("Line: %d	input: %s dirname: %s\n", __LINE__, &input[i], &dirname[j]);
 	}
-	printf("Line: %d	i: %d j: %d\n", __LINE__, i, j);
-	printf("Line: %d	ret: %d counter: %d\n", __LINE__, ret, counter);
-	printf("Line: %d	input: %s dirname: %s\n", __LINE__, &input[i], &dirname[j]);
 	if (((input[ft_strlen(input) - 1] == '*' && dirname[++j]) || (!input[++i] && !dirname[++j])) && ret == counter)
-		return (1);
-	return (0);
+		return (myfree_array(tab), 1);
+	return (myfree_array(tab), 0);
 }
 
+//		printf("Line: %d	input: %s dirname: %s\n", __LINE__, &input[i], &dirname[j]);
 
+	// printf("Line: %d	i: %d j: %d\n", __LINE__, i, j);
+	// printf("Line: %d	ret: %d counter: %d\n", __LINE__, ret, counter);
+	// printf("Line: %d	input: %s dirname: %s\n", __LINE__, &input[i], &dirname[j]);
 
 
 
@@ -279,9 +272,10 @@ int	main()
 {
 //	printf("Line: %d\n", __LINE__);
 	wildcards("*.out");
-	printf("\n*******-----********\n");
-	printf("\n*******-----********\n");
+	printf("\n*******-----********	👻	*******-----********\n");
+	printf("\n*******-----********	👻	*******-----********\n");
 	wildcards("*s*he*****ll*");
 //	printf("Line: %d\n", __LINE__);
+//	system ("leaks minishell");
 	return 0;
 }
