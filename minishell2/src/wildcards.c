@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 18:57:34 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/07/21 10:48:04 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/21 11:07:10 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,21 @@
 #define GREEN "\033[1;32m"
 #define CLEAR "\033[0m"
 
+int	obtain_counter(char *input)
+{
+	int	i;
+	int	ret;
+
+	i = -1;
+	ret = 0;
+	while (input[++i])
+	{
+		if (input[i] != '*')
+			ret++;
+	}
+	return (ret);
+}
+
 int	*check_input_tab(char *input, char **tab, char *dirname, int *i)
 {
 	if (ft_strlen(tab[i[4]]) == 1)
@@ -35,52 +50,19 @@ int	*check_input_tab(char *input, char **tab, char *dirname, int *i)
 			i[4]++;
 		}
 	}
-	else if (ft_strncmp(tab[i[4]], &dirname[i[1]], (int)ft_strlen(tab[i[4]])) == 0)
+	else if (ft_strncmp(tab[i[4]], &dirname[i[1]], ft_strlen(tab[i[4]])) == 0)
 	{
 		i[3] += (int)ft_strlen(tab[i[4]]);
 		i[0] += i[3] - 1;
 		i[1] += i[3] - 1;
 		i[4]++;
-		if (!tab[i[4]] && ((i[1] >= (int)ft_strlen(dirname)) || (i[3] == i[2] && input[ft_strlen(input) - 1] == '*')))
-		{
-			//myfree_array(tab);
-			i[5] = 1;//return 1
-		}
-		else if (!tab[i[4]])
-		{
-			i[5] = 3;//break
-		}
+		if (!tab[i[4]] && ((i[1] >= (int)ft_strlen(dirname)) || \
+		(i[3] == i[2] && ((input[ft_strlen(input) - 1] == '*') || \
+		(!input[++i[0]] && !dirname[++i[1]])))))
+			i[5] = 1;
 	}
 	else
 		i[1]++;
-	// if (ft_strlen(tab[i[4]]) == 1)
-	// {
-	// 	printf("Line: %d\n", __LINE__);
-	// 	if (tab[i[4]][0] == dirname[i[1]])
-	// 	{
-	// 		i[3]++;
-	// 		i[0]++;
-	// 		i[1]++;
-	// 		i[4]++;
-	// 	}
-	// }
-	// else if (ft_strncmp(tab[i[4]], &dirname[i[1]], (int)ft_strlen(*tab)) == 0)
-	// {
-	// 	i[3] += ft_strlen(*tab);
-	// 	i[0] += i[3] - 1;
-	// 	i[1] += i[3] - 1;
-	// 	i[4]++;
-	// 	if (!tab[i[4]] && ((i[1] >= (int)ft_strlen(dirname)) || (i[3] == i[2] && input[i[0] + 1] == '*')))
-	// 	{
-	// 		i[5] = 1;//return 1
-	// 	}
-	// 	else if (!tab[i[4]])
-	// 	{
-	// 		i[5] = 3;//break
-	// 	}
-	// }
-	// else
-	// 	i[1]++;
 	return (i);
 }
 
@@ -116,18 +98,12 @@ int	valid_wildcard(char *input, char *dirname)
 {
 	int		*i;
 	char	**tab;
-	// int		t;
 
 	i = ft_calloc(6, sizeof(int));
-	//count how many letters there are
-	while (input[++i[0]])
-	{
-		if (input[i[0]] != '*')
-			i[2]++;
-	}
+	if (!i)
+		return (0);
+	i[2] = obtain_counter(input);
 	tab = ft_split(input, '*');
-	// t = 0;
-	i[0] = 0;
 	while (input[i[0]] && input[i[0]] == '*')
 		i[0]++;
 	while (dirname[i[1]] && input[i[0]] && i[1] < (int)ft_strlen(dirname))
@@ -138,44 +114,12 @@ int	valid_wildcard(char *input, char *dirname)
 				i[1]++;
 		}
 		i = check_input_tab(input, tab, dirname, i);
-		// if (ft_strlen(tab[i[4]]) == 1)
-		// {
-		// 	if (tab[i[4]][0] == dirname[i[1]])
-		// 	{
-		// 		i[3]++;
-		// 		i[0]++;
-		// 		i[1]++;
-		// 		i[4]++;
-		// 	}
-		// }
-		// else if (ft_strncmp(tab[i[4]], &dirname[i[1]], (int)ft_strlen(tab[i[4]])) == 0)
-		// {
-		// 	i[3] += (int)ft_strlen(tab[i[4]]);
-		// 	i[0] += i[3] - 1;
-		// 	i[1] += i[3] - 1;
-		// 	i[4]++;
-		// 	if (!tab[i[4]] && ((i[1] >= (int)ft_strlen(dirname)) || (i[3] == i[2] && input[ft_strlen(input) - 1] == '*')))
-		// 	{
-		// 		//myfree_array(tab);
-		// 		return (1);
-		// 	}
-		// 	else if (!tab[i[4]])
-		// 	{
-		// 		break ;
-		// 	}
-		// }
-		// else
-		// 	i[1]++;
-		if (i[5] == 3)
-			break ;
 		if (i[5] == 1)
 			return (myfree_array(tab), 1);
 		while (input[i[0]] && input[i[0]] == '*')
 			i[0]++;
 	}
-	if (((input[ft_strlen(input) - 1] == '*' && dirname[++i[1]]) || (!input[++i[0]] && !dirname[++i[1]])) && i[3] == i[2])
-		return (/* myfree_array(tab) ,*/ 1);
-	return (/* myfree_array(tab),  */0);
+	return (myfree_array(tab), 0);
 }
 
 //		printf("Line: %d	input: %s dirname: %s\n", __LINE__, &input[i], &dirname[j]);
