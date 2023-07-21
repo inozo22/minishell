@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 18:57:34 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/07/21 10:48:04 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/21 09:46:33 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,67 +23,6 @@
 #define GREEN "\033[1;32m"
 #define CLEAR "\033[0m"
 
-int	*check_input_tab(char *input, char **tab, char *dirname, int *i)
-{
-	if (ft_strlen(tab[i[4]]) == 1)
-	{
-		if (tab[i[4]][0] == dirname[i[1]])
-		{
-			i[3]++;
-			i[0]++;
-			i[1]++;
-			i[4]++;
-		}
-	}
-	else if (ft_strncmp(tab[i[4]], &dirname[i[1]], (int)ft_strlen(tab[i[4]])) == 0)
-	{
-		i[3] += (int)ft_strlen(tab[i[4]]);
-		i[0] += i[3] - 1;
-		i[1] += i[3] - 1;
-		i[4]++;
-		if (!tab[i[4]] && ((i[1] >= (int)ft_strlen(dirname)) || (i[3] == i[2] && input[ft_strlen(input) - 1] == '*')))
-		{
-			//myfree_array(tab);
-			i[5] = 1;//return 1
-		}
-		else if (!tab[i[4]])
-		{
-			i[5] = 3;//break
-		}
-	}
-	else
-		i[1]++;
-	// if (ft_strlen(tab[i[4]]) == 1)
-	// {
-	// 	printf("Line: %d\n", __LINE__);
-	// 	if (tab[i[4]][0] == dirname[i[1]])
-	// 	{
-	// 		i[3]++;
-	// 		i[0]++;
-	// 		i[1]++;
-	// 		i[4]++;
-	// 	}
-	// }
-	// else if (ft_strncmp(tab[i[4]], &dirname[i[1]], (int)ft_strlen(*tab)) == 0)
-	// {
-	// 	i[3] += ft_strlen(*tab);
-	// 	i[0] += i[3] - 1;
-	// 	i[1] += i[3] - 1;
-	// 	i[4]++;
-	// 	if (!tab[i[4]] && ((i[1] >= (int)ft_strlen(dirname)) || (i[3] == i[2] && input[i[0] + 1] == '*')))
-	// 	{
-	// 		i[5] = 1;//return 1
-	// 	}
-	// 	else if (!tab[i[4]])
-	// 	{
-	// 		i[5] = 3;//break
-	// 	}
-	// }
-	// else
-	// 	i[1]++;
-	return (i);
-}
-
 /**
  * @brief to free ** array
  * @note I couldn't find where is, it should be replaced (if there is)
@@ -94,7 +33,7 @@ void	myfree_array(char **tab)
 	int	i;
 
 	i = 0;
-//	printf("tab[0]: %s\n", tab[i]);
+	printf("tab[0]: %s\n", tab[i]);
 	while (tab[i])
 	{
 		free(tab[i]);
@@ -105,75 +44,79 @@ void	myfree_array(char **tab)
 	tab = NULL;
 }
 
-	// int		i;	i[0]
-	// int		j;	i[1]
-	// int		counter;	i[2]
-	// char	**tab;
-	// int		ret;	i[3]
-	// int		t;	i[4]
-	// int		flag; i[5]
 int	valid_wildcard(char *input, char *dirname)
 {
-	int		*i;
+	int		i;
+	int		j;
+	int		counter;
 	char	**tab;
-	// int		t;
+	int		t;
+	int		ret;
 
-	i = ft_calloc(6, sizeof(int));
+	i = -1;
+	counter = 0;
+	ret = 0;
 	//count how many letters there are
-	while (input[++i[0]])
+	while (input[++i])
 	{
-		if (input[i[0]] != '*')
-			i[2]++;
+		if (input[i] != '*')
+			counter++;
 	}
 	tab = ft_split(input, '*');
-	// t = 0;
-	i[0] = 0;
-	while (input[i[0]] && input[i[0]] == '*')
-		i[0]++;
-	while (dirname[i[1]] && input[i[0]] && i[1] < (int)ft_strlen(dirname))
+	t = 0;
+	j = 0;
+	i = 0;
+	while (input[i] && input[i] == '*')
+		i++;
+	while (dirname[j] && input[i] && j < (int)ft_strlen(dirname))
 	{
-		if (input[i[0] - 1] == '*')
+		if (input[i - 1] == '*')
 		{
-			while (dirname[i[1]] && (input[i[0]] != dirname[i[1]]))
-				i[1]++;
+			while (dirname[j] && (input[i] != dirname[j]))
+				j++;
 		}
-		i = check_input_tab(input, tab, dirname, i);
-		// if (ft_strlen(tab[i[4]]) == 1)
-		// {
-		// 	if (tab[i[4]][0] == dirname[i[1]])
-		// 	{
-		// 		i[3]++;
-		// 		i[0]++;
-		// 		i[1]++;
-		// 		i[4]++;
-		// 	}
-		// }
-		// else if (ft_strncmp(tab[i[4]], &dirname[i[1]], (int)ft_strlen(tab[i[4]])) == 0)
-		// {
-		// 	i[3] += (int)ft_strlen(tab[i[4]]);
-		// 	i[0] += i[3] - 1;
-		// 	i[1] += i[3] - 1;
-		// 	i[4]++;
-		// 	if (!tab[i[4]] && ((i[1] >= (int)ft_strlen(dirname)) || (i[3] == i[2] && input[ft_strlen(input) - 1] == '*')))
-		// 	{
-		// 		//myfree_array(tab);
-		// 		return (1);
-		// 	}
-		// 	else if (!tab[i[4]])
-		// 	{
-		// 		break ;
-		// 	}
-		// }
-		// else
-		// 	i[1]++;
-		if (i[5] == 3)
-			break ;
-		if (i[5] == 1)
-			return (myfree_array(tab), 1);
-		while (input[i[0]] && input[i[0]] == '*')
-			i[0]++;
+		printf("Line: %d\n", __LINE__);
+		if (ft_strlen(*tab) == 1)
+		{
+			printf("Line: %d\n", __LINE__);
+			if (*tab[0] == dirname[j])
+			{
+				ret++;
+				i++;
+				j++;
+				tab++;
+			}
+		}
+		else if (ft_strncmp(*tab, &dirname[j], (int)ft_strlen(*tab)) == 0)
+		{
+			printf("Line: %d\n", __LINE__);
+			ret += ft_strlen(*tab);
+			printf("Line: %d\n", __LINE__);
+			i += ret - 1;
+			j += ret - 1;
+			printf("Line: %d\n", __LINE__);
+			tab++;
+			printf("Line: %d\n", __LINE__);
+			if (!*tab && ((j >= (int)ft_strlen(dirname)) || (ret == counter && input[i + 1] == '*')))
+			{
+				printf("Line: %d\n", __LINE__);
+				myfree_array(tab);
+				printf("Line: %d\n", __LINE__);
+				return (1);
+			}
+			else if (!*tab)
+			{
+				printf("Line: %d\n", __LINE__);
+				break ;
+			}
+		}
+		else
+			j++;
+		printf("Line: %d\n", __LINE__);
+		while (input[i] && input[i] == '*')
+			i++;
 	}
-	if (((input[ft_strlen(input) - 1] == '*' && dirname[++i[1]]) || (!input[++i[0]] && !dirname[++i[1]])) && i[3] == i[2])
+	if (((input[ft_strlen(input) - 1] == '*' && dirname[++j]) || (!input[++i] && !dirname[++j])) && ret == counter)
 		return (/* myfree_array(tab) ,*/ 1);
 	return (/* myfree_array(tab),  */0);
 }
@@ -346,6 +289,6 @@ int	main()
 	printf("\n*******-----********	👻	*******-----********\n");
 	wildcards("*s*he*****ll*");
 //	printf("Line: %d\n", __LINE__);
-//	system ("leaks minishell");
+	system ("leaks minishell");
 	return 0;
 }

@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 18:57:34 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/07/20 18:46:45 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/21 09:30:53 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	*check_input_tab(char *input, char **tab, char *dirname, int *i)
 		i[1] += i[4] - 1;
 		i[3]++;
 		if (!tab[i[3]] && ((i[1] >= (int)ft_strlen(dirname)) || (i[4] == i[2] && input[i[0] + 1] == '*')))
-			return (myfree_array(tab), free (i), 1);
+			return (myfree_array(tab), 1);
 		// else if (!tab[i[3]])
 		// 	break ;
 	}
@@ -165,8 +165,8 @@ int	valid_wildcard(char *input, char *dirname)
 			break ;
 	}
 	if (((input[ft_strlen(input) - 1] == '*' && dirname[++i[1]]) || (!input[++i[0]] && !dirname[++i[1]])) && i[4] == i[2])
-		return (myfree_array(tab), free (i), 1);
-	return (myfree_array(tab), free (i), 0);
+		return (myfree_array(tab), 1);
+	return (myfree_array(tab), 0);
 }
 
 //		printf("Line: %d	input: %s dirname: %s\n", __LINE__, &input[i], &dirname[j]);
