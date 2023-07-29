@@ -51,14 +51,14 @@ INC_DIR		= include/
 
 LIBS		:= ft #mlx
 INCLUDE		:= minishell.h
-SRC_FILES	:= wildcards.c #main.c minishell.c terminate.c error_msgs.c utils.c cmd_split.c \
+SRC_FILES	:=  main.c minishell.c terminate.c error_msgs.c utils.c cmd_split.c \
 				redirect.c expanser2.c lexer.c parser.c executor.c\
 				builtin/built_cd_path.c builtin/built_cd.c builtin/built_cd_utils.c builtin/built_echo.c \
 				builtin/built_env.c builtin/built_exit.c builtin/built_export.c \
 				builtin/built_export_output.c builtin/built_utils.c \
 				builtin/built_export_sort.c builtin/built_pwd.c builtin/built_unset.c \
 				builtin/errors.c builtin/free.c \
-				signals.c
+				signals.c #wildcards.c 
 
 OBJ_FILES	:= $(SRC_FILES:.c=.o)
 

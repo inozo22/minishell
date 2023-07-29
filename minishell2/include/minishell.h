@@ -20,6 +20,7 @@
 # include <limits.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <sys/wait.h>
 # include "libft.h"
 # include "built.h"
 # include "signals.h"
