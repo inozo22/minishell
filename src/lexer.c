@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 18:39:55 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/07/31 13:57:42 by nimai            ###   ########.fr       */
+/*   Updated: 2023/07/31 18:03:55 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ int get_token(t_list **list, char *input, int *pos)
 //	token = clear_trailing_spaces(token);
 	if (!token)
 		return (-1);
+	//230731nimai: kokomade
 	while (tmp)
 	{
 		if (tmp->cmd_pos > max_pipe)
