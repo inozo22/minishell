@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 18:22:41 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/07/03 17:53:29 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/08/01 12:22:21 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,9 +120,9 @@ int	main(int argc, char *argv[], char *envp[])
 	if (!data)
 		return (1);
 	data->pid = pid;
-/* 	int i = -1;
-	while (data->env[++i])
-		printf("Env %d with ptr: %p: %s\n", i, (void *)data->env[i], data->env[i]); */
+	// int i = -1;
+	// while (data->env[++i])
+	// 	printf("Env %d with ptr: %p: %s\n", i, (void *)data->env[i], data->env[i]);
 	minishell(data);
 	free_alloc(data);
 	return (0);
