@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 18:39:55 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/08/01 11:05:20 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/01 14:02:50 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,11 +168,11 @@ int lexer(char *input, t_list **token_list)
 			pos[0] = i;
 		if (pos[2] == HERE_DOC || pos[2] == APPEND || (pos[2] == PIPE_LINE && input[i + 1] == input[i]))
 			pos[0]++;
-//		ft_printf("string start: %d, type: %d\n", pos[0], pos[2]);
+		ft_printf("string start: %d, type: %d\n", pos[0], pos[2]);
 		pos[3] = get_token(token_list, input, pos);
 		if (pos[3] == -1)
 			return (ft_lstclear(token_list, free), -1);
-//		ft_printf("string end: %d\n", pos[1]);
+		ft_printf("string end: %d\n", pos[1]);
 		i = pos[1] - 1;
 	}
 	return (pos[3]);

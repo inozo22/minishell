@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:32:33 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/07/31 13:17:38 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/01 13:33:48 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ int	check_builtin(char **input, t_data *data)
 	if (!input || !input[0])
 		return (-1);
 	ft_printf("Input0: %s\n", input[0]);
+	ft_printf("Input1: %s\n", input[1]);
 	if (!ft_strcmp(input[0], "echo"))
 		return (built_echo(input));
 	else if (!ft_strcmp(input[0], "cd"))
