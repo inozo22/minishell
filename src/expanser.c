@@ -25,7 +25,7 @@ char	*get_var_value(char *env_var, int len, char *envp[])
 	{
 		if (!ft_strncmp(env_var + 1, envp[i], len) && envp[i][len] == '=')
 		{
-			printf("pos of = : %c\n",envp[i][len]);
+			printf("pos of = : %c\n", envp[i][len]);
 			return (ft_strdup(envp[i] + len + 1));
 		}
 	}
@@ -50,6 +50,10 @@ char	*expand(char *arg, int start, int end, char *var_value)
 	return (expanded);
 }
 
+/**
+ * pos[0] = where is '$'
+ * pos[1] = the last letter of the word
+  */
 char	*expanser(char *arg, char *envp[])
 {
 	char	*expanded;
