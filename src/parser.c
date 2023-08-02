@@ -184,6 +184,7 @@ int	parse_redir(char *str)
 	i = 0;
 	redir = 0;
 	while (str[i])
+	{
 		if (str[i] == '<' || str[i] == '>')
 			redir = i;
 		if (str[i + 1] == redir)
@@ -193,6 +194,7 @@ int	parse_redir(char *str)
 			
 // 			while ()
 		}
+	}
 	return (i);
 }
 
@@ -227,6 +229,7 @@ t_list	*parser(char *str)
 //	int		i[2];
 
 	cmd = NULL;
+	return_val = 0;
 	ft_printf("Got input: %s\n", str);
 	if (ft_strnstr(str, "||", ft_strlen(str)))
 	{
@@ -257,6 +260,7 @@ t_list	*parser(char *str)
 		if (pos[2])
 			i[0]++;
 	} */
+	printf("%d\n", return_val);
 	return (cmd);
 }
 

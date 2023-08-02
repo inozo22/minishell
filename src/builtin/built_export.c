@@ -30,7 +30,7 @@ char	*envp_str_mod(char *str, char *input, int i, int flag)
 }
 
 /**
- * 
+ * @note 230802nimai: changed counter i[1] because of the Werror, check how works in MacOS
  */
 void	envp_strs_mod(char *input, t_data *data)
 {
@@ -47,8 +47,10 @@ void	envp_strs_mod(char *input, t_data *data)
 				data->env[i[0]] = envp_str_mod(data->env[i[0]], input, i[2], 0);
 			else if (ft_strncmp(data->env[i[0]], input, i[2]) == 0)
 			{
-				while (data->env[i[0]][++i[1]] == input[i[1]])
-					;
+/* 				while (data->env[i[0]][++i[1]] == input[i[1]])
+					; */
+				while (data->env[i[0]][i[1]] == input[i[1]])
+					i[1]++;
 				if (data->env[i[0]][i[1]] == '\0' && input[i[1]] == '=')
 					data->env[i[0]] = envp_str_mod(data->env[i[0]], \
 					input, i[2], 1);
@@ -119,13 +121,11 @@ char	**envp_strs_join(char *input, t_data *data)
 {
 	char	**ret;
 	int		i;
-	int		j;
 
 	ret = ft_calloc(av_amount(data->env) + 2, sizeof(char *));
 	if (!ret)
 		return (heap_error(1), NULL);
 	i = 0;
-	j = 0;
 	while (data->env[i])
 	{
 		ret[i] = data->env[i];
