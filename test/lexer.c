@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 18:39:55 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/07/17 12:49:46 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/08/03 16:20:16 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,14 +100,14 @@ int	get_token(t_list *token, char *str)
 	while (str[++i])
 	{
 		type = is_metacharacter(str[i]);
-		if (type == 1)
+		if (type == 1)//is an invalid metacharacter
 			return (-1);
-		if (type == 2)
+		if (type == 2)//is a redirection
 		{	
 			ft_lstadd_back(&token, ft_lstnew(ft_substr(str, 1, i), str[0], cmd_pos));
 			return (i);
 		}
-		if (type == 3)
+		if (type == 3)//is a pipe
 		{
 			ft_lstadd_back(&token, ft_lstnew(ft_substr(str, 1, i), str[0], cmd_pos + 1));
 			return (i);
