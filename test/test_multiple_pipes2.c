@@ -243,6 +243,7 @@ int child_creation2(char *infile, char *outfile, char ***cmd, int cmd_number, ch
 			//create pipe
 			int fdpipe[2];
 			pipe(fdpipe);
+			printf("Im here, pipe1: %d, pipe2: %d\n", fdpipe[0], fdpipe[1]);
 			fdout = fdpipe[1];
 			fdin = fdpipe[0];
 		}

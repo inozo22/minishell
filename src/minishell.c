@@ -113,9 +113,9 @@ int	minishell(t_data *data)
 	char	*prompt;
 
 	prompt = get_prompt(data);
+	set_signal_handlers(13);
 	while (1)
 	{
-		set_signal_handlers(13);
 		line_read = readline(prompt);
 		if (line_read && *line_read)
 		{
