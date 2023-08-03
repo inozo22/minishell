@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 15:43:39 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/06/27 14:08:24 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/08/03 13:40:20 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -264,17 +264,20 @@ t_list	*parser(char *str)
 	return (cmd);
 }
 
+
 /* int	main(int argc, char *argv[])
 {
 	t_list	*head;
 	t_list	*node;
 	char	*input;
 	void	*tmp;
-	
+
+	printf("ac: %d\n", argc);
 	if (argc > 1)
 		input = ft_strdup(argv[1]);
 	else
 		return (0);
+	printf("input: %s\n", input);
 	head = parser(input);
 	free(input);
 	node = head;
