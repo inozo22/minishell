@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:11:50 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/31 13:19:29 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/03 12:05:39 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,16 @@ void	sig_eof(void)
 /**
  * @note I think I will remove the strs
  */
+void	action_sigquit(int sig)//looks working this, but don't let me print these lines...
+{
+	(void)sig;
+	// write (1, "Got sigquit\n", 12);
+	// write (1, "Quit: 3\n", 8);
+}
+
+/**
+ * @note I think I will remove the strs
+ */
 void	action(int sig)
 {
 	if (sig == SIGINT)
@@ -33,9 +43,10 @@ void	action(int sig)
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
-	else if (sig == SIGQUIT)//230731nimai: at this moment doesn't use it
+	else if (sig == SIGQUIT)
 	{
-		write (1, "\n", 1);
+		write (1, "Got sigquit\n", 12);
+		write (1, "Quit: 3\n", 8);
 	}
 }
 
@@ -58,26 +69,24 @@ void	set_signal_handlers(pid_t pid)
 		sigquit_ignore();
 		sa.sa_handler = &action;
 		sigaction(SIGINT, &sa, NULL);
-	//	sigaction(SIGQUIT, &sa, NULL);
 	}
 	else
 	{
-		sa.sa_handler = &action;
+		write(1, "Im kid\n", 7);
+		sa.sa_handler = &action;//SIG_DFL;
 		sigaction(SIGINT, &sa, NULL);
 		sigaction(SIGQUIT, &sa, NULL);
 	}
 }
 
-/* void	set_signal_exacuting_handlers(void)
+void	set_signal_exacuting_handlers(void)
 {
 	struct sigaction	sa;
 
-	if (pid == 0)
-	{
-		sigquit_ignore();
-		ft_bzero(&sa, sizeof(struct sigaction));
-		sa.sa_handler = &action;
-		sigaction(SIGINT, &sa, NULL);
-	}
+//	sigquit_ignore();
+	ft_bzero(&sa, sizeof(struct sigaction));
+	sa.sa_handler = &action_sigquit;
+	sigaction(SIGQUIT, &sa, NULL);
+//	sigaction(SIGINT, &sa, NULL);
 }
- */
+

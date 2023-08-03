@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 14:21:14 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/11 15:17:04 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/03 11:55:33 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,5 +18,6 @@
 void	set_signal_handlers(pid_t pid);
 void	sig_eof(void);
 void	action(int sig);
+void	set_signal_exacuting_handlers(void);
 
 #endif
