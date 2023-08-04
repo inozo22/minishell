@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:32:33 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/08/04 12:26:42 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/04 15:21:08 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,21 @@ int	check_exit(char **input, t_data *data)
 	return (INT_MAX);
 }
 
+/* char	*ft_strlower(char *str)
+{
+	int	i;
+
+	i = -1;
+	while (str[++i])
+	{
+		str[i] = ft_tolower(str[i]);
+	}
+	return (str);
+}
+ */
+/**
+ * @note modified to control any kind of letters for pwd, echo, env
+  */
 int	check_builtin(char **input, t_data *data)
 {
 /* 	int i = -1;
@@ -72,23 +87,24 @@ int	check_builtin(char **input, t_data *data)
 		return (-1);
 	ft_printf("Input0: %s\n", input[0]);
 	ft_printf("Input1: %s\n", input[1]);
-	if (!ft_strcmp(input[0], "echo"))
-		return (built_echo(input));
-	else if (!ft_strcmp(input[0], "cd"))
+	if (!ft_strcmp(input[0], "cd"))
 		return (built_cd(input, data));
-	else if (!ft_strcmp(input[0], "pwd"))
-		return (built_pwd(data));
 	else if (!ft_strcmp(input[0], "export"))
 		return (built_export(input, data));
 	else if (!ft_strcmp(input[0], "unset"))
 		return (built_unset(input, data));
-	else if (!ft_strcmp(input[0], "env"))
-		return (built_env(input, data));
 	else if (!ft_strcmp(input[0], "exit"))
 	{
 		ft_printf("Exit found!\n");
 		return (INT_MAX);
 	}
+	ft_strlower(input[0]);//this tmp to cover any convination of letters
+	if (!ft_strcmp(input[0], "echo"))
+		return (built_echo(input));
+	else if (!ft_strcmp(input[0], "pwd"))
+		return (built_pwd(data));
+	else if (!ft_strcmp(input[0], "env"))
+		return (built_env(input, data));
 	else
 		return (-1);
 }
