@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 18:22:41 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/08/03 17:00:02 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/04 09:42:58 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ int	main(int argc, char *argv[], char *envp[])
 {
 	t_data	*data;
 	pid_t	pid;
+	int		ret;
 
 	pid = get_my_pid();
 	if (!pid)
@@ -129,7 +130,7 @@ int	main(int argc, char *argv[], char *envp[])
 	// int i = -1;
 	// while (data->env[++i])
 	// 	printf("Env %d with ptr: %p: %s\n", i, (void *)data->env[i], data->env[i]);
-	minishell(data);
-//	free_alloc(data);
-	return (0);
+	ret = minishell(data);
+	free_alloc(data);
+	return (ret);
 }

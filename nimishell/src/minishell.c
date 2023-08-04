@@ -6,11 +6,12 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:32:33 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/08/03 17:06:25 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/04 10:20:11 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <termios.h>
 
 static char	*get_user(char **env)
 {
@@ -107,21 +108,28 @@ static int	process_input(char *line_read, t_data *data)
 	return (data->return_val);
 }
 
+// struct termios termios_save;
+
 int	minishell(t_data *data)
 {
-	char	*line_read;
-	char	*prompt;
+	char			*line_read;
+	char			*prompt;
+	struct termios	termios_save;
+	struct termios	term;
+	
 
-	prompt = get_prompt(data);
+	tcgetattr(0, &termios_save);
+	tcsetattr(0, 0, &termios_save);
+	term = termios_save;
+	term.c_lflag &= ~ECHOCTL;
+	tcsetattr(0, TCSASOFT, &term);
 	printf("pid in minishell: %d\n", data->pid);
+	//set_signal_handlers(13);
+	set_signal_handlers(data->pid);//230802nimai: changed from above
+	prompt = get_prompt(data);
 	while (1)
 	{
-		//set_signal_handlers(13);
-		set_signal_handlers(data->pid);//230802nimai: changed from above
 		line_read = readline(prompt);
-	/**
-	 * KOKOMADE
-	  */
 		if (line_read && *line_read)
 		{
 /* 			if (!ft_strcmp(line_read, "^C"))
@@ -144,6 +152,9 @@ int	minishell(t_data *data)
 	rl_clear_history();
 	free(line_read);
 	return (data->return_val);
+	/**
+	 * KOKOMADE
+	  */
 }
 //		 to use with SIGSTOP
 //		rl_replace_line("New line", 1);

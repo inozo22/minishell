@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 19:10:38 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/07/31 10:30:36 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/04 09:38:41 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ enum e_state
 # define WRITE_END 1
 
 //# define SHELL_NAME "minihell🤪"
-# define SHELL_NAME "minishell🐚"
+# define SHELL_NAME "nimishell🐚"
 
 typedef struct s_tokens
 {

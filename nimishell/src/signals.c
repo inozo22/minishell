@@ -6,11 +6,12 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:11:50 by nimai             #+#    #+#             */
-/*   Updated: 2023/08/03 12:05:39 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/04 10:10:53 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+// #include <termios.h>
 
 /**
  * @brief when push Ctrl + D, exit 
@@ -36,8 +37,11 @@ void	action_sigquit(int sig)//looks working this, but don't let me print these l
  */
 void	action(int sig)
 {
+//	struct termios		term;
+	
 	if (sig == SIGINT)
 	{
+//		tcsetattr(0, TCSASOFT, &term);
 		rl_on_new_line();
 		write(STDOUT_FILENO, "\n", 1);
 		rl_replace_line("", 0);
@@ -62,7 +66,10 @@ void	sigquit_ignore(void)
 void	set_signal_handlers(pid_t pid)
 {
 	struct sigaction	sa;
+	// struct termios		term;
+	
 
+	// tcsetattr(0, TCSASOFT, &term);
 	ft_bzero(&sa, sizeof(struct sigaction));
 	if (pid)
 	{
