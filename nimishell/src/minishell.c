@@ -6,12 +6,15 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:32:33 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/08/04 11:57:00 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/04 12:26:42 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/**
+ * @note 230804nimai: at the moment, when there is no environment valur, user name will be "noname"
+  */
 static char	*get_user(char **env)
 {
 	int	i;
@@ -23,7 +26,8 @@ static char	*get_user(char **env)
 	if (env[i])
 		return (ft_strdup(env[i] + 5));
 	else
-		return (NULL);
+		return (ft_strdup("noname"));
+	return (NULL);
 }
 
 char	*get_prompt(t_data *data)
@@ -115,7 +119,6 @@ int	minishell(t_data *data)
 	char			*prompt;
 	struct termios	termios_save;
 	struct termios	term;
-	
 
 	tcgetattr(0, &termios_save);
 	tcsetattr(0, 0, &termios_save);
