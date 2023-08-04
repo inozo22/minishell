@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 18:39:55 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/08/01 14:02:50 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/04 13:58:14 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,9 +124,12 @@ int get_token(t_list **list, char *input, int *pos)
 	tmp = *list;
 	max_pipe = 0;
 //	token = clear_trailing_spaces(token);
+//現在、トークンは保存されずに最も後ろに記載されたものだけが実行されている。
+//実行の順については要確認。
+//ちなみに、ミニシェルから出る際になぜか入力済みのコマンドのエラーが出力される。
+	printf("new_token: %s\n", token);
 	if (!token)
 		return (-1);
-	//230731nimai: kokomade
 	while (tmp)
 	{
 		if (tmp->cmd_pos > max_pipe)
@@ -159,6 +162,7 @@ int lexer(char *input, t_list **token_list)
 	ft_bzero(pos, 4 * sizeof(int));
 	while (input[++i])
 	{
+		printf("input: %s\n", &(input[i]));
 		if (ft_isspace(input[i]))
 			continue;
 		pos[2] = is_metacharacter(&(input[i]));

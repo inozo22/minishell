@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 18:22:41 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/08/04 12:46:21 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/04 12:54:58 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@ void	set_path_list(t_data *data)
 	}
 }
 
+/**
+ * @note added SHLVL increment
+  */
 static int	fill_env(t_data *data, char *envp[])
 {
 	char	*tmp;
