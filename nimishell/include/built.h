@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:12:28 by nimai             #+#    #+#             */
-/*   Updated: 2023/07/11 15:51:55 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/08/04 11:56:44 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # define SORT_ID 0
 # define FLAGEXPORT 1
 # define FLAGENV 0
+
+# include <termios.h>
 
 typedef struct s_temp	t_temp;
 
@@ -38,6 +40,8 @@ typedef struct s_data
 	int			return_val;
 	pid_t		pid;
 //	t_tokens	*head;
+//this is test for control sign
+//	struct termios	termios_save;
 }				t_data;
 
 typedef struct s_export_box

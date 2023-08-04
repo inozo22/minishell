@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:11:50 by nimai             #+#    #+#             */
-/*   Updated: 2023/08/04 10:10:53 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/04 11:44:30 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,21 @@ void	sig_eof(void)
  */
 void	action_sigquit(int sig)//looks working this, but don't let me print these lines...
 {
-	(void)sig;
+//	(void)sig;
 	// write (1, "Got sigquit\n", 12);
 	// write (1, "Quit: 3\n", 8);
+	if (sig == SIGINT)
+	{
+		rl_on_new_line();
+		write(STDOUT_FILENO, "^C\n", 1);
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
+	else if (sig == SIGQUIT)
+	{
+		write (1, "Got sigquit\n", 12);
+		write (1, "Quit: 3\n", 8);
+	}
 }
 
 /**
@@ -37,11 +49,8 @@ void	action_sigquit(int sig)//looks working this, but don't let me print these l
  */
 void	action(int sig)
 {
-//	struct termios		term;
-	
 	if (sig == SIGINT)
 	{
-//		tcsetattr(0, TCSASOFT, &term);
 		rl_on_new_line();
 		write(STDOUT_FILENO, "\n", 1);
 		rl_replace_line("", 0);
@@ -94,6 +103,6 @@ void	set_signal_exacuting_handlers(void)
 	ft_bzero(&sa, sizeof(struct sigaction));
 	sa.sa_handler = &action_sigquit;
 	sigaction(SIGQUIT, &sa, NULL);
-//	sigaction(SIGINT, &sa, NULL);
+	sigaction(SIGINT, &sa, NULL);
 }
 
