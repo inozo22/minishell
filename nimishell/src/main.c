@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 18:22:41 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/08/04 09:42:58 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/04 12:46:21 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ void	set_path_list(t_data *data)
 
 static int	fill_env(t_data *data, char *envp[])
 {
-	int	i;
+	char	*tmp;
+	int		i;
 
 	i = 0;
 	while (envp[i])
@@ -42,7 +43,13 @@ static int	fill_env(t_data *data, char *envp[])
 	i = -1;
 	while (envp[++i])
 	{
-		if (ft_strncmp(envp[i], "OLDPWD=", 7))
+		if (ft_strncmp(envp[i], "SHLVL=", 6) == 0)
+		{
+			tmp = envp[i];
+			tmp[6]++;
+			data->env[i] = ft_strdup(tmp);
+		}
+		else if (ft_strncmp(envp[i], "OLDPWD=", 7))
 			data->env[i] = ft_strdup(envp[i]);
 		else
 			data->env[i] = ft_strdup("OLDPWD");
