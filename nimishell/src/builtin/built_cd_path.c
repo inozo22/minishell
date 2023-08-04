@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 16:00:17 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/20 12:02:57 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/04 15:45:29 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,9 @@ t_data	*envp_cd_mod(t_data *data, char *path, int type)
 	return (data);
 }
 
+/**
+ * @note this function is used in check_builtin too, maybe change the file
+  */
 char	*ft_strlower(char *str)
 {
 	int		i;

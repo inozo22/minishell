@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 18:39:55 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/08/04 13:58:14 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/04 16:34:11 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,9 @@ char	*clear_trailing_spaces(char *token)
 	return (new_token);
 }
 
+/**
+ * @note pos[2] = -1 is word
+  */
 int get_token(t_list **list, char *input, int *pos)
 {
 	char	*token;
@@ -124,7 +127,7 @@ int get_token(t_list **list, char *input, int *pos)
 	tmp = *list;
 	max_pipe = 0;
 //	token = clear_trailing_spaces(token);
-//現在、トークンは保存されずに最も後ろに記載されたものだけが実行されている。
+
 //実行の順については要確認。
 //ちなみに、ミニシェルから出る際になぜか入力済みのコマンドのエラーが出力される。
 	printf("new_token: %s\n", token);
@@ -132,6 +135,7 @@ int get_token(t_list **list, char *input, int *pos)
 		return (-1);
 	while (tmp)
 	{
+		ft_printf("Line: %d token: %s, type: %d, pos: %d\n\n", __LINE__, tmp->content, tmp->type, tmp->cmd_pos);
 		if (tmp->cmd_pos > max_pipe)
 			max_pipe = tmp->cmd_pos;
 		tmp = tmp->next;
@@ -139,10 +143,16 @@ int get_token(t_list **list, char *input, int *pos)
 	if (pos[2] == PIPE_LINE)
 		++max_pipe;
 	new = ft_lstnew(token, pos[2], max_pipe);
-//	ft_printf("token: %s, type: %d, pos: %d\n\n", new->content, new->type, new->cmd_pos);
+	ft_printf("token: %s, type: %d, pos: %d\n\n", new->content, new->type, new->cmd_pos);
 	if (!new)
 		return (-1);
 	ft_lstadd_back(list, new);
+	tmp = *list;
+	while (tmp)
+	{
+		printf("Line: %d, content: %s, type: %d, pos: %d\n", __LINE__, tmp->content, tmp->type, tmp->cmd_pos);
+		tmp = tmp->next;
+	}
 	return (max_pipe);
 }
 
@@ -180,4 +190,5 @@ int lexer(char *input, t_list **token_list)
 		i = pos[1] - 1;
 	}
 	return (pos[3]);
+	//kokomade yonnda
 }

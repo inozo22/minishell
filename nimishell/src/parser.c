@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 15:43:39 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/08/03 13:40:20 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/04 16:42:06 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,7 +230,7 @@ t_list	*parser(char *str)
 
 	cmd = NULL;
 	return_val = 0;
-	ft_printf("Got input: %s\n", str);
+	ft_printf("\nGot input: %s\n", str);
 	if (ft_strnstr(str, "||", ft_strlen(str)))
 	{
 		return_val = error_msg("minihell", "|", 2);

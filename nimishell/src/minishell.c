@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:32:33 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/08/04 15:21:08 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/04 16:43:03 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,20 +63,11 @@ int	check_exit(char **input, t_data *data)
 	return (INT_MAX);
 }
 
-/* char	*ft_strlower(char *str)
-{
-	int	i;
-
-	i = -1;
-	while (str[++i])
-	{
-		str[i] = ft_tolower(str[i]);
-	}
-	return (str);
-}
- */
 /**
  * @note modified to control any kind of letters for pwd, echo, env
+ * @note changed order of the conditions, I think will not make any error because of this. tho....
+ * @note コマンドArrにして、関数をポインターで渡したらきれいに出来そうだけど、現状見やすいので放置
+ * It would be neat to make it a command Arr and pass function's pointer, but it's readable, so leave it.
   */
 int	check_builtin(char **input, t_data *data)
 {
@@ -98,7 +89,7 @@ int	check_builtin(char **input, t_data *data)
 		ft_printf("Exit found!\n");
 		return (INT_MAX);
 	}
-	ft_strlower(input[0]);//this tmp to cover any convination of letters
+	ft_strlower(input[0]);
 	if (!ft_strcmp(input[0], "echo"))
 		return (built_echo(input));
 	else if (!ft_strcmp(input[0], "pwd"))
@@ -114,10 +105,20 @@ static int	process_input(char *line_read, t_data *data)
 //	int		j;
 //	char	**input;
 	t_list	*cmd_list;
+	t_list	*cmd;
 	int		cmd_nb;
 
 	cmd_nb = lexer(line_read, &cmd_list);
-	printf("cmd_nb: %d\n", cmd_nb);
+	printf("cmd_nb: %d\n", cmd_nb);//230804add
+	cmd = parser(line_read);//230804add
+
+/**
+ * 
+ * @note 230804 kokomade
+ * 
+  */
+
+	
 	data->return_val = child_creation(NULL, NULL, cmd_list, cmd_nb, data->path, data->env, data);
 	ft_lstclear(&cmd_list, free);
 //	if (data->return_val == INT_MAX)
