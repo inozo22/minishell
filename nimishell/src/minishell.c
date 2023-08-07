@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:32:33 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/08/07 13:34:41 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/07 17:01:27 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ static int	process_input(char *line_read, t_data *data)
 //	int		j;
 //	char	**input;
 	t_list	*cmd_list;
-	t_list	*cmd;
+//	t_list	*cmd;
 	int		cmd_nb;
 
 	cmd_nb = lexer(line_read, &cmd_list);
@@ -115,7 +115,7 @@ static int	process_input(char *line_read, t_data *data)
 	// 	cmd_list = cmd_list->next;
 	// }
 	printf("cmd_nb: %d\n", cmd_nb);//230804add
-	cmd = parser(line_read);//230804add
+	parser(line_read);//230807add
 	// while (cmd)
 	// {
 	// 	printf("cmd->content: %s	type: %d	cmp_pos: %d\n", cmd->content, cmd->type, cmd->cmd_pos);

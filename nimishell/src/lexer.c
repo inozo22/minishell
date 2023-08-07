@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 18:39:55 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/08/04 16:34:11 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/07 17:02:57 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ int get_token(t_list **list, char *input, int *pos)
 	max_pipe = 0;
 //	token = clear_trailing_spaces(token);
 
-//実行の順については要確認。
+//実行の順については要確認。(at the same time I think)
 //ちなみに、ミニシェルから出る際になぜか入力済みのコマンドのエラーが出力される。
 	printf("new_token: %s\n", token);
 	if (!token)
@@ -190,5 +190,4 @@ int lexer(char *input, t_list **token_list)
 		i = pos[1] - 1;
 	}
 	return (pos[3]);
-	//kokomade yonnda
 }
