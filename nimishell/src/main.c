@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 18:22:41 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/08/08 15:46:41 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/08 16:41:33 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,29 @@ void	set_path_list(t_data *data)
 	}
 }
 
+char	*get_shlvl(const char *envp)
+{
+	int		n;
+	char	*num;
+	char	*ret;
+
+	n = ft_atoi(&envp[6]);
+	n++;
+	if (n > 999)
+	n = 1;
+	num = ft_itoa(n);
+	ret = (char *)ft_calloc(6 + ft_strlen(num) + 1, sizeof(char));
+	ft_strcpy(ret, "SHLVL=");
+	ft_strcat(ret, num);
+	free (num);
+	return (ret);
+}
+
 /**
  * @note added SHLVL increment
   */
 static int	fill_env(t_data *data, char *envp[])
 {
-	char	*tmp;
 	int		i;
 
 	i = 0;
@@ -52,9 +69,8 @@ static int	fill_env(t_data *data, char *envp[])
 	{
 		if (ft_strncmp(envp[i], "SHLVL=", 6) == 0)
 		{
-			tmp = envp[i];
-			tmp[6]++;
-			data->env[i] = ft_strdup(tmp);
+			data->env[i] = get_shlvl(envp[i]);
+			//you can put error message when it has 1000, but I don't think anyone try to 1000 times open minishell
 		}
 		else if (ft_strncmp(envp[i], "OLDPWD=", 7))
 			data->env[i] = ft_strdup(envp[i]);

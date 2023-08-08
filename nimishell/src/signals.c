@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:11:50 by nimai             #+#    #+#             */
-/*   Updated: 2023/08/08 15:57:44 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/08 16:04:16 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	action_child(int sig)//looks working this, but don't let me print these lin
 	}
 	else if (sig == SIGQUIT)
 	{
-		write (STDOUT_FILENO, "^\\Quit: 3\n", 8);
+		write (STDOUT_FILENO, "^\\Quit: 3\n", 10);
 		g_return_val = 131;
 	}
 	return ;

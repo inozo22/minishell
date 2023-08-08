@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:32:33 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/08/08 15:47:09 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/08 16:25:04 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,20 +40,11 @@ char	*get_prompt(t_data *data)
 
 	user = get_user(data->env);
 	prompt_len = ft_strlen(SHELL_NAME) + ft_strlen(user);
-	color_len = ft_strlen(COLOR_YELLOW) + ft_strlen(COLOR_RESET) + ft_strlen(COLOR_BLUE) + ft_strlen(COLOR_RESET);
+	color_len = ft_strlen(COLOR_YELLOW) + ft_strlen(COLOR_RESET) + \
+	ft_strlen(COLOR_BLUE) + ft_strlen(COLOR_RESET);
 	prompt = (char *)ft_calloc(prompt_len + color_len + 5, sizeof(char));
-//	prompt = (char *)ft_calloc(prompt_len + 5, sizeof(char));
 	if (!prompt)
 		return (NULL);
-	// ft_strcpy(prompt, COLOR_ACCENT);
-	// ft_strcat(prompt, SHELL_NAME);
-	// ft_strcat(prompt, COLOR_RESET);
-	// ft_strcat(prompt, COLOR_BLUE);
-	// ft_strcat(prompt, "@");
-	// ft_strcat(prompt, user);
-	// free(user);
-	// ft_strcat(prompt, COLOR_RESET);
-	// ft_strcat(prompt, "$ ");
 	ft_strcpy(prompt, COLOR_YELLOW);
 	ft_strcat(prompt, SHELL_NAME);
 	ft_strcat(prompt, COLOR_RESET);
