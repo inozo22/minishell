@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 15:43:39 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/08/08 13:20:40 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/08 17:54:19 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ int	parse_special_chars(t_list **cmd, char c)
 	node = *cmd;
 	while (node)
 	{
-		ft_printf("parse initial value: %s\n", node->content);
+	//	ft_printf("parse initial value: %s\n", node->content);230808
 		if (node->content[ft_strlen(node->content) - 1] == c)
 		{
 			error_msg("minihell", "newline", 2);
@@ -166,7 +166,7 @@ int	parse_special_chars(t_list **cmd, char c)
 		{
 			if (!list[i + 1])
 				{
-					error_msg("minihell", "newline", 2);
+					error_msg("minishell", "newline", 2);
 					return((long int) ft_lstclear(cmd, free));
 				}
 			
@@ -204,7 +204,7 @@ t_list	*fill_cmd_list(char *str)
 	int		i;
 	char	**pipes_list;
 	t_list	*head;
-	
+
 	i = -1;
 	pipes_list = ft_split(str, '|');
 	if (!pipes_list)
@@ -244,6 +244,13 @@ t_list	*parser(char *str)
 	{
 		printf("Error");
 		return (NULL);		
+	}
+	t_list *tmp;
+	tmp = cmd;
+	while (tmp)
+	{
+		printf("Line: %d, content: %s, type: %d, pos: %d\n", __LINE__, tmp->content, tmp->type, tmp->cmd_pos);
+		tmp = tmp->next;
 	}
 //	pos = (int *)ft_calloc(3, sizeof(int));
 /* 	while (str[i[0]])

@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 18:22:41 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/08/08 16:41:33 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/08 16:42:23 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	*get_shlvl(const char *envp)
 	n = ft_atoi(&envp[6]);
 	n++;
 	if (n > 999)
-	n = 1;
+		n = 1;
 	num = ft_itoa(n);
 	ret = (char *)ft_calloc(6 + ft_strlen(num) + 1, sizeof(char));
 	ft_strcpy(ret, "SHLVL=");
