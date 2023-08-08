@@ -6,14 +6,15 @@
 #    By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/30 13:14:38 by bde-mada          #+#    #+#              #
-#    Updated: 2023/08/03 16:35:49 by nimai            ###   ########.fr        #
+#    Updated: 2023/08/08 13:16:46 by nimai            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	:= minishell
 
 define ASCIIART
-
+\\_______________  ____________________________________/
+                \\/
        /^-^\         /^-----^\\
       / o o \        V  o o  V
      /   ▼   \        |  ▽  |
@@ -111,6 +112,7 @@ $(NAME): $(OBJS) $(INCLUDES)
 	@echo $(CURSIVE)$(GRAY) "		- Compiling project $(NAME)..." $(NONE)
 	$(CC) $(CFLAGS) $(INC) $(DEBUG) $(OBJS) $(LDFLAGS) $(LDLIBS) $(LNK) -o $(NAME)
 	@echo $(ACCENT)"✅ $(NAME) compiled ✅"$(NONE)
+	@grep "TODO:" log
 
 $(LIBS): $(LIBS_DIR)
 	@echo $(CURSIVE)$(GRAY) "		- Compiling libs..." $(NONE)

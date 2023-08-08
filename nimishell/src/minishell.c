@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:32:33 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/08/08 11:26:29 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/08 12:52:44 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,24 +146,25 @@ int	minishell(t_data *data)
 	char			*line_read;
 	char			*prompt;
 
+//230808nimai: comment above to check how working signals
 // these are remove ^C in the prompt
-	// struct termios	termios_save;
-	// struct termios	term;
+	struct termios	termios_save;
+	struct termios	term;
 
-	// tcgetattr(0, &termios_save);
-	// tcsetattr(0, 0, &termios_save);
-	// term = termios_save;
-	// term.c_lflag &= ~ECHOCTL;
-	// tcsetattr(0, TCSASOFT, &term);
+	tcgetattr(0, &termios_save);
+	tcsetattr(0, 0, &termios_save);
+	term = termios_save;
+	term.c_lflag &= ~ECHOCTL;
+	tcsetattr(0, TCSASOFT, &term);
 // these are remove ^C in the prompt
 
 	printf("pid in minishell: %d\n", data->pid);
 	printf("Hi, Im hereeeeeee\n");
 	//set_signal_handlers(13);
-	set_signal_handlers(13);//230802nimai: changed from above
 	prompt = get_prompt(data);
 	while (1)
 	{
+		set_signal_handlers(13);//230802nimai: changed from above
 		line_read = readline(prompt);
 		if (line_read && *line_read)
 		{

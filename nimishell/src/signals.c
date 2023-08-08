@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:11:50 by nimai             #+#    #+#             */
-/*   Updated: 2023/08/08 11:15:22 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/08 13:09:18 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,21 +27,15 @@ void	sig_eof(void)
  */
 void	action_child(int sig)//looks working this, but don't let me print these lines...
 {
-//	(void)sig;
-	// write (1, "Got sigquit\n", 12);
-	// write (1, "Quit: 3\n", 8);
 	if (sig == SIGINT)
 	{
-		write(STDOUT_FILENO, "^C\n", 1);
-		rl_on_new_line();
-//		write(STDOUT_FILENO, "^C\n", 1);
-		rl_replace_line("", 0);
-//		rl_redisplay();
+		write(STDOUT_FILENO, "^C\n", 3);
 	}
 	else if (sig == SIGQUIT)
 	{
-		write (1, "Quit: 3\n", 8);
+		write (STDOUT_FILENO, "Quit: 3\n", 8);
 	}
+	return ;
 }
 
 /**
@@ -51,16 +45,11 @@ void	action(int sig)
 {
 	if (sig == SIGINT)
 	{
-		rl_on_new_line();
-		write(STDOUT_FILENO, "\n", 1);
+		ioctl(STDIN_FILENO, TIOCSTI, "\n");
 		rl_replace_line("", 0);
+		rl_on_new_line();
 		rl_redisplay();
 	}
-	// else if (sig == SIGQUIT)
-	// {
-	// 	write (1, "Got sigquit\n", 12);
-	// 	write (1, "Quit: 3\n", 8);
-	// }
 }
 
 void	sigquit_ignore(void)
@@ -86,20 +75,8 @@ void	set_signal_handlers(pid_t pid)
 	else
 	{
 		write(1, "Im kid\n", 7);
-		sa.sa_handler = &action_child;//SIG_DFL;
+		sa.sa_handler = &action_child;
 		sigaction(SIGINT, &sa, NULL);
 		sigaction(SIGQUIT, &sa, NULL);
 	}
 }
-
-// void	set_signal_exacuting_handlers(void)
-// {
-// 	struct sigaction	sa;
-
-// //	sigquit_ignore();
-// 	ft_bzero(&sa, sizeof(struct sigaction));
-// 	sa.sa_handler = &action_sigquit;
-// 	sigaction(SIGQUIT, &sa, NULL);
-// 	sigaction(SIGINT, &sa, NULL);
-// }
-
