@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 23:43:32 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/08/08 12:49:45 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/08 13:22:03 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -374,17 +374,13 @@ int child_creation(char *infile, char *outfile, t_list *lst, int cmd_number, cha
 		// Redirect output
 		dup2(fdout,1);
 		close(fdout);
-		// Create child process
+		//set singnal handlers for child process
 		set_signal_handlers(0);
+		// Create child process
 		pid = fork();
 		if (pid == 0)
 		{
 			//child
-			
-			//for control + signals in child process
-//			set_signal_handlers(pid);//
-			//for control + signals in child process
-
 			printf("cmd[i][0] = %s\n", lst->content);
 			char **cmd = ft_calloc(2, sizeof(char *));
 			cmd[0] = lst->content;

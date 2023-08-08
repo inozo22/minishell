@@ -2,4 +2,4 @@
 	
 -----------------------------------------------------------------------
 TODO: implement error code with SIGINT, SIGQUIT
-TODO: 
+TODO: readline doesn't work well when it's reach to the "final of the line"

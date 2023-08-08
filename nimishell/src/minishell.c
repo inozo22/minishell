@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:32:33 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/08/08 12:52:44 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/08 14:09:24 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,10 @@ static char	*get_user(char **env)
 	return (NULL);
 }
 
+
+/**
+ * @note as the readline don't accept string strange, avandone this function
+  */
 char	*get_prompt(t_data *data)
 {
 	char	*user;
@@ -144,7 +148,7 @@ static int	process_input(char *line_read, t_data *data)
 int	minishell(t_data *data)
 {
 	char			*line_read;
-	char			*prompt;
+//	char			*prompt;
 
 //230808nimai: comment above to check how working signals
 // these are remove ^C in the prompt
@@ -159,13 +163,13 @@ int	minishell(t_data *data)
 // these are remove ^C in the prompt
 
 	printf("pid in minishell: %d\n", data->pid);
-	printf("Hi, Im hereeeeeee\n");
 	//set_signal_handlers(13);
-	prompt = get_prompt(data);
+//	prompt = get_prompt(data);
 	while (1)
 	{
-		set_signal_handlers(13);//230802nimai: changed from above
-		line_read = readline(prompt);
+		set_signal_handlers(13);//230808nimai: changed from above, to recall it after child process
+		//line_read = readline(prompt);
+		line_read = readline(SHELL_NAME);
 		if (line_read && *line_read)
 		{
 /* 			if (!ft_strcmp(line_read, "^C"))
@@ -175,14 +179,14 @@ int	minishell(t_data *data)
 		}
 		if (!line_read)//230731nimai: added to work ctrl+D without segfault
 		{
-			sig_eof();//check function process
+			sig_eof(data);//check function process
 			break ;
 		}
 		if (process_input(line_read, data) == INT_MAX)
 			break ;
 		free(line_read);
 	}
-	free(prompt);
+//	free(prompt);
 	rl_redisplay();
 	printf("\n\nBye 🗑");
 	rl_clear_history();

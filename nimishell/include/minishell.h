@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 19:10:38 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/08/08 12:53:17 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/08 14:09:52 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,10 @@
 # include "built.h"
 # include "signals.h"
 //# include "../lib/libft/libft.h"
+
+//test
+extern int	g_return_val;
+
 
  enum e_token
 {
@@ -55,8 +59,7 @@ enum e_state
 # define READ_END 0
 # define WRITE_END 1
 
-//# define SHELL_NAME "minihell🤪"
-# define SHELL_NAME "nimishell🐚"
+# define SHELL_NAME "nimishell > "
 
 typedef struct s_tokens
 {

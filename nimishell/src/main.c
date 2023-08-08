@@ -6,11 +6,15 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 18:22:41 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/08/04 12:54:58 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/08 13:47:50 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+//test
+int	g_return_val;
+//test
 
 void	set_path_list(t_data *data)
 {
@@ -127,6 +131,7 @@ int	main(int argc, char *argv[], char *envp[])
 	pid_t	pid;
 	int		ret;
 
+	g_return_val = 0;
 	pid = get_my_pid();
 	if (!pid)
 		return (1);
@@ -141,6 +146,8 @@ int	main(int argc, char *argv[], char *envp[])
 	// while (data->env[++i])
 	// 	printf("Env %d with ptr: %p: %s\n", i, (void *)data->env[i], data->env[i]);
 	ret = minishell(data);
+	if (g_return_val)
+		ret = g_return_val;
 	free_alloc(data);
 	return (ret);
 }

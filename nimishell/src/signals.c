@@ -6,20 +6,21 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:11:50 by nimai             #+#    #+#             */
-/*   Updated: 2023/08/08 13:09:18 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/08 13:48:26 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-// #include <termios.h>
 
 /**
  * @brief when push Ctrl + D, exit 
  * @note as the super free after the while, only write "exit" and break the loop
  */
-void	sig_eof(void)
+void	sig_eof(t_data *data)
 {
+	(void)data;
 	write(STDOUT_FILENO, "exit\n", 5);
+	g_return_val = 1;
 }
 
 /**
@@ -48,7 +49,7 @@ void	action(int sig)
 		ioctl(STDIN_FILENO, TIOCSTI, "\n");
 		rl_replace_line("", 0);
 		rl_on_new_line();
-		rl_redisplay();
+	//	rl_redisplay();
 	}
 }
 
