@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 19:10:38 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/08/08 14:09:52 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/08 15:41:12 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ enum e_state
 # define READ_END 0
 # define WRITE_END 1
 
-# define SHELL_NAME "nimishell > "
+# define SHELL_NAME "nimishell"
 
 typedef struct s_tokens
 {
@@ -110,15 +110,16 @@ typedef struct s_tokens
 # define SHELL_COLOR_ESCAPE_SEQ(X) "\x1b["X"m"
 # define SHELL_FORMAT_RESET ANSI_COLOR_ESCAPE_SEQ(GEN_FORMAT_RESET)
 
-# define COLOR_RESET	"\033[0m"
-# define COLOR_GREEN	"\033[32m"
-# define COLOR_YELLOW	"\033[1;33m"
-# define COLOR_GRAY		"\033[2;37m"
-# define COLOR_CURSIVE	"\033[3m"
-# define COLOR_RED		"\x1b[31m"
-# define COLOR_BLUE		"\033[1;34m"
-# define COLOR_CYAN 	"\033[1;36m"
-# define COLOR_ACCENT	"\033[92;3;4;1m"
+//"\001" and "\002" are necessary to work with readline 
+# define COLOR_RESET	"\001\033[0m\002"
+# define COLOR_GREEN	"\001\033[32m\002"
+# define COLOR_YELLOW	"\001\033[1;33m\002"
+# define COLOR_GRAY		"\001\033[2;37m\002"
+# define COLOR_CURSIVE	"\001\033[3m\002"
+# define COLOR_RED		"\001\x1b[31m\002"
+# define COLOR_BLUE		"\001\033[1;34m\002"
+# define COLOR_CYAN 	"\001\033[1;36m\002"
+# define COLOR_ACCENT	"\001\033[92;3;4;1m\002"
 
 //Functions
 //	minishell

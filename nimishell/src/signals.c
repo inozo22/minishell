@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:11:50 by nimai             #+#    #+#             */
-/*   Updated: 2023/08/08 13:48:26 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/08 15:57:44 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,8 @@
  */
 void	sig_eof(t_data *data)
 {
-	(void)data;
 	write(STDOUT_FILENO, "exit\n", 5);
-	g_return_val = 1;
+	data->return_val = 0;
 }
 
 /**
@@ -31,10 +30,12 @@ void	action_child(int sig)//looks working this, but don't let me print these lin
 	if (sig == SIGINT)
 	{
 		write(STDOUT_FILENO, "^C\n", 3);
+		g_return_val = 130;
 	}
 	else if (sig == SIGQUIT)
 	{
-		write (STDOUT_FILENO, "Quit: 3\n", 8);
+		write (STDOUT_FILENO, "^\\Quit: 3\n", 8);
+		g_return_val = 131;
 	}
 	return ;
 }
@@ -50,6 +51,7 @@ void	action(int sig)
 		rl_replace_line("", 0);
 		rl_on_new_line();
 	//	rl_redisplay();
+		g_return_val = 1;
 	}
 }
 
@@ -60,6 +62,7 @@ void	sigquit_ignore(void)
 	ft_bzero(&sa, sizeof(struct sigaction));
 	sa.sa_handler = SIG_IGN;
 	sigaction(SIGQUIT, &sa, NULL);
+	//here it's not necessary to control error number
 }
 
 void	set_signal_handlers(pid_t pid)

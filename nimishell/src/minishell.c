@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:32:33 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/08/08 14:09:24 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/08 15:47:09 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,6 @@ static char	*get_user(char **env)
 }
 
 
-/**
- * @note as the readline don't accept string strange, avandone this function
-  */
 char	*get_prompt(t_data *data)
 {
 	char	*user;
@@ -43,12 +40,21 @@ char	*get_prompt(t_data *data)
 
 	user = get_user(data->env);
 	prompt_len = ft_strlen(SHELL_NAME) + ft_strlen(user);
-	color_len = ft_strlen(COLOR_ACCENT) + ft_strlen(COLOR_RESET) \
-						+ ft_strlen(COLOR_BLUE) + ft_strlen(COLOR_RESET);
+	color_len = ft_strlen(COLOR_YELLOW) + ft_strlen(COLOR_RESET) + ft_strlen(COLOR_BLUE) + ft_strlen(COLOR_RESET);
 	prompt = (char *)ft_calloc(prompt_len + color_len + 5, sizeof(char));
+//	prompt = (char *)ft_calloc(prompt_len + 5, sizeof(char));
 	if (!prompt)
 		return (NULL);
-	ft_strcpy(prompt, COLOR_ACCENT);
+	// ft_strcpy(prompt, COLOR_ACCENT);
+	// ft_strcat(prompt, SHELL_NAME);
+	// ft_strcat(prompt, COLOR_RESET);
+	// ft_strcat(prompt, COLOR_BLUE);
+	// ft_strcat(prompt, "@");
+	// ft_strcat(prompt, user);
+	// free(user);
+	// ft_strcat(prompt, COLOR_RESET);
+	// ft_strcat(prompt, "$ ");
+	ft_strcpy(prompt, COLOR_YELLOW);
 	ft_strcat(prompt, SHELL_NAME);
 	ft_strcat(prompt, COLOR_RESET);
 	ft_strcat(prompt, COLOR_BLUE);
@@ -148,7 +154,7 @@ static int	process_input(char *line_read, t_data *data)
 int	minishell(t_data *data)
 {
 	char			*line_read;
-//	char			*prompt;
+	char			*prompt;
 
 //230808nimai: comment above to check how working signals
 // these are remove ^C in the prompt
@@ -164,12 +170,12 @@ int	minishell(t_data *data)
 
 	printf("pid in minishell: %d\n", data->pid);
 	//set_signal_handlers(13);
-//	prompt = get_prompt(data);
+	prompt = get_prompt(data);
 	while (1)
 	{
 		set_signal_handlers(13);//230808nimai: changed from above, to recall it after child process
-		//line_read = readline(prompt);
-		line_read = readline(SHELL_NAME);
+		line_read = readline(prompt);
+		//line_read = readline(SHELL_NAME);
 		if (line_read && *line_read)
 		{
 /* 			if (!ft_strcmp(line_read, "^C"))
