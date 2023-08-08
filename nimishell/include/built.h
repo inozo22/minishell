@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:12:28 by nimai             #+#    #+#             */
-/*   Updated: 2023/08/04 11:56:44 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/08 11:23:52 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # define FLAGEXPORT 1
 # define FLAGENV 0
 
-# include <termios.h>
+//# include <termios.h>
 
 typedef struct s_temp	t_temp;
 
