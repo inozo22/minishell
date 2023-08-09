@@ -50,17 +50,17 @@ char	*get_var_value(char *env_var, char *envp[])
  * @note ($$) Expands to the pid of the current shell.
  * @note ($1-9) Expands to the corresponding arguments passed to bash
  */
-char	*is_expand(char *token, char *envp[])
+char	*is_expand(char *token, char *envp[], t_data *data)
 {
 /* 	int	i;
 
 	i = -1; */
 	if (!ft_strncmp(token, "$?", 2))
-		return (/* data->return_val */"1");
+		return (ft_itoa(data->return_val));
 	if (!ft_strncmp(token, "$!", 2))
-		return (/* data->return_val */"1000");
-	if (!ft_strncmp(token, "$$", 2))//"4180"
-		return (/* ft_itoa(data->pid) */"1000");
+		return (ft_itoa(data->return_val));
+	if (!ft_strncmp(token, "$$", 2))
+		return (ft_itoa(data->pid));
 	if (!ft_strncmp(token, "$-", 2))
 		return ("himBH");
 	if (!ft_strncmp(token, "$@", 2) || !ft_strncmp(token, "$*", 2))
@@ -95,7 +95,6 @@ char	*expand(char *arg, int start, int end, char *var_value, char *envp[])
 	{
 		if (!ft_strncmp(&arg[1], envp[i], len) && envp[i][len] == '=')
 			break ;
-
 	}
 	if (envp[i])
 	{
@@ -134,6 +133,9 @@ char	*expanser(char *arg, char *envp[], t_data *data)
 	i = 0;//changed from -1
 	expanded = ft_strdup(arg);
 	pos[0] = ft_strchr(expanded, '$');
+	if (pos[0] && expanded[0] == '\'')
+		return (expanded);
+	//if there is no "$", never enter
 	while (pos[0])
 	{
 		printf("%sI will expand: %s, pos[0]: %s%s\n", COLOR_RED, expanded, pos[0], COLOR_RESET);
@@ -142,18 +144,24 @@ char	*expanser(char *arg, char *envp[], t_data *data)
 			pos[1]++;
 		printf("start: %s, end: %s\n", pos[0], pos[1]);
 		tmp = expanded;
-		var_value = is_expand(pos[0], envp);
-		if (!ft_strcmp(var_value, "1"))
-		{
-			return (ft_itoa(data->return_val));
-		}
+		var_value = is_expand(pos[0], envp, data);//check unique letter
+		// if (!ft_strcmp(var_value, "1"))
+		// {
+		// 	return (ft_itoa(data->return_val));
+		// }
 		printf("var value: %s\n", var_value);
-		expanded = expand(expanded, pos[0] - expanded, pos[1] - pos[0], var_value, envp);
+		if (!var_value)
+			expanded = expand(expanded, pos[0] - expanded, pos[1] - pos[0], var_value, envp);
+		else
+		{
+			return (free(expanded), var_value);
+		}
 		printf("i val: %d, i pos after write: %s\n",i, arg + i);
 	//	free(var_value);
-	//	exit (0);
 		free (tmp);
-		break ;
+		pos[0] += pos[1] - pos[0];
+		printf("%spos[0]: %s%s\n", COLOR_RED, pos[0], COLOR_RESET);
+//		break ;
 	}
 	/**
 	 * @note int i is not necesarry, and IDK why it's a loop althogh send only a command from process input
