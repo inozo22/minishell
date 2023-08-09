@@ -99,6 +99,8 @@ char	*expand(char *arg, int start, int end, char *var_value, char *envp[])
 	if (envp[i])
 	{
 		ret = (char *)ft_calloc(ft_strlen(envp[i]) - len, 1);
+		if (!ret)
+			return (NULL);//memory allocate error
 		ft_strcpy(ret, &envp[i][len + 1]);
 //		printf("%sret :%s%s\n", COLOR_RED, ret, COLOR_RESET);
 	}
@@ -133,10 +135,10 @@ char	*expanser(char *arg, char *envp[], t_data *data)
 	i = 0;//changed from -1
 	expanded = ft_strdup(arg);
 	pos[0] = ft_strchr(expanded, '$');
-	if (pos[0] && expanded[0] == '\'')
-		return (expanded);
+	// if (pos[0] && expanded[0] == '\'')
+	// 	return (expanded);
 	//if there is no "$", never enter
-	while (pos[0])
+	while (pos[0] && arg[0] != '\'')
 	{
 		printf("%sI will expand: %s, pos[0]: %s%s\n", COLOR_RED, expanded, pos[0], COLOR_RESET);
 		pos[1] = pos[0] + 1;
@@ -144,6 +146,8 @@ char	*expanser(char *arg, char *envp[], t_data *data)
 			pos[1]++;
 		printf("start: %s, end: %s\n", pos[0], pos[1]);
 		tmp = expanded;
+		printf("tmp: %s expanded: %s\n", tmp, expanded);
+//		free (expanded);
 		var_value = is_expand(pos[0], envp, data);//check unique letter
 		// if (!ft_strcmp(var_value, "1"))
 		// {
@@ -151,17 +155,23 @@ char	*expanser(char *arg, char *envp[], t_data *data)
 		// }
 		printf("var value: %s\n", var_value);
 		if (!var_value)
-			expanded = expand(expanded, pos[0] - expanded, pos[1] - pos[0], var_value, envp);
-		else
 		{
-			return (free(expanded), var_value);
+			var_value = expand(expanded, pos[0] - expanded, pos[1] - pos[0], var_value, envp);
 		}
-		printf("i val: %d, i pos after write: %s\n",i, arg + i);
-	//	free(var_value);
+		// else
+		// {
+		// 	expanded = var_value;
+		// 	;//ft_strjoin(tmp, );
+		// }
+		expanded = (char *)ft_calloc(ft_strlen(var_value) + ft_strlen(tmp) + 1, 1);
+		ft_strcpy(expanded, tmp);
+		ft_strcat(expanded, var_value);
+	//	printf("i val: %d, i pos after write: %s\n",i, arg + i);
+		if (pos[0][0] == '$')
+			free(var_value);
 		free (tmp);
-		pos[0] += pos[1] - pos[0];
+		pos[0] += pos[1] - pos[0] + 1;
 		printf("%spos[0]: %s%s\n", COLOR_RED, pos[0], COLOR_RESET);
-//		break ;
 	}
 	/**
 	 * @note int i is not necesarry, and IDK why it's a loop althogh send only a command from process input
