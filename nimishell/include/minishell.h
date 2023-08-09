@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 19:10:38 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/08/09 11:48:26 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/09 13:10:30 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,22 @@
 //test
 extern int	g_return_val;
 
-
+//  enum e_token
+// {
+// 	WORD = -1,
+// 	IS_SPACE = 32,
+// 	NEW_LINE = 10,
+// 	QOUTE = 39,
+// 	DOUBLE_QUOTE = 34,
+// 	ESCAPE = 92,
+// 	ENV = 36,
+// 	PIPE_LINE = 124,
+// 	REDIR_IN = 60,
+// 	REDIR_OUT = 62,
+// 	HERE_DOC,
+// 	APPEND,
+// 	INVALID,
+// };
  enum e_token
 {
 	WORD = -1,
@@ -170,6 +185,6 @@ char	*path_modify(char *cur, char *str);
 int		av_amount(char **strs);
 
 //Expanser
-char	*expanser(char *arg, char *envp[]);
+char	*expanser(char *arg, char *envp[], t_data *data);
 
 #endif

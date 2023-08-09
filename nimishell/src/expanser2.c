@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include "minishell.h"
+#include "minishell.h"
 #include "../lib/libft/libft.h"
 #include <stdio.h>
 
@@ -55,21 +55,21 @@ char	*is_expand(char *token, char *envp[])
 /* 	int	i;
 
 	i = -1; */
-	if (ft_strncmp(token, "$?", 2))
+	if (!ft_strncmp(token, "$?", 2))
 		return (/* data->return_val */"1");
-	if (ft_strncmp(token, "$!", 2))
+	if (!ft_strncmp(token, "$!", 2))
 		return (/* data->return_val */"1000");
-	if (ft_strncmp(token, "$$", 2))
+	if (!ft_strncmp(token, "$$", 2))
 		return (/* ft_itoa(data->pid) */"1000");
-	if (ft_strncmp(token, "$-", 2))
+	if (!ft_strncmp(token, "$-", 2))
 		return ("himBH");
-	if (ft_strncmp(token, "$@", 2) || ft_strncmp(token, "$*", 2))
+	if (!ft_strncmp(token, "$@", 2) || !ft_strncmp(token, "$*", 2))
 		return ("");
-	if (ft_strncmp(token, "$#", 2))
+	if (!ft_strncmp(token, "$#", 2))
 		return ("0");
-	if (ft_strncmp(token, "$IFS", 4))
+	if (!ft_strncmp(token, "$IFS", 4))
 		return ("\t\n");
-	if (ft_isdigit(token[1]))
+	if (!ft_isdigit(token[1]))
 		return ("");
 	if (!(token[1]) || (!ft_isalnum(token[1]) && token[1] != '_'))
 		return (NULL);
@@ -94,7 +94,7 @@ char	*expand(char *arg, int start, int end, char *var_value)
 	return (expanded);
 }
 
-char	*expanser(char *arg, char *envp[])
+char	*expanser(char *arg, char *envp[], t_data *data)
 {
 	char	*expanded;
 	char	*var_value;
@@ -102,10 +102,11 @@ char	*expanser(char *arg, char *envp[])
 	int		i;
 	char 	*pos[2];
 
-	i = -1;
+	i = 0;//changed from -1
 	expanded = ft_strdup(arg);
 	pos[0] = ft_strchr(expanded, '$');
-	while (pos[0])
+	printf("%sexpanded: %s, pos[0]: %s%s\n", COLOR_GREEN, expanded, pos[0], COLOR_RESET);
+	while (pos[0]/*  || ++i < 20000 */)
 	{
 		pos[1] = pos[0] + 1;
 		while (ft_isalnum(*pos[1]))
@@ -113,12 +114,21 @@ char	*expanser(char *arg, char *envp[])
 		printf("start: %s, end: %s\n", pos[0], pos[1]);
 		tmp = expanded;
 		var_value = is_expand(pos[0], envp);
+		if (!ft_strcmp(var_value, "1"))
+		{
+			return (ft_itoa(data->return_val));
+		}
 		printf("var value: %s\n", var_value);
 		expanded = expand(expanded, pos[0] - expanded, pos[1] - pos[0], var_value);
 		printf("i val: %d, i pos after write: %s\n",i, arg + i);
-		free(var_value);
+	//	free(var_value);
+	//	exit (0);
 		free (tmp);
+		break ;
 	}
+	/**
+	 * @note int i is not necesarry, and IDK why it's a loop althogh send only a command from process input
+	 */
 	return (expanded);
 }
 

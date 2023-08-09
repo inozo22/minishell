@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:32:33 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/08/09 12:09:48 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/09 13:07:40 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,24 +122,25 @@ static int	process_input(char *line_read, t_data *data)
 	// 	printf("cmd->content: %s	type: %d	cmp_pos: %d\n", cmd->content, cmd->type, cmd->cmd_pos);
 	// 	cmd = cmd->next;
 	// }
-//	exit (1);
 
-/**
- * 
- * @note 230808 kokomade
- * 
- */
 	t_list	*tmp;
 	tmp = cmd_list;
 	while (tmp)
 	{
-		tmp->content = expanser(tmp->content, data->env);
+		tmp->content = expanser(tmp->content, data->env, data);
 		printf("%sEXPANSER: Line: %d, content: %s, type: %d, pos: %d%s\n", COLOR_BLUE, __LINE__, tmp->content, tmp->type, tmp->cmd_pos, COLOR_RESET);
 		tmp = tmp->next;
 	}
+//	exit (0);
+/**
+ * 
+ * @note 230809 kokomade
+ * @note make the expanserworking
+ * 
+ */
 
 
-
+//infile, outfile obtain in expanser?
 	data->return_val = child_creation(NULL, NULL, cmd_list, cmd_nb, data->path, data->env, data);
 	ft_lstclear(&cmd_list, free);
 //	if (data->return_val == INT_MAX)
