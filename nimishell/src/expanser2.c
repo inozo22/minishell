@@ -178,6 +178,7 @@ char	*expanser(char *arg, char *envp[], t_data *data)
 	 */
 	return (expanded);
 }
+//230809nimai: expanded should be whole string for the arg
 
 /* int	main(int argc, char *argv[], char *envp[])
 {

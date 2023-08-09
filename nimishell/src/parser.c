@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 15:43:39 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/08/09 11:12:53 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/09 18:21:15 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,9 @@ char	*ft_remove_char(char *str, int c)
 	return (cleaned);
 }
 
+/**
+ * @note 230809nnimai: quotes keep until expansser?
+ */
 char	*remove_quotes(char *str)
 {
 	char	*cleaned;
