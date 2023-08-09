@@ -59,7 +59,7 @@ char	*is_expand(char *token, char *envp[])
 		return (/* data->return_val */"1");
 	if (!ft_strncmp(token, "$!", 2))
 		return (/* data->return_val */"1000");
-	if (!ft_strncmp(token, "$$", 2))
+	if (!ft_strncmp(token, "$$", 2))//"4180"
 		return (/* ft_itoa(data->pid) */"1000");
 	if (!ft_strncmp(token, "$-", 2))
 		return ("himBH");
@@ -76,23 +76,52 @@ char	*is_expand(char *token, char *envp[])
 	return(get_var_value(token, envp));
 }
 
-char	*expand(char *arg, int start, int end, char *var_value)
+/**
+ * @brief get the full string from env
+ * @return when there is value return full value, otherwise null
+ */
+char	*expand(char *arg, int start, int end, char *var_value, char *envp[])
 {
-	char	*expanded;
-	char	*tmp;
+	char	*ret;
+	int		i;
+	int		len;
 
-	expanded = ft_substr(arg, 0, start);
-	printf("First section: %s\n", expanded);
-	tmp = expanded;
-	expanded = ft_strjoin(expanded, var_value);
-	printf("First section + expanded: %s\n", expanded);
-	free(tmp);
-	tmp = expanded;
-	expanded = ft_strjoin(expanded, arg + end);
-	free(tmp);
-	printf("All: %s\n", expanded);
-	return (expanded);
+	(void)var_value;
+	ret = NULL;
+	printf("%sstart: %d, end: %d, arg: %s%s\n", COLOR_RED, start, end, arg, COLOR_RESET);
+	i = -1;
+	len = ft_strlen(&arg[1]);
+	while (envp[++i])
+	{
+		if (!ft_strncmp(&arg[1], envp[i], len) && envp[i][len] == '=')
+			break ;
+
+	}
+	if (envp[i])
+	{
+		ret = (char *)ft_calloc(ft_strlen(envp[i]) - len, 1);
+		ft_strcpy(ret, &envp[i][len + 1]);
+//		printf("%sret :%s%s\n", COLOR_RED, ret, COLOR_RESET);
+	}
+	return (ret);
 }
+// char	*expand(char *arg, int start, int end, char *var_value)
+// {
+// 	char	*expanded;
+// 	char	*tmp;
+
+// 	expanded = ft_substr(arg, 0, start);
+// 	printf("First section: %s\n", expanded);
+// 	tmp = expanded;
+// 	expanded = ft_strjoin(expanded, var_value);
+// 	printf("First section + expanded: %s\n", expanded);
+// 	free(tmp);
+// 	tmp = expanded;
+// 	expanded = ft_strjoin(expanded, arg + end);
+// 	free(tmp);
+// 	printf("All: %s\n", expanded);
+// 	return (expanded);
+// }
 
 char	*expanser(char *arg, char *envp[], t_data *data)
 {
@@ -105,9 +134,9 @@ char	*expanser(char *arg, char *envp[], t_data *data)
 	i = 0;//changed from -1
 	expanded = ft_strdup(arg);
 	pos[0] = ft_strchr(expanded, '$');
-	printf("%sexpanded: %s, pos[0]: %s%s\n", COLOR_GREEN, expanded, pos[0], COLOR_RESET);
-	while (pos[0]/*  || ++i < 20000 */)
+	while (pos[0])
 	{
+		printf("%sI will expand: %s, pos[0]: %s%s\n", COLOR_RED, expanded, pos[0], COLOR_RESET);
 		pos[1] = pos[0] + 1;
 		while (ft_isalnum(*pos[1]))
 			pos[1]++;
@@ -119,7 +148,7 @@ char	*expanser(char *arg, char *envp[], t_data *data)
 			return (ft_itoa(data->return_val));
 		}
 		printf("var value: %s\n", var_value);
-		expanded = expand(expanded, pos[0] - expanded, pos[1] - pos[0], var_value);
+		expanded = expand(expanded, pos[0] - expanded, pos[1] - pos[0], var_value, envp);
 		printf("i val: %d, i pos after write: %s\n",i, arg + i);
 	//	free(var_value);
 	//	exit (0);
