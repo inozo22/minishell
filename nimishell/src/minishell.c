@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:32:33 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/08/08 16:25:04 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/09 12:09:48 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,11 +126,20 @@ static int	process_input(char *line_read, t_data *data)
 
 /**
  * 
- * @note 230804 kokomade
+ * @note 230808 kokomade
  * 
-  */
+ */
+	t_list	*tmp;
+	tmp = cmd_list;
+	while (tmp)
+	{
+		tmp->content = expanser(tmp->content, data->env);
+		printf("%sEXPANSER: Line: %d, content: %s, type: %d, pos: %d%s\n", COLOR_BLUE, __LINE__, tmp->content, tmp->type, tmp->cmd_pos, COLOR_RESET);
+		tmp = tmp->next;
+	}
 
-	
+
+
 	data->return_val = child_creation(NULL, NULL, cmd_list, cmd_nb, data->path, data->env, data);
 	ft_lstclear(&cmd_list, free);
 //	if (data->return_val == INT_MAX)
@@ -166,7 +175,6 @@ int	minishell(t_data *data)
 	{
 		set_signal_handlers(13);//230808nimai: changed from above, to recall it after child process
 		line_read = readline(prompt);
-		//line_read = readline(SHELL_NAME);
 		if (line_read && *line_read)
 		{
 /* 			if (!ft_strcmp(line_read, "^C"))
@@ -183,7 +191,7 @@ int	minishell(t_data *data)
 			break ;
 		free(line_read);
 	}
-//	free(prompt);
+	free(prompt);
 	rl_redisplay();
 	printf("\n\nBye 🗑");
 	rl_clear_history();

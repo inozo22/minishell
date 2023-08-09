@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 18:39:55 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/08/08 16:50:48 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/09 11:17:15 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,12 +147,6 @@ int get_token(t_list **list, char *input, int *pos)
 	if (!new)
 		return (-1);
 	ft_lstadd_back(list, new);
-	tmp = *list;
-	while (tmp)
-	{
-		printf("Line: %d, content: %s, type: %d, pos: %d\n", __LINE__, tmp->content, tmp->type, tmp->cmd_pos);
-		tmp = tmp->next;
-	}
 	return (max_pipe);
 }
 
@@ -166,6 +160,7 @@ int lexer(char *input, t_list **token_list)
 {
 	int		i;
 	int		pos[4];
+	t_list	*tmp;
 
 	*token_list = NULL;
 	i = -1;
@@ -188,6 +183,12 @@ int lexer(char *input, t_list **token_list)
 			return (ft_lstclear(token_list, free), -1);
 		ft_printf("string end: %d\n", pos[1]);
 		i = pos[1] - 1;
+	}
+	tmp = *token_list;
+	while (tmp)
+	{
+		printf("%sLEXER: Line: %d, content: %s, type: %d, pos: %d%s\n", COLOR_GREEN, __LINE__, tmp->content, tmp->type, tmp->cmd_pos, COLOR_RESET);
+		tmp = tmp->next;
 	}
 	return (pos[3]);
 }

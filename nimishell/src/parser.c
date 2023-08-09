@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 15:43:39 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/08/08 17:54:19 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/09 11:12:53 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static char	*dquote(char *str)
 		str = ft_strjoin(str, tmp[0]);
 		free(tmp[0]);
 		free(tmp[1]);
-	};
+	}
 	ft_printf("output in dquote: %s\n", str);
 	return (str);
 }
@@ -249,7 +249,7 @@ t_list	*parser(char *str)
 	tmp = cmd;
 	while (tmp)
 	{
-		printf("Line: %d, content: %s, type: %d, pos: %d\n", __LINE__, tmp->content, tmp->type, tmp->cmd_pos);
+		printf("%sPARSER: Line: %d, content: %s, type: %d, pos: %d%s\n", COLOR_CYAN, __LINE__, tmp->content, tmp->type, tmp->cmd_pos, COLOR_RESET);
 		tmp = tmp->next;
 	}
 //	pos = (int *)ft_calloc(3, sizeof(int));

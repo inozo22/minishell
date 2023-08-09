@@ -1,4 +1,4 @@
-- 
+- printf("%sI'm here%s\n", COLOR_YELLOW, COLOR_RESET);
 	
 -----------------------------------------------------------------------
 TODO: make lexer and expanser works

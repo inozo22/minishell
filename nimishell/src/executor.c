@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 23:43:32 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/08/08 13:22:03 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/09 11:51:43 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -388,11 +388,14 @@ int child_creation(char *infile, char *outfile, t_list *lst, int cmd_number, cha
 			ft_printf("Check builtin return: %d\n", builtin);
 			if (builtin != -1)
 				exit(builtin);
-			char *cmd_path = get_cmd_path(lst->content, path);
+			char *cmd_path = NULL;
+			cmd_path = get_cmd_path(lst->content, path);
 			execve(cmd_path, cmd, env);
+			//as doesn't return when execute the command well, there is no protection
 			perror("execve");
 			//free all the data if execve fails
-			free(cmd_path);
+			//230809nimai: comment to avoid double freeing.
+			//free(cmd_path);
 			exit(1);
 		}
 		}

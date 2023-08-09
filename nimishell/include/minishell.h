@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 19:10:38 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/08/08 15:41:12 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/09 11:48:26 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,9 +110,9 @@ typedef struct s_tokens
 # define SHELL_COLOR_ESCAPE_SEQ(X) "\x1b["X"m"
 # define SHELL_FORMAT_RESET ANSI_COLOR_ESCAPE_SEQ(GEN_FORMAT_RESET)
 
-//"\001" and "\002" are necessary to work with readline 
+//"\001" and "\002" are escape sequence, which is necessary to work with readline 
 # define COLOR_RESET	"\001\033[0m\002"
-# define COLOR_GREEN	"\001\033[32m\002"
+# define COLOR_GREEN	"\001\033[1;32m\002"
 # define COLOR_YELLOW	"\001\033[1;33m\002"
 # define COLOR_GRAY		"\001\033[2;37m\002"
 # define COLOR_CURSIVE	"\001\033[3m\002"
@@ -168,5 +168,8 @@ char	*path_modify(char *cur, char *str);
 
 //	echo
 int		av_amount(char **strs);
+
+//Expanser
+char	*expanser(char *arg, char *envp[]);
 
 #endif
