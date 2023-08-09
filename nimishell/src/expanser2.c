@@ -135,8 +135,6 @@ char	*expanser(char *arg, char *envp[], t_data *data)
 	i = 0;//changed from -1
 	expanded = ft_strdup(arg);
 	pos[0] = ft_strchr(expanded, '$');
-	// if (pos[0] && expanded[0] == '\'')
-	// 	return (expanded);
 	//if there is no "$", never enter
 	while (pos[0] && arg[0] != '\'')
 	{
@@ -149,20 +147,11 @@ char	*expanser(char *arg, char *envp[], t_data *data)
 		printf("tmp: %s expanded: %s\n", tmp, expanded);
 //		free (expanded);
 		var_value = is_expand(pos[0], envp, data);//check unique letter
-		// if (!ft_strcmp(var_value, "1"))
-		// {
-		// 	return (ft_itoa(data->return_val));
-		// }
 		printf("var value: %s\n", var_value);
 		if (!var_value)
 		{
 			var_value = expand(expanded, pos[0] - expanded, pos[1] - pos[0], var_value, envp);
 		}
-		// else
-		// {
-		// 	expanded = var_value;
-		// 	;//ft_strjoin(tmp, );
-		// }
 		expanded = (char *)ft_calloc(ft_strlen(var_value) + ft_strlen(tmp) + 1, 1);
 		ft_strcpy(expanded, tmp);
 		ft_strcat(expanded, var_value);
@@ -174,7 +163,7 @@ char	*expanser(char *arg, char *envp[], t_data *data)
 		printf("%spos[0]: %s%s\n", COLOR_RED, pos[0], COLOR_RESET);
 	}
 	/**
-	 * @note int i is not necesarry, and IDK why it's a loop althogh send only a command from process input
+	 * @note int i is not necesarry
 	 */
 	return (expanded);
 }
