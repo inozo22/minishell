@@ -2,6 +2,7 @@
 	
 -----------------------------------------------------------------------
 TODO: make lexer and expanser works
+TODO: is expand in expanser, "$*" doesn't work and "$0" gets open input
 
 
 
