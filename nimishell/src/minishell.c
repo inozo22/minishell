@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <termios.h>
 
 /**
  * @note 230804nimai: at the moment, when there is no environment valur, user name will be "noname"
@@ -157,16 +158,15 @@ int	minishell(t_data *data)
 	char			*line_read;
 	char			*prompt;
 
-//230808nimai: comment above to check how working signals
 // these are remove ^C in the prompt
-	struct termios	termios_save;
-	struct termios	term;
+//	struct termios	termios_save;
+//	struct termios	term;
 
-	tcgetattr(0, &termios_save);
-	tcsetattr(0, 0, &termios_save);
-	term = termios_save;
-	term.c_lflag &= ~ECHOCTL;
-	tcsetattr(0, TCSASOFT, &term);
+//	tcgetattr(0, &termios_save);
+//	tcsetattr(0, 0, &termios_save);
+//	term = termios_save;
+//	term.c_lflag &= ~ECHOCTL;
+//	tcsetattr(0, TCSASOFT, &term);
 // these are remove ^C in the prompt
 
 	printf("pid in minishell: %d\n", data->pid);
@@ -181,7 +181,7 @@ int	minishell(t_data *data)
 /* 			if (!ft_strcmp(line_read, "^C"))
 				rl_on_new_line();
 			else *///230731nimai:comment
-				add_history(line_read);
+			add_history(line_read);
 		}
 		if (!line_read)//230731nimai: added to work ctrl+D without segfault
 		{
@@ -198,10 +198,4 @@ int	minishell(t_data *data)
 	rl_clear_history();
 	free(line_read);
 	return (data->return_val);
-	/**
-	 * KOKOMADE
-	  */
 }
-//		 to use with SIGSTOP
-//		rl_replace_line("New line", 1);
-//		rl_on_new_line(); to use with SIGSTOP

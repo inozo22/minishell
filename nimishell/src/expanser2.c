@@ -129,10 +129,10 @@ char	*expanser(char *arg, char *envp[], t_data *data)
 	char	*expanded;
 	char	*var_value;
 	char	*tmp;
-	int		i;
+	//int		i;
 	char 	*pos[2];
 
-	i = 0;//changed from -1
+	//i = 0;//changed from -1
 	expanded = ft_strdup(arg);
 	pos[0] = ft_strchr(expanded, '$');
 	//if there is no "$", never enter
