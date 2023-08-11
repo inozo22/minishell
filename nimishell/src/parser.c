@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 15:43:39 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/08/11 12:02:40 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/11 18:10:57 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,50 +60,50 @@ static char	*dquote(char *str)
 	return (str);
 }
 
-char	*ft_remove_char(char *str, int c)
-{
-	char	*char_pos;
-	char	*cleaned;
-	char	*tmp;
-	int		flag;
+// char	*ft_remove_char(char *str, int c)
+// {
+// 	char	*char_pos;
+// 	char	*cleaned;
+// 	char	*tmp;
+// 	int		flag;
 
-	flag = 1;
-	char_pos = ft_strchr(str, c);
-	printf("Line: %d, char_pos: %s\n", __LINE__, char_pos);
-	cleaned = ft_substr(str, 0, str - char_pos);
-	tmp = cleaned;
-	if (char_pos[1])
-		cleaned = ft_strjoin(cleaned, char_pos + flag);
-	else
-		cleaned = ft_strndup(cleaned, ft_strlen(cleaned) - 1);
-	free (tmp);
-	printf("Line: %d, cleaned: %s\n", __LINE__, cleaned);
-	//exit (0);
-	return (cleaned);
-}
+// 	flag = 1;
+// 	char_pos = ft_strchr(str, c);
+// 	printf("Line: %d, char_pos: %s\n", __LINE__, char_pos);
+// 	cleaned = ft_substr(str, 0, str - char_pos);
+// 	tmp = cleaned;
+// 	if (char_pos[1])
+// 		cleaned = ft_strjoin(cleaned, char_pos + flag);
+// 	else
+// 		cleaned = ft_strndup(cleaned, ft_strlen(cleaned) - 1);
+// 	free (tmp);
+// 	printf("Line: %d, cleaned: %s\n", __LINE__, cleaned);
+// 	//exit (0);
+// 	return (cleaned);
+// }
 
 
-char	*remove_quotes(char *str)
-{
-	char	*cleaned;
-	int i = 0;
+// char	*remove_quotes(char *str)
+// {
+// 	char	*cleaned;
+// 	int i = 0;
 
-	cleaned = ft_strdup(str);
-//	cleaned = str;
-	while (ft_strchr(cleaned, '\"') && i < 3)
-	{
-		cleaned = ft_remove_char(cleaned, '\"');
-		//cleaned++;
-		i++;
-	}
-	while (ft_strchr(cleaned, '\'') && i < 3)
-	{
-		cleaned = ft_remove_char(cleaned, '\'');
-		//cleaned++;
-		i++;
-	}
-	return (cleaned);
-}
+// 	cleaned = ft_strdup(str);
+// //	cleaned = str;
+// 	while (ft_strchr(cleaned, '\"') && i < 3)
+// 	{
+// 		cleaned = ft_remove_char(cleaned, '\"');
+// 		//cleaned++;
+// 		i++;
+// 	}
+// 	while (ft_strchr(cleaned, '\'') && i < 3)
+// 	{
+// 		cleaned = ft_remove_char(cleaned, '\'');
+// 		//cleaned++;
+// 		i++;
+// 	}
+// 	return (cleaned);
+// }
 
 /**
  * @note 230809nnimai: quotes keep until expansser?

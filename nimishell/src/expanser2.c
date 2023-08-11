@@ -146,7 +146,40 @@ char	*expand(char *pos[3], char *arg, t_data *data, char *expanded)
 	return (free (tmp), expanded);
 }
 
+char	*remove_quotes(char *str)
+{
+	int		i;
+	int		j;
+	int		len;
+	char	*ret;
 
+	i = -1;
+	len = 0;
+	ret = NULL;
+	while (str[++i])
+	{
+		if (str[i] != '\'' && str[i] != '\"')
+			len++;
+	}
+	ret = ft_calloc(len + 1, 1);
+	if (!ret)
+		return (NULL);//malloc error
+	i = 0;
+	j = 0;
+	while (i < len)
+	{
+		if(str[i] != '\'' && str[i] != '\"')
+		{
+			ret[j] = str[i];
+			j++;
+		}
+		i++;
+	}
+	printf("ret: %s\n", ret);
+	if (!ret)
+		return (str);
+	return (ret);
+}
 
 
 /**
