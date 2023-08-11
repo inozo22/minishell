@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 23:43:32 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/08/09 11:51:43 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/11 15:15:43 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -297,8 +297,20 @@ int	close_free_all_pipes(int **fd_pipe, int cmd_nb)
 	return (0);
 } */
 
+/**
+ * @note 230811nimai: add g_return_val, check if there is another way to reset g_return_val
+ */
 int	check_exit_status(int e_status)
 {
+	int	ret;
+
+	ret = 0;
+	if (g_return_val)
+	{
+		ret = g_return_val;
+		g_return_val = 0;
+		return (ret);
+	}
 	if (WIFEXITED(e_status))
 		return (WEXITSTATUS(e_status));
 	if (WIFSIGNALED(e_status))
@@ -394,7 +406,7 @@ int child_creation(char *infile, char *outfile, t_list *lst, int cmd_number, cha
 			//as doesn't return when execute the command well, there is no protection
 			perror("execve");
 			//free all the data if execve fails
-			//230809nimai: comment to avoid double freeing.
+			//230809nimai: comment free to avoid double freeing.
 			//free(cmd_path);
 			exit(1);
 		}
