@@ -2,7 +2,10 @@
 	
 -----------------------------------------------------------------------
 TODO: make lexer and expanser works
-TODO: is expand in expanser, "$*" doesn't work and "$0" gets open input
+
+
+-----------------------------------------------------------------------
+DONE~~: is expand in expanser, "$*" doesn't work and "$0" gets open input~~
 
 
 
@@ -10,7 +13,7 @@ TODO: is expand in expanser, "$*" doesn't work and "$0" gets open input
 
 -----------------------------------------------------------------------
 *** CASES which should control ***
-bash-3.2$ cd $$HOME
-bash: cd: 4180HOME: No such file or directory
+~~bash-3.2$ cd $$HOME~~
+~~bash: cd: 4180HOME: No such file or directory~~230811
 
 

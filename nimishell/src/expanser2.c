@@ -117,6 +117,35 @@ char	*is_expand(char *token, int len, char *envp[], t_data *data)
 // 	return (ret);
 // }
 
+char	*expand(char *pos[3], char *arg, t_data *data, char *expanded)
+{
+	char	*tmp;
+
+	while (ft_isalnum(*pos[1]))//get the str's last point
+		pos[1]++;
+	if (*pos[0] == '$')
+		tmp = is_expand(pos[0], (pos[1] - pos[0]- 1), data->env, data);
+	else
+		tmp = ft_strndup(pos[0], (pos[1] - pos[0]));
+	if (tmp)
+	{
+		if (ft_strcmp(expanded, arg) != 0)
+			expanded = ft_strjoin(expanded, tmp);
+		else
+		{
+			free (expanded);
+			expanded = ft_calloc(ft_strlen(tmp), 1);
+			ft_strcpy(expanded, tmp);
+		}
+	}
+	else if (!tmp && ft_strcmp(expanded, arg) == 0)
+	{
+		free (expanded);
+		expanded = NULL;
+	}
+	return (free (tmp), expanded);
+}
+
 
 
 
@@ -126,38 +155,16 @@ char	*is_expand(char *token, int len, char *envp[], t_data *data)
 char	*expanser(char *arg, char *envp[], t_data *data)
 {
 	char	*expanded;
-	char	*tmp;
 	char	*pos[3];
 
+	(void)envp;
 	expanded = ft_strdup(arg);
 	pos[2] = ft_strdup(expanded);
 	pos[0] = ft_strchr(pos[2], '$');
 	while (pos[0] && arg[0] != '\'' && ft_strlen(pos[0]))
 	{
 		pos[1] = pos[0] + 1;
-		while (ft_isalnum(*pos[1]))//get the str's last point
-			pos[1]++;
-		if (*pos[0] == '$')
-			tmp = is_expand(pos[0], (pos[1] - pos[0]- 1), envp, data);
-		else
-			tmp = ft_strndup(pos[0], (pos[1] - pos[0]));
-		if (tmp)
-		{
-			if (ft_strcmp(expanded, arg) != 0)
-				expanded = ft_strjoin(expanded, tmp);
-			else
-			{
-				free (expanded);
-				expanded = ft_calloc(ft_strlen(tmp), 1);
-				ft_strcpy(expanded, tmp);
-			}
-			free(tmp);
-		}
-		else if (!tmp && ft_strcmp(expanded, arg) == 0)
-		{
-			free(expanded);
-			expanded = NULL;
-		}
+		expanded = expand(pos, arg, data, expanded);
 		if (pos[1] - pos[0] == 1)
 			pos[1]++;
 		pos[0] = pos[1];

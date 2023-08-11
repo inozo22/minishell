@@ -6,7 +6,7 @@
 #    By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/30 13:14:38 by bde-mada          #+#    #+#              #
-#    Updated: 2023/08/08 13:16:46 by nimai            ###   ########.fr        #
+#    Updated: 2023/08/11 12:13:26 by nimai            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -112,7 +112,7 @@ $(NAME): $(OBJS) $(INCLUDES)
 	@echo $(CURSIVE)$(GRAY) "		- Compiling project $(NAME)..." $(NONE)
 	$(CC) $(CFLAGS) $(INC) $(DEBUG) $(OBJS) $(LDFLAGS) $(LDLIBS) $(LNK) -o $(NAME)
 	@echo $(ACCENT)"✅ $(NAME) compiled ✅"$(NONE)
-	@grep "TODO:" log
+	@grep "TODO:" log.md
 
 $(LIBS): $(LIBS_DIR)
 	@echo $(CURSIVE)$(GRAY) "		- Compiling libs..." $(NONE)
