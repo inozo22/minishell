@@ -31,6 +31,7 @@ char	*get_var_value(char *env_var, char *envp[], int len)
 		return (NULL);
 	return (ft_substr(env_var, 0, len));
 }
+
 //$- returns a string representing the flags of the shell
 //$@ $< and $> not implemented, return empty
 /**
@@ -82,7 +83,6 @@ char	*is_expand(char *token, int len, char *envp[], t_data *data)
 		printf("%sLine: %d HERE I AM%s\n", COLOR_RED, __LINE__, COLOR_RESET);
 		return (NULL);
 	}
-	printf("%sLine: %d HERE I AM%s\n", COLOR_RED, __LINE__, COLOR_RESET);
 	return(get_var_value(token, envp, len));
 }
 

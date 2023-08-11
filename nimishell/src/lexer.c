@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 18:39:55 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/08/09 11:17:15 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/11 14:22:46 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,6 +155,7 @@ int get_token(t_list **list, char *input, int *pos)
  * @param pos[1] end index
  * @param pos[2] type
  * @param pos[3] max_pipe4
+ * @note invalid (, ), ;, \, *
  */
 int lexer(char *input, t_list **token_list)
 {
@@ -165,6 +166,7 @@ int lexer(char *input, t_list **token_list)
 	*token_list = NULL;
 	i = -1;
 	ft_bzero(pos, 4 * sizeof(int));
+	printf("%sLine: %d::%s%s\n", COLOR_RED, __LINE__, __FILE__, COLOR_RESET);
 	while (input[++i])
 	{
 		printf("input: %s\n", &(input[i]));
@@ -172,7 +174,9 @@ int lexer(char *input, t_list **token_list)
 			continue;
 		pos[2] = is_metacharacter(&(input[i]));
 		if (pos[2] == INVALID)
+		{
 			return (ft_lstclear(token_list, free), -1);
+		}
 		if (pos[2] != IS_SPACE)
 			pos[0] = i;
 		if (pos[2] == HERE_DOC || pos[2] == APPEND || (pos[2] == PIPE_LINE && input[i + 1] == input[i]))
@@ -192,3 +196,4 @@ int lexer(char *input, t_list **token_list)
 	}
 	return (pos[3]);
 }
+//	printf("%sLine: %d::%s%s\n", COLOR_RED, __LINE__, __FILE__, COLOR_RESET);

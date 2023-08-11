@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 19:10:38 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/08/11 11:41:44 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/11 14:11:51 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ extern int	g_return_val;
 // 	PIPE_LINE = 124,
 // 	REDIR_IN = 60,
 // 	REDIR_OUT = 62,
-// 	HERE_DOC,
-// 	APPEND,
-// 	INVALID,
+// 	HERE_DOC,//63
+// 	APPEND,//64
+// 	INVALID,//65
 // };
  enum e_token
 {

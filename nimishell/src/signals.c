@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:11:50 by nimai             #+#    #+#             */
-/*   Updated: 2023/08/08 16:04:16 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/11 13:11:40 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	action_child(int sig)//looks working this, but don't let me print these lin
 }
 
 /**
- * @note I think I will remove the strs
+ * @note
  */
 void	action(int sig)
 {

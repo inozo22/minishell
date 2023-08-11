@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:32:33 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/08/10 10:38:59 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/11 14:05:04 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ static int	process_input(char *line_read, t_data *data)
 	// 	cmd_list = cmd_list->next;
 	// }
 	printf("cmd_nb: %d\n", cmd_nb);//230804add
-	parser(line_read);//230807add
+//	parser(line_read);//230807add
 	// while (cmd)
 	// {
 	// 	printf("cmd->content: %s	type: %d	cmp_pos: %d\n", cmd->content, cmd->type, cmd->cmd_pos);
