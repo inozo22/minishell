@@ -27,6 +27,8 @@ char	*get_var_value(char *env_var, char *envp[], int len)
 			return (ft_strdup(envp[i] + len + 1));
 		}
 	}
+	if (!envp[i])
+		return (NULL);
 	return (ft_substr(env_var, 0, len));
 }
 //$- returns a string representing the flags of the shell
@@ -65,8 +67,9 @@ char	*is_expand(char *token, int len, char *envp[], t_data *data)
 		return (ft_strdup(""));
 	if (!ft_strncmp(token, "$#", 2))
 		return (ft_itoa(0));
+	//keep opening the input if I put "minishell", at this moment put a space at the end of the string to escape
 	if (!ft_strncmp(token, "$0", 2))
-		return (ft_strdup("minishell"));//keep opening the input
+		return (ft_strdup("minishell "));
 	if (!ft_strncmp(token, "$IFS", 4))
 		return (ft_strdup("\t\n"));
 	if (ft_isdigit(token[1]))
@@ -135,15 +138,23 @@ char	*expanser(char *arg, char *envp[], t_data *data)
 			tmp = is_expand(pos[0], (pos[1] - pos[0]- 1), envp, data);
 		else
 			tmp = ft_strdup(pos[0]);
-		if (ft_strcmp(expanded, arg) != 0)
-			expanded = ft_strjoin(expanded, tmp);
-		else
+		if (tmp)
 		{
-			free (expanded);
-			expanded = ft_calloc(ft_strlen(tmp), 1);
-			ft_strcpy(expanded, tmp);
+			if (ft_strcmp(expanded, arg) != 0)
+				expanded = ft_strjoin(expanded, tmp);
+			else
+			{
+				free (expanded);
+				expanded = ft_calloc(ft_strlen(tmp), 1);
+				ft_strcpy(expanded, tmp);
+			}
+			free(tmp);
 		}
-		free(tmp);
+		else if (!tmp && ft_strcmp(expanded, arg) == 0)
+		{
+			free(expanded);
+			expanded = NULL;
+		}
 		if (pos[1] - pos[0] == 1)
 			pos[1]++;
 		pos[0] = pos[1];
