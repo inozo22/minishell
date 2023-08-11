@@ -21,7 +21,7 @@ char	*get_var_value(char *env_var, char *envp[], int len)
 	i = -1;
 	while (envp[++i])
 	{
-		printf("pos of = : %c, envp[%d]: %s\n", envp[i][len], i, envp[i]);
+//		printf("pos of = : %c, envp[%d]: %s\n", envp[i][len], i, envp[i]);
 		if (!ft_strncmp(env_var + 1, envp[i], len) && envp[i][len] == '=')
 		{
 			return (ft_strdup(envp[i] + len + 1));
@@ -117,6 +117,9 @@ char	*is_expand(char *token, int len, char *envp[], t_data *data)
 // 	return (ret);
 // }
 
+
+
+
 /**
  * @param pos[2] to keep and free string 
  */
@@ -132,12 +135,12 @@ char	*expanser(char *arg, char *envp[], t_data *data)
 	while (pos[0] && arg[0] != '\'' && ft_strlen(pos[0]))
 	{
 		pos[1] = pos[0] + 1;
-		while (ft_isalnum(*pos[1]))
+		while (ft_isalnum(*pos[1]))//get the str's last point
 			pos[1]++;
 		if (*pos[0] == '$')
 			tmp = is_expand(pos[0], (pos[1] - pos[0]- 1), envp, data);
 		else
-			tmp = ft_strdup(pos[0]);
+			tmp = ft_strndup(pos[0], (pos[1] - pos[0]));
 		if (tmp)
 		{
 			if (ft_strcmp(expanded, arg) != 0)
@@ -159,8 +162,6 @@ char	*expanser(char *arg, char *envp[], t_data *data)
 			pos[1]++;
 		pos[0] = pos[1];
 	}
-
-
 
 
 //今ここ
