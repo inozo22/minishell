@@ -3,6 +3,7 @@
 -----------------------------------------------------------------------
 TODO: make lexer and expanser works
 TODO: remove quotes in case quotes are not edge (not"HOME", but $$"HOME")
+TODO: obtain file name in parser(?)
 
 
 -----------------------------------------------------------------------
