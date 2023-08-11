@@ -57,6 +57,10 @@ int	here_doc_read(char *eof)
 	return (here_doc_to_stdin(input));
 }
 
+/**
+ * @note protect function open
+ * 
+ */
 int	redir(char **command)
 {
 	if (command[0][0] == '>')
