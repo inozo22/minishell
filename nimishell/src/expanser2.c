@@ -162,6 +162,7 @@ char	*expanser(char *arg, char *envp[], t_data *data)
 			pos[1]++;
 		pos[0] = pos[1];
 	}
+	expanded = remove_quotes(expanded);
 
 
 //今ここ
