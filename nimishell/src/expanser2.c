@@ -156,12 +156,14 @@ char	*remove_quotes(char *str)
 	i = -1;
 	len = 0;
 	ret = NULL;
+	printf("str: %s\n", str);
 	while (str[++i])
 	{
 		if (str[i] != '\'' && str[i] != '\"')
 			len++;
 	}
 	ret = ft_calloc(len + 1, 1);
+	printf("len: %d\n", len);
 	if (!ret)
 		return (NULL);//malloc error
 	i = 0;
@@ -194,14 +196,21 @@ char	*expanser(char *arg, char *envp[], t_data *data)
 	expanded = ft_strdup(arg);
 	pos[2] = ft_strdup(expanded);
 	pos[0] = ft_strchr(pos[2], '$');
+	if (pos[0])
+		printf("len: %ld\n", ft_strlen(pos[0]));
 	while (pos[0] && arg[0] != '\'' && ft_strlen(pos[0]))
 	{
 		pos[1] = pos[0] + 1;
+		printf("expanded before expand: %s\n", expanded);
 		expanded = expand(pos, arg, data, expanded);
+		printf("expanded after expand: %s\n", expanded);
+		if (!pos[0])
+			break ;
 		if (pos[1] - pos[0] == 1)
 			pos[1]++;
 		pos[0] = pos[1];
 	}
+	printf("expanded: %s\n", expanded);
 	expanded = remove_quotes(expanded);
 
 
