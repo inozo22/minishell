@@ -168,7 +168,7 @@ char	*remove_quotes(char *str)
 		return (NULL);//malloc error
 	i = 0;
 	j = 0;
-	while (i < len)
+	while (i < len + 1)
 	{
 		if(str[i] != '\'' && str[i] != '\"')
 		{
