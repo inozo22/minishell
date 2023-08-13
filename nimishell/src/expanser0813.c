@@ -120,29 +120,13 @@ char	*is_expand(char *token, int len, char *envp[], t_data *data)
 char	*expand(char *pos[3], char *arg, t_data *data, char *expanded)
 {
 	char	*tmp;
-	int		flag = 0;
 
-	printf("Line* %d: pos[1]: %s\n", __LINE__, pos[1]);
-	if ((*pos[1] - 1) == '\'')
-		flag++;
 	while (ft_isalnum(*pos[1]))//get the str's last point
 		pos[1]++;
-	if (*pos[1] == '\'' && flag)
-	{
-		pos[1]++;
-		printf("Line: %d: pos[0]: %s\n", __LINE__, pos[0]);
-		tmp = ft_strndup(pos[0], (pos[1] - pos[0]));
-	}
-	else if (*pos[0] == '$')
-	{
-		printf("Line: %d: pos[0]: %s\n", __LINE__, pos[0]);
+	if (*pos[0] == '$')
 		tmp = is_expand(pos[0], (pos[1] - pos[0]- 1), data->env, data);
-	}
 	else
-	{
-		printf("Line: %d: pos[0]: %s\n", __LINE__, pos[0]);
 		tmp = ft_strndup(pos[0], (pos[1] - pos[0]));
-	}
 	if (tmp)
 	{
 		if (ft_strcmp(expanded, arg) != 0)
@@ -203,27 +187,22 @@ char	*remove_quotes(char *str)
 /**
  * @param pos[2] to keep and free string 
  */
-char	*expanser(t_list *list, t_data *data)
+char	*expanser(char *arg, char *envp[], t_data *data)
 {
 	char	*expanded;
 	char	*pos[3];
 
-	expanded = ft_strdup(list->content);
+	(void)envp;
+	expanded = ft_strdup(arg);
 	pos[2] = ft_strdup(expanded);
 	pos[0] = ft_strchr(pos[2], '$');
 	if (pos[0])
 		printf("len: %ld\n", ft_strlen(pos[0]));
-	while (pos[0] && list->content[0] != '\'' && ft_strlen(pos[0]))
+	while (pos[0] && arg[0] != '\'' && ft_strlen(pos[0]))
 	{
 		pos[1] = pos[0] + 1;
-		// if (pos[0] == '\'')
-		// {
-		// 	while (++pos[0] != '\'')
-		// 		;
-			
-		// }
-		printf("expanded before expand: %s pos[0]: %s\n", expanded, pos[0]);
-		expanded = expand(pos, list->content, data, expanded);
+		printf("expanded before expand: %s\n", expanded);
+		expanded = expand(pos, arg, data, expanded);
 		printf("expanded after expand: %s\n", expanded);
 		if (!pos[0])
 			break ;

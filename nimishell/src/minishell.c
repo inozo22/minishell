@@ -127,7 +127,7 @@ static int	process_input(char *line_read, t_data *data)
 	tmp = cmd_list;
 	while (tmp)
 	{
-		tmp->content = expanser(tmp->content, data->env, data);
+		tmp->content = expanser(tmp, data);
 		printf("%sEXPANSER: Line: %d, content: %s, type: %d, pos: %d%s\n", COLOR_BLUE, __LINE__, tmp->content, tmp->type, tmp->cmd_pos, COLOR_RESET);
 		tmp = tmp->next;
 	}
