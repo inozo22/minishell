@@ -33,21 +33,55 @@ char	*obtain_no_expanded(char *str)
 	char	*ret;
 	int		i;
 	int		len;
+	int		flag;
 
-	len = ft_strlen(str);
+	printf("Line: %d str: %s\n", __LINE__, str);
+	flag = 0;
 	i = 0;
-	if (str[i] == '\'' || str[i] == '\"')
+	if (str[i] == '\'')
 	{
 		i++;
-		len -= 2;
+		flag++;
 	}
-	ret = ft_calloc(len, 1);
+	while (ft_isalnum(str[i]))
+	{
+		i++;
+		len++;
+	}
+	// i = 0;
+	// if (str[i] == '\'' || str[i] == '\"')
+	// {
+	// 	i++;
+	// 	len -= 2;
+	// }
+	ret = ft_calloc(len + 1 - flag, 1);
 	if (!ret)
 		return (NULL);
-	ft_strcpy(ret, str);
+	ft_strlcpy(ret, str, len + 1 - flag);
 	printf("Line: %d	ret: %s\n", __LINE__, ret);
 	return (ret);
 }
+
+// char	*obtain_no_expanded(char *str)
+// {
+// 	char	*ret;
+// 	int		i;
+// 	int		len;
+
+// 	len = ft_strlen(str);
+// 	i = 0;
+// 	if (str[i] == '\'' || str[i] == '\"')
+// 	{
+// 		i++;
+// 		len -= 2;
+// 	}
+// 	ret = ft_calloc(len, 1);
+// 	if (!ret)
+// 		return (NULL);
+// 	ft_strcpy(ret, str);
+// 	printf("Line: %d	ret: %s\n", __LINE__, ret);
+// 	return (ret);
+// }
 
 char	*expanser(t_list *list, t_data *data)
 {
@@ -68,28 +102,28 @@ char	*expanser(t_list *list, t_data *data)
 		if (list->content[i] == '\'')//obtain string with single quotes
 		{
 			expanded = obtain_no_expanded(&list->content[i]);
-			printf("Line: %d	expanded: %s\n", __LINE__, expanded);
+//			printf("Line: %d	expanded: %s\n", __LINE__, expanded);
 			i = i + ft_strlen(expanded) + 2;
 		}
 		else if (ft_strncmp(&list->content[i], "$?", 2) == 0)
 		{
 			expanded = ft_itoa(data->return_val);
-			printf("Line: %d	expanded: %s\n", __LINE__, expanded);
+//			printf("Line: %d	expanded: %s\n", __LINE__, expanded);
 			i += 2;
 		}
 		else if (list->content[i] == '$')
 		{
 			expanded = expand(list, data, &list->content[i]);
-			printf("Line: %d	expanded: %s\n", __LINE__, expanded);
+//			printf("Line: %d	expanded: %s\n", __LINE__, expanded);
 			i = count_expanded(&list->content[i]);
 		}
 		else//obtain string not expanded
 		{
 			expanded = obtain_no_expanded(&list->content[i]);
-			printf("Line: %d	expanded: %s\n", __LINE__, expanded);
+//			printf("Line: %d	expanded: %s\n", __LINE__, expanded);
 			i += ft_strlen(expanded);
 		}
-		printf("Line: %d	expanded: %s\n", __LINE__, expanded);
+//		printf("Line: %d	expanded: %s\n", __LINE__, expanded);
 		if (ret)
 			printf("Line: %d	ret: %s\n", __LINE__, ret);
 		if (!ret)
