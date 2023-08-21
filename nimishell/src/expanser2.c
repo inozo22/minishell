@@ -38,6 +38,7 @@ char	*obtain_no_expanded(char *str)
 	printf("Line: %d str: %s\n", __LINE__, str);
 	flag = 0;
 	i = 0;
+	len = 0;
 	if (str[i] == '\'')
 	{
 		i++;

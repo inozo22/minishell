@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 10:02:30 by nimai             #+#    #+#             */
-/*   Updated: 2023/08/21 11:00:35 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/21 11:39:57 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,19 @@ int	g_return_val;
 
 //TEST/////TEST////////TEST///////TEST/////////TEST////TEST////////
 
+int	test_expand(t_data *data)
+{
+	t_list	*list;
+	char	*input = "$HOME $? \'$HOME\'";
 
+	lexer(input, &list);
+	expanser(list, data);
+	// printf("%s\n", expand(NULL, data, "$HOME"));
+	// printf("%s\n", expand(NULL, data, "$?"));
+	// printf("%s\n", expand(NULL, data, "\'$HOME\'"));
+	// printf("%s\n", expand(NULL, data, "\"$HOME\""));
+	return(0);
+}
 
 
 
@@ -114,13 +126,13 @@ int	main(int argc, char *argv[], char *envp[])
 	printf("env[0] %s\n", data->env[0]);
 	data->pid = pid;
 //	printf("pid: %d\n", data->pid);
-	putenv("CASA=notengo");
-	printf("%s\n", getenv("CASA"));
-	write(1, "4\n", 2);
+	// putenv("CASA=notengo");
+	// printf("%s\n", getenv("CASA"));
+	// write(1, "4\n", 2);
 
 	//if you want to put any test function, here
 
-
+	test_expand(data);
 
 
 

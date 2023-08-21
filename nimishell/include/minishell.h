@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 19:10:38 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/08/21 10:52:33 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/21 11:31:13 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,5 +196,6 @@ int		av_amount(char **strs);
 //Expanser
 //char	*expanser(char *arg, char *envp[], t_data *data);
 char	*expanser(t_list *list, t_data *data);
+char	*expand(t_list *list, t_data *data, char *str);
 
 #endif
