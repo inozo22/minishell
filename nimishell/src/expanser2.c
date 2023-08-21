@@ -1,147 +1,249 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expanser2.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/10 10:32:20 by nimai             #+#    #+#             */
+/*   Updated: 2023/08/10 10:32:20 by nimai            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 #include "../lib/libft/libft.h"
 
-int	count_expanded(char *str)
-{
-	int	ret;
-
-	ret = 0;
-	while (ft_isalnum(str[ret]))
-		ret++;
-	return (ret);
-}
-
-char	*expand(t_list *list, t_data *data, char *str)
+char	*get_var_value(char *env_var, char *envp[], int len)
 {
 	int	i;
 
+	printf("\n\nenv var: %s len: %d\n", env_var, len);
 	i = -1;
-	(void)list;
-	while (data->env[++i])
+	while (envp[++i])
 	{
-		if (!ft_strncmp(str + 1, data->env[i], count_expanded(str) - 1) && data->env[i])
-			return (ft_strdup(data->env[i] + count_expanded(str)));
+//		printf("pos of = : %c, envp[%d]: %s\n", envp[i][len], i, envp[i]);
+		if (!ft_strncmp(env_var + 1, envp[i], len) && envp[i][len] == '=')
+		{
+			return (ft_strdup(envp[i] + len + 1));
+		}
 	}
-	if (!data->env[i])
+	if (!envp[i])
 		return (NULL);
-	return (0);
+	return (ft_substr(env_var, 0, len));
 }
 
-
-char	*obtain_no_expanded(char *str)
+//$- returns a string representing the flags of the shell
+//$@ $< and $> not implemented, return empty
+/**
+ * @brief expands considering the special parameters in bash
+ * @author bde-mada
+ * @note ($*) Expands to the positional parameters, starting from one.
+ * @note ($@) Expands to the positional parameters, starting from one.
+ * @note ($#) Expands to the number of positional parameters in decimal.
+ * @note ($?) Expands to the exit status of the most recently executed 
+ * foreground pipeline.
+ * @note ($-) Expands to the current option flags as specified upon invocation,
+ * by the set builtin command, or those set by the shell itself.
+ * @note ($$) Expands to the process ID of the shell. In a subshell, it expands
+ * to the process ID of the invoking shell, not the subshell.
+ * @note ($!) Expands to the process ID of the job most recently placed into
+ * the background
+ * @note ($0) Expands to the name of the shell or shell script.
+ * @note ($$) Expands to the pid of the current shell.
+ * @note ($1-9) Expands to the corresponding arguments passed to bash
+ */
+char	*is_expand(char *token, int len, char *envp[], t_data *data)
 {
-	char	*ret;
-	int		i;
-	int		len;
-	int		flag;
-
-	printf("Line: %d str: %s\n", __LINE__, str);
-	flag = 0;
-	i = 0;
-	len = 0;
-	if (str[i] == '\'')
+	if (!ft_strncmp(token, "$?", 2))
 	{
-		i++;
-		flag++;
+		return (ft_itoa(data->return_val));
 	}
-	while (ft_isalnum(str[i]))
+	if (!ft_strncmp(token, "$!", 2))
+		return (ft_itoa(data->return_val));
+	if (!ft_strncmp(token, "$$", 2))
+		return (ft_itoa(data->pid));
+	if (!ft_strncmp(token, "$-", 2))
+		return (ft_strdup("himBH"));
+	if (!ft_strncmp(token, "$@", 2) || !ft_strncmp(token, "$*", 2))
+		return (ft_strdup(""));
+	if (!ft_strncmp(token, "$#", 2))
+		return (ft_itoa(0));
+	//keep opening the input if I put "minishell", at this moment put a space at the end of the string to escape
+	if (!ft_strncmp(token, "$0", 2))
+		return (ft_strdup("minishell "));
+	if (!ft_strncmp(token, "$IFS", 4))
+		return (ft_strdup("\t\n"));
+	if (ft_isdigit(token[1]))
 	{
-		i++;
-		len++;
+		printf("%sLine: %d HERE I AM%s\n", COLOR_RED, __LINE__, COLOR_RESET);
+		return (ft_strdup(""));
 	}
-	// i = 0;
-	// if (str[i] == '\'' || str[i] == '\"')
-	// {
-	// 	i++;
-	// 	len -= 2;
-	// }
-	ret = ft_calloc(len + 1 - flag, 1);
-	if (!ret)
+	if (!(token[1]) || (!ft_isalnum(token[1]) && token[1] != '_'))
+	{
+		printf("%sLine: %d HERE I AM%s\n", COLOR_RED, __LINE__, COLOR_RESET);
 		return (NULL);
-	ft_strlcpy(ret, str, len + 1 - flag);
-	printf("Line: %d	ret: %s\n", __LINE__, ret);
-	return (ret);
+	}
+	return(get_var_value(token, envp, len));
 }
 
-// char	*obtain_no_expanded(char *str)
+/**
+ * @brief get the full string from env
+ * @return when there is value return full value, otherwise null
+ */
+// char	*expand(char *arg, int start, int end, char *var_value, char *envp[])
 // {
 // 	char	*ret;
 // 	int		i;
 // 	int		len;
 
-// 	len = ft_strlen(str);
-// 	i = 0;
-// 	if (str[i] == '\'' || str[i] == '\"')
+// 	(void)var_value;
+// 	ret = NULL;
+// 	printf("%sstart: %d, end: %d, arg: %s%s\n", COLOR_RED, start, end, arg, COLOR_RESET);
+// 	i = -1;
+// 	len = ft_strlen(&arg[1]);
+// 	while (envp[++i])
 // 	{
-// 		i++;
-// 		len -= 2;
+// 		if (!ft_strncmp(&arg[1], envp[i], len) && envp[i][len] == '=')
+// 			break ;
 // 	}
-// 	ret = ft_calloc(len, 1);
-// 	if (!ret)
-// 		return (NULL);
-// 	ft_strcpy(ret, str);
-// 	printf("Line: %d	ret: %s\n", __LINE__, ret);
+// 	if (envp[i])
+// 	{
+// 		ret = (char *)ft_calloc(ft_strlen(envp[i]) - len, 1);
+// 		if (!ret)
+// 			return (NULL);//memory allocate error
+// 		ft_strcpy(ret, &envp[i][len + 1]);
+// //		printf("%sret :%s%s\n", COLOR_RED, ret, COLOR_RESET);
+// 	}
 // 	return (ret);
 // }
 
-char	*expanser(t_list *list, t_data *data)
+char	*expand(char *pos[3], char *arg, t_data *data, char *expanded)
 {
-	char	*ret;
 	char	*tmp;
-	char	*expanded;
-	int		i;
-//	int		g;
+	int		flag = 0;
 
-//	(void)data;
-	ret = NULL;
-	tmp = NULL;
-	expanded = NULL;
-	i = 0;
-	while (list->content[i])
+	printf("Line: %d: pos[1]: %s\n", __LINE__, pos[1]);
+	if ((*pos[0]) == '\'')
 	{
-		printf("ret: %s list->content[%d]: %s\n", ret, i, &list->content[i]);
-		if (list->content[i] == '\'')//obtain string with single quotes
-		{
-			expanded = obtain_no_expanded(&list->content[i]);
-//			printf("Line: %d	expanded: %s\n", __LINE__, expanded);
-			i = i + ft_strlen(expanded) + 2;
-		}
-		else if (ft_strncmp(&list->content[i], "$?", 2) == 0)
-		{
-			expanded = ft_itoa(data->return_val);
-//			printf("Line: %d	expanded: %s\n", __LINE__, expanded);
-			i += 2;
-		}
-		else if (list->content[i] == '$')
-		{
-			expanded = expand(list, data, &list->content[i]);
-//			printf("Line: %d	expanded: %s\n", __LINE__, expanded);
-			i = count_expanded(&list->content[i]);
-		}
-		else//obtain string not expanded
-		{
-			expanded = obtain_no_expanded(&list->content[i]);
-//			printf("Line: %d	expanded: %s\n", __LINE__, expanded);
-			i += ft_strlen(expanded);
-		}
-//		printf("Line: %d	expanded: %s\n", __LINE__, expanded);
-		if (ret)
-			printf("Line: %d	ret: %s\n", __LINE__, ret);
-		if (!ret)
-			ret = expanded;
+		printf("Line: %d: pos[0]: %s\n", __LINE__, pos[0]);
+		flag++;
+	}
+	while (ft_isalnum(*pos[1]) || *pos[1] == '$')//get the str's last point
+		pos[1]++;
+	if (*pos[1] == '\'' && flag)
+	{
+		pos[1]++;
+		printf("Line: %d: pos[0]: %s\n", __LINE__, pos[0]);
+		tmp = ft_strndup(pos[0], (pos[1] - pos[0]));
+	}
+	else if (*pos[0] == '$')
+	{
+		printf("Line: %d: pos[0]: %s\n", __LINE__, pos[0]);
+		tmp = is_expand(pos[0], (pos[1] - pos[0]- 1), data->env, data);
+	}
+	else
+	{
+		printf("Line: %d: pos[0]: %s\n", __LINE__, pos[0]);
+		tmp = ft_strndup(pos[0], (pos[1] - pos[0]));
+	}
+	if (tmp)
+	{
+		if (ft_strcmp(expanded, arg) != 0)
+			expanded = ft_strjoin(expanded, tmp);
 		else
 		{
-			tmp = ft_strdup(ret);
-			free (ret);
-			printf("Line: %d	expanded: %s ret: %s tmp: %s\n", __LINE__, expanded, ret, tmp);
-			ret = ft_calloc(ft_strlen(expanded) + ft_strlen(tmp) + 1, 1);
-			ret = ft_strjoin(tmp, expanded);
-			free (tmp);
+			free (expanded);
+			expanded = ft_calloc(ft_strlen(tmp), 1);
+			ft_strcpy(expanded, tmp);
 		}
-		printf("Line: %d	ret: %s, expanded: %s\n", __LINE__, ret, expanded);
 	}
+	else if (!tmp && ft_strcmp(expanded, arg) == 0)
+	{
+		free (expanded);
+		expanded = NULL;
+	}
+	return (free (tmp), expanded);
+}
 
+char	*remove_quotes(char *str)
+{
+	int		i;
+	int		j;
+	int		len;
+	char	*ret;
 
-
+	i = -1;
+	len = 0;
+	ret = NULL;
+	printf("str: %s\n", str);
+	while (str[++i])
+	{
+		if (str[i] != '\'' && str[i] != '\"')
+			len++;
+	}
+	ret = ft_calloc(len + 1, 1);
+	printf("len: %d\n", len);
+	if (!ret)
+		return (NULL);//malloc error
+	i = 0;
+	j = 0;
+	while (i <= len + 1)
+	{
+		if(str[i] != '\'' && str[i] != '\"')
+		{
+			ret[j] = str[i];
+			j++;
+		}
+		i++;
+	}
+	printf("ret: %s\n", ret);
+	if (!ret)
+		return (str);
 	return (ret);
+}
+
+
+/**
+ * @param pos[2] to keep and free string 
+ */
+char	*expanser(t_list *list, t_data *data)
+{
+	char	*expanded;
+	char	*pos[3];
+
+	expanded = ft_strdup(list->content);
+	pos[2] = ft_strdup(expanded);
+	pos[0] = ft_strchr(pos[2], '$');
+	if (pos[0])
+		printf("len: %ld\n", ft_strlen(pos[0]));
+	while (pos[0] && list->content[0] != '\'' && ft_strlen(pos[0]))
+	{
+		// if (*pos[0] == '\'')
+		// 	break;
+		pos[1] = pos[0] + 1;
+		// if (pos[0] == '\'')
+		// {
+		// 	while (++pos[0] != '\'')
+		// 		;
+			
+		// }
+		printf("expanded before expand: %s pos[0]: %s\n", expanded, pos[0]);
+		expanded = expand(pos, list->content, data, expanded);
+		printf("expanded after expand: %s\n", expanded);
+		if (!pos[0])
+			break ;
+		if (pos[1] - pos[0] == 1)
+			pos[1]++;
+		pos[0] = pos[1];
+	}
+	printf("expanded: %s\n", expanded);
+	expanded = remove_quotes(expanded);
+
+
+//今ここ
+
+
+/* 	if (*expanded == '\'' || *expanded == '\"')
+		expanded = remove_quotes(expanded); */
+	return (free (pos[2]), expanded);
 }

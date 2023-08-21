@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 10:02:30 by nimai             #+#    #+#             */
-/*   Updated: 2023/08/21 11:39:57 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/21 13:30:35 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,17 @@ int	g_return_val;
 int	test_expand(t_data *data)
 {
 	t_list	*list;
-	char	*input = "$HOME $? \'$HOME\'";
+	char	*input = "$HOME $? \'$HOME\' $?\'$HOME\'$?";
+//	char	*input2 = "$$ $$$USER";
+	char	*ret;
 
 	lexer(input, &list);
-	expanser(list, data);
-	// printf("%s\n", expand(NULL, data, "$HOME"));
-	// printf("%s\n", expand(NULL, data, "$?"));
-	// printf("%s\n", expand(NULL, data, "\'$HOME\'"));
-	// printf("%s\n", expand(NULL, data, "\"$HOME\""));
+	while (list)
+	{
+		ret = expanser(list, data);
+		printf("%sEXPANSER: Line: %d, ret: %s, type: %d, pos: %d%s\n", COLOR_BLUE, __LINE__, ret, list->type, list->cmd_pos, COLOR_RESET);
+		list = list->next;
+	}
 	return(0);
 }
 
