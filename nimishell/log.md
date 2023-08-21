@@ -5,6 +5,7 @@ TODO: make lexer and expanser works
 TODO: remove quotes in case quotes are not edge (not"HOME", but $$"HOME")
 TODO: obtain file name in parser(?)
 TODO: put protect for open function in redir
+TODO: control {} in expanser
 
 
 -----------------------------------------------------------------------

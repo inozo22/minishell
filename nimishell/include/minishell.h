@@ -194,6 +194,7 @@ char	*path_modify(char *cur, char *str);
 int		av_amount(char **strs);
 
 //Expanser
-char	*expanser(char *arg, char *envp[], t_data *data);
+//char	*expanser(char *arg, char *envp[], t_data *data);
+char	*expanser(t_list *list, t_data *data);
 
 #endif

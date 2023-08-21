@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 15:43:39 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/08/11 12:02:40 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/11 18:10:57 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,27 +83,27 @@ char	*ft_remove_char(char *str, int c)
 }
 
 
-char	*remove_quotes(char *str)
-{
-	char	*cleaned;
-	int i = 0;
+// char	*remove_quotes(char *str)
+// {
+// 	char	*cleaned;
+// 	int i = 0;
 
-	cleaned = ft_strdup(str);
-//	cleaned = str;
-	while (ft_strchr(cleaned, '\"') && i < 3)
-	{
-		cleaned = ft_remove_char(cleaned, '\"');
-		//cleaned++;
-		i++;
-	}
-	while (ft_strchr(cleaned, '\'') && i < 3)
-	{
-		cleaned = ft_remove_char(cleaned, '\'');
-		//cleaned++;
-		i++;
-	}
-	return (cleaned);
-}
+// 	cleaned = ft_strdup(str);
+// //	cleaned = str;
+// 	while (ft_strchr(cleaned, '\"') && i < 3)
+// 	{
+// 		cleaned = ft_remove_char(cleaned, '\"');
+// 		//cleaned++;
+// 		i++;
+// 	}
+// 	while (ft_strchr(cleaned, '\'') && i < 3)
+// 	{
+// 		cleaned = ft_remove_char(cleaned, '\'');
+// 		//cleaned++;
+// 		i++;
+// 	}
+// 	return (cleaned);
+// }
 
 /**
  * @note 230809nnimai: quotes keep until expansser?
