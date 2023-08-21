@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 10:02:30 by nimai             #+#    #+#             */
-/*   Updated: 2023/08/21 13:49:54 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/21 15:51:56 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,35 @@ int	g_return_val;
 
 //TEST/////TEST////////TEST///////TEST/////////TEST////TEST////////
 
+int	test_childcreation(t_data *data)
+{
+	t_list	*list;
+	t_list	*tmp;
+//	char	*input = "$HOME $? \'$HOME\' $?\'$HOME\'$?";
+//	char	*input = "echo $HOME$USERa $HOME $? \'$HOME\' $?\'$HOME\'$?$$";
+	char	*input = "echo | cd | pwd | env";
+//	char	*input2 = "$$ $$$USER";
+	char	*ret;
+	int		cmd_nb;
+
+	cmd_nb = lexer(input, &list);
+	tmp = list;
+	while (tmp)
+	{
+		ret = expanser(tmp, data);
+		printf("%sEXPANSER: Line: %d, ret: %s, type: %d, pos: %d%s\n", COLOR_BLUE, __LINE__, ret, tmp->type, tmp->cmd_pos, COLOR_RESET);
+		tmp = tmp->next;
+	}
+	child_creation(NULL, NULL, list, cmd_nb, data->path, data->env, data);
+	return(0);
+}
+
 int	test_expand(t_data *data)
 {
 	t_list	*list;
 //	char	*input = "$HOME $? \'$HOME\' $?\'$HOME\'$?";
-	char	*input = "$HOME$USER";
+//	char	*input = "echo $HOME$USERa $HOME $? \'$HOME\' $?\'$HOME\'$?$$";
+	char	*input = "echo cd pwd env";
 //	char	*input2 = "$$ $$$USER";
 	char	*ret;
 
@@ -129,6 +153,7 @@ int	main(int argc, char *argv[], char *envp[])
 	//if you want to put any test function, here
 
 	test_expand(data);
+	test_childcreation(data);
 
 
 

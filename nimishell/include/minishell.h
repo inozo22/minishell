@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 19:10:38 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/08/21 12:06:24 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/21 15:08:34 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,6 +158,7 @@ int		lexer(char *input, t_list **token_list);
 
 t_list	*parser(char *str);
 char	*remove_quotes(char *str);
+//char	*remove_quotes(char *str, char *ret);
 
 //	Terminate
 int		errors(int error_id, t_data *data);

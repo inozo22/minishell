@@ -17,7 +17,7 @@ char	*get_var_value(char *env_var, char *envp[], int len)
 {
 	int	i;
 
-	printf("\n\nenv var: %s len: %d\n", env_var, len);
+//	printf("\n\nenv var: %s len: %d\n", env_var, len);
 	i = -1;
 	while (envp[++i])
 	{
@@ -86,119 +86,72 @@ char	*is_expand(char *token, int len, char *envp[], t_data *data)
 	return(get_var_value(token, envp, len));
 }
 
-/**
- * @brief get the full string from env
- * @return when there is value return full value, otherwise null
- */
-// char	*expand(char *arg, int start, int end, char *var_value, char *envp[])
-// {
-// 	char	*ret;
-// 	int		i;
-// 	int		len;
-
-// 	(void)var_value;
-// 	ret = NULL;
-// 	printf("%sstart: %d, end: %d, arg: %s%s\n", COLOR_RED, start, end, arg, COLOR_RESET);
-// 	i = -1;
-// 	len = ft_strlen(&arg[1]);
-// 	while (envp[++i])
-// 	{
-// 		if (!ft_strncmp(&arg[1], envp[i], len) && envp[i][len] == '=')
-// 			break ;
-// 	}
-// 	if (envp[i])
-// 	{
-// 		ret = (char *)ft_calloc(ft_strlen(envp[i]) - len, 1);
-// 		if (!ret)
-// 			return (NULL);//memory allocate error
-// 		ft_strcpy(ret, &envp[i][len + 1]);
-// //		printf("%sret :%s%s\n", COLOR_RED, ret, COLOR_RESET);
-// 	}
-// 	return (ret);
-// }
+char	*obtain_expanded(char *tmp, char *ret, char *arg)
+{
+	if (ft_strcmp(ret, arg) != 0)
+		ret = ft_strjoin(ret, tmp);
+	else
+	{
+		free (ret);
+		ret = ft_calloc(ft_strlen(tmp), 1);
+		ft_strcpy(ret, tmp);
+	}
+	return (ret);
+}
 
 char	*expand(char *pos[3], char *arg, t_data *data, char *expanded)
 {
 	char	*tmp;
-	int		flag = 0;
+	int		flag;
 
-//	printf("Line: %d: pos[1]: %s\n", __LINE__, pos[1]);
+	flag = 0;
 	if ((*pos[0]) == '\'')
-	{
-//		printf("Line: %d: pos[0]: %s\n", __LINE__, pos[0]);
 		flag++;
-	}
-	while (ft_isalnum(*pos[1]) || (*pos[1] == '$' && flag))//get the str's last point
+	while (ft_isalnum(*pos[1]) || (*pos[1] == '$' && flag))
 		pos[1]++;
 	if (*pos[1] == '\'' && flag)
 	{
 		pos[1]++;
-//		printf("Line: %d: pos[0]: %s\n", __LINE__, pos[0]);
 		tmp = ft_strndup(pos[0], (pos[1] - pos[0]));
 	}
 	else if (*pos[0] == '$')
-	{
-		printf("Line: %d: pos[0]: %s\n", __LINE__, pos[0]);
 		tmp = is_expand(pos[0], (pos[1] - pos[0]- 1), data->env, data);
-	}
 	else
-	{
-//		printf("Line: %d: pos[0]: %s\n", __LINE__, pos[0]);
 		tmp = ft_strndup(pos[0], (pos[1] - pos[0]));
-	}
 	if (tmp)
-	{
-		if (ft_strcmp(expanded, arg) != 0)
-			expanded = ft_strjoin(expanded, tmp);
-		else
-		{
-			free (expanded);
-			expanded = ft_calloc(ft_strlen(tmp), 1);
-			ft_strcpy(expanded, tmp);
-		}
-	}
+		expanded = obtain_expanded(tmp, expanded, arg);
 	else if (!tmp && ft_strcmp(expanded, arg) == 0)
-	{
-		free (expanded);
-		expanded = NULL;
-	}
+		return (free (expanded), NULL);
 	return (free (tmp), expanded);
 }
 
 char	*remove_quotes(char *str)
 {
-	int		i;
-	int		j;
-	int		len;
 	char	*ret;
+	int		i[3];
 
-	i = -1;
-	len = 0;
+	ft_bzero(i, 3 * sizeof(int));
 	ret = NULL;
-	printf("str: %s\n", str);
-	while (str[++i])
+	while (str[i[0]])
 	{
-		if (str[i] != '\'' && str[i] != '\"')
-			len++;
+		if (str[i[0]] != '\'' && str[i[0]] != '\"')
+			i[2]++;
+		i[0]++;
 	}
-	ret = ft_calloc(len + 1, 1);
-	printf("len: %d\n", len);
+	ret = ft_calloc(i[2] + 1, 1);
 	if (!ret)
 		return (NULL);//malloc error
-	i = 0;
-	j = 0;
-	while (i <= len + 1)
+	i[0] = -1;
+	while (++i[0] <= i[2] + 1)
 	{
-		if(str[i] != '\'' && str[i] != '\"')
+		if (str[i[0]] != '\'' && str[i[0]] != '\"')
 		{
-			ret[j] = str[i];
-			j++;
+			ret[i[1]] = str[i[0]];
+			i[1]++;
 		}
-		i++;
 	}
-	printf("ret: %s\n", ret);
-	if (!ret)
-		return (str);
+	// if (!ret)
+	// 	return (str);
 	return (ret);
 }
 
@@ -214,28 +167,21 @@ char	*expanser(t_list *list, t_data *data)
 	expanded = ft_strdup(list->content);
 	pos[2] = ft_strdup(expanded);
 	pos[0] = ft_strchr(pos[2], '$');
-	if (pos[0])
-		printf("len: %ld\n", ft_strlen(pos[0]));
+	// if (pos[0])
+	// 	printf("len: %ld\n", ft_strlen(pos[0]));
 	while (pos[0] && list->content[0] != '\'' && ft_strlen(pos[0]))
 	{
 		pos[1] = pos[0] + 1;
-		printf("expanded before expand: %s pos[0]: %s\n", expanded, pos[0]);
+//		printf("expanded before expand: %s pos[0]: %s\n", expanded, pos[0]);
 		expanded = expand(pos, list->content, data, expanded);
-		printf("expanded after expand: %s\n", expanded);
+//		printf("expanded after expand: %s\n", expanded);
 		if (!pos[0])
 			break ;
 		if (pos[1] - pos[0] == 1)
 			pos[1]++;
 		pos[0] = pos[1];
 	}
-	printf("expanded: %s\n", expanded);
+//	printf("expanded: %s\n", expanded);
 	expanded = remove_quotes(expanded);
-
-
-//今ここ
-
-
-/* 	if (*expanded == '\'' || *expanded == '\"')
-		expanded = remove_quotes(expanded); */
 	return (free (pos[2]), expanded);
 }
