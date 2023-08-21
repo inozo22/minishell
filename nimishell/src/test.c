@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 10:02:30 by nimai             #+#    #+#             */
-/*   Updated: 2023/08/21 13:30:35 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/21 13:49:54 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ int	g_return_val;
 int	test_expand(t_data *data)
 {
 	t_list	*list;
-	char	*input = "$HOME $? \'$HOME\' $?\'$HOME\'$?";
+//	char	*input = "$HOME $? \'$HOME\' $?\'$HOME\'$?";
+	char	*input = "$HOME$USER";
 //	char	*input2 = "$$ $$$USER";
 	char	*ret;
 
@@ -34,10 +35,6 @@ int	test_expand(t_data *data)
 	}
 	return(0);
 }
-
-
-
-
 
 //TEST/////TEST////////TEST///////TEST/////////TEST////TEST////////
 /**
@@ -128,10 +125,6 @@ int	main(int argc, char *argv[], char *envp[])
 		return (1);
 	printf("env[0] %s\n", data->env[0]);
 	data->pid = pid;
-//	printf("pid: %d\n", data->pid);
-	// putenv("CASA=notengo");
-	// printf("%s\n", getenv("CASA"));
-	// write(1, "4\n", 2);
 
 	//if you want to put any test function, here
 

@@ -75,12 +75,12 @@ char	*is_expand(char *token, int len, char *envp[], t_data *data)
 		return (ft_strdup("\t\n"));
 	if (ft_isdigit(token[1]))
 	{
-		printf("%sLine: %d HERE I AM%s\n", COLOR_RED, __LINE__, COLOR_RESET);
+//		printf("%sLine: %d HERE I AM%s\n", COLOR_RED, __LINE__, COLOR_RESET);
 		return (ft_strdup(""));
 	}
 	if (!(token[1]) || (!ft_isalnum(token[1]) && token[1] != '_'))
 	{
-		printf("%sLine: %d HERE I AM%s\n", COLOR_RED, __LINE__, COLOR_RESET);
+//		printf("%sLine: %d HERE I AM%s\n", COLOR_RED, __LINE__, COLOR_RESET);
 		return (NULL);
 	}
 	return(get_var_value(token, envp, len));
@@ -122,18 +122,18 @@ char	*expand(char *pos[3], char *arg, t_data *data, char *expanded)
 	char	*tmp;
 	int		flag = 0;
 
-	printf("Line: %d: pos[1]: %s\n", __LINE__, pos[1]);
+//	printf("Line: %d: pos[1]: %s\n", __LINE__, pos[1]);
 	if ((*pos[0]) == '\'')
 	{
-		printf("Line: %d: pos[0]: %s\n", __LINE__, pos[0]);
+//		printf("Line: %d: pos[0]: %s\n", __LINE__, pos[0]);
 		flag++;
 	}
-	while (ft_isalnum(*pos[1]) || *pos[1] == '$')//get the str's last point
+	while (ft_isalnum(*pos[1]) || (*pos[1] == '$' && flag))//get the str's last point
 		pos[1]++;
 	if (*pos[1] == '\'' && flag)
 	{
 		pos[1]++;
-		printf("Line: %d: pos[0]: %s\n", __LINE__, pos[0]);
+//		printf("Line: %d: pos[0]: %s\n", __LINE__, pos[0]);
 		tmp = ft_strndup(pos[0], (pos[1] - pos[0]));
 	}
 	else if (*pos[0] == '$')
@@ -143,7 +143,7 @@ char	*expand(char *pos[3], char *arg, t_data *data, char *expanded)
 	}
 	else
 	{
-		printf("Line: %d: pos[0]: %s\n", __LINE__, pos[0]);
+//		printf("Line: %d: pos[0]: %s\n", __LINE__, pos[0]);
 		tmp = ft_strndup(pos[0], (pos[1] - pos[0]));
 	}
 	if (tmp)
@@ -218,15 +218,7 @@ char	*expanser(t_list *list, t_data *data)
 		printf("len: %ld\n", ft_strlen(pos[0]));
 	while (pos[0] && list->content[0] != '\'' && ft_strlen(pos[0]))
 	{
-		// if (*pos[0] == '\'')
-		// 	break;
 		pos[1] = pos[0] + 1;
-		// if (pos[0] == '\'')
-		// {
-		// 	while (++pos[0] != '\'')
-		// 		;
-			
-		// }
 		printf("expanded before expand: %s pos[0]: %s\n", expanded, pos[0]);
 		expanded = expand(pos, list->content, data, expanded);
 		printf("expanded after expand: %s\n", expanded);
