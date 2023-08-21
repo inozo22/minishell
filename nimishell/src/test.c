@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/08 18:22:41 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/08/21 11:16:15 by nimai            ###   ########.fr       */
+/*   Created: 2023/08/21 10:02:30 by nimai             #+#    #+#             */
+/*   Updated: 2023/08/21 11:00:35 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,15 @@
 int	g_return_val;
 //test
 
+//TEST/////TEST////////TEST///////TEST/////////TEST////TEST////////
+
+
+
+
+
+
+
+//TEST/////TEST////////TEST///////TEST/////////TEST////TEST////////
 /**
  * @note added SHLVL increment
   */
@@ -102,12 +111,24 @@ int	main(int argc, char *argv[], char *envp[])
 	data = init_data(envp, argv[0]);
 	if (!data)
 		return (1);
+	printf("env[0] %s\n", data->env[0]);
 	data->pid = pid;
-	printf("pid: %d\n", data->pid);
-	// int i = -1;
-	// while (data->env[++i])
-	// 	printf("Env %d with ptr: %p: %s\n", i, (void *)data->env[i], data->env[i]);
-	ret = minishell(data);
+//	printf("pid: %d\n", data->pid);
+	putenv("CASA=notengo");
+	printf("%s\n", getenv("CASA"));
+	write(1, "4\n", 2);
+
+	//if you want to put any test function, here
+
+
+
+
+
+	////////////////////////////////////////
+
+
+	if (argv[1])
+		ret = minishell(data);
 	if (g_return_val)
 		ret = g_return_val;
 	free_alloc(data);

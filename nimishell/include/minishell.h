@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 19:10:38 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/08/11 15:21:05 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/21 10:52:33 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,13 @@ typedef struct s_tokens
 # define COLOR_ACCENT	"\001\033[92;3;4;1m\002"
 
 //Functions
+
+// minishell_init
+void	set_path_list(t_data *data);
+char	*get_shlvl(const char *envp);
+pid_t	get_my_pid(void);
+//static int	fill_env(t_data *data, char *envp[]);
+
 //	minishell
 
 int		minishell(t_data *data);
