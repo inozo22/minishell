@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 15:43:39 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/08/11 18:10:57 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/21 17:46:52 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,9 +203,7 @@ int	parse_special_chars(t_list **cmd, char c)
 					error_msg("minishell", "newline", 2);
 					return((long int) ft_lstclear(cmd, free));
 				}
-			
 		}
-		
 	}
 	return (1);
 }

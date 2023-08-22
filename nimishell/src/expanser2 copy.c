@@ -164,28 +164,6 @@ char	*remove_quotes(char *str)
 	return (ret);
 }
 
-void	check_quotestype(t_list *list)
-{
-	int	i;
-
-	i = 0;
-	printf("content: %s\n", list->content);
-	while (list->content[i])
-	{
-		if (list->content[i] == '\'')
-		{
-			list->type = '\'';
-			break ;
-		}
-		else if (list->content[i] == '\"')
-		{
-			list->type = '\"';
-			break ;
-		}
-		i++;
-	}
-}
-
 
 /**
  * @param pos[2] to keep and free string 
@@ -200,7 +178,6 @@ char	*expanser(t_list *list, t_data *data)
 	pos[0] = ft_strchr(pos[2], '$');
 	// if (pos[0])
 	// 	printf("len: %ld\n", ft_strlen(pos[0]));
-	check_quotestype(list);
 	while (pos[0] && list->content[0] != '\'' && ft_strlen(pos[0]))
 	{
 		pos[1] = pos[0] + 1;
