@@ -164,29 +164,6 @@ char	*remove_quotes(char *str)
 	return (ret);
 }
 
-void	check_quotestype(t_list *list)
-{
-	int	i;
-
-	i = 0;
-	printf("content: %s\n", list->content);
-	while (list->content[i])
-	{
-		if (list->content[i] == '\'')
-		{
-			list->type = '\'';
-			break ;
-		}
-		else if (list->content[i] == '\"')
-		{
-			list->type = '\"';
-			break ;
-		}
-		i++;
-	}
-}
-
-
 /**
  * @param pos[2] to keep and free string 
  */

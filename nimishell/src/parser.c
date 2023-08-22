@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 15:43:39 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/08/21 17:46:52 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/22 14:26:16 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -301,6 +301,59 @@ t_list	*parser(char *str)
 	printf("%d\n", return_val);
 	return (cmd);
 }
+
+//i[0] = quotes flag
+//i[1] = in_word flag
+//i[2] = count
+// t_list	*parser(char *str)
+// {
+// 	t_list	*cmd;
+// 	int		return_val;
+// //	int		*pos;
+// //	int		i[2];
+
+// 	cmd = NULL;
+// 	return_val = 0;
+// 	ft_printf("\nGot input: %s\n", str);
+// 	if (ft_strnstr(str, "||", ft_strlen(str)))
+// 	{
+// 		return_val = error_msg("minihell", "|", 2);
+// 		return (NULL);
+// 	}
+// 	if (str[0] == '\\' && str[1])
+// 		str = ft_remove_char(str, '\\');
+// 	str = dquote(str);
+// 	ft_printf("Final input: %s\n", str);
+// 	cmd = fill_cmd_list(str);
+// 	if (!cmd)
+// 	{
+// 		printf("Error");
+// 		return (NULL);		
+// 	}
+// 	t_list *tmp;
+// 	tmp = cmd;
+// 	while (tmp)
+// 	{
+// 		printf("%sPARSER: Line: %d, content: %s, type: %d, pos: %d%s\n", COLOR_CYAN, __LINE__, tmp->content, tmp->type, tmp->cmd_pos, COLOR_RESET);
+// 		tmp = tmp->next;
+// 	}
+// //	pos = (int *)ft_calloc(3, sizeof(int));
+// /* 	while (str[i[0]])
+// 	{
+// 		get_args_pos(&str[i[0]], pos);
+// 		if (pos[2])
+// 			arg_list[i[1]++] = ft_substr(&str[i[0]], pos[0] + 1, pos[1] - 1);
+// 		else
+// 			arg_list[i[1]++] = ft_substr(&str[i[0]], pos[0], pos[1]);
+// 		if (!arg_list[i[1] - 1])
+// 			return (del_err_array(&arg_list, i[1] - 1));
+// 		i[0] = i[0] + pos[0] + pos[1];
+// 		if (pos[2])
+// 			i[0]++;
+// 	} */
+// 	printf("%d\n", return_val);
+// 	return (cmd);
+// }
 
 
 /* int	main(int argc, char *argv[])

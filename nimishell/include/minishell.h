@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 19:10:38 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/08/22 13:30:15 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/22 14:30:20 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,6 +198,5 @@ int		av_amount(char **strs);
 //char	*expanser(char *arg, char *envp[], t_data *data);
 char	*expanser(t_list *list, t_data *data);
 //char	*expand(t_list *list, t_data *data, char *str);
-void	check_quotestype(t_list *list);
 
 #endif
