@@ -29,7 +29,6 @@ char	*get_var_value(char *env_var, char *envp[], int len)
 		{
 			if (env_var[i] != '{')
 				tmp[j++] = env_var[i];
-
 		}
 		tmp[j] = 0;
 		len = j - 1;
