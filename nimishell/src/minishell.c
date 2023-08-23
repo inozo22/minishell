@@ -67,9 +67,9 @@ int	check_exit(char **input, t_data *data)
 /**
  * @note modified to control any kind of letters for pwd, echo, env
  * @note changed order of the conditions, I think will not make any error because of this. tho....
- * @note コマンドArrにして、関数をポインターで渡したらきれいに出来そうだけど、現状見やすいので放置
  * It would be neat to make it a command Arr and pass function's pointer, but it's readable, so leave it.
-  */
+ * @note Input1 is empty now
+ */
 int	check_builtin(char **input, t_data *data)
 {
 /* 	int i = -1;
@@ -119,16 +119,6 @@ static int	process_input(char *line_read, t_data *data)
 		printf("%sEXPANSER: Line: %d, content: %s, type: %d, pos: %d%s\n", COLOR_BLUE, __LINE__, tmp->content, tmp->type, tmp->cmd_pos, COLOR_RESET);
 		tmp = tmp->next;
 	}
-//	exit (0);
-/**
- * 
- * @note 230809 kokomade
- * @note make the expanserworking
- * 
- */
-
-
-//infile, outfile obtain in expanser? ->in parser kana
 	data->return_val = child_creation(NULL, NULL, cmd_list, cmd_nb, data->path, data->env, data);
 	ft_lstclear(&cmd_list, free);
 //	if (data->return_val == INT_MAX)

@@ -15,6 +15,7 @@
 /**
  * @brief when push Ctrl + D, exit 
  * @note as the super free after the while, only write "exit" and break the loop
+ * @note put exit function from builins
  */
 void	sig_eof(t_data *data)
 {
