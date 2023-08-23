@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:11:50 by nimai             #+#    #+#             */
-/*   Updated: 2023/08/22 14:59:40 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/23 15:51:58 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ void	action(int sig)
 	if (sig == SIGINT)
 	{
 		ioctl(STDIN_FILENO, TIOCSTI, "\n");
-		rl_replace_line("", 0);
-		rl_on_new_line();
+/* 		rl_replace_line("", 0);
+		rl_on_new_line(); */
 	//	rl_redisplay();
 		g_return_val = 1;
 	}
