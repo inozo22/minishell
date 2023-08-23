@@ -2,14 +2,14 @@
 	
 -----------------------------------------------------------------------
 TODO: make lexer and expanser works
-TODO: remove quotes in case quotes are not edge (not"HOME", but $$"HOME")
 TODO: obtain file name in parser(?)
 TODO: put protect for open function in redir
-TODO: control {} in expanser
 
 
 -----------------------------------------------------------------------
 DONE~~: is expand in expanser, "$*" doesn't work and "$0" gets open input~~
+DONE~~: remove quotes in case quotes are not edge (not"HOME", but $$"HOME")~~
+DONE~~: control {} in expanser~~
 
 
 
