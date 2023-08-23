@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:18:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/23 17:52:25 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/22 15:37:59 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,6 @@ char	*mod_path(char *input)
  * @brief add environment according to av in **
  * @author nimai
  * @return ** pointer, then free 
- * @note 230530nimai: I will throw it away
  */
 char	**envp_strs_join(char *input, t_data *data)
 {

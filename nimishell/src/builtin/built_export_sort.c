@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 16:17:55 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/15 13:00:26 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/22 15:35:25 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	swap_pairs(t_export_box *first, t_export_box *second)
  * @brief manage "builtin" export cmd.
  * @author nimai
  * @param **av "export", "ABC=abc".
- * @note qsort works except numbers, if the string is shorter, ignore the number 
  */
 int	get_pivot(t_export_box box[], int left, int right)
 {

@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:11:50 by nimai             #+#    #+#             */
-/*   Updated: 2023/08/11 13:11:40 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/22 14:59:40 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	sigquit_ignore(void)
 	ft_bzero(&sa, sizeof(struct sigaction));
 	sa.sa_handler = SIG_IGN;
 	sigaction(SIGQUIT, &sa, NULL);
-	//here it's not necessary to control error number
+	g_return_val = 0;
 }
 
 void	set_signal_handlers(pid_t pid)

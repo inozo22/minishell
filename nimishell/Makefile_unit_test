@@ -1,19 +1,19 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    Makefile_test                                      :+:      :+:    :+:    #
+#    Makefile_unit_test                                 :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/30 13:14:38 by bde-mada          #+#    #+#              #
-#    Updated: 2023/08/21 10:30:38 by nimai            ###   ########.fr        #
+#    Updated: 2023/08/23 10:25:47 by nimai            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	:= test
 
 define ASCIIART
-	It's a test!
+	Unit test compiled!!
 \\_______________  ____________________________________/
                 \\/
        /^-^\         /^-----^\\
@@ -55,14 +55,6 @@ SRC_FILES	:=  test.c minishell_init.c minishell.c terminate.c error_msgs.c utils
 				builtin/built_export_sort.c builtin/built_pwd.c builtin/built_unset.c \
 				builtin/errors.c builtin/free.c \
 				signals.c #wildcards.c \
-				main.c minishell.c terminate.c error_msgs.c utils.c cmd_split.c \
-				redirect.c expanser2.c lexer.c parser.c executor.c\
-				builtin/built_cd_path.c builtin/built_cd.c builtin/built_cd_utils.c builtin/built_echo.c \
-				builtin/built_env.c builtin/built_exit.c builtin/built_export.c \
-				builtin/built_export_output.c builtin/built_utils.c \
-				builtin/built_export_sort.c builtin/built_pwd.c builtin/built_unset.c \
-				builtin/errors.c builtin/free.c \
-				signals.c #wildcards.c 
 
 OBJ_FILES	:= $(SRC_FILES:.c=.o)
 

@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 09:50:35 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/21 12:13:13 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/22 15:42:12 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_data	*unset_env(t_data *data, char *str)
 	j = -1;
 	tmp = (char **)malloc(sizeof(char *) * (av_amount(data->env) + 1));
 	if (!tmp)
-		return (NULL);
+		return (heap_error(1), NULL);
 	len = ft_strlen(str);
 	while (data->env[++i])
 	{

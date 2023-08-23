@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:32:33 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/08/22 14:28:02 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/22 15:14:50 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,14 +146,14 @@ int	minishell(t_data *data)
 	char			*prompt;
 
 // these are remove ^C in the prompt
-	// struct termios	termios_save;
-	// struct termios	term;
+	struct termios	termios_save;
+	struct termios	term;
 
-	// tcgetattr(0, &termios_save);
-	// tcsetattr(0, 0, &termios_save);
-	// term = termios_save;
-	// term.c_lflag &= ~ECHOCTL;
-	// tcsetattr(0, TCSASOFT, &term);
+	tcgetattr(0, &termios_save);
+	tcsetattr(0, 0, &termios_save);
+	term = termios_save;
+	term.c_lflag &= ~ECHOCTL;
+	tcsetattr(0, TCSASOFT, &term);
 // these are remove ^C in the prompt
 
 	printf("pid in minishell: %d\n", data->pid);
@@ -172,7 +172,7 @@ int	minishell(t_data *data)
 		}
 		if (!line_read)//230731nimai: added to work ctrl+D without segfault
 		{
-			sig_eof(data);//check function process
+			sig_eof(data);//check function in child process
 			break ;
 		}
 		if (process_input(line_read, data) == INT_MAX)

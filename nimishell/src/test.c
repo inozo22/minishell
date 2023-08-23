@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 10:02:30 by nimai             #+#    #+#             */
-/*   Updated: 2023/08/22 13:33:25 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/23 12:24:51 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,34 +18,13 @@ int	g_return_val;
 
 //TEST/////TEST////////TEST///////TEST/////////TEST////TEST////////
 
-int	test_checkquotes()
-{
-	char	*input = "echo \"\"\"\"\'$HO\'\'ME\'\"\"\"\"$$ \"\'$HOME\'\" \'\"$HOME\"\' \"\'\"\'$HOME\'\"\'\"";
-	t_list	*list;
-	t_list	*tmp;
-
-	lexer(input, &list);
-	tmp = list;
-	while (tmp)
-	{
-		check_quotestype(tmp);
-		tmp = tmp->next;
-	}
-	while (list)
-	{
-		printf("content: %s, type: %d\n", list->content, list->type);
-		list = list->next;
-	}
-	return (0);
-}
-
 
 int	test_childcreation(t_data *data)
 {
 	t_list	*list;
 	t_list	*tmp;
 //	char	*input = "$HOME $? \'$HOME\' $?\'$HOME\'$?";
-	char	*input = "echo \"\"\"\"\'$HO\'\'ME\'\"\"\"\"$$ \"\'$HOME\'\" \'\"$HOME\"\' \"\'\"\'$HOME\'\"\'\"";
+	char	*input = "echo ${HOM} ${HOME} \'${HOME}\' $HO{ME} ";
 //	char	*input = "echo | cd | pwd | env";
 //	char	*input = "cat < infile| cat >outfile";
 //	char	*input = "cat < infile";
@@ -177,8 +156,8 @@ int	main(int argc, char *argv[], char *envp[])
 	//if you want to put any test function, here
 
 //	test_expand(data);
-//	test_childcreation(data);
-	test_checkquotes();
+	test_childcreation(data);
+	//test_checkquotes();
 
 
 
