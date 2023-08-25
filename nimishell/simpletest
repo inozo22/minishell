@@ -7,26 +7,20 @@
 # echo -e "cd ..\n pwd" | ./minishell > minishell.txt
 # echo -e "cd ..\n pwd" | bash >> bash.txt
 
-echo "export | grep -v -E '^declare -x _='" | bash > bash.txt
-echo "export 1 _+ _OK _2? _OK2=VAR =NG OK3=\n export | grep -v -E '^declare -x _='" | bash >> bash.txt
-echo "export dquote='\"' dollar='$' backslash='\' backquote='\`' newline='\\\n'\n export | grep -v -E '^declare -x _='" | bash >> bash.txt
-echo "export APPEND=1\n export APPEND+=2\n export | grep APPEND" | bash >> bash.txt
-echo "export APPEND_NONE=1\n export APPEND_NONE+=\n export | grep APPEND_NONE" | bash > bash.txt
-echo "export APPEND_NONE=\n export APPEND_NONE=\n export APPEND_NONE+=\n export | grep APPEND_NONE" | bash > bash.txt
-echo "export APPEND_EMPTY=""\n export APPEND_EMPTY=""\n export APPEND_EMPTY=""\n export | grep APPEND_EMPTY" | bash > bash.txt
-echo "export OVERWRITE=42\n export OVERWRITE=a\n export | grep OVERWRITE" | bash > bash.txt
-echo "export A=B=C=D\n export | grep A" | bash > bash.txt
-echo "export PATH\n export | grep PATH" | bash > bash.txt
-echo "export PWD\n export | grep PWD" | bash > bash.txt
-echo "export OLDPWD\n export | grep OLDPWD" | bash > bash.txt
-echo "unset PWD\n cd ..\n export | grep PWD" | bash > bash.txt
-echo "unset OLDPWD\n cd ..\n export | grep OLDPWD" | bash > bash.txt
-echo "unset PWD\n cd ..\n export PWD=new_value\n export | grep PWD" | bash > bash.txt
-echo "unset OLDPWD\n cd ..\n export OLDPWD=new_value\n export | grep OLDPWD" | bash > bash.txt
-echo "unset PWD\n cd ..\n export PWD\n export | grep PWD" | bash > bash.txt
-echo "unset OLDPWD\n cd ..\n export OLDPWD\n export | grep OLDPWD" | bash > bash.txt
-echo "export =" | bash > bash.txt
+echo "echo $OLDPWD" | bash > bash.txt
+echo "echo $OLDPWD, export OLDPWD=/" | bash >> bash.txt
+echo "echo $PWD" | bash >> bash.txt
+echo "echo $PWD, export PWD=/" | bash >> bash.txt
 
+echo "echo \"🦥■■■  Im here ■■■🦥\""| bash >> bash.txt 
+#230825
 
-#echo "echo \"🦥■■■  Im here ■■■🦥\""| bash >> bash.txt
+#echo "echo $PWD, mkdir dir\n ln -s dir symdir\n cd symdir" | bash >> bash.txt
+echo "pwd" | bash >> bash.txt
+echo "pwd, export PWD=/" | bash >> bash.txt
+echo "pwd, mkdir dir; ln -s dir symdir; cd symdir" | bash >> bash.txt
+echo "pwd; echo $PWD; echo $OLDPWD, export PWD=; export OLDPWD=;" | bash >> bash.txt
+echo "mkdir dir; cd dir; pwd; echo $PWD; echo $OLDPWD, export PWD=; export OLDPWD=;" | bash >> bash.txt
+echo "mkdir dir; cd dir; cd ..; pwd; echo $PWD; echo $OLDPWD, export PWD=; export OLDPWD=; | bash >> bash.txt
+echo "cd; pwd; echo $PWD; echo $OLDPWD, export PWD=; export OLDPWD=;" | bash >> bash.txt
 

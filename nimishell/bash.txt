@@ -1,0 +1,12 @@
+
+, export OLDPWD=/
+/Users/nimai/42/42cursus/minishell/nimishell
+/Users/nimai/42/42cursus/minishell/nimishell, export PWD=/
+🦥■■■  Im here ■■■🦥
+/Users/nimai/42/42cursus/minishell/nimishell
+/Users/nimai/42/42cursus/minishell/nimishell
+/Users/nimai/42/42cursus/minishell/nimishell
+, export PWD=
+/Users/nimai/42/42cursus/minishell/nimishell/dir
+/Users/nimai/42/42cursus/minishell/nimishell
+, export PWD=
