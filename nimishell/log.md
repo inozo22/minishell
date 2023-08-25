@@ -6,6 +6,7 @@ TODO: expanser: "$USER"'$USER' doesn't work
 TODO: obtain file name in parser(?)
 TODO: put protect for open function in redir
 TODO: put builtins's exit in sig_eof 
+TODO: make simpletest
 
 
 -----------------------------------------------------------------------

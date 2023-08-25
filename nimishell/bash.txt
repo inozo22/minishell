@@ -1,0 +1,2 @@
+hoge
+/Users/nimai/42/42cursus/minishell/nimishell

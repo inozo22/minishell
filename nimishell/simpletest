@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# test echo
+echo "echo hoge" | ./minishell > minishell.txt
+echo "echo hoge" | bash > bash.txt
+
+
+echo -e "cd ..\n pwd" | ./minishell > minishell.txt
+echo -e "cd ..\n pwd" | bash >> bash.txt
+
+
+# test echo
+
+
+
+
+
+
+
+# diff minishell.txt bash.txt
