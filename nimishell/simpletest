@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# test echo
+# test pwd
 # echo "echo hoge" | ./minishell > minishell.txt
 # echo "echo hoge" | bash > bash.txt
 

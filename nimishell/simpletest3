@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# test unset
+
+# echo "echo \"🦥■■■  Im here ■■■🦥\""| bash >> bash.txt 
+#要動作確認
+
+
+
+echo "unset/n env | grep -v -E '^_=' | sort"| bash > bash.txt 
+echo "unset A/n echo $A, export A='test $A'"| bash >> bash.txt 
+echo "unset _A1/n echo $_A1, export _A1='test $_A1'"| bash >> bash.txt 
+echo "unset A B C/n echo $A$B$C$D, export A=test B=multiple C=var D=hello"| bash >> bash.txt 
+echo "unset A B =invalid C/n echo $A$B$C$D, export A=test B=multiple C=var D=hello"| bash >> bash.txt 
+echo "unset PWD/n echo $PWD"| bash >> bash.txt 
+echo "unset OLDPWD/n echo $OLDPWD"| bash >> bash.txt 
+echo "unset NO_SUCH_ENV/n echo $?$NO_SUCH_ENV, unset NO_SUCH_ENV"| bash >> bash.txt 
+echo "unset 1"| bash >> bash.txt 
+echo "unset A=a/n echo $A, export A=a"| bash >> bash.txt 
+echo "unset ' \"$&`\n'"| bash >> bash.txt 

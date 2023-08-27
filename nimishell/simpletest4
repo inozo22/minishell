@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# test env
+
+# echo "echo \"🦥■■■  Im here ■■■🦥\""| bash >> bash.txt 
+#要動作確認
+
+echo "env | grep -v -E '^_=' | sort"| bash > bash.txt
+echo "env | grep -v -E '^_=' | sort, export A=hello"| bash >> bash.txt
+echo "cd ..//n env | grep -v -E '^_=' | sort"| bash >> bash.txt
