@@ -8,17 +8,20 @@
 # echo -e "cd ..\n pwd" | bash >> bash.txt
 
 echo "echo $OLDPWD" | bash > bash.txt
-echo "echo $OLDPWD, export OLDPWD=/" | bash >> bash.txt
+echo "export OLDPWD=/\n echo \$OLDPWD" | bash >> bash.txt
 echo "echo $PWD" | bash >> bash.txt
-echo "echo $PWD, export PWD=/" | bash >> bash.txt
+echo "export PWD=/\necho \$PWD" | bash >> bash.txt
+echo "mkdir dir\n ln -s dir symdir\n cd symdir\n echo \$PWD" | bash >> bash.txt
+echo "pwd" | bash >> bash.txt
+echo "export PWD=/\n pwd\n echo \$PWD" | bash >> bash.txt
+
+echo "echo \"🦥■■■  Im here ■■■🦥\""| bash >> bash.txt 
+
+echo "mkdir dir\n ln -s dir symdir\n cd symdir\n pwd" | bash >> bash.txt
 
 echo "echo \"🦥■■■  Im here ■■■🦥\""| bash >> bash.txt 
 #230825
 
-#echo "echo $PWD, mkdir dir\n ln -s dir symdir\n cd symdir" | bash >> bash.txt
-echo "pwd" | bash >> bash.txt
-echo "pwd, export PWD=/" | bash >> bash.txt
-echo "pwd, mkdir dir; ln -s dir symdir; cd symdir" | bash >> bash.txt
 echo "pwd; echo $PWD; echo $OLDPWD, export PWD=; export OLDPWD=;" | bash >> bash.txt
 echo "mkdir dir; cd dir; pwd; echo $PWD; echo $OLDPWD, export PWD=; export OLDPWD=;" | bash >> bash.txt
 echo "mkdir dir; cd dir; cd ..; pwd; echo $PWD; echo $OLDPWD, export PWD=; export OLDPWD=; | bash >> bash.txt
