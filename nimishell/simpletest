@@ -14,16 +14,10 @@ echo "export PWD=/\necho \$PWD" | bash >> bash.txt
 echo "mkdir dir\n ln -s dir symdir\n cd symdir\n echo \$PWD" | bash >> bash.txt
 echo "pwd" | bash >> bash.txt
 echo "export PWD=/\n pwd\n echo \$PWD" | bash >> bash.txt
-
-echo "echo \"🦥■■■  Im here ■■■🦥\""| bash >> bash.txt 
-
 echo "mkdir dir\n ln -s dir symdir\n cd symdir\n pwd" | bash >> bash.txt
+echo "export PWD=\n export OLDPWD=\n pwd\n echo \$PWD\n echo \$OLDPWD" | bash >> bash.txt
+echo "export PWD=\n export OLDPWD=\n mkdir dir\n cd dir\n pwd\n echo \$PWD\n echo \$OLDPWD" | bash >> bash.txt
+echo "export PWD=\n export OLDPWD=\n mkdir dir\n cd dir\n cd ..\n pwd\n echo \$PWD\n echo \$OLDPWD\n" | bash >> bash.txt
+echo "export PWD=\n export OLDPWD=\n cd\n pwd\n echo \$PWD\n echo \$OLDPWD" | bash >> bash.txt
 
 echo "echo \"🦥■■■  Im here ■■■🦥\""| bash >> bash.txt 
-#230825
-
-echo "pwd; echo $PWD; echo $OLDPWD, export PWD=; export OLDPWD=;" | bash >> bash.txt
-echo "mkdir dir; cd dir; pwd; echo $PWD; echo $OLDPWD, export PWD=; export OLDPWD=;" | bash >> bash.txt
-echo "mkdir dir; cd dir; cd ..; pwd; echo $PWD; echo $OLDPWD, export PWD=; export OLDPWD=; | bash >> bash.txt
-echo "cd; pwd; echo $PWD; echo $OLDPWD, export PWD=; export OLDPWD=;" | bash >> bash.txt
-

@@ -2,13 +2,16 @@
 
 # test unset
 
-# echo "echo \"🦥■■■  Im here ■■■🦥\""| bash >> bash.txt 
 #要動作確認
+#230828
 
 
 
-echo "unset/n env | grep -v -E '^_=' | sort"| bash > bash.txt 
-echo "unset A/n echo $A, export A='test $A'"| bash >> bash.txt 
+echo "unset\n env | grep -v -E '^_=' | sort"| bash > bash.txt 
+
+echo "echo \"🦥■■■  Im here ■■■🦥\""| bash >> bash.txt 
+
+echo "export A='test $A'\n unset A/n echo \$A"| bash >> bash.txt 
 echo "unset _A1/n echo $_A1, export _A1='test $_A1'"| bash >> bash.txt 
 echo "unset A B C/n echo $A$B$C$D, export A=test B=multiple C=var D=hello"| bash >> bash.txt 
 echo "unset A B =invalid C/n echo $A$B$C$D, export A=test B=multiple C=var D=hello"| bash >> bash.txt 

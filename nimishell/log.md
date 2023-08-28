@@ -5,7 +5,7 @@ TODO: make lexer and expanser works
 TODO: expanser: "$USER"'$USER' doesn't work
 TODO: obtain file name in parser(?)
 TODO: put protect for open function in redir
-TODO: make simpletest
+TODO: make simpletest(unset)
 
 
 -----------------------------------------------------------------------
