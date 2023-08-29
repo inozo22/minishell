@@ -1,10 +1,18 @@
 #!/bin/bash
 
+### test ###
+# echo "env" | ./minishell > minishell.txt
+# echo "env" | bash > bash.txt
+# echo "pwd" | ./minishell >> minishell.txt
+# echo "pwd" | bash >> bash.txt
+# diff minishell.txt bash.txt
+### test ###
+
 # test echo
 # echo "echo hoge" | ./minishell > minishell.txt
 # echo "echo hoge" | bash > bash.txt
 
-# echo -e "cd ..\n pwd" | ./minishell > minishell.txt
+# echo -e "cd ..\n pwd" | ./minishell >> minishell.txt
 # echo -e "cd ..\n pwd" | bash >> bash.txt
 echo "echo" | bash > bash.txt
 echo "echo" | ./minishell > minishell.txt
@@ -14,7 +22,6 @@ echo "echo	tab"| bash >> bash.txt
 echo "echo	tab"| ./minishell >> minishell.txt
 echo "echo \"	tab	\""| bash >> bash.txt
 echo "echo \"	tab	\""| ./minishell >> minishell.txt
-
 echo "echo		tab"| bash >> bash.txt
 echo "echo		tab"| ./minishell >> minishell.txt
 echo "echo hello world"| bash >> bash.txt
