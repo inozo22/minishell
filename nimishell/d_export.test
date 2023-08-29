@@ -46,6 +46,6 @@ echo "unset OLDPWD\n cd ..\n export OLDPWD\n export | grep OLDPWD" | ./minishell
 echo "export =" | bash > bash.txt
 echo "export =" | ./minishell >> minishell.txt
 
-
+diff minishell.txt bash.txt
 #echo "echo \"🦥■■■  Im here ■■■🦥\""| bash >> bash.txt
 

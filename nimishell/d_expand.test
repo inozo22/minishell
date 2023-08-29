@@ -41,6 +41,6 @@ echo "export TEST=ech\n "$TEST"o hello" | ./minishell >> minishell.txt
 # echo "export TEST='echo hello'\n $TEST" | bash >> bash.txt
 echo "export abcdefghijklmnopqrstuvwxyz_ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890=hello\n echo $abcdefghijklmnopqrstuvwxyz_ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890" | bash >> bash.txt
 
-
+diff minishell.txt bash.txt
 #echo "echo \"🦥■■■  Im here ■■■🦥\""| bash >> bash.txt
 

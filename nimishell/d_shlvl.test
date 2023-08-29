@@ -1,0 +1,43 @@
+#!/bin/bash
+
+# test shlvl
+
+echo "export SHLVL=0\n echo \$SHLVL" | bash > bash.txt
+echo "export SHLVL=0\n echo \$SHLVL" | ./minishell > minishell.txt
+echo "export SHLVL=998\n echo \$SHLVL" | bash >> bash.txt
+echo "export SHLVL=998\n echo \$SHLVL" | ./minishell >> minishell.txt
+echo "export SHLVL=999\n echo \$SHLVL" | bash >> bash.txt
+echo "export SHLVL=999\n echo \$SHLVL" | ./minishell >> minishell.txt
+echo "export SHLVL=1000\n echo \$SHLVL" | bash >> bash.txt
+echo "export SHLVL=1000\n echo \$SHLVL" | ./minishell >> minishell.txt
+echo "export SHLVL=+42\n echo \$SHLVL" | bash >> bash.txt
+echo "export SHLVL=+42\n echo \$SHLVL" | ./minishell >> minishell.txt
+echo "export SHLVL=-1\n echo \$SHLVL" | bash >> bash.txt
+echo "export SHLVL=-1\n echo \$SHLVL" | ./minishell >> minishell.txt
+echo "export SHLVL=4294967295\n echo \$SHLVL" | bash >> bash.txt
+echo "export SHLVL=4294967295\n echo \$SHLVL" | ./minishell >> minishell.txt
+echo "export SHLVL=4294967296\n echo \$SHLVL" | bash >> bash.txt
+echo "export SHLVL=4294967296\n echo \$SHLVL" | ./minishell >> minishell.txt
+echo "export SHLVL=-4294967296\n echo \$SHLVL" | bash >> bash.txt
+echo "export SHLVL=-4294967296\n echo \$SHLVL" | ./minishell >> minishell.txt
+echo "export SHLVL=-4294967297\n echo \$SHLVL" | bash >> bash.txt
+echo "export SHLVL=-4294967297\n echo \$SHLVL" | ./minishell >> minishell.txt
+echo "export SHLVL=a\n echo \$SHLVL" | bash >> bash.txt
+echo "export SHLVL=a\n echo \$SHLVL" | ./minishell >> minishell.txt
+echo "export SHLVL=`printf "'\t''\n''\v''\f''\r'42"`\n echo \$SHLVL" | bash >> bash.txt
+echo "export SHLVL=`printf "'\t''\n''\v''\f''\r'42"`\n echo \$SHLVL" | ./minishell >> minishell.txt
+echo "export SHLVL=`printf "\ 42\ "`\n echo \$SHLVL" | bash >> bash.txt
+echo "export SHLVL=`printf "\ 42\ "`\n echo \$SHLVL" | ./minishell >> minishell.txt
+echo "export SHLVL=`printf "\ 42'\t'"`\n echo \$SHLVL" | bash >> bash.txt
+echo "export SHLVL=`printf "\ 42'\t'"`\n echo \$SHLVL" | ./minishell >> minishell.txt
+echo "export SHLVL=`printf "\ 42'\v'"`\n echo \$SHLVL" | bash >> bash.txt
+echo "export SHLVL=`printf "\ 42'\v'"`\n echo \$SHLVL" | ./minishell >> minishell.txt
+echo "export SHLVL=`printf "\ 42'\n'"`\n echo \$SHLVL" | bash >> bash.txt
+echo "export SHLVL=`printf "\ 42'\n'"`\n echo \$SHLVL" | ./minishell >> minishell.txt
+echo "export SHLVL=`printf "\ 42'\f'"`\n echo \$SHLVL" | bash >> bash.txt
+echo "export SHLVL=`printf "\ 42'\f'"`\n echo \$SHLVL" | ./minishell >> minishell.txt
+echo "export SHLVL=`printf "\ 42'\r'"`\n echo \$SHLVL" | bash >> bash.txt
+echo "export SHLVL=`printf "\ 42'\r'"`\n echo \$SHLVL" | ./minishell >> minishell.txt
+
+diff minishell.txt bash.txt
+#echo "echo \"🦥■■■  Im here ■■■🦥\""| bash >> bash.txt 

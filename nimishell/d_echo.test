@@ -110,3 +110,4 @@ echo "echo \\\\\\\\\\\\\\\$USER"| bash >> bash.txt
 echo "echo \\\\\\\\\\\\\\\$USER"| ./minishell >> minishell.txt
 
 #echo "echo \"🦥■■■  Im here ■■■🦥\""| bash >> bash.txt
+diff minishell.txt bash.txt
