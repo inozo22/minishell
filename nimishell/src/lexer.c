@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
+/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 18:39:55 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/08/11 14:22:46 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/23 17:59:55 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ int is_metacharacter(char *str)
 		else
 			return (REDIR_OUT);
 	}
+	if (*str == '|' && *(str + 1) == '|')
+		return (INVALID);
 	if (*str == '|')
 		return (PIPE_LINE);
 	if (ft_isspace(*str))
@@ -127,9 +129,6 @@ int get_token(t_list **list, char *input, int *pos)
 	tmp = *list;
 	max_pipe = 0;
 //	token = clear_trailing_spaces(token);
-
-//実行の順については要確認。(at the same time I think)
-//ちなみに、ミニシェルから出る際になぜか入力済みのコマンドのエラーが出力される。
 	printf("new_token: %s\n", token);
 	if (!token)
 		return (-1);
@@ -167,7 +166,7 @@ int lexer(char *input, t_list **token_list)
 	i = -1;
 	ft_bzero(pos, 4 * sizeof(int));
 	printf("%sLine: %d::%s%s\n", COLOR_RED, __LINE__, __FILE__, COLOR_RESET);
-	while (input[++i])
+	while (input && input[++i])
 	{
 		printf("input: %s\n", &(input[i]));
 		if (ft_isspace(input[i]))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
+/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:32:33 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/08/22 15:14:50 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/29 16:01:11 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ static int	process_input(char *line_read, t_data *data)
 
 
 //infile, outfile obtain in expanser? ->in parser kana
-	data->return_val = child_creation(NULL, NULL, cmd_list, cmd_nb, data->path, data->env, data);
+	data->return_val = executer(NULL, NULL, cmd_list, cmd_nb, data->path, data->env, data);
 	ft_lstclear(&cmd_list, free);
 //	if (data->return_val == INT_MAX)
 //		return (check_exit(input, data));
@@ -140,6 +140,21 @@ static int	process_input(char *line_read, t_data *data)
 
 // struct termios termios_save;
 
+/**
+ * @brief set terminal attributes to remove ^C in the prompt
+  */
+int	set_terminal_attributes(struct termios *termios_save)
+{
+	struct termios	term;
+
+	if (tcgetattr(0, termios_save))
+		return (1);
+	term = *termios_save;
+	term.c_lflag &= ~ECHOCTL;
+	tcsetattr(0, TCSASOFT, &term);
+	return (0);
+}
+
 int	minishell(t_data *data)
 {
 	char			*line_read;
@@ -147,16 +162,11 @@ int	minishell(t_data *data)
 
 // these are remove ^C in the prompt
 	struct termios	termios_save;
-	struct termios	term;
 
-	tcgetattr(0, &termios_save);
-	tcsetattr(0, 0, &termios_save);
-	term = termios_save;
-	term.c_lflag &= ~ECHOCTL;
-	tcsetattr(0, TCSASOFT, &term);
-// these are remove ^C in the prompt
-
-	printf("pid in minishell: %d\n", data->pid);
+// CORREGIR MENSAJE DE ERROR
+	if (set_terminal_attributes(&termios_save) == 1)
+		exit (1);
+		//return (errors(12, data));
 	//set_signal_handlers(13);
 	prompt = get_prompt(data);
 	while (1)
@@ -164,25 +174,27 @@ int	minishell(t_data *data)
 		set_signal_handlers(13);//230808nimai: changed from above, to recall it after child process
 		line_read = readline(prompt);
 		if (line_read && *line_read)
-		{
 /* 			if (!ft_strcmp(line_read, "^C"))
 				rl_on_new_line();
 			else *///230731nimai:comment
 			add_history(line_read);
-		}
-		if (!line_read)//230731nimai: added to work ctrl+D without segfault
+		else
 		{
-			sig_eof(data);//check function in child process
-			break ;
+//			sig_eof(data);//check function in child process
+			if (!line_read)//230731nimai: added to work ctrl+D without segfault
+				break ;
+			else
+				continue ;
 		}
 		if (process_input(line_read, data) == INT_MAX)
 			break ;
 		free(line_read);
 	}
 	free(prompt);
-	rl_redisplay();
+//	rl_redisplay();
 	printf("\n\nBye 🗑");
 	rl_clear_history();
 	free(line_read);
+	tcsetattr(0, 0, &termios_save);
 	return (data->return_val);
 }

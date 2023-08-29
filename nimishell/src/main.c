@@ -3,22 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
+/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 18:22:41 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/08/21 11:16:15 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/29 15:52:54 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//test
+//global variable for return value
 int	g_return_val;
-//test
 
 /**
  * @note added SHLVL increment
-  */
+ */
 static int	fill_env(t_data *data, char *envp[])
 {
 	int		i;
@@ -103,10 +102,8 @@ int	main(int argc, char *argv[], char *envp[])
 	if (!data)
 		return (1);
 	data->pid = pid;
-	printf("pid: %d\n", data->pid);
-	// int i = -1;
-	// while (data->env[++i])
-	// 	printf("Env %d with ptr: %p: %s\n", i, (void *)data->env[i], data->env[i]);
+	ft_printf("PID obtained: %d\n", data->pid);
+	ft_printf("PID with getpid(): %d\n", getpid());
 	ret = minishell(data);
 	if (g_return_val)
 		ret = g_return_val;

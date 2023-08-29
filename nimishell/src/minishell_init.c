@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_init.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
+/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 18:22:41 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/08/21 11:15:54 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/29 15:54:08 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ pid_t	get_my_pid(void)
 	pid_t	pid;
 
 	pid = fork();
-	printf("pid in get_my_pid: %d\n", pid);
 	if (pid == -1)
 		return (0);
 	if (pid == 0)
@@ -64,8 +63,4 @@ pid_t	get_my_pid(void)
 	else
 		wait(NULL);
 	return (pid - 1);
-	/**
-	 * 
-	 * @note nannde 1 hii teru, arbitrary number?
-	  */
 }

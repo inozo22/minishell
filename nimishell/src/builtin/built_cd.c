@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_cd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
+/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 18:40:39 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/26 11:34:26 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/29 15:52:34 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,7 @@ int	built_cd(char **input, t_data *data)
 			return (free (cur), 1);
 	}
 	data = envp_cd_mod(data, pwd, 2);//write OLDPWD
-	if (cur && !input[1])//when you don't have argument after "cd", move to $HOME
+	if (cur && (!input[1] || !ft_strcmp(input[1], "~")))//when you don't have argument after "cd", move to $HOME
 		dest = get_dest_path_env(data, "HOME");
 	else if (ft_strcmp("./", input[1]) == 0 || ft_strncmp(".", input[1], 1 == 0))
 		dest = get_dest_path_wl_sign(data, cur, pwd);

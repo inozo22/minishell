@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
+/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:11:50 by nimai             #+#    #+#             */
-/*   Updated: 2023/08/23 15:51:58 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/29 15:47:26 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	action_child(int sig)//looks working this, but don't let me print these lin
 {
 	if (sig == SIGINT)
 	{
-		write(STDOUT_FILENO, "^C\n", 3);
+//		write(STDOUT_FILENO, "^C\n", 3);
 		g_return_val = 130;
 	}
 	else if (sig == SIGQUIT)
@@ -48,8 +48,8 @@ void	action(int sig)
 	if (sig == SIGINT)
 	{
 		ioctl(STDIN_FILENO, TIOCSTI, "\n");
-/* 		rl_replace_line("", 0);
-		rl_on_new_line(); */
+		rl_replace_line("", 0);
+		rl_on_new_line();
 	//	rl_redisplay();
 		g_return_val = 1;
 	}

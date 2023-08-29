@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+         #
+#    By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/30 13:14:38 by bde-mada          #+#    #+#              #
-#    Updated: 2023/08/21 10:42:19 by nimai            ###   ########.fr        #
+#    Updated: 2023/08/29 15:19:11 by bde-mada         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,7 @@ INC_DIR		= include/
 LIBS		:= ft #mlx
 INCLUDE		:= minishell.h
 SRC_FILES	:=  main.c minishell_init.c minishell.c terminate.c error_msgs.c utils.c cmd_split.c \
-				redirect.c expanser2.c lexer.c parser.c executor.c\
+				redirect.c expanser2.c lexer.c parser.c executer.c\
 				builtin/built_cd_path.c builtin/built_cd.c builtin/built_cd_utils.c builtin/built_echo.c \
 				builtin/built_env.c builtin/built_exit.c builtin/built_export.c \
 				builtin/built_export_output.c builtin/built_utils.c \
