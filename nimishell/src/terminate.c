@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 14:24:59 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/07/03 15:02:41 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/08/29 16:41:42 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ void	free_alloc(t_data *data)
 int	errors(int error_id, t_data *data)
 {
 	perror("minishell:");
-	if (error_id == 12)
-		ft_printf("Mem error\n");
+	if (error_id == ENOMEM)
+		ft_printf("Cannot allocate memory\n");
 	free_alloc(data);
 	return (error_id);
 }

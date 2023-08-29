@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:32:33 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/08/29 16:01:11 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/08/29 16:30:51 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int	check_builtin(char **input, t_data *data)
 		return (-1);
 }
 
-static int	process_input(char *line_read, t_data *data)
+int	process_input(char *line_read, t_data *data)
 {
 //	int		j;
 //	char	**input;

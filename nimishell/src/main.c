@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 18:22:41 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/08/29 15:52:54 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/08/29 16:47:02 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,15 @@ static int	fill_env(t_data *data, char *envp[])
 	return (0);
 }
 
-static void	define_basic_env(t_data *data, char *prog_name)
+static int	define_basic_env(t_data *data, char *prog_name)
 {
 	char	*ptr;
 	char	*tmp;
 
 	ptr = getcwd(NULL, 0);
 	data->env = (char **)ft_calloc(5 + 1, sizeof(char *));
+	if (!data->env)
+		return(errors(12, data));
 	data->env[0] = ft_strdup("PATH=/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin");
 	data->env[1] = ft_strjoin("PWD=", ptr);
 	data->env[2] = ft_strdup("OLDPWD");
@@ -66,47 +68,45 @@ static void	define_basic_env(t_data *data, char *prog_name)
 	free(ptr);
 	free(tmp);
 	ft_printf("No environment available, baseline created\n");
+	return (0);
 }
 
-static t_data	*init_data(char *envp[], char *prog_name)
+static int	init_data(t_data *data, char *envp[], char *prog_name)
 {
-	t_data	*data;
-
-	data = NULL;
-	data = (t_data *)ft_calloc(1, sizeof(t_data));
-	if (!data)
-		errors(12, data);
-	data->return_val = 0;
 	if (!*envp)
-		define_basic_env(data, prog_name);
-	else
-		if (fill_env(data, envp))
-			return (NULL);
+	{
+		if (define_basic_env(data, prog_name))
+			return (1);
+	}
+	else if (fill_env(data, envp))
+		return (1);
 	set_path_list(data);
-	return (data);
+	return (0);
 }
 
 int	main(int argc, char *argv[], char *envp[])
 {
-	t_data	*data;
-	pid_t	pid;
+	t_data	data;
 	int		ret;
 
 	g_return_val = 0;
-	pid = get_my_pid();
-	if (!pid)
+	data.pid = get_my_pid();
+	if (!data.pid)
 		return (1);
-	if ((argc == 3 && ft_strcmp(argv[1], "-c")) || argc != 1)
-		exit (error_file(argv[0], argv[1]));
-	data = init_data(envp, argv[0]);
-	if (!data)
-		return (1);
-	data->pid = pid;
-	ft_printf("PID obtained: %d\n", data->pid);
+	init_data(&data, envp, argv[0]);
+	ft_printf("PID obtained: %d\n", data.pid);
+	ft_printf("argc: %d\n", argc);
 	ft_printf("PID with getpid(): %d\n", getpid());
-	ret = minishell(data);
+	if (argc != 1)
+	{
+		if ((argc == 3 && !ft_strcmp(argv[1], "-c")))
+			return (process_input(argv[2], &data));
+		else
+			exit (error_file(argv[0], argv[1]));
+	}
+	ret = minishell(&data);
 	if (g_return_val)
 		ret = g_return_val;
-	free_alloc(data);
+	free_alloc(&data);
 	return (ret);
 }

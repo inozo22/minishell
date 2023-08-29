@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 19:10:38 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/08/29 15:19:42 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/08/29 16:36:38 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,7 @@ pid_t	get_my_pid(void);
 
 int		minishell(t_data *data);
 int		check_builtin(char **input, t_data *data);
+int		process_input(char *line_read, t_data *data);
 
 //	Lexer
 
