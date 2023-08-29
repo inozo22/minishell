@@ -4,6 +4,7 @@
 TODO: make lexer and expanser works
 TODO: obtain file name in parser(?)
 TODO: put protect for open function in redir
+TODO: Check leaks in non interactive mode and interactive exit
 
 
 -----------------------------------------------------------------------
