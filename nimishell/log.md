@@ -2,10 +2,8 @@
 	
 -----------------------------------------------------------------------
 TODO: make lexer and expanser works
-TODO: expanser: "$USER"'$USER' doesn't work
 TODO: obtain file name in parser(?)
 TODO: put protect for open function in redir
-TODO: make simpletest(unset)
 
 
 -----------------------------------------------------------------------
@@ -13,6 +11,8 @@ DONE~~: is expand in expanser, "$*" doesn't work and "$0" gets open input~~
 DONE~~: remove quotes in case quotes are not edge (not"HOME", but $$"HOME")~~
 DONE~~: control {} in expanser~~
 DONE~~: put builtins's exit in sig_eof ~~
+DONE~~: make simpletest(unset)~~
+DONE~~: expanser: "$USER"'$USER' doesn't work~~
 
 
 
