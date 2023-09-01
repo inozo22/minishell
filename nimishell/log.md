@@ -5,7 +5,8 @@ TODO: make lexer and expanser works
 TODO: obtain file name in parser(?)
 TODO: put protect for open function in redir
 TODO: Check leaks in non interactive mode and interactive exit
-TODO: Check cmd_num argument in built_exit
+TODO: Include cmd_list in executer to get all the arguments of the command
+
 
 
 ---------------------------------

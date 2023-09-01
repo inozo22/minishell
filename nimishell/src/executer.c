@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 23:43:32 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/01 16:27:49 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/01 18:20:58 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -318,6 +318,9 @@ int	check_exit_status(int e_status)
 	return (0);
 }
 
+
+
+
 /**
  * @param tmp_stdfd[0] = tmp_stdin
  * @param tmp_stdfd[1] = tmp_stdout
@@ -388,18 +391,19 @@ int executer(char *infile, char *outfile, t_list *lst, int cmd_number, char **pa
 		close(fdout);
 		//set singnal handlers for child process
 		set_signal_handlers(0);
+		printf("cmd[i][0] = %s\n", lst->content);
+		char **cmd = ft_calloc(2, sizeof(char *));
+		cmd[0] = lst->content;
+		int is_builtin = check_builtin(cmd, data);
+		ft_printf("Check builtin return: %d\n", is_builtin);
+		if (is_builtin >= 0)
+			return (is_builtin);
+		
 		// Create child process
 		pid = fork();
 		if (pid == 0)
 		{
 			//child
-			printf("cmd[i][0] = %s\n", lst->content);
-			char **cmd = ft_calloc(2, sizeof(char *));
-			cmd[0] = lst->content;
-			int builtin = check_builtin(cmd, data);
-			ft_printf("Check builtin return: %d\n", builtin);
-			if (builtin != -1)
-				exit(builtin);
 			char *cmd_path = NULL;
 			cmd_path = get_cmd_path(lst->content, path);
 			execve(cmd_path, cmd, env);

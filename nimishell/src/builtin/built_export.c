@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:18:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/01 15:24:27 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/01 18:29:35 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ void	envp_strs_mod(char *input, t_data *data)
 				data->env[i[0]] = envp_str_mod(data->env[i[0]], input, i[2], 0);
 			else if (ft_strncmp(data->env[i[0]], input, i[2]) == 0)
 			{
-/* 				while (data->env[i[0]][++i[1]] == input[i[1]])
-					; */
+				while (data->env[i[0]][++i[1]] == input[i[1]])
+					;
 				while (data->env[i[0]][i[1]] == input[i[1]])
 					i[1]++;
 				if (data->env[i[0]][i[1]] == '\0' && input[i[1]] == '=')
