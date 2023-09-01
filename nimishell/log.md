@@ -6,6 +6,7 @@ TODO: obtain file name in parser(?)
 TODO: put protect for open function in redir
 
 
+
 -----------------------------------------------------------------------
 DONE~~: is expand in expanser, "$*" doesn't work and "$0" gets open input~~
 DONE~~: remove quotes in case quotes are not edge (not"HOME", but $$"HOME")~~

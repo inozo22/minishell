@@ -6,18 +6,45 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 10:02:30 by nimai             #+#    #+#             */
-/*   Updated: 2023/08/23 12:24:51 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/01 12:21:04 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "get_next_line_bonus.h"
 
+#include <fcntl.h>
+#include <stdlib.h>
 //test
 int	g_return_val;
 //test
+static int	process_input(char *line_read, t_data *data);
 
 //TEST/////TEST////////TEST///////TEST/////////TEST////TEST////////
 
+int	input_test(t_data *data)
+{
+	process_input("echo -n aaa", data);
+	process_input("exit", data);
+	return (0);
+}
+
+int	input_mult_test(t_data *data, char *test)
+{
+	int		fd;
+	char	*str;
+
+	fd = open(test, O_RDONLY);
+	str = get_next_line(fd);
+	while (str)
+	{
+		printf("%scommand line: %s%s\n", COLOR_CYAN, str, COLOR_RESET);
+		process_input(str, data);
+		free (str);
+		str = get_next_line(fd);
+	}
+	return (0);
+}
 
 int	test_childcreation(t_data *data)
 {
@@ -64,6 +91,34 @@ int	test_expand(t_data *data)
 }
 
 //TEST/////TEST////////TEST///////TEST/////////TEST////TEST////////
+
+static int	process_input(char *line_read, t_data *data)
+{
+//	int		j;
+//	char	**input;
+	t_list	*cmd_list;
+//	t_list	*cmd;
+	int		cmd_nb;
+	t_list	*tmp;
+
+	cmd_nb = lexer(line_read, &cmd_list);
+	parser(line_read);//230807add
+	tmp = cmd_list;
+	while (tmp)
+	{
+		tmp->content = expanser(tmp, data);
+		printf("%sEXPANSER: Line: %d, content: %s, type: %d, pos: %d%s\n", COLOR_BLUE, __LINE__, tmp->content, tmp->type, tmp->cmd_pos, COLOR_RESET);
+		tmp = tmp->next;
+	}
+	data->return_val = child_creation(NULL, NULL, cmd_list, cmd_nb, data->path, data->env, data);
+	ft_lstclear(&cmd_list, free);
+//	if (data->return_val == INT_MAX)
+//		return (check_exit(input, data));
+//	del_array((void ***) &input);
+//	ft_printf("Command executed: %s with return: %d\n", input[0], data->return_val);
+	return (data->return_val);
+}
+
 /**
  * @note added SHLVL increment
   */
@@ -156,8 +211,10 @@ int	main(int argc, char *argv[], char *envp[])
 	//if you want to put any test function, here
 
 //	test_expand(data);
-	test_childcreation(data);
-	//test_checkquotes();
+//	test_childcreation(data);
+//test_checkquotes();
+	input_mult_test(data, "u_echo.test");
+//	input_test(data);
 
 
 
