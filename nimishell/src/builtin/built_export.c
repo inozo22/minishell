@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:18:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/01 12:49:43 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/01 15:24:27 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ char	*envp_str_mod(char *str, char *input, int i, int flag)
 
 /**
  * @note 230802nimai: changed counter i[1] because of the Werror, check how works in MacOS
+ * @note error wit fsanitize=address when executing "cd" in line 53
  */
 void	envp_strs_mod(char *input, t_data *data)
 {

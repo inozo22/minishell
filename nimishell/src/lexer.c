@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 18:39:55 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/08/23 17:59:55 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/01 14:05:02 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,20 @@ int	is_quote(char c)
 	return (quotes);
 }
 
+static int	check_literal_metacharacter(int c)
+{
+	if (c == '(' || c == ')' || c == ';' || c == '\\' \
+	|| c == '*' || c == '&' || c == '`' || c == '[' \
+	|| c == ']' || c == '{' || c == '}')
+	{
+		ft_printf(COLOR_YELLOW"Used metacharacter: %c\n"COLOR_RESET, c);
+		ft_printf("Special characters like (), [], {}, *, \\, &, ``... will \
+					be treated as literal characters\n\n");	
+		return (1);
+	}
+	return (0);
+}
+
 /**
  * @return 1 if c is an invalid metacharacter
  * @return 2 if c is a redirection
@@ -48,8 +62,8 @@ int	is_quote(char c)
  */
 int is_metacharacter(char *str)
 {
-	if (*str == '(' || *str == ')' || *str == ';' || *str == '\\' || *str == '*')
-		return (INVALID);
+	if (check_literal_metacharacter(*str))
+		return (WORD);
 	if (*str == '<')
 	{
 		if (*(str + 1) == *str)
@@ -104,6 +118,7 @@ int get_token(t_list **list, char *input, int *pos)
 	t_list	*new;
 	t_list	*tmp;
 	int		max_pipe;
+	int		current_char_type;
 
 	if (pos[2] != WORD)
 		pos[0]++;
@@ -114,9 +129,10 @@ int get_token(t_list **list, char *input, int *pos)
 	{	
 		if (!is_quote(input[pos[1]]))
 		{
-			if (is_metacharacter(&input[pos[1]]) != WORD)
+			current_char_type = is_metacharacter(&input[pos[1]]);
+			if (current_char_type != WORD)
 				break ;
-			else if (is_metacharacter(&input[pos[1]]) == INVALID)
+			else if (current_char_type == INVALID)
 				return (1);
 		}
 		pos[1]++;
@@ -134,7 +150,7 @@ int get_token(t_list **list, char *input, int *pos)
 		return (-1);
 	while (tmp)
 	{
-		ft_printf("Line: %d token: %s, type: %d, pos: %d\n\n", __LINE__, tmp->content, tmp->type, tmp->cmd_pos);
+//		ft_printf("Line: %d token: %s, type: %d, pos: %d\n", __LINE__, tmp->content, tmp->type, tmp->cmd_pos);
 		if (tmp->cmd_pos > max_pipe)
 			max_pipe = tmp->cmd_pos;
 		tmp = tmp->next;
@@ -142,7 +158,7 @@ int get_token(t_list **list, char *input, int *pos)
 	if (pos[2] == PIPE_LINE)
 		++max_pipe;
 	new = ft_lstnew(token, pos[2], max_pipe);
-	ft_printf("token: %s, type: %d, pos: %d\n\n", new->content, new->type, new->cmd_pos);
+	ft_printf("token: %s, type: %d, pos: %d\n", new->content, new->type, new->cmd_pos);
 	if (!new)
 		return (-1);
 	ft_lstadd_back(list, new);
@@ -165,7 +181,7 @@ int lexer(char *input, t_list **token_list)
 	*token_list = NULL;
 	i = -1;
 	ft_bzero(pos, 4 * sizeof(int));
-	printf("%sLine: %d::%s%s\n", COLOR_RED, __LINE__, __FILE__, COLOR_RESET);
+	ft_printf(COLOR_ACCENT"LEXER START\n"COLOR_RESET);
 	while (input && input[++i])
 	{
 		printf("input: %s\n", &(input[i]));
@@ -184,7 +200,7 @@ int lexer(char *input, t_list **token_list)
 		pos[3] = get_token(token_list, input, pos);
 		if (pos[3] == -1)
 			return (ft_lstclear(token_list, free), -1);
-		ft_printf("string end: %d\n", pos[1]);
+//		ft_printf("string end: %d\n", pos[1]);
 		i = pos[1] - 1;
 	}
 	tmp = *token_list;

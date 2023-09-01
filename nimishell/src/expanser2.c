@@ -13,39 +13,22 @@
 #include "minishell.h"
 #include "../lib/libft/libft.h"
 
+/**
+ * @brief gets the value of the environment variable
+ * @note Takes brackets and curly brackets as literal characters
+ */
 char	*get_var_value(char *env_var, char *envp[], int len)
 {
 	int		i;
-	int		j;
-	char	*tmp;
 
 	printf("\n\nenv var: %s len: %d\n", env_var, len);
-	i = -1;
-	j = 0;
-	if (!ft_strncmp(env_var, "${", 2))
-	{
-		tmp = ft_calloc(len, 1);
-		while (env_var[++i] != '}')
-		{
-			if (env_var[i] != '{')
-				tmp[j++] = env_var[i];
-		}
-		tmp[j] = 0;
-		len = j - 1;
-		ft_strcpy(env_var, tmp);
-		free (tmp);
-	}
 	i = -1;
 	while (envp[++i])
 	{
 		if (!ft_strncmp(env_var + 1, envp[i], len) && envp[i][len] == '=')
-		{
 			return (ft_strdup(envp[i] + len + 1));
-		}
 	}
-	if (!envp[i])
-		return (NULL);
-	return (ft_substr(env_var, 0, len));
+	return (NULL);
 }
 
 //$- returns a string representing the flags of the shell
@@ -84,7 +67,7 @@ char	*is_expand(char *token, int len, char *envp[], t_data *data)
 		return (ft_itoa(0));
 	//keep opening the input if I put "minishell", at this moment put a space at the end of the string to escape
 	if (!ft_strncmp(token, "$0", 2))
-		return (ft_strdup("minishell "));
+		return (ft_strdup("minishell"));
 	if (!ft_strncmp(token, "${", 2))
 		return (get_var_value(token, envp, len));
 	if (!ft_strncmp(token, "$IFS", 4))
@@ -151,9 +134,6 @@ char	*expand(char *pos[3], char *arg, t_data *data, char *expanded)
  * @note i[0] i
  * @note i[1] j
  * @note i[2] len
- * 
- * 
- * 
   */
 char	*remove_quotes(char *str)
 {
@@ -168,12 +148,12 @@ char	*remove_quotes(char *str)
 			i[2]++;
 		i[0]++;
 	}
-	ret = ft_calloc(i[2] + 1, 1);
+	ret = ft_calloc(i[2] + 1, sizeof(char));
 	if (!ret)
 		return (NULL);//malloc error
 	i[0] = -1;
 	//copy string
-	while (++i[0] <= i[2] + 1)
+	while (++i[0] < i[2])
 	{
 		if (str[i[0]] != '\'' && str[i[0]] != '\"')
 		{

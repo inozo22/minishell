@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 14:24:59 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/08/29 16:41:42 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/01 15:07:58 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	free_alloc(t_data *data)
 {
 	free_list(data->env);
 	data->env = NULL;
-	free(data);
 }
 
 int	errors(int error_id, t_data *data)
