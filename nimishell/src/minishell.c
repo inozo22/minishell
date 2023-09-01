@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:32:33 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/08/29 16:30:51 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/01 12:03:23 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,10 @@ char	*get_prompt(t_data *data)
 	return (prompt);
 }
 
-int	check_exit(char **input, t_data *data)
+int	check_exit(char **input)
 {
 	if (input[1])
-		data->return_val = ft_atoi(input[1]);
+		g_return_val = ft_atoi(input[1]);
 	return (INT_MAX);
 }
 
@@ -129,13 +129,13 @@ int	process_input(char *line_read, t_data *data)
 
 
 //infile, outfile obtain in expanser? ->in parser kana
-	data->return_val = executer(NULL, NULL, cmd_list, cmd_nb, data->path, data->env, data);
+	g_return_val = executer(NULL, NULL, cmd_list, cmd_nb, data->path, data->env, data);
 	ft_lstclear(&cmd_list, free);
 //	if (data->return_val == INT_MAX)
 //		return (check_exit(input, data));
 //	del_array((void ***) &input);
 //	ft_printf("Command executed: %s with return: %d\n", input[0], data->return_val);
-	return (data->return_val);
+	return (g_return_val);
 }
 
 // struct termios termios_save;
@@ -196,5 +196,5 @@ int	minishell(t_data *data)
 	rl_clear_history();
 	free(line_read);
 	tcsetattr(0, 0, &termios_save);
-	return (data->return_val);
+	return (g_return_val);
 }

@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:11:50 by nimai             #+#    #+#             */
-/*   Updated: 2023/08/29 15:47:26 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/01 12:27:08 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@
  * @brief when push Ctrl + D, exit 
  * @note as the super free after the while, only write "exit" and break the loop
  */
-void	sig_eof(t_data *data)
+void	sig_eof(void)
 {
 	write(STDOUT_FILENO, "exit\n", 5);
-	data->return_val = 0;
+	g_return_val = 0;
 }
 
 /**

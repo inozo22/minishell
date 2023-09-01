@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_cd_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
+/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 09:43:46 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/26 11:29:12 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/01 12:25:27 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*get_dest_path_wl_sign(t_data *data, char *cur, char *pwd)
 	{
 		if (chdir(cur) == -1)
 		{
-			data->return_val = 1;
+			g_return_val = 1;
 			return (error_built("cd", "failuer to move to current directory\n"), NULL);
 		}
 		ret = ft_strdup(cur);
@@ -57,12 +57,12 @@ char	*get_dest_path_env(t_data *data, char *envtype)
 	ret = get_env(data->env, envtype);
 	if (!ret)
 	{
-		data->return_val = 1;
+		g_return_val = 1;
 		return (error_notset("cd", envtype), NULL);
 	}
 	if (chdir(ret) == -1)
 	{
-		data->return_val = 1;
+		g_return_val = 1;
 		return (error_built("cd", "failed chdir"), NULL);
 	}
 	return (ret);

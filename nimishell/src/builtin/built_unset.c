@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_unset.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
+/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 09:50:35 by nimai             #+#    #+#             */
-/*   Updated: 2023/08/22 15:42:12 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/01 12:26:36 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	built_unset(char **input, t_data *data)
 	i = 1;
 	while (input[i])
 	{
-		if (check_valid(input[i], "unset", data) == 1)
+		if (check_valid(input[i], "unset") == 1)
 			data = unset_env(data, input[i]);
 		i++;
 	}

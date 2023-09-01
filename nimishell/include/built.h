@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:12:28 by nimai             #+#    #+#             */
-/*   Updated: 2023/08/29 15:16:42 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/01 12:26:19 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ typedef struct s_data
 {
 	char		**env;
 	char		**path;
-	int			return_val;
 	pid_t		pid;
 //	t_tokens	*head;
 //this is test for control sign
@@ -94,8 +93,8 @@ char		*ft_strlower(char *str);
 char		*str_mod(char *cur, char *str, int i);
 char		*path_modify(char *cur, char *str);
 int			get_pos_above_path(char *str);
-char		*get_above_path(char *cur, t_data *data);
-void		error_cd(char *cmd, t_data *data);
+char		*get_above_path(char *current);
+void		error_cd(char *cmd);
 char		*get_dest_path_wl_sign(t_data *data, char *cur, char *pwd);
 char		*get_dest_path_env(t_data *data, char *envtype);
 /**
@@ -106,7 +105,7 @@ char		*get_dest_path_env(t_data *data, char *envtype);
  * functions from utils
  */
 
-int			check_valid(char *str, char *cmd, t_data *data);
+int			check_valid(char *str, char *cmd);
 char		*get_env(char **env, char *type);
 /**
  * functions from utils

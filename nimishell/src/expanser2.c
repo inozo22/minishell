@@ -71,9 +71,9 @@ char	*get_var_value(char *env_var, char *envp[], int len)
 char	*is_expand(char *token, int len, char *envp[], t_data *data)
 {
 	if (!ft_strncmp(token, "$?", 2))
-		return (ft_itoa(data->return_val));
+		return (ft_itoa(g_return_val));
 	if (!ft_strncmp(token, "$!", 2))
-		return (ft_itoa(data->return_val));
+		return (ft_itoa(g_return_val));
 	if (!ft_strncmp(token, "$$", 2))
 		return (ft_itoa(data->pid));
 	if (!ft_strncmp(token, "$-", 2))

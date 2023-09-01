@@ -1,13 +1,13 @@
 - printf("%sI'm here%s\n", COLOR_YELLOW, COLOR_RESET);
 	
------------------------------------------------------------------------
+---------------------------------
 TODO: make lexer and expanser works
 TODO: obtain file name in parser(?)
 TODO: put protect for open function in redir
 TODO: Check leaks in non interactive mode and interactive exit
 
 
------------------------------------------------------------------------
+---------------------------------
 DONE~~: is expand in expanser, "$*" doesn't work and "$0" gets open input~~
 DONE~~: remove quotes in case quotes are not edge (not"HOME", but $$"HOME")~~
 DONE~~: control {} in expanser~~
@@ -16,7 +16,7 @@ DONE~~: control {} in expanser~~
 
 
 
------------------------------------------------------------------------
+---------------------------------
 *** CASES which should control ***
 ~~bash-3.2$ cd $$HOME~~
 ~~bash: cd: 4180HOME: No such file or directory~~230811
