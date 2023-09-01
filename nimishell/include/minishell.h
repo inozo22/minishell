@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 19:10:38 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/08/29 16:36:38 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/01 16:03:41 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,8 +167,6 @@ int		error_msg(char *prog_name, char *cmd, int mode);
 //int child_creation(t_data *data, char **cmd);
 int		executer(char *infile, char *outfile, t_list *lst, int cmd_number, char **path, char **env, t_data *data);
 
-int		executor(t_list *lst, int cmd_number, char ***commands, char **path, char **env, t_data *data);
-
 //	Split
 char	**split_input(char *str);
 
@@ -192,7 +190,7 @@ int		av_amount(char **strs);
 
 //Expanser
 //char	*expanser(char *arg, char *envp[], t_data *data);
-char	*expanser(t_list *list, t_data *data);
+char	*expander(t_list *list, t_data *data);
 //char	*expand(t_list *list, t_data *data, char *str);
 
 #endif

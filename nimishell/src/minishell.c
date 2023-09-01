@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:32:33 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/01 15:13:52 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/01 16:31:50 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	check_builtin(char **input, t_data *data)
 /* 	int i = -1;
 	while (data->env[++i])
 		ft_printf("env %d: %s\n", i, data->env[i]); */
-	if (!input || !input[0])
+	if (!input[0])
 		return (-1);
 	ft_printf("Input0: %s\n", input[0]);
 	ft_printf("Input1: %s\n", input[1]);
@@ -86,11 +86,7 @@ int	check_builtin(char **input, t_data *data)
 	else if (!ft_strcmp(input[0], "unset"))
 		return (built_unset(input, data));
 	else if (!ft_strcmp(input[0], "exit"))
-	{
-		ft_printf("Exit found!\n");
-		return (INT_MAX);
-	}
-	ft_strlower(input[0]);
+		return (built_exit(input, data, 1));
 	if (!ft_strcmp(input[0], "echo"))
 		return (built_echo(input));
 	else if (!ft_strcmp(input[0], "pwd"))
@@ -115,9 +111,23 @@ int	process_input(char *line_read, t_data *data)
 	tmp = cmd_list;
 	while (tmp)
 	{
-		tmp->content = expanser(tmp, data);
-		printf("%sEXPANSER: Line: %d, content: %s, type: %d, pos: %d%s\n", COLOR_BLUE, __LINE__, tmp->content, tmp->type, tmp->cmd_pos, COLOR_RESET);
+		tmp->content = expander(tmp, data);
+		printf("%sEXPANDER: Line: %d, content: %s, type: %d, pos: %d%s\n", COLOR_BLUE, __LINE__, tmp->content, tmp->type, tmp->cmd_pos, COLOR_RESET);
 		tmp = tmp->next;
+	}
+	tmp = cmd_list;
+	if (cmd_nb == 0)
+	{
+		while (tmp)
+		{
+			//SET THE EXIT INPUT FROM NULL TO DOUBLE ARRAY
+			if (tmp->type == WORD && !ft_strcmp(tmp->content, "exit") && built_exit(NULL, data, 0) == 0)
+			{
+				ft_lstclear(&cmd_list, free);
+				return (0);
+			}
+			tmp = tmp->next;
+		}
 	}
 //	exit (0);
 /**
@@ -143,7 +153,7 @@ int	process_input(char *line_read, t_data *data)
 /**
  * @brief set terminal attributes to remove ^C in the prompt
   */
-int	set_terminal_attributes(struct termios *termios_save)
+static int	set_terminal_attributes(struct termios *termios_save)
 {
 	struct termios	term;
 
@@ -152,6 +162,16 @@ int	set_terminal_attributes(struct termios *termios_save)
 	term = *termios_save;
 	term.c_lflag &= ~ECHOCTL;
 	tcsetattr(0, TCSASOFT, &term);
+	return (0);
+}
+
+static int	clean_exit(char *prompt, char *line_read, struct termios *term_save)
+{
+	free(prompt);
+	printf("\nBye 🗑\n");
+//	rl_clear_history();
+	free(line_read);
+	tcsetattr(0, 0, term_save);
 	return (0);
 }
 
@@ -165,7 +185,7 @@ int	minishell(t_data *data)
 
 // CORREGIR MENSAJE DE ERROR
 	if (set_terminal_attributes(&termios_save) == 1)
-		exit (1);
+		return (1);
 		//return (errors(12, data));
 	//set_signal_handlers(13);
 	prompt = get_prompt(data);
@@ -178,23 +198,16 @@ int	minishell(t_data *data)
 				rl_on_new_line();
 			else *///230731nimai:comment
 			add_history(line_read);
-		else
+		if (!line_read)//230731nimai: added to work ctrl+D without segfault
 		{
-//			sig_eof(data);//check function in child process
-			if (!line_read)//230731nimai: added to work ctrl+D without segfault
-				break ;
-			else
-				continue ;
+			g_return_val = 0;
+			break ;
 		}
-		if (process_input(line_read, data) == INT_MAX)
+		process_input(line_read, data);
+		if (data->exit_status)
 			break ;
 		free(line_read);
 	}
-	free(prompt);
-//	rl_redisplay();
-	printf("\n\nBye 🗑");
 	rl_clear_history();
-	free(line_read);
-	tcsetattr(0, 0, &termios_save);
-	return (g_return_val);
+	return (clean_exit(prompt, line_read, &termios_save));
 }

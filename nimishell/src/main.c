@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 18:22:41 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/08/29 16:47:02 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/01 16:20:15 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,13 +81,13 @@ static int	init_data(t_data *data, char *envp[], char *prog_name)
 	else if (fill_env(data, envp))
 		return (1);
 	set_path_list(data);
+	data->exit_status = 0;
 	return (0);
 }
 
 int	main(int argc, char *argv[], char *envp[])
 {
 	t_data	data;
-	int		ret;
 
 	g_return_val = 0;
 	data.pid = get_my_pid();
@@ -104,9 +104,7 @@ int	main(int argc, char *argv[], char *envp[])
 		else
 			exit (error_file(argv[0], argv[1]));
 	}
-	ret = minishell(&data);
-	if (g_return_val)
-		ret = g_return_val;
+	minishell(&data);
 	free_alloc(&data);
-	return (ret);
+	return (g_return_val);
 }

@@ -169,7 +169,7 @@ char	*remove_quotes(char *str)
 /**
  * @param pos[2] to keep and free string 
  */
-char	*expanser(t_list *list, t_data *data)
+char	*expander(t_list *list, t_data *data)
 {
 	char	*expanded;
 	char	*pos[3];

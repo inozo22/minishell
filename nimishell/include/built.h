@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:12:28 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/01 12:26:19 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/01 16:26:00 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct s_data
 	char		**env;
 	char		**path;
 	pid_t		pid;
+	short int	exit_status;
 //	t_tokens	*head;
 //this is test for control sign
 //	struct termios	termios_save;
@@ -61,7 +62,7 @@ typedef struct s_export
 	int				plen;
 }	t_export;
 
-int			built_exit(char **input, int cmd_num);
+int			built_exit(char **input, t_data *data, int cmd_num);
 int			built_pwd(t_data *data);
 int			built_echo(char **input);
 int			built_cd(char **input, t_data *data);
