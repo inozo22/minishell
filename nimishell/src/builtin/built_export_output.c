@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 12:44:12 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/05 16:15:31 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/05 16:25:28 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,8 @@ void	output_env(t_export *list, int len, int flag)
  * @brief a part of initiation t_data
  * @author nimai
  * @param strs it's copy of envp
- * @note It's not beautiful to allocate 2000 each box[i].name and val, but it's necessary to sort.
+ * @note It's not beautiful to allocate 2000 each box[i].name and val,
+ * but it's necessary to sort.
  * i[0] = i
  * i[1] = len
  * i[2] = c

@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 13:05:08 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/01 16:35:22 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/05 16:29:35 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ int	av_amount(char **strs)
  * @brief manage "builtin" exit cmd.
  * @author nimai
  * @param **av "exit", "0"
- * @return if there are more than <cmd + 1 argument>, return to minishell prompt, without execute any function after this.
+ * @return if there are more than <cmd + 1 argument>, return to minishell
+ * prompt, without execute any function after this.
  * @note 230611nimai: free in the main, so don't have to free memory here.
  */
 int	built_exit(char **input, t_data *data, int cmd_num)
@@ -73,7 +74,8 @@ int	built_exit(char **input, t_data *data, int cmd_num)
 	amount = av_amount(input);
 	if (amount >= 3)
 	{
-		//230523nimai:when return it, it will not move to next command, but return to minishell prompt
+		//230523nimai:when return it, it will not move to next command,
+		//but return to minishell prompt
 		return (error_exit_msg());
 	}
 	else if (amount > 1 && !is_numeric(input[1]))

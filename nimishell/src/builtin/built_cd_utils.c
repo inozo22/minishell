@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 09:43:46 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/01 12:25:27 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/05 16:32:12 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,20 +25,22 @@ char	*get_dest_path_wl_sign(t_data *data, char *cur, char *pwd)
 
 	ret = NULL;
 	(void)data;
-	if (cur)//move to where you are, you will get OLDPWD
+	if (cur) //move to where you are, you will get OLDPWD
 	{
 		if (chdir(cur) == -1)
 		{
 			g_return_val = 1;
-			return (error_built("cd", "failuer to move to current directory\n"), NULL);
+			return (error_built("cd", \
+					"failure to move to current directory\n"), NULL);
 		}
 		ret = ft_strdup(cur);
 	}
-	else if (!cur)//move to where you are, but if it's not exist
+	else if (!cur) //move to where you are, but if it's not exist
 	{
 		// I think I should put input instead of "./" because could be any string
 		ret = ft_strjoin(pwd, "./");
-		ft_printf("cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory");//temporary error control
+		ft_printf("cd: error retrieving current directory: getcwd: \
+				cannot access parent directories: No such file or directory"); //temporary error control
 	}
 	return (ret);
 }

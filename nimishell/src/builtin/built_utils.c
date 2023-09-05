@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 11:52:54 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/01 12:25:56 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/05 16:23:11 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,6 @@ char	*get_env(char **env, char *type)
 	if (env[i] && ft_strrchr(env[i], '='))
 		return (ft_strdup(env[i] + ft_strlen(type) + 1));
 	else
-		return (NULL);//not set error coco?
+		return (NULL);
 }
+		//not set error coco?

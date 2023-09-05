@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:18:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/01 18:29:35 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/05 16:28:31 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 /**
  * 
- * @param flag if there is no '=', you will put one more length to allocate memory
+ * @param flag if there is no '=', you will put one more length to
+ * allocate memory
  */
 char	*envp_str_mod(char *str, char *input, int i, int flag)
 {
@@ -30,7 +31,8 @@ char	*envp_str_mod(char *str, char *input, int i, int flag)
 }
 
 /**
- * @note 230802nimai: changed counter i[1] because of the Werror, check how works in MacOS
+ * @note 230802nimai: changed counter i[1] because of the Werror,
+ * check how works in MacOS
  * @note error wit fsanitize=address when executing "cd" in line 53
  */
 void	envp_strs_mod(char *input, t_data *data)
@@ -44,7 +46,7 @@ void	envp_strs_mod(char *input, t_data *data)
 		while (data->env[i[0]])
 		{
 			i[1] = -1;
-			if (ft_strncmp(data->env[i[0]], input, i[2] + 1) == 0)//with '='
+			if (ft_strncmp(data->env[i[0]], input, i[2] + 1) == 0) //with '='
 				data->env[i[0]] = envp_str_mod(data->env[i[0]], input, i[2], 0);
 			else if (ft_strncmp(data->env[i[0]], input, i[2]) == 0)
 			{
@@ -147,7 +149,6 @@ int	check_input(char *input, t_data *data)
 	int	i;
 	int	j;
 
-
 	i = 0;
 	while (data->env[i])
 	{
@@ -202,19 +203,22 @@ int	built_export(char **input, t_data *data)
  * BEHAVIOUR ON BASH
  * when execute export, the list should be ascending order, 
  * separated by capital letter and small letter-> done
- * If there is more than one argument after command, add as a variable, 
+ * If there is more than one argument after command, add as a variable,
  * except if there is no space
  * 
- * 230601nimai: I have doubt with $<variable name> ->treate as I have received a path
+ * 230601nimai: I have doubt with $<variable name> ->treate as I have received
+ * a path
  * 
  * ??? Is it OK if we control in the minishell?	-> OK!
- * For example, it's ok if do sth in bash, but doesn't affect to the minishell? ->OK!
+ * For example, it's ok if do sth in bash, but doesn't affect to the
+ * minishell? ->OK!
  * 
  * ******************************************************************
  * 230613nimai:
  * export OLDPWD: do nothing
  * export OLDPWD=aaa: overwrite
- * export OLDPWD="aaa": doesn't work (ask how will I receive) <- 230614nimai: I think will receive as a string
+ * export OLDPWD="aaa": doesn't work (ask how will I receive)
+ * <- 230614nimai: I think will receive as a string
  * export OLDPWA: add in export, but doesn't print with env command
  * export OLDPWA=aaa: add new variable
  * export OLDPWA="aaa": doesn't work (ask how will I receive)

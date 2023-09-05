@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
+/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 17:20:27 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/17 17:40:16 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/05 16:22:38 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,13 @@ void	error_id_built(char *cmd, char *av, char *comment)
 	ft_putstr_fd(": `", 2);
 	ft_putstr_fd(av, 2);
 	ft_putstr_fd("': ", 2);
-/* 	if (errno == 13)
+	ft_putendl_fd(comment, 2);
+}
+/* 	if (errno == EACCESS)
 	{
 		ft_putendl_fd(": Permission denied", 2);
 		return (127);
 	} */
-	ft_putendl_fd(comment, 2);
-}
 
 /**
  * @brief error message in builtin with argument
@@ -59,13 +59,13 @@ void	error_av_built(char *cmd, char *av, char *comment)
 	ft_putstr_fd(": ", 2);
 	ft_putstr_fd(av, 2);
 	ft_putstr_fd(": ", 2);
-/* 	if (errno == 13)
+	ft_putendl_fd(comment, 2);
+}
+/* 	if (errno == EACESS)
 	{
 		ft_putendl_fd(": Permission denied", 2);
 		return (127);
 	} */
-	ft_putendl_fd(comment, 2);
-}
 
 /**
  * @brief error message in builtin with argument
@@ -81,10 +81,10 @@ void	error_built(char *cmd, char *comment)
 	if (errno == 13)
 	{
 		ft_putendl_fd(": Permission denied", 2);
-		//return (127);
 	}
 	ft_putendl_fd(comment, 2);
 }
+		//return (127);
 
 /**
  * @brief error message in builtin with argument

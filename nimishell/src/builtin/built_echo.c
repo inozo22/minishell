@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_echo.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
+/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:54:13 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/26 12:20:54 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/05 16:31:08 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 /**
  * @brief look for flag, doesn't matter how many n's has
  * @author nimai
- * @return if it's flag, returns 1, if it's included flag some number more than 1, otherwise 0.
+ * @return if it's flag, returns 1, if it's included flag some number more
+ * than 1, otherwise 0.
  * Hope anyone put more than 2147483647 ns
  */
 int	is_flag(char *str)
