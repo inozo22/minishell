@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:11:50 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/05 14:06:57 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/05 16:34:52 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	action_child(int sig)//looks working this, but don't let me print these lin
 {
 	if (sig == SIGINT)
 	{
-//		write(STDOUT_FILENO, "^C\n", 3);
+		write(STDOUT_FILENO, "^C\n", 3);
 		g_return_val = 130;
 	}
 	else if (sig == SIGQUIT)
