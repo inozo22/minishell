@@ -113,16 +113,16 @@ char	*expand(char *pos[3], char *arg, t_data *data, char *expanded)
 	if (*pos[1] == '\'' && flag)
 	{
 		pos[1]++;
-		tmp = ft_strndup(pos[0], (pos[1] - pos[0]));
+		tmp = ft_substr(pos[0], 0, (pos[1] - pos[0]));
 	}
 /* 	if (*pos[1] == '}' || (*pos[1] == '\'' && flag))
 		pos[1]++;
 		if (*pos[1] == '\'' && flag) */
-	//		tmp = ft_strndup(pos[0], (pos[1] - pos[0]));
+	//		tmp = ft_substr(pos[0], 0, (pos[1] - pos[0]));
 	if (*pos[0] == '$')//it will not enter with single quote
 		tmp = is_expand(pos[0], (pos[1] - pos[0]- 1), data->env, data);
 	else
-		tmp = ft_strndup(pos[0], (pos[1] - pos[0]));
+		tmp = ft_substr(pos[0], 0, (pos[1] - pos[0]));
 	if (tmp)
 		expanded = obtain_expanded(tmp, expanded, arg);
 	else if (!tmp && ft_strcmp(expanded, arg) == 0)

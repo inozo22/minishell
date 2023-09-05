@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 19:10:38 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/01 16:03:41 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/05 16:04:18 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ extern int	g_return_val;
 # define WRITE_END 1
 
 # define SHELL_NAME "nimishell"
+# define DEFAULT_PATH "PATH=/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin"
 
 typedef struct s_tokens
 {
@@ -176,6 +177,7 @@ void	*del(void **ptr);
 void	*del_array(void ***ptr);
 void	*del_err_array(char ***ptr, int i);
 void	*del_triple_array(char ****ptr);
+int		update_last_executed_cmd(t_data *data, char *cmd);
 
 //Bultin
 //	errors

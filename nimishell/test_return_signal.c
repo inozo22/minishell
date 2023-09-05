@@ -1,35 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   terminate.c                                        :+:      :+:    :+:   */
+/*   test_return_signal.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/30 14:24:59 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/05 15:11:20 by bde-mada         ###   ########.fr       */
+/*   Created: 2023/09/04 16:52:25 by bde-mada          #+#    #+#             */
+/*   Updated: 2023/09/04 17:31:59 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include <unistd.h>
+#include <stdlib.h>
+#include <sys/wait.h>
+#include <stdio.h>
 
-void	*free_list(char **list)
+int	main(void)
 {
-	int	i;
-
-	i = -1;
-	while (list[++i])
-	{
-		free(list[i]);
-		list[i] = NULL;
+	int return_val;
+	char *args[2] = {".", NULL};
+	pid_t pid = fork();
+	if (!pid)
+	{	
+		printf("Child process\n");
+		if (execve("/bin/cat", NULL, NULL) == -1)
+			exit (1);
 	}
-	free(list);
-	return (NULL);
-}
-
-void	free_alloc(t_data *data)
-{
-	free_list(data->env);
-	free_list(data->path);
-	data->env = NULL;
-	data->path = NULL;
+	else
+	{	
+		usleep(100);
+		printf("Parent process\n");
+		waitpid(0, &return_val, 0);
+		printf("Exit status: %d\n", return_val);
+	}
+	return 0;
 }

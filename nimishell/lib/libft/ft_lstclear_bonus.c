@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 20:03:17 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/06/23 16:22:08 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/04 15:48:09 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	*ft_lstclear(t_list **lst, void (*del)(void *))
 	{
 		ft_lstclear(&(*lst)->next, del);
 		ft_lstdelone(*lst, del);
-		*lst = 0;
+		*lst = NULL;
 	}
 	return (NULL);
 }

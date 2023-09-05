@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 18:39:55 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/01 14:05:02 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/04 15:44:56 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,6 @@ int get_token(t_list **list, char *input, int *pos)
 //	ft_printf("str: %s\n", token);
 	tmp = *list;
 	max_pipe = 0;
-//	token = clear_trailing_spaces(token);
 	printf("new_token: %s\n", token);
 	if (!token)
 		return (-1);

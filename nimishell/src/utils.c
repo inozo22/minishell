@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 12:49:14 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/06/23 12:41:36 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/05 16:09:55 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,18 @@ void	*del_err_array(char ***ptr, int i)
 	free(*ptr);
 	*ptr = NULL;
 	return (ptr);
+}
+
+int	update_last_executed_cmd(t_data *data, char *cmd)
+{
+	char	**tmp_input;
+
+	tmp_input = (char **)ft_calloc(2 + 1, sizeof(char *));
+	if (!tmp_input)
+		return (errors(ENOMEM, data));
+	tmp_input[0] = ft_strdup("export");
+	tmp_input[1] = ft_strjoin("_=", cmd);
+	built_export(tmp_input, data);
+	free_list(tmp_input);
+	return (0);
 }

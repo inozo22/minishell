@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 23:43:32 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/01 18:20:58 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/04 13:31:19 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -318,9 +318,6 @@ int	check_exit_status(int e_status)
 	return (0);
 }
 
-
-
-
 /**
  * @param tmp_stdfd[0] = tmp_stdin
  * @param tmp_stdfd[1] = tmp_stdout
@@ -406,7 +403,17 @@ int executer(char *infile, char *outfile, t_list *lst, int cmd_number, char **pa
 			//child
 			char *cmd_path = NULL;
 			cmd_path = get_cmd_path(lst->content, path);
-			execve(cmd_path, cmd, env);
+			if (execve(cmd_path, cmd, env) == -1)
+			{
+				if (errno == ENOEXEC)
+				{
+					char *new_argv[2];
+					new_argv[0] = cmd_path;
+					new_argv[1] = NULL;
+					if (execve("/bin/sh", new_argv, env) == -1)
+						perror("execve");
+				}
+			}
 			//as doesn't return when execute the command well, there is no protection
 			perror("execve");
 			//free all the data if execve fails

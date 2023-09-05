@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 16:04:56 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/08/23 17:47:10 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/05 14:45:19 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,13 @@ int	command_not_found_handler(char *name, char *cmd)
 	ft_putstr_fd(": command not found: ", 2);
 	ft_putendl_fd(cmd, 2);
 	return (127);
+}
+
+int	errors(int error_id, t_data *data)
+{
+	perror("minishell:");
+	if (error_id == ENOMEM)
+		ft_printf("Cannot allocate memory\n");
+	free_alloc(data);
+	return (error_id);
 }
