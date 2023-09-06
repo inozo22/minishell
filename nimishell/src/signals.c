@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:11:50 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/06 13:16:20 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/06 15:01:13 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ void	action_child(int sig, siginfo_t *info, void *context)//looks working this, 
 		write(STDOUT_FILENO, "^C\n", 3);
 		g_return_val = 130;
 	//	exit (130);
-	//	kill(info->si_pid, SIGINT);
+	//	kill(info->si_pid, SIGTERM);
 	}
 	else if (sig == SIGQUIT)
 	{
@@ -139,6 +139,7 @@ void	sigquit_ignore(void)
 	ft_bzero(&sa, sizeof(struct sigaction));
 	sa.sa_handler = SIG_IGN;
 	sigaction(SIGQUIT, &sa, NULL);
+	sa.sa_flags = SA_SIGINFO | SA_RESTART;
 	g_return_val = 0;
 }
 
@@ -152,7 +153,6 @@ void	set_signal_handlers(pid_t pid)
 		write(1, "Im pappy\n", 9);
 		sigquit_ignore();
 		sa.sa_handler = &action;
-		sigemptyset(&sa.sa_mask);
 		sa.sa_flags = SA_SIGINFO | SA_RESTART;
 		sigaction(SIGINT, &sa, NULL);
 	}
@@ -160,7 +160,6 @@ void	set_signal_handlers(pid_t pid)
 	{
 		write(1, "Im kid\n", 7);
 		sa.sa_sigaction = &action_child;
-		sigemptyset(&sa.sa_mask);
 		sa.sa_flags = SA_SIGINFO | SA_RESTART;
 		sigaction(SIGINT, &sa, NULL);
 		sigaction(SIGQUIT, &sa, NULL);
