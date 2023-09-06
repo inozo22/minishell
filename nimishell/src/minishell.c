@@ -75,7 +75,7 @@ int	check_builtin(char **input, t_data *data)
 /* 	int i = -1;
 	while (data->env[++i])
 		ft_printf("env %d: %s\n", i, data->env[i]); */
-	update_last_executed_cmd(data, input[0]);
+//	update_last_executed_cmd(data, input[0]);
 	if (!input[0])
 		return (-1);
 	ft_printf("Input0: %s\n", input[0]);
@@ -140,12 +140,12 @@ int	process_input(char *line_read, t_data *data)
 
 
 //infile, outfile obtain in expanser? ->in parser kana
-	g_return_val = executer(NULL, NULL, cmd_list, cmd_nb, data->path, data->env, data);
+	g_return_val = executer(NULL, cmd_list, cmd_nb, data->path, data->env, data);
 	ft_printf("Return val: %d\n", g_return_val);
 	ft_lstclear(&cmd_list, free);
 //	if (data->return_val == INT_MAX)
 //		return (check_exit(input, data));
-//	del_array((void ***) &input);
+//	del_array((void ***) &input)in	;
 //	ft_printf("Command executed: %s with return: %d\n", input[0], data->return_val);
 	return (g_return_val);
 }

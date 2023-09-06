@@ -29,6 +29,10 @@
 # include "signals.h"
 //# include "../lib/libft/libft.h"
 
+# ifndef TCSASOFT
+#  define TCSASOFT 0
+# endif
+
 //test
 extern int	g_return_val;
 
@@ -166,7 +170,7 @@ int		error_msg(char *prog_name, char *cmd, int mode);
 
 //	Executor
 //int child_creation(t_data *data, char **cmd);
-int		executer(char *infile, char *outfile, t_list *lst, int cmd_number, char **path, char **env, t_data *data);
+int		executer(char *outfile, t_list *lst, int cmd_number, char **path, char **env, t_data *data);
 
 //	Split
 char	**split_input(char *str);
@@ -194,5 +198,9 @@ int		av_amount(char **strs);
 //char	*expanser(char *arg, char *envp[], t_data *data);
 char	*expander(t_list *list, t_data *data);
 //char	*expand(t_list *list, t_data *data, char *str);
+
+//Redirect
+
+int		heredoc_read(char *eof);
 
 #endif
