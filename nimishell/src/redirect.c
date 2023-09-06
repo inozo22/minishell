@@ -30,6 +30,7 @@ int	heredoc_to_stdin(char *input)
 		close(fd[WRITE_END]);
 		exit(0);
 	}
+	wait(NULL);
 	close(fd[WRITE_END]);
 	dup2(fd[READ_END], STDIN_FILENO);
 	close(fd[READ_END]);
@@ -46,7 +47,7 @@ int	heredoc_read(char *eof)
 	while (1)
 	{
 		line_read = readline(">");
-		if (ft_strcmp(eof, line_read))
+		if (!ft_strcmp(eof, line_read))
 			break ;
 		tmp = input;
 		input = ft_strjoin(line_read, input);
