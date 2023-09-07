@@ -1,0 +1,21 @@
+echo $OLDPWD
+export OLDPWD=/\n echo $OLDPWD
+echo $PWD
+echo $PWD\n export PWD=/ 
+echo mkdir dir\n ln -s dir symdir\n cd symdir\n $PWD 
+pwd
+export PWD=/\n pwd 
+mkdir dir\n ln -s dir symdir\n cd symdir\n pwd 
+export PWD=\n export OLDPWD=\n pwd\n echo $PWD\n echo $OLDPWD 
+export PWD=\n export OLDPWD=\n mkdir dir\n cd dir\n pwd\n echo $PWD\n echo $OLDPWD
+export PWD=\n export OLDPWD=\n mkdir dir\n cd dir\n cd ..\n pwd\n echo $PWD\n echo $OLDPWD
+export PWD=\n export OLDPWD=\n cd\n pwd\n echo $PWD\n echo $OLDPWD
+mkdir dir\n cd dir\n rmdir ../dir\n cd ./\n pwd\n echo $PWD\n echo $OLDPWD, export PWD=\n export OLDPWD=\n
+export PWD=\n export OLDPWD=\n mkdir dir\n cd dir\n rmdir ../dir\n cd ./\n cd ././././././//////////./././././././//////./\n pwd\n echo $PWD\n echo $OLDPWD
+export PWD=\n export OLDPWD=\n mkdir dir\n cd dir\n rmdir ../dir\n cd ./\n cd ../\n pwd\n echo $PWD\n echo $OLDPWD
+export PWD=\n export OLDPWD=\n mkdir dir\n ln -s dir link\n cd link\n rmdir ../dir\n cd ./\n pwd\n echo $PWD\n echo $OLDPWD
+export PWD=\n export OLDPWD=\n mkdir dir\n ln -s dir link\n cd link\n rmdir ../dir\n cd ./\n cd ../\n pwd\n echo $PWD\n echo $OLDPWD
+export PWD=\n export OLDPWD=\n mkdir DIR\n cd dir\n rmdir ../DIR\n cd ./\n pwd\n echo $PWD\n echo $OLDPWD
+export PWD=\n export OLDPWD=\n mkdir DIR\n cd dir\n rmdir ../DIR\n cd ./\n cd ../\n pwd\n echo $PWD\n echo $OLDPWD
+export PWD=\n export OLDPWD=\n mkdir dir\n ln -s dir link\n cd LINK\n rmdir ../dir\n cd ./\n pwd\n echo $PWD\n echo $OLDPWD
+export PWD=\n export OLDPWD=\n mkdir dir\n ln -s dir link\n cd LINK\n rmdir ../dir\n cd ./\n cd ../\n pwd\n echo $PWD\n echo $OLDPWD

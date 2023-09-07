@@ -1,0 +1,36 @@
+#!/bin/bash
+
+# test pwd
+# echo "echo hoge" | ./minishell > minishell.txt
+# echo "echo hoge" | bash > bash.txt
+
+# echo -e "cd ..\n pwd" | ./minishell > minishell.txt
+# echo -e "cd ..\n pwd" | bash >> bash.txt
+
+echo "echo $OLDPWD" | bash > bash.txt
+echo "echo $OLDPWD" | ./minishell > minishell.txt
+echo -e "export OLDPWD=/\n echo \$OLDPWD" | bash >> bash.txt
+echo -e "export OLDPWD=/\n echo \$OLDPWD" | ./minishell >> minishell.txt
+echo "echo $PWD" | bash >> bash.txt
+echo "echo $PWD" | ./minishell >> minishell.txt
+echo -e "export PWD=/\necho \$PWD" | bash >> bash.txt
+echo -e "export PWD=/\necho \$PWD" | ./minishell >> minishell.txt
+echo -e "mkdir dir\n ln -s dir symdir\n cd symdir\n echo \$PWD" | bash >> bash.txt
+echo -e "mkdir dir\n ln -s dir symdir\n cd symdir\n echo \$PWD" | ./minishell >> minishell.txt
+echo "pwd" | bash >> bash.txt
+echo "pwd" | ./minishell >> minishell.txt
+echo -e "export PWD=/\n pwd\n echo \$PWD" | bash >> bash.txt
+echo -e "export PWD=/\n pwd\n echo \$PWD" | ./minishell >> minishell.txt
+echo -e "mkdir dir\n ln -s dir symdir\n cd symdir\n pwd" | bash >> bash.txt
+echo -e "mkdir dir\n ln -s dir symdir\n cd symdir\n pwd" | ./minishell >> minishell.txt
+echo -e "export PWD=\n export OLDPWD=\n pwd\n echo \$PWD\n echo \$OLDPWD" | bash >> bash.txt
+echo -e "export PWD=\n export OLDPWD=\n pwd\n echo \$PWD\n echo \$OLDPWD" | ./minishell >> minishell.txt
+echo -e "export PWD=\n export OLDPWD=\n mkdir dir\n cd dir\n pwd\n echo \$PWD\n echo \$OLDPWD" | bash >> bash.txt
+echo -e "export PWD=\n export OLDPWD=\n mkdir dir\n cd dir\n pwd\n echo \$PWD\n echo \$OLDPWD" | ./minishell >> minishell.txt
+echo -e "export PWD=\n export OLDPWD=\n mkdir dir\n cd dir\n cd ..\n pwd\n echo \$PWD\n echo \$OLDPWD\n" | bash >> bash.txt
+echo -e "export PWD=\n export OLDPWD=\n mkdir dir\n cd dir\n cd ..\n pwd\n echo \$PWD\n echo \$OLDPWD\n" | ./minishell >> minishell.txt
+echo -e "export PWD=\n export OLDPWD=\n cd\n pwd\n echo \$PWD\n echo \$OLDPWD" | bash >> bash.txt
+echo -e "export PWD=\n export OLDPWD=\n cd\n pwd\n echo \$PWD\n echo \$OLDPWD" | ./minishell >> minishell.txt
+
+#echo "echo \"🦥■■■  Im here ■■■🦥\""| bash >> bash.txt 
+diff minishell.txt bash.txt

@@ -67,9 +67,9 @@ int	check_exit(char **input)
 /**
  * @note modified to control any kind of letters for pwd, echo, env
  * @note changed order of the conditions, I think will not make any error because of this. tho....
- * @note コマンドArrにして、関数をポインターで渡したらきれいに出来そうだけど、現状見やすいので放置
  * It would be neat to make it a command Arr and pass function's pointer, but it's readable, so leave it.
-  */
+ * @note Input1 is empty now
+ */
 int	check_builtin(char **input, t_data *data)
 {
 /* 	int i = -1;
@@ -116,6 +116,7 @@ int	process_input(char *line_read, t_data *data)
 		printf("%sEXPANDER: Line: %d, content: %s, type: %d, pos: %d%s\n", COLOR_BLUE, __LINE__, tmp->content, tmp->type, tmp->cmd_pos, COLOR_RESET);
 		tmp = tmp->next;
 	}
+
 	tmp = cmd_list;
 	if (cmd_nb == 0)
 	{
@@ -142,6 +143,7 @@ int	process_input(char *line_read, t_data *data)
 //infile, outfile obtain in expanser? ->in parser kana
 	g_return_val = executer(NULL, cmd_list, cmd_nb, data->path, data->env, data);
 	ft_printf("Return val: %d\n", g_return_val);
+
 	ft_lstclear(&cmd_list, free);
 //	if (data->return_val == INT_MAX)
 //		return (check_exit(input, data));
@@ -183,12 +185,14 @@ int	minishell(t_data *data)
 	char			*prompt;
 
 // these are remove ^C in the prompt
+
 	struct termios	termios_save;
 
 // CORREGIR MENSAJE DE ERROR
 	if (set_terminal_attributes(&termios_save) == 1)
 		return (1);
 		//return (errors(12, data));
+
 	//set_signal_handlers(13);
 	prompt = get_prompt(data);
 	while (1)

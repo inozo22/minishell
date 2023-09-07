@@ -12,10 +12,6 @@
 
 #include "minishell.h"
 
-//test
-//int	g_return_val;
-//test
-
 void	set_path_list(t_data *data)
 {
 	int	i;
