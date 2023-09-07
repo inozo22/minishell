@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 18:22:41 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/07 17:36:39 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/07 18:02:56 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int	fill_env(t_data *data, char *envp[])
 		i++;
 	data->env = (char **)ft_calloc(i + 2, sizeof(char *));
 	if (!data->env)
-		return(errors(12, data));
+		return (errors(12, data));
 	i = -1;
 	while (envp[++i])
 	{
@@ -60,7 +60,6 @@ static int	fill_env(t_data *data, char *envp[])
 		if (!data->env[i] && envp[i])
 			return (errors(ENOMEM, data));
 	}
-	ft_printf("Environment loaded\n");
 	return (0);
 }
 
@@ -72,7 +71,7 @@ static int	define_basic_env(t_data *data, char *prog_name)
 	ptr = getcwd(NULL, 0);
 	data->env = (char **)ft_calloc(5 + 1, sizeof(char *));
 	if (!data->env)
-		return(errors(12, data));
+		return (errors(12, data));
 	data->env[0] = ft_strdup(DEFAULT_PATH);
 	data->env[1] = ft_strjoin("PWD=", ptr);
 	data->env[2] = ft_strdup("OLDPWD");
@@ -91,6 +90,7 @@ static int	init_data(t_data *data, char *envp[], char *prog_name)
 		return (1);
 	else if (*envp && fill_env(data, envp))
 		return (1);
+	ft_printf("Environment loaded\n");
 	set_path_list(data);
 	data->exit_status = 0;
 	return (0);

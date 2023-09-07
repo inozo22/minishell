@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   executer2.c                                        :+:      :+:    :+:   */
+/*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/07 13:51:32 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/07 18:01:11 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ char	*get_cmd_path(char *cmd, char **path)
 }
 
 /**
- * @note 230811nimai: add g_return_val, check if there is another way to reset g_return_val
+ * @note 230811nimai: add g_return_val, check if there is another way to
+ * reset g_return_val
  */
 int	check_exit_status(int e_status)
 {
@@ -61,15 +62,16 @@ int	check_exit_status(int e_status)
 	return (0);
 }
 
-int execute_script_without_shebang(char **cmd, char **env)
+int	execute_script_without_shebang(char **cmd, char **env)
 {
-	char *new_argv[2];
+	char	*new_argv[2];
+	
 	new_argv[0] = cmd[0];
 	new_argv[1] = NULL;
 	free_list(cmd);
 	if (execve("/bin/bash", new_argv, env) == -1)
 		return (1);
-	return (0);	
+	return (0);
 }
 
 /**
@@ -78,8 +80,8 @@ int execute_script_without_shebang(char **cmd, char **env)
  * @param fdin[0] = fdin
  * @param fdin[1] = fdout
 */
-//int child_creation(char *infile, char *outfile, char ***cmd, int cmd_number, char **path, char **env, t_data *data)
-/* int executer(char *infile, char *outfile, t_list *lst, int cmd_number, char **path, char **env, t_data *data)
+/* int executer(char *infile, char *outfile, t_list *lst, int cmd_number,
+				char **path, char **env, t_data *data)
 {
 	//save in/out
 	int tmp_stdin;
@@ -184,7 +186,7 @@ int execute_script_without_shebang(char **cmd, char **env)
 }
  */
 
-char **fill_current_cmd(t_list *lst, int pos)
+char	**fill_current_cmd(t_list *lst, int pos)
 {
 	char	**cmd;
 	t_list	*tmp;
@@ -217,10 +219,9 @@ char **fill_current_cmd(t_list *lst, int pos)
  * @note protect function open
  * 
  */
-int get_iofiles_fd(int *fd, t_list *lst, int pos)
+int	get_iofiles_fd(int *fd, t_list *lst, int pos)
 {
 	ft_bzero(fd, 2 * sizeof(int));
-	
 	while (lst && lst->cmd_pos == pos)
 	{
 		if (lst->type == REDIR_IN)
@@ -236,10 +237,10 @@ int get_iofiles_fd(int *fd, t_list *lst, int pos)
 	return (0);
 }
 
-int get_heredoc_input(t_list *lst, int pos)
+int	get_heredoc_input(t_list *lst, int pos)
 {
 	char	*tmp_eof;
-	
+
 	tmp_eof = NULL;
 	while (lst && lst->cmd_pos == pos)
 	{
@@ -252,15 +253,15 @@ int get_heredoc_input(t_list *lst, int pos)
 	return (0);
 }
 
-int executer(char *outfile, t_list *lst, int cmd_number, char **path, char **env, t_data *data)
+int	executer(char *outfile, t_list *lst, int cmd_number, \
+				char **path, char **env, t_data *data)
 {
-	//save in/out
-	int tmp_stdin;
-	int tmp_stdout;
-	pid_t pid;
-	int fd[2];
-	int e_status;
-	int pos;
+	int		tmp_stdin;
+	int		tmp_stdout;
+	pid_t	pid;
+	int		fd[2];
+	int		e_status;
+	int		pos;
 	char	**cmd;
 
 	e_status = 0;
@@ -292,10 +293,10 @@ int executer(char *outfile, t_list *lst, int cmd_number, char **path, char **env
 			dup2(fd[0], 0);
 			close(fd[0]);
 			//setup output
-			if(pos == cmd_number)
+			if (pos == cmd_number)
 			{
 				// Last simple command
-				if(outfile)
+				if (outfile)
 					fd[1] = open(outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 				else
 				{
@@ -308,7 +309,7 @@ int executer(char *outfile, t_list *lst, int cmd_number, char **path, char **env
 				// Not last
 				//simple command 
 				//create pipe
-				int fdpipe[2];
+				int	fdpipe[2];
 				pipe(fdpipe);
 				fd[1] = fdpipe[1];
 				fd[0] = fdpipe[0];
@@ -320,7 +321,7 @@ int executer(char *outfile, t_list *lst, int cmd_number, char **path, char **env
 			//set singnal handlers for child process
 			set_signal_handlers(0);
 
-			int j = -1;
+			int	j = -1;
 			while (cmd[++j])
 				ft_printf("cmd[%d] = %s\n", j, cmd[j]);
 
@@ -364,4 +365,3 @@ int executer(char *outfile, t_list *lst, int cmd_number, char **path, char **env
 //	waitpid(pid, &e_status, WUNTRACED);
 	return (check_exit_status(e_status));
 }
-

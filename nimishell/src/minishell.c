@@ -6,14 +6,15 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:32:33 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/07 15:43:22 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/07 18:35:10 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /**
- * @note 230804nimai: at the moment, when there is no environment valur, user name will be "noname"
+ * @note 230804nimai: at the moment, when there is no environment valur,
+ * user name will be "noname"
   */
 static char	*get_user(char **env)
 {
@@ -29,7 +30,6 @@ static char	*get_user(char **env)
 		return (ft_strdup("noname"));
 	return (NULL);
 }
-
 
 char	*get_prompt(t_data *data)
 {
@@ -66,46 +66,53 @@ int	check_exit(char **input)
 
 /**
  * @note modified to control any kind of letters for pwd, echo, env
- * @note changed order of the conditions, I think will not make any error because of this. tho....
- * It would be neat to make it a command Arr and pass function's pointer, but it's readable, so leave it.
+ * @note changed order of the conditions, I think will not make any
+ * error because of this. tho....
+ * It would be neat to make it a command Arr and pass function's pointer,
+ * but it's readable, so leave it.
  * @note Input1 is empty now
+ * @note cd, echo, pwd and env are not case sensitive
  */
+/* 	int	j = -1;
+	while (input[++j])
+		ft_printf("Input %d: %s\n", j, input[j]); */
 int	check_builtin(char **input, t_data *data)
 {
+	char	*lower_input;
 /* 	int i = -1;
 	while (data->env[++i])
 		ft_printf("env %d: %s\n", i, data->env[i]); */
 //	update_last_executed_cmd(data, input[0]);
 	if (!input[0])
 		return (-1);
-	ft_printf("Input0: %s\n", input[0]);
-	ft_printf("Input1: %s\n", input[1]);
-	if (!ft_strcmp(input[0], "cd"))
-		return (built_cd(input, data));
-	else if (!ft_strcmp(input[0], "export"))
+	if (!ft_strcmp(input[0], "export"))
 		return (built_export(input, data));
-	else if (!ft_strcmp(input[0], "unset"))
+	if (!ft_strcmp(input[0], "unset"))
 		return (built_unset(input, data));
-	else if (!ft_strcmp(input[0], "exit"))
+	if (!ft_strcmp(input[0], "exit"))
 		return (built_exit(input, data, 1));
-	if (!ft_strcmp(input[0], "echo"))
-		return (built_echo(input));
-	else if (!ft_strcmp(input[0], "pwd"))
-		return (built_pwd(data));
-	else if (!ft_strcmp(input[0], "env"))
-		return (built_env(input, data));
-	else
-		return (-1);
+	lower_input = ft_strdup(input[0]);
+	ft_strlower(lower_input);
+	if (!ft_strcmp(lower_input, "cd"))
+		return (free(lower_input), built_cd(input, data));
+	if (!ft_strcmp(lower_input, "echo"))
+		return (free(lower_input), built_echo(input));
+	if (!ft_strcmp(lower_input, "pwd"))
+		return (free(lower_input), built_pwd(data));
+	if (!ft_strcmp(lower_input, "env"))
+		return (free(lower_input), built_env(input, data));
+	free(lower_input);
+	return (-1);
 }
 
 int	process_input(char *line_read, t_data *data)
 {
+	t_list	*cmd_list;
+	t_list	*tmp;
+	int		cmd_nb;
 //	int		j;
 //	char	**input;
-	t_list	*cmd_list;
 //	t_list	*cmd;
-	int		cmd_nb;
-	t_list	*tmp;
 
 	cmd_nb = lexer(line_read, &cmd_list);
 	parser(line_read);//230807add
@@ -113,10 +120,10 @@ int	process_input(char *line_read, t_data *data)
 	while (tmp)
 	{
 		tmp->content = expander(tmp, data);
-		printf("%sEXPANDER: Line: %d, content: %s, type: %d, pos: %d%s\n", COLOR_BLUE, __LINE__, tmp->content, tmp->type, tmp->cmd_pos, COLOR_RESET);
+		printf("%sEXPANDER: Line: %d, content: %s, type: %d, pos: %d%s\n", \
+				COLOR_BLUE, __LINE__, tmp->content, tmp->type, tmp->cmd_pos, COLOR_RESET);
 		tmp = tmp->next;
 	}
-
 	tmp = cmd_list;
 	if (cmd_nb == 0)
 	{
@@ -138,8 +145,6 @@ int	process_input(char *line_read, t_data *data)
  * @note make the expanserworking
  * 
  */
-
-
 //infile, outfile obtain in expanser? ->in parser kana
 	g_return_val = executer(NULL, cmd_list, cmd_nb, data->path, data->env, data);
 	ft_printf("Return val: %d\n", g_return_val);
@@ -160,9 +165,9 @@ int	minishell(t_data *data)
 	prompt = get_prompt(data);
 	while (1)
 	{
-		set_signal_handlers(1);//230808nimai: changed from above, to recall it after child process
+		set_signal_handlers(1); //230808nimai: changed from above, to recall it after child process
 		line_read = readline(prompt);
-		if (!line_read)//230731nimai: added to work ctrl+D without segfault
+		if (!line_read)
 		{
 			g_return_val = 0;
 			break ;

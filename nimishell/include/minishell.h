@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 19:10:38 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/07 15:56:29 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/07 17:53:17 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ extern volatile int	g_return_val;
 // 	APPEND,//64
 // 	INVALID,//65
 // };
- enum e_token
+enum e_token
 {
 	WORD = -1,
 	IS_SPACE = ' ',
@@ -121,10 +121,10 @@ typedef struct s_tokens
 # define BACKGROUND_COL_CYAN             "46"
 # define BACKGROUND_COL_WHITE            "47"
 
-# define SHELL_COLOR_ESCAPE_SEQ(X) "\033["X"m"
-# define SHELL_FORMAT_RESET ANSI_COLOR_ESCAPE_SEQ(GEN_FORMAT_RESET)
+//# define SHELL_COLOR_ESCAPE_SEQ(X) "\033["X"m"
+//# define SHELL_FORMAT_RESET ANSI_COLOR_ESCAPE_SEQ(GEN_FORMAT_RESET)
 
-//"\001" and "\002" are escape sequence, which is necessary to work with readline 
+//"\001" and "\002" are escape sequence, necessary to work with readline
 # define COLOR_RESET	"\001\033[0m\002"
 # define COLOR_GREEN	"\001\033[1;32m\002"
 # define COLOR_YELLOW	"\001\033[1;33m\002"
@@ -170,7 +170,8 @@ int		error_msg(char *prog_name, char *cmd, int mode);
 
 //	Executor
 //int child_creation(t_data *data, char **cmd);
-int		executer(char *outfile, t_list *lst, int cmd_number, char **path, char **env, t_data *data);
+int		executer(char *outfile, t_list *lst, int cmd_number, \
+					char **path, char **env, t_data *data);
 
 //	Split
 char	**split_input(char *str);

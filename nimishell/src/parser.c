@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 15:43:39 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/05 15:29:54 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/07 18:36:14 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,8 @@ char	*ft_remove_char(char *str, int c)
 		cleaned = ft_substr(cleaned, 0, ft_strlen(cleaned) - 1);
 	free (tmp);
 	printf("Line: %d, cleaned: %s\n", __LINE__, cleaned);
-	//exit (0);
 	return (cleaned);
 }
-
 
 // char	*remove_quotes(char *str)
 // {
@@ -201,7 +199,7 @@ int	parse_special_chars(t_list **cmd, char c)
 			if (!list[i + 1])
 				{
 					error_msg("minishell", "newline", 2);
-					return((long int) ft_lstclear(cmd, free));
+					return ((long int) ft_lstclear(cmd, free));
 				}
 		}
 	}
