@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 18:22:41 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/07 15:33:47 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/07 17:36:39 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <termios.h>
 
 //global variable for return value
-int	g_return_val;
+volatile int	g_return_val;
 
 /**
  * @brief set terminal attributes to remove ^C in the prompt
@@ -107,9 +107,6 @@ int	main(int argc, char *argv[], char *envp[])
 		return (1);
 	if (init_data(&data, envp, argv[0]))
 		return (1);
-/* 	ft_printf("PID obtained: %d\n", data.pid);
-	ft_printf("argc: %d\n", argc);
-	ft_printf("PID with getpid(): %d\n", getpid()); */
 	if (argc != 1)
 	{
 		if ((argc == 3 && !ft_strcmp(argv[1], "-c")))

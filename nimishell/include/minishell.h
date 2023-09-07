@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 19:10:38 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/07 15:44:20 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/07 15:56:29 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 # endif
 
 //test
-extern int	g_return_val;
+extern volatile int	g_return_val;
 
 //  enum e_token
 // {
