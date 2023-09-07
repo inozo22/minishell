@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
+/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 14:21:14 by nimai             #+#    #+#             */
-/*   Updated: 2023/08/08 15:47:19 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/01 12:27:23 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <sys/ioctl.h>
 
 void	set_signal_handlers(pid_t pid);
-void	sig_eof(t_data *data);
+void	sig_eof(void);
 void	action(int sig);
 //void	set_signal_exacuting_handlers(void);
 

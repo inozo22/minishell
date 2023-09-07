@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_export_sort.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
+/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 16:17:55 by nimai             #+#    #+#             */
-/*   Updated: 2023/08/22 15:35:25 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/05 16:25:08 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ int	get_pivot(t_export_box box[], int left, int right)
 	i = left;
 	j = right + 1;
 	pivot = left;
-
 	while (i < j)
 	{
 		while (i < j && box[++i].name && box[pivot].name && \
@@ -70,7 +69,6 @@ void	quick_sort(t_export_box box[], int left, int right)
 		quick_sort(box, pivot + 1, right);
 	}
 }
-
 
 /**
  * 

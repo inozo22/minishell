@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_cd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
+/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 18:40:39 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/26 11:34:26 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/01 12:24:51 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
  * @author nimai
  * @note when decided error management, merge it.
  */
-void	error_cd(char *cmd, t_data *data)
+void	error_cd(char *cmd)
 {
-	data->return_val = 1;
+	g_return_val = 1;
 	ft_printf("minishell: cd: %s: No such file or directory\n", cmd);
 }
 
@@ -43,18 +43,18 @@ int	get_pos_above_path(char *str)
 	return (len);
 }
 
-char	*get_above_path(char *cur, t_data *data)
+char	*get_above_path(char *current)
 {
 	int		cut;
 	char	*ret;
 
-	cut = get_pos_above_path(cur);
+	cut = get_pos_above_path(current);
 	ret = malloc(sizeof(char) * (cut + 1));
 	if (!ret)
 		return (heap_error(1), NULL);
-	ft_strlcpy(ret, cur, cut + 1);
+	ft_strlcpy(ret, current, cut + 1);
 	if (chdir(ret) == -1)
-		return (error_cd(ret, data), NULL);
+		return (error_cd(ret), NULL);
 	return (ret);
 }
 
@@ -64,7 +64,7 @@ char	*get_above_path(char *cur, t_data *data)
  * @note first try to obtain PWD by get_env, if it doesn't succeed, try getcwd
  * @note check the condition required when it's merged with lexor part
  */
-char	*get_dest_path(char *dest, char *pwd, t_data *data)
+char	*get_dest_path(char *dest, char *pwd)
 {
 	char	*ret;
 	char	*cur;
@@ -75,16 +75,16 @@ char	*get_dest_path(char *dest, char *pwd, t_data *data)
 	{
 		while (dest[++i])
 			if (dest[i] != '/')
-				return (error_cd(dest, data), NULL);
-		ret = get_above_path(pwd, data);
+				return (error_cd(dest), NULL);
+		ret = get_above_path(pwd);
 		return (ret);
 	}
 	else
 	{
 		if (chdir(dest) == -1)
 		{
-			data->return_val = 1;
-			return (error_cd(dest, data), NULL);
+			g_return_val = 1;
+			return (error_cd(dest), NULL);
 		}
 		cur = getcwd(NULL, 0);
 		if (ft_strlen(cur) > ft_strlen(dest))
@@ -133,7 +133,7 @@ int	built_cd(char **input, t_data *data)
 	char		*cur;
 	static char	*pwd = NULL;
 
-	data->return_val = 0;
+	g_return_val = 0;
 	if (!pwd)
 		pwd = init_pwd(data);
 	if (!input)
@@ -146,14 +146,14 @@ int	built_cd(char **input, t_data *data)
 			return (free (cur), 1);
 	}
 	data = envp_cd_mod(data, pwd, 2);//write OLDPWD
-	if (cur && !input[1])//when you don't have argument after "cd", move to $HOME
+	if (cur && (!input[1] || !ft_strcmp(input[1], "~")))//when you don't have argument after "cd", move to $HOME
 		dest = get_dest_path_env(data, "HOME");
 	else if (ft_strcmp("./", input[1]) == 0 || ft_strncmp(".", input[1], 1 == 0))
 		dest = get_dest_path_wl_sign(data, cur, pwd);
 	else if (ft_strcmp("-", input[1]) != 0)
-		dest = get_dest_path(input[1], pwd, data);//230524nimai: after av[3] will be ignored.
+		dest = get_dest_path(input[1], pwd);//230524nimai: after av[3] will be ignored.
 	pwd = mod_pwd(pwd, dest);
-	return (envp_cd_mod(data, dest, 1), free (dest), free (cur), data->return_val);
+	return (envp_cd_mod(data, dest, 1), free (dest), free (cur), g_return_val);
 }
 
 /**

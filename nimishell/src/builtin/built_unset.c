@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_unset.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
+/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 09:50:35 by nimai             #+#    #+#             */
-/*   Updated: 2023/08/22 15:42:12 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/05 16:24:12 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ t_data	*unset_env(t_data *data, char *str)
  * @brief manage "builtin" unset cmd.
  * @author nimai
  * @param **av "unset", "ABC", "DEF"
- * @note if it's not valid, receive error message, but if it's valid and doesn't exist will not receive anything
+ * @note if it's not valid, receive error message, but if it's valid and doesn't
+ *  exist will not receive anything
  */
 int	built_unset(char **input, t_data *data)
 {
@@ -58,7 +59,7 @@ int	built_unset(char **input, t_data *data)
 	i = 1;
 	while (input[i])
 	{
-		if (check_valid(input[i], "unset", data) == 1)
+		if (check_valid(input[i], "unset") == 1)
 			data = unset_env(data, input[i]);
 		i++;
 	}
@@ -70,8 +71,10 @@ int	built_unset(char **input, t_data *data)
  * 
  * 
  * 230601nimai: 
- * unset: kind of did it, but should be started over after it've been decided on the structure."
-[main b02d1eb] unset: kind of did it, but should be started over after it've been decided on the structure
+ * unset: kind of did it, but should be started over after it've been decided
+ *  on the structure."
+[main b02d1eb] unset: kind of did it, but should be started over after it've
+ been decided on the structure
  * 230615nimai: done.
  * 
  */

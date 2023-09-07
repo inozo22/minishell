@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_export_output.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
+/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 12:44:12 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/23 16:40:42 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/05 16:25:28 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	print_export(char	*str)
  * @author nimai
  * @param flag control between env and export (230526)
  * @note maybe adjust to some list too.
+ * @note 230905bde-mada: added condition to skip '_' variable
  */
 void	output_env(t_export *list, int len, int flag)
 {
@@ -50,6 +51,8 @@ void	output_env(t_export *list, int len, int flag)
 		{
 			if (list->box[i].id == j && flag == FLAGEXPORT)
 			{
+				if (ft_strncmp(list->box[i].name, "_", 1) == 0)
+					continue ;
 				ft_printf("declare -x ");
 				ft_printf("%s", list->box[i].name);
 				if (list->box[i].equal == 1)
@@ -70,7 +73,8 @@ void	output_env(t_export *list, int len, int flag)
  * @brief a part of initiation t_data
  * @author nimai
  * @param strs it's copy of envp
- * @note It's not beautiful to allocate 2000 each box[i].name and val, but it's necessary to sort.
+ * @note It's not beautiful to allocate 2000 each box[i].name and val,
+ * but it's necessary to sort.
  * i[0] = i
  * i[1] = len
  * i[2] = c

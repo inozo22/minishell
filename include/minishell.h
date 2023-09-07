@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
+/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 19:10:38 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/07/31 10:30:36 by nimai            ###   ########.fr       */
+/*   Updated: 2023/08/23 17:26:55 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # include "libft.h"
 # include "built.h"
 # include "signals.h"
-//# include "../lib/libft/libft.h"
+# include <termios.h>
 
  enum e_token
 {
@@ -42,19 +42,12 @@
 	APPEND,
 	INVALID,
 };
-/*
-enum e_state
-{
-	IN_DQUOTE,
-	IN_QUOTE,
-	GENERAL,
-}; */
 
 # define READ_END 0
 # define WRITE_END 1
 
 //# define SHELL_NAME "minihell🤪"
-# define SHELL_NAME "minishell🐚"
+# define SHELL_NAME "minishell"
 
 typedef struct s_tokens
 {

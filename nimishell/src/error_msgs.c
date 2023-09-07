@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 16:04:56 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/06/24 22:23:08 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/05 14:45:19 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	error_file(char *prog_name, char *in_file)
 	ft_putstr_fd(prog_name, 2);
 	ft_putstr_fd(": ", 2);
 	ft_putstr_fd(in_file, 2);
-	if (errno == 13)
+	if (errno == EACCES)
 	{
 		ft_putendl_fd(": Permission denied", 2);
 		return (127);
@@ -44,4 +44,21 @@ int	error_msg(char *prog_name, char *cmd, int mode)
 		return (2);
 	}
 	return (0);
+}
+
+int	command_not_found_handler(char *name, char *cmd)
+{
+	ft_putstr_fd(name, 2);
+	ft_putstr_fd(": command not found: ", 2);
+	ft_putendl_fd(cmd, 2);
+	return (127);
+}
+
+int	errors(int error_id, t_data *data)
+{
+	perror("minishell:");
+	if (error_id == ENOMEM)
+		ft_printf("Cannot allocate memory\n");
+	free_alloc(data);
+	return (error_id);
 }
