@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
+/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 19:10:38 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/06 15:41:24 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/07 15:44:20 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,8 @@
 # include <readline/history.h>
 # include <sys/wait.h>
 # include <sys/types.h>//it's not necessary in POSIX.1
-# include <termios.h>
-# include "../lib/libft/libft.h"
-//# include "libft.h"
+
+# include "libft.h"
 # include "built.h"
 # include "signals.h"
 //# include "../lib/libft/libft.h"

@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 12:49:14 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/05 16:09:55 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/07 13:06:41 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	ft_isquote(int c)
 void	*del(void **ptr)
 {
 	free(*ptr);
-	ptr = NULL;
+	*ptr = NULL;
 	return (ptr);
 }
 

@@ -6,7 +6,11 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:11:50 by nimai             #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/09/06 15:19:07 by nimai            ###   ########.fr       */
+=======
+/*   Updated: 2023/09/07 12:48:48 by bde-mada         ###   ########.fr       */
+>>>>>>> dev_borja
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +129,7 @@ void	action(int sig)
 {
 	if (sig == SIGINT)
 	{
+		
 		ioctl(STDIN_FILENO, TIOCSTI, "\n");
 		rl_replace_line("", 0);
 		rl_on_new_line();

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wildcards.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
+/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 18:57:34 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/07/21 11:10:01 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/07 15:27:56 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <dirent.h>
 #include <errno.h>
 //#include "../lib/libft/libft.h"
-#include "minishell.h"
+#include "../include/minishell.h"
 
 #define BLUE "\033[1;34m"
 #define YELLOW "\033[1;33m"
@@ -152,10 +152,12 @@ char	*wildcards(char *str)
 	return (str);
 }
 
-int	main()
+int	main(int argc, char **argv)
 {
 //	printf("Line: %d\n", __LINE__);
-	wildcards("*.out");
+	if (argc != 2)
+		return (0);
+	wildcards(argv[1]);
 	printf("\n*******-----********	👻	*******-----********\n");
 	printf("\n*******-----********	👻	*******-----********\n");
 	wildcards("*s*he*****ll*");

@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:32:33 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/05 16:04:32 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/07 15:43:22 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,68 +152,31 @@ int	process_input(char *line_read, t_data *data)
 	return (g_return_val);
 }
 
-// struct termios termios_save;
-
-/**
- * @brief set terminal attributes to remove ^C in the prompt
-  */
-static int	set_terminal_attributes(struct termios *termios_save)
-{
-	struct termios	term;
-
-	if (tcgetattr(0, termios_save))
-		return (1);
-	term = *termios_save;
-	term.c_lflag &= ~ECHOCTL;
-	tcsetattr(0, TCSASOFT, &term);
-	return (0);
-}
-
-static int	clean_exit(char *prompt, char *line_read, struct termios *term_save)
-{
-	free(prompt);
-	printf("\nBye 🗑\n");
-//	rl_clear_history();
-	free(line_read);
-	tcsetattr(0, 0, term_save);
-	return (0);
-}
-
 int	minishell(t_data *data)
 {
 	char			*line_read;
 	char			*prompt;
 
-// these are remove ^C in the prompt
-
-	struct termios	termios_save;
-
-// CORREGIR MENSAJE DE ERROR
-	if (set_terminal_attributes(&termios_save) == 1)
-		return (1);
-		//return (errors(12, data));
-
-	//set_signal_handlers(13);
 	prompt = get_prompt(data);
 	while (1)
 	{
-		set_signal_handlers(13);//230808nimai: changed from above, to recall it after child process
+		set_signal_handlers(1);//230808nimai: changed from above, to recall it after child process
 		line_read = readline(prompt);
-		if (line_read && *line_read)
-/* 			if (!ft_strcmp(line_read, "^C"))
-				rl_on_new_line();
-			else *///230731nimai:comment
-			add_history(line_read);
 		if (!line_read)//230731nimai: added to work ctrl+D without segfault
 		{
 			g_return_val = 0;
 			break ;
 		}
+		if (*line_read)
+			add_history(line_read);
 		process_input(line_read, data);
 		if (data->exit_status)
 			break ;
 		free(line_read);
 	}
 	rl_clear_history();
-	return (clean_exit(prompt, line_read, &termios_save));
+	free(line_read);
+	free(prompt);
+	printf("\nBye 🗑\n");
+	return (0);
 }

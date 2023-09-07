@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/05 16:05:15 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/07 13:51:32 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,6 +220,7 @@ char **fill_current_cmd(t_list *lst, int pos)
 int get_iofiles_fd(int *fd, t_list *lst, int pos)
 {
 	ft_bzero(fd, 2 * sizeof(int));
+	
 	while (lst && lst->cmd_pos == pos)
 	{
 		if (lst->type == REDIR_IN)
@@ -237,13 +238,17 @@ int get_iofiles_fd(int *fd, t_list *lst, int pos)
 
 int get_heredoc_input(t_list *lst, int pos)
 {
+	char	*tmp_eof;
+	
+	tmp_eof = NULL;
 	while (lst && lst->cmd_pos == pos)
 	{
 		if (lst->type == HERE_DOC)
-			if (heredoc_read(lst->content))
-				return (1);
+			tmp_eof = lst->content;
 		lst = lst->next;
 	}
+	if (tmp_eof && heredoc_read(tmp_eof))
+		return (1);
 	return (0);
 }
 
