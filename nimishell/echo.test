@@ -1,0 +1,57 @@
+#!/bin/bash
+
+# test echo
+# echo "echo hoge" | ./minishell > minishell.txt
+# echo "echo hoge" | bash > bash.txt
+
+# echo -e "cd ..\n pwd" | ./minishell > minishell.txt
+# echo -e "cd ..\n pwd" | bash >> bash.txt
+echo "echo" | bash > bash.txt
+echo "echo a" | bash >> bash.txt
+echo "echo	tab"| bash >> bash.txt
+echo "echo \"	tab	\""| bash >> bash.txt
+echo "echo		tab"| bash >> bash.txt
+echo "echo hello world"| bash >> bash.txt
+echo "echo -n"| bash >> bash.txt
+echo "echo -n a"| bash >> bash.txt
+echo "echo -n hello world"| bash >> bash.txt
+echo "echo -nnnnnnnn"| bash >> bash.txt
+echo "echo -nnnnnnnn a"| bash >> bash.txt
+echo "echo -nnnnnnnn hello world"| bash >> bash.txt
+echo "echo -nnnnnnnn -nnnnnnnn"| bash >> bash.txt
+echo "echo -nnnnnnnn -nnnnnnnn a"| bash >> bash.txt
+echo "echo -nnnnnnnn -nnnnnnnn hello world"| bash >> bash.txt
+echo "echo -nk hello"| bash >> bash.txt
+echo "echo -nnnnnnnnnnk hello"| bash >> bash.txt
+echo "echo -nknknknk hello"| bash >> bash.txt
+echo "echo hello -n"| bash >> bash.txt
+echo "echo hello -nnnnnnn"| bash >> bash.txt
+echo "echo hello -nknknknknk"| bash >> bash.txt
+echo "echo hello -nnnnnnnnn -nnnnnnnnn"| bash >> bash.txt
+echo "echo \-n hello"| bash >> bash.txt
+echo "echo \"-n\" hello"| bash >> bash.txt
+echo "echo '-n' hello"| bash >> bash.txt
+echo "echo \"-n\" \"hello\""| bash >> bash.txt
+echo "echo '-n' 'hello'"| bash >> bash.txt
+echo "echo \\-\\\n \h\e\l\l\o"| bash >> bash.txt
+echo "echo '\-\\\n' '\h\e\l\l\o'"| bash >> bash.txt
+echo "echo \"\-\\\n\" \"\h\e\l\l\o\""| bash >> bash.txt
+echo "echo $PATH"| bash >> bash.txt
+echo "echo \"$PATH\""| bash >> bash.txt
+echo "echo '\$PATH'"| bash >> bash.txt
+echo "echo \\\$PATH"| bash >> bash.txt
+echo "echo \"\\\$PATH\""| bash >> bash.txt
+echo "echo '\\\$PATH'"| bash >> bash.txt
+echo "echo a \"\" b \"\" c"| bash >> bash.txt
+echo "echo a \"$NO_SUCH_ENV\" b $NO_SUCH_ENV c, unset NO_SUCH_ENV"| bash >> bash.txt
+echo "echo		hello"| bash >> bash.txt
+echo "echo \\\"$\\\""| bash >> bash.txt
+echo "echo \"$ $ $ $ $ $ \""| bash >> bash.txt
+echo "echo \"\\\$\\\$USER\\\\$USER\"\"$USER\""| bash >> bash.txt
+echo "echo $"| bash >> bash.txt
+echo "echo \\\$USER"| bash >> bash.txt
+echo "echo \\\\\\\$USER"| bash >> bash.txt
+echo "echo \\\\\\\\\\\$USER"| bash >> bash.txt
+echo "echo \\\\\\\\\\\\\\\$USER"| bash >> bash.txt
+
+#echo "echo \"🦥■■■  Im here ■■■🦥\""| bash >> bash.txt

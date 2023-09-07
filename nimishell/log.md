@@ -9,10 +9,15 @@ TODO: Include cmd_list in executer to get all the arguments of the command
 
 
 
+
 ---------------------------------
+
 DONE~~: is expand in expanser, "$*" doesn't work and "$0" gets open input~~
 DONE~~: remove quotes in case quotes are not edge (not"HOME", but $$"HOME")~~
 DONE~~: control {} in expanser~~
+DONE~~: put builtins's exit in sig_eof ~~
+DONE~~: make simpletest(unset)~~
+DONE~~: expanser: "$USER"'$USER' doesn't work~~
 
 
 
