@@ -13,7 +13,7 @@
 #include "minishell.h"
 #include <fcntl.h>
 
-int	here_doc_to_stdin(char *input)
+int	heredoc_to_stdin(char *input)
 {
 	pid_t	pid;
 	int		fd[2];
@@ -30,13 +30,14 @@ int	here_doc_to_stdin(char *input)
 		close(fd[WRITE_END]);
 		exit(0);
 	}
+	wait(NULL);
 	close(fd[WRITE_END]);
 	dup2(fd[READ_END], STDIN_FILENO);
 	close(fd[READ_END]);
 	return (0);
 }
 
-int	here_doc_read(char *eof)
+int	heredoc_read(char *eof)
 {
 	char	*line_read;
 	char	*input;
@@ -46,7 +47,7 @@ int	here_doc_read(char *eof)
 	while (1)
 	{
 		line_read = readline(">");
-		if (ft_strcmp(eof, line_read))
+		if (!ft_strcmp(eof, line_read))
 			break ;
 		tmp = input;
 		input = ft_strjoin(line_read, input);
@@ -54,14 +55,14 @@ int	here_doc_read(char *eof)
 		del((void **)&line_read);
 	}
 	del((void **)&line_read);
-	return (here_doc_to_stdin(input));
+	return (heredoc_to_stdin(input));
 }
 
 /**
  * @note protect function open
  * 
  */
-int	redir(char **command)
+/* int	redir(char **command)
 {
 	if (command[0][0] == '>')
 		return (open(command[1], O_WRONLY | O_CREAT | O_TRUNC, 0644));
@@ -70,6 +71,6 @@ int	redir(char **command)
 	else if (command[0][0] == '<')
 		return (open(command[1], O_RDONLY));
 	else if (ft_strncmp(command[0], "<<", 2))
-		return (here_doc_read(command[1]));
+		return (heredoc_read(command[1]));
 	return (-1);
-}
+} */

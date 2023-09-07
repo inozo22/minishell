@@ -50,8 +50,8 @@ void	envp_strs_mod(char *input, t_data *data)
 				data->env[i[0]] = envp_str_mod(data->env[i[0]], input, i[2], 0);
 			else if (ft_strncmp(data->env[i[0]], input, i[2]) == 0)
 			{
-				while (data->env[i[0]][++i[1]] == input[i[1]])
-					;
+/* 				while (data->env[i[0]][i[1]] == input[i[1]])
+					i[1]++; */
 				while (data->env[i[0]][i[1]] == input[i[1]])
 					i[1]++;
 				if (data->env[i[0]][i[1]] == '\0' && input[i[1]] == '=')

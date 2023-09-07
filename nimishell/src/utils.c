@@ -62,6 +62,8 @@ int	update_last_executed_cmd(t_data *data, char *cmd)
 		return (errors(ENOMEM, data));
 	tmp_input[0] = ft_strdup("export");
 	tmp_input[1] = ft_strjoin("_=", cmd);
+	ft_printf("tmp_input[0]: %s\n", tmp_input[0]);
+	ft_printf("tmp_input[1]: %s\n", tmp_input[1]);
 	built_export(tmp_input, data);
 	free_list(tmp_input);
 	return (0);
