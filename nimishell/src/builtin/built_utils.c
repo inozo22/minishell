@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 11:52:54 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/05 16:23:11 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/07 18:08:17 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,3 +70,21 @@ char	*get_env(char **env, char *type)
 		return (NULL);
 }
 		//not set error coco?
+
+/**
+ * @note this function is used in check_builtin too, maybe change the file
+  */
+char	*ft_strlower(char *str)
+{
+	int		i;
+	char	*tmp;
+
+	i = 0;
+	tmp = str;
+	while (tmp[i])
+	{
+		tmp[i] = ft_tolower(str[i]);
+		i++;
+	}
+	return (tmp);
+}

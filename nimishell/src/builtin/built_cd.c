@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_cd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 18:40:39 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/01 12:24:51 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/07 19:56:13 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	get_pos_above_path(char *str)
 	return (len);
 }
 
-char	*get_above_path(char *current)
+/* char	*get_above_path(char *current)
 {
 	int		cut;
 	char	*ret;
@@ -56,41 +56,68 @@ char	*get_above_path(char *current)
 	if (chdir(ret) == -1)
 		return (error_cd(ret), NULL);
 	return (ret);
-}
+} */
 
 /**
  * @brief obtain destination path
  * @author nimai
  * @note first try to obtain PWD by get_env, if it doesn't succeed, try getcwd
- * @note check the condition required when it's merged with lexor part
  */
-char	*get_dest_path(char *dest, char *pwd)
+/* char	*get_dest_path(char *dest, char *pwd)
 {
 	char	*ret;
 	char	*cur;
 	int		i;
 
 	i = 1;
-	if (ft_strcmp("..", dest) == 0/*  || ft_strcmp("../", dest) == 0 */ || ft_strncmp("..//", dest, 4) == 0)
+	if (ft_strcmp("..", dest) == 0 || ft_strcmp("../", dest) == 0 || \
+	ft_strncmp("..//", dest, 4) == 0)
 	{
 		while (dest[++i])
 			if (dest[i] != '/')
 				return (error_cd(dest), NULL);
-		ret = get_above_path(pwd);
-		return (ret);
+	//	ret = get_above_path(pwd);
+		return (get_above_path(pwd));
 	}
 	else
 	{
 		if (chdir(dest) == -1)
-		{
-			g_return_val = 1;
-			return (error_cd(dest), NULL);
-		}
+			return (g_return_val = 1, error_cd(dest), NULL);
 		cur = getcwd(NULL, 0);
-		if (ft_strlen(cur) > ft_strlen(dest))
-			return (path_modify(cur, dest));
-		return (free (cur), dest);
+		ret = ft_strdup(dest);
+		if (ft_strlen(cur) > ft_strlen(ret))
+			return (path_modify(cur, ret));
+		else if (!ft_strcmp("//", ret))
+			return (free (cur), ret);
+		return (free (ret), cur);
 	}
+} */
+/**
+ * @brief obtain destination path
+ * @author nimai
+ */
+char	*get_dest_path(char *dest/* , char *pwd */)
+{
+	char	*ret;
+	char	*cur;
+
+//	(void)pwd;
+	if (chdir(dest) == -1)
+		return (g_return_val = 1, error_cd(dest), NULL);
+	cur = getcwd(NULL, 0);
+	ret = ft_strdup(dest);
+	printf("cur: %s	\ndest: %s\nret: %s\n", cur, dest, ret);
+	if (ft_strlen(cur) > ft_strlen(ret) && ft_strncmp("..", ret, 2))
+		return (path_modify(cur, ret));
+	else if (ft_strlen(cur) <= ft_strlen(ret))
+	{
+		if (ret[ft_strlen(ret) - 1] == '/')
+			return (path_modify(NULL, ret));
+		return (free (cur), ret);
+	}
+	else if (!ft_strcmp("//", ret))
+		return (free (cur), ret);
+	return (free (ret), cur);
 }
 
 static char	*mod_pwd(char *pwd, char *dest)
@@ -123,7 +150,6 @@ static char	*init_pwd(t_data *data)
 	return (ft_strdup(data->env[i] + 4));
 }
 
-
 /**
  * @note should be modified, but yet IDK if it's work with the current directory absense, so after merge check and modify
  */
@@ -144,16 +170,30 @@ int	built_cd(char **input, t_data *data)
 		dest = get_dest_path_env(data, "OLDPWD");
 		if (!dest)
 			return (free (cur), 1);
+		ft_printf("%s\n", pwd);
 	}
 	data = envp_cd_mod(data, pwd, 2);//write OLDPWD
+
+	printf("%sOLDPWD: %s%s\n", COLOR_YELLOW, pwd, COLOR_RESET);
+	printf("%sinput[1]: %s%s\n", COLOR_YELLOW, input[1], COLOR_RESET);
+
 	if (cur && (!input[1] || !ft_strcmp(input[1], "~")))//when you don't have argument after "cd", move to $HOME
 		dest = get_dest_path_env(data, "HOME");
 	else if (ft_strcmp("./", input[1]) == 0 || ft_strncmp(".", input[1], 1 == 0))
 		dest = get_dest_path_wl_sign(data, cur, pwd);
 	else if (ft_strcmp("-", input[1]) != 0)
-		dest = get_dest_path(input[1], pwd);//230524nimai: after av[3] will be ignored.
+		dest = get_dest_path(input[1]/* , pwd */);//230524nimai: after av[3] will be ignored.
 	pwd = mod_pwd(pwd, dest);
+
+	printf("%sPWD: %s%s\n", COLOR_YELLOW, pwd, COLOR_RESET);
+	printf("%sgetcwd: %s%s\n", COLOR_YELLOW, getcwd(NULL, 0), COLOR_RESET);
+
+//230907nimai: sanitize error with cmd "cd /" with free (dest)
 	return (envp_cd_mod(data, dest, 1), free (dest), free (cur), g_return_val);
+	// envp_cd_mod(data, dest, 1);
+	// free (dest);
+	// free (cur);
+	// return (g_return_val);
 }
 
 /**

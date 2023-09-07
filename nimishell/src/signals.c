@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:11:50 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/06 15:19:07 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/07 14:48:57 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,4 +165,3 @@ void	set_signal_handlers(pid_t pid)
 		sigaction(SIGQUIT, &sa, NULL);
 	}
 }
-
