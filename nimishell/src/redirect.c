@@ -18,7 +18,7 @@ int	heredoc_to_stdin(char *input)
 	pid_t	pid;
 	int		fd[2];
 
-	if (pipe(fd) == -1)
+	if (!input || pipe(fd) == -1)
 		return (1);
 	pid = fork();
 	if (pid == -1)
@@ -44,10 +44,12 @@ int	heredoc_read(char *eof)
 	char	*tmp;
 
 	input = NULL;
-	while (1)
+	line_read = NULL;
+	g_return_val = -1;
+	while (g_return_val < 0)
 	{
 		line_read = readline(">");
-		if (!ft_strcmp(eof, line_read))
+		if (!line_read || !ft_strcmp(eof, line_read))
 			break ;
 		tmp = input;
 		input = ft_strjoin(line_read, input);
