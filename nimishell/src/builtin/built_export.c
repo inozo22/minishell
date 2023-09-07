@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_export.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:18:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/05 16:28:31 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/07 13:19:58 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ void	envp_strs_mod(char *input, t_data *data)
 				data->env[i[0]] = envp_str_mod(data->env[i[0]], input, i[2], 0);
 			else if (ft_strncmp(data->env[i[0]], input, i[2]) == 0)
 			{
-/* 				while (data->env[i[0]][i[1]] == input[i[1]])
-					i[1]++; */
+				while (data->env[i[0]][++i[1]] == input[i[1]])
+					;
 				while (data->env[i[0]][i[1]] == input[i[1]])
 					i[1]++;
 				if (data->env[i[0]][i[1]] == '\0' && input[i[1]] == '=')
