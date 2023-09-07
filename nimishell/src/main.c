@@ -6,14 +6,30 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 18:22:41 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/05 15:40:16 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/07 15:33:47 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <termios.h>
 
 //global variable for return value
 int	g_return_val;
+
+/**
+ * @brief set terminal attributes to remove ^C in the prompt
+  */
+static int	set_terminal_attributes(struct termios *termios_save)
+{
+	struct termios	term;
+
+	if (tcgetattr(0, termios_save))
+		return (1);
+	term = *termios_save;
+	term.c_lflag &= ~ECHOCTL;
+	tcsetattr(0, TCSASOFT, &term);
+	return (0);
+}
 
 /**
  * @note added SHLVL increment
@@ -82,7 +98,8 @@ static int	init_data(t_data *data, char *envp[], char *prog_name)
 
 int	main(int argc, char *argv[], char *envp[])
 {
-	t_data	data;
+	t_data			data;
+	struct termios	termios_save;
 
 	g_return_val = 0;
 	data.pid = get_my_pid();
@@ -100,7 +117,13 @@ int	main(int argc, char *argv[], char *envp[])
 		else
 			exit (error_file(argv[0], argv[1]));
 	}
+	// these remove ^C in the prompt
+	// CORREGIR MENSAJE DE ERROR
+	if (set_terminal_attributes(&termios_save) == 1)
+		return (1);
+		//return (errors(12, data));
 	minishell(&data);
 	free_alloc(&data);
+	tcsetattr(0, 0, &termios_save);
 	return (g_return_val);
 }
