@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_unset.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 09:50:35 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/05 16:24:12 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/08 16:53:29 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,24 @@ t_data	*unset_env(t_data *data, char *str)
 int	built_unset(char **input, t_data *data)
 {
 	int		i;
+	int		len;
 
 	i = 1;
-	while (input[i])
+	len = av_amount(input);
+	while (i < len)
 	{
 		if (check_valid(input[i], "unset") == 1)
 			data = unset_env(data, input[i]);
 		i++;
 	}
+// test print=======================
+	// int j = 0;
+	// while (data->env[j])
+	// {
+	// 	printf("env: %s\n", data->env[j]);
+	// 	j++;
+	// }
+// test print=======================
 	return (0);
 }
 

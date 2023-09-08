@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 10:02:30 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/08 15:46:32 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/08 16:55:15 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,28 @@ int	g_return_val;
 //test
 
 //TEST/////TEST////////TEST///////TEST/////////TEST////TEST////////
+
+int	built_unset_test(t_data *data)
+{
+	char	**input1;
+
+	input1 = ft_calloc(2, 1);
+	input1[0] = "unset";
+	input1[1] = "HOME";
+	built_unset(input1, data);
+	printf("I did unset!\n");
+
+	sleep (1);
+
+	char	**input2;
+
+	input2 = ft_calloc(1, 1);
+	input2[0] = "export";
+	built_export(input2, data);
+	printf("I did export!\n");
+
+	return (0);
+}
 
 int	built_cd_oldpwd_test(t_data *data)
 {
@@ -108,33 +130,6 @@ int	input_mult_test(t_data *data, char *test)
 // }
 
 //TEST/////TEST////////TEST///////TEST/////////TEST////TEST////////
-
-// static int	process_input(char *line_read, t_data *data)
-// {
-// //	int		j;
-// //	char	**input;
-// 	t_list	*cmd_list;
-// //	t_list	*cmd;
-// 	int		cmd_nb;
-// 	t_list	*tmp;
-
-// 	cmd_nb = lexer(line_read, &cmd_list);
-// 	parser(line_read);//230807add
-// 	tmp = cmd_list;
-// 	while (tmp)
-// 	{
-// 		tmp->content = expanser(tmp, data);
-// 		printf("%sEXPANSER: Line: %d, content: %s, type: %d, pos: %d%s\n", COLOR_BLUE, __LINE__, tmp->content, tmp->type, tmp->cmd_pos, COLOR_RESET);
-// 		tmp = tmp->next;
-// 	}
-// 	data->return_val = child_creation(NULL, NULL, cmd_list, cmd_nb, data->path, data->env, data);
-// 	ft_lstclear(&cmd_list, free);
-// //	if (data->return_val == INT_MAX)
-// //		return (check_exit(input, data));
-// //	del_array((void ***) &input);
-// //	ft_printf("Command executed: %s with return: %d\n", input[0], data->return_val);
-// 	return (data->return_val);
-// }
 
 /**
  * @note added SHLVL increment
@@ -231,7 +226,8 @@ int	main(int argc, char *argv[], char *envp[])
 //test_checkquotes();
 //	input_mult_test(data, "u_echo.test");
 //	input_test(data);
-	built_cd_oldpwd_test(data);
+//	built_cd_oldpwd_test(data);
+	built_unset_test(data);
 
 
 

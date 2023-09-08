@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 16:00:17 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/08 15:05:03 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/08 17:13:12 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ t_data	*envp_cd_mod(t_data *data, char *path, int type)
 	}
 	else if (type == 2)
 	{
+		//230908nimai: I have to put a condition that there is no PWD
 		tmp = ft_calloc(ft_strlen(path) + 8, sizeof(char));
 		if (!tmp)
 			return (heap_error(1), NULL);
