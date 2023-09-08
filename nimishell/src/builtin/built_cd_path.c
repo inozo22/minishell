@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 16:00:17 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/08 14:59:10 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/08 15:05:03 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,10 @@ char	*str_mod(char *cur, char *str, int i, int len)
 	int	j;
 
 	j = 0;
-	printf("%scur: %s len: %d%s\n", COLOR_YELLOW, cur, len, COLOR_RESET);
+//	printf("%scur: %s len: %d%s\n", COLOR_YELLOW, cur, len, COLOR_RESET);
 	while (i < len && cur && cur[i])
 	{
-		printf("cur: %s i: %d%s\n", cur, i, COLOR_RESET);
+//		printf("cur: %s i: %d%s\n", cur, i, COLOR_RESET);
 		cur[i] = str[j];
 		i++;
 		j++;
@@ -148,9 +148,9 @@ char	*path_modify(char *cur, char *str)
 	tmp = ft_strdup(str);
 	ft_strlower(tmp);
 	i = strcount(cur, tmp, ft_strlen(cur));
-	printf("cur: %s\ntmp: %s\ni: %d\n", cur, tmp, i);
+//	printf("cur: %s\ntmp: %s\ni: %d\n", cur, tmp, i);
 //	i = ft_strnstr(cur, tmp, ft_strlen(cur)) - cur;
-	printf("%sLINE: %d	cur: %s i: %d%s\n", COLOR_YELLOW, __LINE__, cur, i, COLOR_YELLOW);
+//	printf("%sLINE: %d	cur: %s i: %d%s\n", COLOR_YELLOW, __LINE__, cur, i, COLOR_YELLOW);
 	cur = str_mod(cur, str, i, ft_strlen(cur));
 	free (tmp);
 	return (cur);

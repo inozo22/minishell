@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 18:40:39 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/08 14:36:34 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/08 15:07:39 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,7 +170,7 @@ int	built_cd(char **input, t_data *data)
 		dest = get_dest_path_env(data, "OLDPWD");
 		if (!dest)
 			return (free (cur), 1);
-		ft_printf("%s\n", pwd);
+//		ft_printf("%s\n", pwd);
 	}
 	data = envp_cd_mod(data, pwd, 2);//write OLDPWD
 
