@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 18:40:39 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/07 19:56:13 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/08 14:36:34 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,12 +107,12 @@ char	*get_dest_path(char *dest/* , char *pwd */)
 	cur = getcwd(NULL, 0);
 	ret = ft_strdup(dest);
 	printf("cur: %s	\ndest: %s\nret: %s\n", cur, dest, ret);
-	if (ft_strlen(cur) > ft_strlen(ret) && ft_strncmp("..", ret, 2))
+	if (ft_strlen(cur) > ft_strlen(ret) && ft_strncmp("..", ret, 2) != 0)
 		return (path_modify(cur, ret));
 	else if (ft_strlen(cur) <= ft_strlen(ret))
 	{
 		if (ret[ft_strlen(ret) - 1] == '/')
-			return (path_modify(NULL, ret));
+			return (path_modify(cur, ret));
 		return (free (cur), ret);
 	}
 	else if (!ft_strcmp("//", ret))
@@ -188,12 +188,7 @@ int	built_cd(char **input, t_data *data)
 	printf("%sPWD: %s%s\n", COLOR_YELLOW, pwd, COLOR_RESET);
 	printf("%sgetcwd: %s%s\n", COLOR_YELLOW, getcwd(NULL, 0), COLOR_RESET);
 
-//230907nimai: sanitize error with cmd "cd /" with free (dest)
 	return (envp_cd_mod(data, dest, 1), free (dest), free (cur), g_return_val);
-	// envp_cd_mod(data, dest, 1);
-	// free (dest);
-	// free (cur);
-	// return (g_return_val);
 }
 
 /**
