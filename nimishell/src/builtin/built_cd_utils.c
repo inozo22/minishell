@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 09:43:46 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/08 15:10:53 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/08 16:01:36 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,10 @@ char	*get_dest_path_env(t_data *data, char *envtype)
 	}
 	if (chdir(ret) == -1)
 	{
-		if (!ft_strcmp("OLDPWD", envtype))
-			ft_printf("%s\n", ret);
 		g_return_val = 1;
 		return (error_built("cd", "failed chdir"), NULL);
 	}
+	if (!ft_strcmp("OLDPWD", envtype))
+		ft_printf("%s\n", ret);
 	return (ret);
 }
