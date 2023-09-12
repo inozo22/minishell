@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 12:44:12 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/12 11:37:36 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/12 11:42:04 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	print_export(char	*str)
  * @param flag control between env and export (230526)
  * @note maybe adjust to some list too.
  * @note 230905bde-mada: added condition to skip '_' variable
+ * @note 230912nimai: removed flags and fixed condition to skip '_' variable
  */
 void	output_env(t_export *list, int len)
 {
