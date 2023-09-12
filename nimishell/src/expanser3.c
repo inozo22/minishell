@@ -26,11 +26,12 @@ char	*get_var_value(char *env_var, char *envp[], int len)
 	while (envp[++i])
 	{
 //		printf("pos of = : %c, envp[%d]: %s\n", envp[i][len], i, envp[i]);
-		if (!ft_strncmp(env_var + 1, envp[i], len) && envp[i][len] == '=')
+//		ft_printf("Env var: %s, envp[%d]: %s\n", env_var, i, envp[i]);
+		if (!ft_strncmp(env_var, envp[i], len) && envp[i][len] == '=')
 			return (ft_strdup(envp[i] + len + 1));
 	}
-	ft_printf("minishell: %s: Undefined variable.\n", env_var);
-	return (NULL);
+	ft_printf(SHELL_NAME": %s: Undefined variable.\n", env_var);
+	return (ft_substr(env_var, 0, len));
 }
 
 //$- returns a string representing the flags of the shell
@@ -58,6 +59,7 @@ char	*is_expand(char *env_var, int len, char *env[])
 	//GET PID FROM DATA
 	int	pid;
 
+	ft_printf("Input in is_expand: %s, with len: %d\n", env_var, len);
 	pid = 123;	
 	if (!ft_strncmp(env_var, "$?", len))
 	{
@@ -75,7 +77,7 @@ char	*is_expand(char *env_var, int len, char *env[])
 		return (ft_itoa(0));
 	//keep opening the input if I put "minishell", at this moment put a space at the end of the string to escape
 	if (!ft_strncmp(env_var, "$0", len))
-		return (ft_strdup("minishell "));
+		return (ft_strdup(SHELL_NAME));
 	if (!ft_strncmp(env_var, "$IFS", len))
 		return (ft_strdup("\t\n"));
 	if (ft_isdigit(env_var[1]))
@@ -88,7 +90,7 @@ char	*is_expand(char *env_var, int len, char *env[])
 //		printf("%sLine: %d HERE I AM%s\n", COLOR_RED, __LINE__, COLOR_RESET);
 		return (NULL);
 	}
-	return(get_var_value(env_var, env, len));
+	return(get_var_value(env_var + 1, env, len - 1));
 }
 
 char	*obtain_expanded(char *tmp, char *ret, char *arg)
@@ -123,22 +125,49 @@ char	*remove_quotes(char *str)
 			i[2]++;
 		i[0]++;
 	}
-	ret = ft_calloc(i[2] + 1, 1);
+	ret = ft_calloc(i[2] + 1, sizeof(char));
 	if (!ret)
 		return (NULL);//malloc error
-	i[0] = -1;
-	//copy 
-	while (++i[0] <= i[2] + 1)
+	//copy
+	while (--i[0] > -1)
 	{
 		if (str[i[0]] != '\'' && str[i[0]] != '\"')
 		{
-			ret[i[1]] = str[i[0]];
-			i[1]++;
+			ret[--i[2]] = str[i[0]];
+//			ft_printf("%c", ret[i[2]]);
 		}
 	}
-	// if (!ret)
-	// 	return (str);
+//	ft_printf("\n");
+	free(str);
 	return (ret);
+}
+
+int	compose_expanded(char *expanded, char **str, int dollar_pos, int end_pos_var)
+{
+	char	*preceding;
+	char	*following;
+	char	*str_expanded;
+	
+	preceding = ft_substr(*str, 0, dollar_pos);
+	if (!preceding)
+		return (0);
+	ft_printf("preceding: %s\n", preceding);
+	preceding = remove_quotes(preceding);
+/* 	if (!str[end_pos_var])
+		dollar_pos = end_pos_var - 1;
+	else
+		dollar_pos = end_pos_var; */
+	following = ft_substr(*str, end_pos_var, ft_strlen(*str) - end_pos_var);
+	if (!following)
+		return (free(preceding), -1);
+	ft_printf("following: %s\n", following);
+	following = remove_quotes(following);
+	str_expanded = ft_strjoin_many(3, preceding, expanded, following);
+	if (!str_expanded)
+		return (free(preceding), free(following), -1);
+	free(*str);
+	*str = str_expanded;
+	return (ft_strlen(preceding) + ft_strlen(expanded) - 1);
 }
 
 /**
@@ -150,33 +179,25 @@ int	expand(char **str, int *pos, int quotes, char *env[])
 {
 	int		i[2];
 	char	*tmp;
-	char	*pieces[3];
+	char	*expanded_var;
 
-	ft_bzero(i, 2 * sizeof(int));
+	ft_bzero(i, 2 * sizeof(i));
 	i[0] = *pos;
 	tmp = *str;
-	if (ft_isdigit(*str[*pos + 1]))
-		i[0]++;
-	else
-		while ((*str)[i[0]] && (*str)[i[0]] != ' ' && (*str)[i[0]] != quotes)
+	if (!ft_isdigit((*str)[*pos]))
+		while ((*str)[i[0]] && !ft_isspace((*str)[i[0]]) && (*str)[i[0]] != quotes)
 			i[0]++;
-	pieces[1] = is_expand(&tmp[*pos], i[0] - *pos, env);
-	if (!pieces[1])
-		return (0);
-	ft_printf("pieces[1]: %s\n", pieces[1]);
-	pieces[0] = ft_substr(tmp, 0, *pos);
-	ft_printf("pieces[0]: %s\n", pieces[0]);
-	pieces[2] = ft_substr(tmp, i[0], ft_strlen(tmp) - i[0]);
-	ft_printf("pieces[2]: %s\n", pieces[2]);
-	if (!pieces[0] || !pieces[1] || !pieces[2])
-	{
-		while (i[1] < 3)
-			free(pieces[i[1]++]);
+	expanded_var = is_expand(&tmp[*pos], i[0] - *pos, env);
+	if (!expanded_var)
 		return (1);
-	}
-	free(*str);
-	*str = ft_strjoin_many(3, pieces[0], pieces[1], pieces[2]);
-	if (*str)
+	ft_printf("Expanded_var: %s\n", expanded_var);
+	if (!expanded_var)
+		return (0);
+	*pos = compose_expanded(expanded_var, str, *pos, i[0]);
+	if (*pos == -1)
+		return (1);
+	is_quote(quotes);
+	if (!*str)
 		return (1);
 	return (0);
 }
@@ -192,11 +213,10 @@ char	*expanser(char *str, char *env[])
 	i = -1;
 	while (str[++i])
 	{
-		ft_printf("i: %d\n", i);
 		quotes = is_quote(str[i]);
 		if (str[i] == '$' && quotes != '\'')
 		{
-			ft_printf("quotes status: %d\n", quotes);
+			ft_printf("quotes status: %d in str: %s\n", quotes, str + i);
 			ft_printf("str pos: %s\n", str + i);	
 			if (expand(&str, &i, quotes, env))
 				return (NULL);
@@ -207,23 +227,24 @@ char	*expanser(char *str, char *env[])
 
 int	main(int argc, char *argv[], char *envp[])
 {
+	char	*input[] = {"'$HOME': $HOME aaa", "   '$USER':  	\"$USER\" ei", "'$PWD':\"$PWD\"", "'$OLDPWD':$OLDPWD", "$INVENT:\"$INVENT\"", "'$?'\"$?\"", "'$-':\"$-\"", "'$0':\"$0\"", "'$1':\"$1\"", NULL};
 	char	*str;
 	char	*expanded;
-	int		i = 0;
+	int		i = -1;
 
-	if (argc != 2)
+	if (argc != 1 || !argv || !envp)
 		return (1);
-	while (argv[++i])
+	while (input[++i])
 	{
-		ft_printf("Expanding %s\n", argv[i]);
-		str = ft_strdup(argv[i]);
+		ft_printf("Expanding %s\n", input[i]);
+		str = ft_strdup(input[i]);
 		expanded = expanser(str, envp);
-		printf("expanded: %s\n", expanded);
-		free(str);
+		printf("expanded: %s\n\n", expanded);
+		free(expanded);
 	}
 	return (0);
 }
 
-// cc -Wall -Wextra -g3 -fsanitize=address -Ilib/libft -Iinclude src/expanser3.c src/lexer.c lib/libft/libft.a && ./a.out "'$HOME': $HOME		'$USER':\"$USER\"		$PWD		'$OLDPWD':$OLDPWD		$INVENT:\"$INVENT\"		\"$?\"		'$-':\"S-\"		'S0':\"$0\""
+// cc -Wall -Wextra -g3 -fsanitize=address -Ilib/libft -Iinclude src/expanser3.c src/lexer.c src/error_msgs.c src/terminate.c lib/libft/libft.a && ./a.out
 
-// cc -Wall -Wextra -g3 -Ilib/libft -Iinclude src/expanser3.c src/lexer.c lib/libft/libft.a && valgrind --leak-check=full ./a.out "'$HOME': $HOME          '$USER':\"$USER\"                $PWD            '$OLDPWD':$OLDPWD               $INVENT:\"$INVENT\"              \"$?\"          '$-':\"S-\"             'S0':\"$0\""
+// cc -Wall -Wextra -g3 -Ilib/libft -Iinclude src/expanser3.c src/lexer.c src/error_msgs.c src/terminate.c lib/libft/libft.a && valgrind ./a.out

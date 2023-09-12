@@ -6,7 +6,7 @@
 #    By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/30 13:14:38 by bde-mada          #+#    #+#              #
-#    Updated: 2023/09/07 17:54:51 by bde-mada         ###   ########.fr        #
+#    Updated: 2023/09/12 15:51:38 by bde-mada         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ CFLAGS		= -Wall -Wextra -Werror -pedantic
 OS			= $(shell uname)
 
 #Optimization and valgrind debugging flags:
-DEBUG			:= -g3 -O0 -fsanitize=address 
+DEBUG			:= -g3 -O0 #-fsanitize=address 
 #change -O0 with -O1 or -O2 for faster execution but worse info
 
 LDFLAGS		= $(addprefix -L, $(LIBS_DIR))

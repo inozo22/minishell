@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 19:10:38 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/07 17:53:17 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/12 15:12:10 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@
 #  define TCSASOFT 0
 # endif
 
-//test
 extern volatile int	g_return_val;
 
 //  enum e_token
@@ -168,6 +167,7 @@ void	*free_list(char **list);
 //	Error messages
 int		error_file(char *prog_name, char *in_file);
 int		error_msg(char *prog_name, char *cmd, int mode);
+int		command_not_found_handler(char *name, char *cmd);
 
 //	Executor
 //int child_creation(t_data *data, char **cmd);

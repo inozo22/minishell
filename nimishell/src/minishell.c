@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:32:33 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/07 18:35:10 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/12 17:14:23 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,9 @@ int	process_input(char *line_read, t_data *data)
 //	t_list	*cmd;
 
 	cmd_nb = lexer(line_read, &cmd_list);
-	parser(line_read);//230807add
+	if (cmd_nb == -1)
+		return (1);
+//	parser(line_read);//230807add
 	tmp = cmd_list;
 	while (tmp)
 	{
@@ -147,9 +149,8 @@ int	process_input(char *line_read, t_data *data)
  */
 //infile, outfile obtain in expanser? ->in parser kana
 	g_return_val = executer(NULL, cmd_list, cmd_nb, data->path, data->env, data);
-	ft_printf("Return val: %d\n", g_return_val);
-
-	ft_lstclear(&cmd_list, free);
+	
+	ft_lstclear(&tmp, free);
 //	if (data->return_val == INT_MAX)
 //		return (check_exit(input, data));
 //	del_array((void ***) &input)in	;
@@ -175,6 +176,7 @@ int	minishell(t_data *data)
 		if (*line_read)
 			add_history(line_read);
 		process_input(line_read, data);
+		ft_printf("\n\nReturn val: %d\n", g_return_val);
 		if (data->exit_status)
 			break ;
 		free(line_read);

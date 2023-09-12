@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/07 18:01:11 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/12 16:00:20 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*get_cmd_path(char *cmd, char **path)
 		cmd_path = NULL;
 	}
 	//DELETE
-	ft_printf("cmd_path: %s\n", cmd_path);
+	ft_printf("cmd_path: %s\n\n", cmd_path);
 	return (cmd_path);
 }
 
@@ -253,6 +253,36 @@ int	get_heredoc_input(t_list *lst, int pos)
 	return (0);
 }
 
+int	child_execution(char **cmd, char **env, char **path, t_data *data)
+{
+	char	*cmd_path;
+	int		return_val;
+	
+	//child
+	cmd_path = get_cmd_path(cmd[0], path);
+	if (!cmd_path)
+	{
+		return_val = error_msg(SHELL_NAME, cmd[0], 1);
+		free_list(cmd);
+		free_alloc(data);
+		exit(return_val);
+	}
+//	update_last_executed_cmd(data, cmd_path);
+	if (execve(cmd_path, cmd, env) == -1 && errno == ENOEXEC)
+		execute_script_without_shebang(cmd, env);
+	//as doesn't return when execute the command well, there is no protection
+	else
+	{
+		perror("execve");
+		//free all the data if execve fails
+		//230809nimai: comment free to avoid double freeing.
+		free(cmd_path);
+		free_list(cmd);
+		free_alloc(data);		
+	}
+	exit(1);
+}
+
 int	executer(char *outfile, t_list *lst, int cmd_number, \
 				char **path, char **env, t_data *data)
 {
@@ -290,8 +320,11 @@ int	executer(char *outfile, t_list *lst, int cmd_number, \
 			get_iofiles_fd(fd, lst, pos);
 			get_heredoc_input(lst, pos);
 			//redirect input
-			dup2(fd[0], 0);
-			close(fd[0]);
+			if (pos != 0)
+			{
+ 				dup2(fd[0], STDIN_FILENO);
+				close(fd[0]);		
+			}
 			//setup output
 			if (pos == cmd_number)
 			{
@@ -326,32 +359,18 @@ int	executer(char *outfile, t_list *lst, int cmd_number, \
 				ft_printf("cmd[%d] = %s\n", j, cmd[j]);
 
 			int is_builtin = check_builtin(cmd, data);
-			ft_printf("Check builtin return: %d\n", is_builtin);
+			ft_printf("\nCheck builtin return: %d\n", is_builtin);
 			if (is_builtin >= 0)
 				return (is_builtin);
 			
 			// Create child process
 			pid = fork();
 			if (pid == 0)
-			{
-				//child
-				char *cmd_path = NULL;
-				cmd_path = get_cmd_path(cmd[0], path);
-				ft_printf("cmd_path: %s\n", cmd_path);
-//				update_last_executed_cmd(data, cmd_path);
-				if (execve(cmd_path, cmd, env) == -1 && errno == ENOEXEC)
-					execute_script_without_shebang(cmd, env);
-				//as doesn't return when execute the command well, there is no protection
-				perror("execve");
-				//free all the data if execve fails
-				//230809nimai: comment free to avoid double freeing.
-				//free(cmd_path);
-				exit(1);
-			}
+				child_execution(cmd, env, path, data);
 			while (lst && lst->cmd_pos == pos)
 				lst = lst->next;
 			pos++;
-//			free_list(cmd);
+			free(cmd);
 		}
 	}
 	//for
@@ -361,7 +380,7 @@ int	executer(char *outfile, t_list *lst, int cmd_number, \
 	close(tmp_stdin);
 	close(tmp_stdout);
 
-	wait(&e_status);
+	waitpid(0, &e_status, WUNTRACED);
 //	waitpid(pid, &e_status, WUNTRACED);
 	return (check_exit_status(e_status));
 }
