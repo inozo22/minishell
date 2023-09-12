@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 18:40:39 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/08 15:07:39 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/12 11:25:46 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,20 +28,20 @@ void	error_cd(char *cmd)
  * @author nimai
  * @note 
  */
-int	get_pos_above_path(char *str)
-{
-	int		len;
+// int	get_pos_above_path(char *str)
+// {
+// 	int		len;
 
-	len = ft_strlen(str);
-	while (str[--len])
-	{
-		if (str[len] == '/')
-			break ;
-	}
-	if (len == 0)
-		len++;
-	return (len);
-}
+// 	len = ft_strlen(str);
+// 	while (str[--len])
+// 	{
+// 		if (str[len] == '/')
+// 			break ;
+// 	}
+// 	if (len == 0)
+// 		len++;
+// 	return (len);
+// }
 
 /* char	*get_above_path(char *current)
 {
@@ -130,6 +130,9 @@ static char	*mod_pwd(char *pwd, char *dest)
 	return (pwd);
 }
 
+/**
+ * @note to fill static pwd in cd function, if there is no PWD in env, obtain by getcwd.
+ */
 static char	*init_pwd(t_data *data)
 {
 	char	*ret;

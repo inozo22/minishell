@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:18:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/08 15:59:02 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/12 10:46:48 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,7 +189,7 @@ int	built_export(char **input, t_data *data)
 		return (0);
 	}
 	i = 0;
-	while (/* input[++i] */++i < len/* av_amount(input) */)
+	while (/* input[++i] */++i < len /* av_amount(input) */)
 	{
 		if (!check_input(input[i], data))
 		{
