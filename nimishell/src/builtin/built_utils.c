@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 11:52:54 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/12 10:42:23 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/12 11:45:53 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
  * @author nimai
  * @return 1 if it's valid, otherwise 0.
  * @note in built_utils.
- * @note builtin global function
  */
 int	check_valid(char *str, char *cmd)
 {

@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 12:44:12 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/12 11:42:04 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/12 11:44:14 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,9 +105,8 @@ t_export	*fill_list(char **env, t_export *ret)
 }
 
 /**
- * @brief print export, until free t_export
+ * @brief print export, then free t_export
  * @author nimai
- * @note I have taken from the built_export because of the amount of line
  */
 int	output_export(t_data *data)
 {
