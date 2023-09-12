@@ -152,6 +152,7 @@ int		process_input(char *line_read, t_data *data);
 //	Lexer
 
 int		lexer(char *input, t_list **token_list);
+int		is_quote(char c);
 
 //	Parser
 

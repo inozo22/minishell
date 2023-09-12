@@ -11,7 +11,11 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+//DELETE
 #include "../lib/libft/libft.h"
+
+volatile int	g_return_val = 0;
 
 char	*get_var_value(char *env_var, char *envp[], int len)
 {
@@ -23,13 +27,10 @@ char	*get_var_value(char *env_var, char *envp[], int len)
 	{
 //		printf("pos of = : %c, envp[%d]: %s\n", envp[i][len], i, envp[i]);
 		if (!ft_strncmp(env_var + 1, envp[i], len) && envp[i][len] == '=')
-		{
 			return (ft_strdup(envp[i] + len + 1));
-		}
 	}
-	if (!envp[i])
-		return (NULL);
-	return (ft_substr(env_var, 0, len));
+	ft_printf("minishell: %s: Undefined variable.\n", env_var);
+	return (NULL);
 }
 
 //$- returns a string representing the flags of the shell
@@ -52,38 +53,42 @@ char	*get_var_value(char *env_var, char *envp[], int len)
  * @note ($$) Expands to the pid of the current shell.
  * @note ($1-9) Expands to the corresponding arguments passed to bash
  */
-char	*is_expand(char *token, int len, char *envp[], t_data *data)
+char	*is_expand(char *env_var, int len, char *env[])
 {
-	if (!ft_strncmp(token, "$?", 2))
+	//GET PID FROM DATA
+	int	pid;
+
+	pid = 123;	
+	if (!ft_strncmp(env_var, "$?", len))
 	{
-		return (ft_itoa(data->return_val));
+		return (ft_itoa(g_return_val));
 	}
-	if (!ft_strncmp(token, "$!", 2))
-		return (ft_itoa(data->return_val));
-	if (!ft_strncmp(token, "$$", 2))
-		return (ft_itoa(data->pid));
-	if (!ft_strncmp(token, "$-", 2))
+	if (!ft_strncmp(env_var, "$!", len))
+		return (ft_itoa(g_return_val));
+	if (!ft_strncmp(env_var, "$$", len))
+		return (ft_itoa(pid));
+	if (!ft_strncmp(env_var, "$-", len))
 		return (ft_strdup("himBH"));
-	if (!ft_strncmp(token, "$@", 2) || !ft_strncmp(token, "$*", 2))
+	if (!ft_strncmp(env_var, "$@", len) || !ft_strncmp(env_var, "$*", len))
 		return (ft_strdup(""));
-	if (!ft_strncmp(token, "$#", 2))
+	if (!ft_strncmp(env_var, "$#", len))
 		return (ft_itoa(0));
 	//keep opening the input if I put "minishell", at this moment put a space at the end of the string to escape
-	if (!ft_strncmp(token, "$0", 2))
+	if (!ft_strncmp(env_var, "$0", len))
 		return (ft_strdup("minishell "));
-	if (!ft_strncmp(token, "$IFS", 4))
+	if (!ft_strncmp(env_var, "$IFS", len))
 		return (ft_strdup("\t\n"));
-	if (ft_isdigit(token[1]))
+	if (ft_isdigit(env_var[1]))
 	{
 //		printf("%sLine: %d HERE I AM%s\n", COLOR_RED, __LINE__, COLOR_RESET);
 		return (ft_strdup(""));
 	}
-	if (!(token[1]) || (!ft_isalnum(token[1]) && token[1] != '_'))
+	if (!(env_var[1]) || (!ft_isalnum(env_var[1]) && env_var[1] != '_'))
 	{
 //		printf("%sLine: %d HERE I AM%s\n", COLOR_RED, __LINE__, COLOR_RESET);
 		return (NULL);
 	}
-	return(get_var_value(token, envp, len));
+	return(get_var_value(env_var, env, len));
 }
 
 char	*obtain_expanded(char *tmp, char *ret, char *arg)
@@ -99,39 +104,11 @@ char	*obtain_expanded(char *tmp, char *ret, char *arg)
 	return (ret);
 }
 
-char	*expand(char *pos[3], char *arg, t_data *data, char *expanded)
-{
-	char	*tmp;
-	int		flag;
-
-	flag = 0;
-	if ((*pos[0]) == '\'')
-		flag++;
-	while (ft_isalnum(*pos[1]) || (*pos[1] == '$' && flag))
-		pos[1]++;
-	if (*pos[1] == '\'' && flag)
-	{
-		pos[1]++;
-		tmp = ft_strndup(pos[0], (pos[1] - pos[0]));
-	}
-	else if (*pos[0] == '$')
-		tmp = is_expand(pos[0], (pos[1] - pos[0]- 1), data->env, data);
-	else
-		tmp = ft_strndup(pos[0], (pos[1] - pos[0]));
-	if (tmp)
-		expanded = obtain_expanded(tmp, expanded, arg);
-	else if (!tmp && ft_strcmp(expanded, arg) == 0)
-		return (free (expanded), NULL);
-	return (free (tmp), expanded);
-}
 
 /**
  * @note i[0] i
  * @note i[1] j
  * @note i[2] len
- * 
- * 
- * 
   */
 char	*remove_quotes(char *str)
 {
@@ -164,33 +141,89 @@ char	*remove_quotes(char *str)
 	return (ret);
 }
 
+/**
+ * @note pieces[0] before $
+ * @note pieces[1] expanded var
+ * @note pieces[2] after var 
+ */
+int	expand(char **str, int *pos, int quotes, char *env[])
+{
+	int		i[2];
+	char	*tmp;
+	char	*pieces[3];
+
+	ft_bzero(i, 2 * sizeof(int));
+	i[0] = *pos;
+	tmp = *str;
+	if (ft_isdigit(*str[*pos + 1]))
+		i[0]++;
+	else
+		while ((*str)[i[0]] && (*str)[i[0]] != ' ' && (*str)[i[0]] != quotes)
+			i[0]++;
+	pieces[1] = is_expand(&tmp[*pos], i[0] - *pos, env);
+	if (!pieces[1])
+		return (0);
+	ft_printf("pieces[1]: %s\n", pieces[1]);
+	pieces[0] = ft_substr(tmp, 0, *pos);
+	ft_printf("pieces[0]: %s\n", pieces[0]);
+	pieces[2] = ft_substr(tmp, i[0], ft_strlen(tmp) - i[0]);
+	ft_printf("pieces[2]: %s\n", pieces[2]);
+	if (!pieces[0] || !pieces[1] || !pieces[2])
+	{
+		while (i[1] < 3)
+			free(pieces[i[1]++]);
+		return (1);
+	}
+	free(*str);
+	*str = ft_strjoin_many(3, pieces[0], pieces[1], pieces[2]);
+	if (*str)
+		return (1);
+	return (0);
+}
 
 /**
  * @param pos[2] to keep and free string 
  */
-char	*expanser(t_list *list, t_data *data)
+char	*expanser(char *str, char *env[])
 {
-	char	*expanded;
-	char	*pos[3];
+	int	i;
+	int quotes;
 
-	expanded = ft_strdup(list->content);
-	pos[2] = ft_strdup(expanded);
-	pos[0] = ft_strchr(pos[2], '$');
-	// if (pos[0])
-	// 	printf("len: %ld\n", ft_strlen(pos[0]));
-	while (pos[0] && list->content[0] != '\'' && ft_strlen(pos[0]))
+	i = -1;
+	while (str[++i])
 	{
-		pos[1] = pos[0] + 1;
-//		printf("expanded before expand: %s pos[0]: %s\n", expanded, pos[0]);
-		expanded = expand(pos, list->content, data, expanded);
-//		printf("expanded after expand: %s\n", expanded);
-		if (!pos[0])
-			break ;
-		if (pos[1] - pos[0] == 1)
-			pos[1]++;
-		pos[0] = pos[1];
+		ft_printf("i: %d\n", i);
+		quotes = is_quote(str[i]);
+		if (str[i] == '$' && quotes != '\'')
+		{
+			ft_printf("quotes status: %d\n", quotes);
+			ft_printf("str pos: %s\n", str + i);	
+			if (expand(&str, &i, quotes, env))
+				return (NULL);
+		}
 	}
-//	printf("expanded: %s\n", expanded);
-	expanded = remove_quotes(expanded);
-	return (free (pos[2]), expanded);
+	return (str);
 }
+
+int	main(int argc, char *argv[], char *envp[])
+{
+	char	*str;
+	char	*expanded;
+	int		i = 0;
+
+	if (argc != 2)
+		return (1);
+	while (argv[++i])
+	{
+		ft_printf("Expanding %s\n", argv[i]);
+		str = ft_strdup(argv[i]);
+		expanded = expanser(str, envp);
+		printf("expanded: %s\n", expanded);
+		free(str);
+	}
+	return (0);
+}
+
+// cc -Wall -Wextra -g3 -fsanitize=address -Ilib/libft -Iinclude src/expanser3.c src/lexer.c lib/libft/libft.a && ./a.out "'$HOME': $HOME		'$USER':\"$USER\"		$PWD		'$OLDPWD':$OLDPWD		$INVENT:\"$INVENT\"		\"$?\"		'$-':\"S-\"		'S0':\"$0\""
+
+// cc -Wall -Wextra -g3 -Ilib/libft -Iinclude src/expanser3.c src/lexer.c lib/libft/libft.a && valgrind --leak-check=full ./a.out "'$HOME': $HOME          '$USER':\"$USER\"                $PWD            '$OLDPWD':$OLDPWD               $INVENT:\"$INVENT\"              \"$?\"          '$-':\"S-\"             'S0':\"$0\""
