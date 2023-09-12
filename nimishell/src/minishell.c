@@ -110,22 +110,10 @@ int	process_input(char *line_read, t_data *data)
 	t_list	*cmd_list;
 	t_list	*tmp;
 	int		cmd_nb;
-//	int		j;
-//	char	**input;
-//	t_list	*cmd;
 
 	cmd_nb = lexer(line_read, &cmd_list);
 	if (cmd_nb == -1)
 		return (1);
-//	parser(line_read);//230807add
-/* 	tmp = cmd_list;
-	while (tmp)
-	{
-		tmp->content = expander(tmp, data);
-		printf("%sEXPANDER: Line: %d, content: %s, type: %d, pos: %d%s\n", \
-				COLOR_BLUE, __LINE__, tmp->content, tmp->type, tmp->cmd_pos, COLOR_RESET);
-		tmp = tmp->next;
-	} */
 	tmp = cmd_list;
 	if (cmd_nb == 0)
 	{
@@ -140,21 +128,8 @@ int	process_input(char *line_read, t_data *data)
 			tmp = tmp->next;
 		}
 	}
-//	exit (0);
-/**
- * 
- * @note 230809 kokomade
- * @note make the expanserworking
- * 
- */
-//infile, outfile obtain in expanser? ->in parser kana
 	g_return_val = executer(NULL, cmd_list, cmd_nb, data->path, data->env, data);
-	
-	ft_lstclear(&tmp, free);
-//	if (data->return_val == INT_MAX)
-//		return (check_exit(input, data));
-//	del_array((void ***) &input)in	;
-//	ft_printf("Command executed: %s with return: %d\n", input[0], data->return_val);
+	ft_lstclear(&cmd_list, free);
 	return (g_return_val);
 }
 

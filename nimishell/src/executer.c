@@ -361,7 +361,7 @@ int	executer(char *outfile, t_list *lst, int cmd_number, \
 			int is_builtin = check_builtin(cmd, data);
 			ft_printf("\nCheck builtin return: %d\n", is_builtin);
 			if (is_builtin >= 0)
-				return (is_builtin);
+				return (free(cmd), is_builtin);
 			
 			// Create child process
 			pid = fork();

@@ -13,9 +13,9 @@
 #include "minishell.h"
 
 //DELETE
-#include "../lib/libft/libft.h"
+// #include "../lib/libft/libft.h"
 
-volatile int	g_return_val = 0;
+// volatile int	g_return_val = 0;
 
 char	*get_var_value(char *env_var, char *envp[], int len)
 {
@@ -166,7 +166,6 @@ int	compose_expanded(char *expanded, char **str, int dollar_pos, int end_pos_var
 	str_expanded = ft_strjoin_many(3, preceding, expanded, following);
 	if (!str_expanded)
 		return (free(preceding), free(following), -1);
-	free(*str);
 	*str = str_expanded;
 	len = ft_strlen(preceding) + ft_strlen(expanded) - 1;
 	free(preceding);
@@ -183,16 +182,14 @@ int	compose_expanded(char *expanded, char **str, int dollar_pos, int end_pos_var
 int	expand(char **str, int *pos, int quotes, char *env[])
 {
 	int		i[2];
-	char	*tmp;
 	char	*expanded_var;
 
 	ft_bzero(i, 2 * sizeof(i));
 	i[0] = *pos;
-	tmp = *str;
 	if (!ft_isdigit((*str)[*pos]))
 		while ((*str)[i[0]] && !ft_isspace((*str)[i[0]]) && (*str)[i[0]] != quotes)
 			i[0]++;
-	expanded_var = is_expand(&tmp[*pos], i[0] - *pos, env);
+	expanded_var = is_expand(str[*pos], i[0] - *pos, env);
 	if (!expanded_var)
 		return (1);
 	ft_printf("Expanded_var: %s\n", expanded_var);

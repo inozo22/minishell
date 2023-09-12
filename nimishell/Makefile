@@ -28,7 +28,7 @@ endef
 export ASCIIART
 
 CC 			= cc
-CFLAGS		= -Wall -Wextra -Werror -pedantic
+CFLAGS		= -Wall -Wextra -Werror -Wpedantic
 
 OS			= $(shell uname)
 
