@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:18:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/12 18:29:55 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/12 18:51:48 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,10 +202,22 @@ int	built_export(char **input, t_data *data)
 	printf("input[%d]: %s\n", i + 2, input[i + 2]);
 	printf("input[%d]: %s\n", i + 3, input[i + 3]);
 
-
+	tmp = (char **)ft_calloc(len, sizeof (char *));
+	while (i < len)
+	{
+		tmp[i] = ft_strdup(input[i]);
+		printf("tmp[%d]: %s input[%d]: %s\n", i,  tmp[i], i, input[i]);
+		i++;
+	}
+	tmp[i] = NULL;
 	i = 0;
-	tmp =  input;
-	while (tmp[i] && ++i < len)
+	while (tmp[i])
+	{
+		printf("tmp[%d]: %s\n", i,  tmp[i]);
+		i++;
+	}
+	i = 0;
+	while (++i < len)
 	{
 		printf("tmp[%d]: %s\n", i, tmp[i]);
 		printf("tmp[%d]: %s\n", i + 1, tmp[i + 1]);
