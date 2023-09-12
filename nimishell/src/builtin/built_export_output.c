@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_export_output.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 12:44:12 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/05 16:25:28 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/12 11:37:36 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	print_export(char	*str)
  * @note maybe adjust to some list too.
  * @note 230905bde-mada: added condition to skip '_' variable
  */
-void	output_env(t_export *list, int len, int flag)
+void	output_env(t_export *list, int len)
 {
 	int	i;
 	int	j;
@@ -49,10 +49,8 @@ void	output_env(t_export *list, int len, int flag)
 		i = -1;
 		while (++i < len)
 		{
-			if (list->box[i].id == j && flag == FLAGEXPORT)
+			if (list->box[i].id == j && ft_strcmp(list->box[i].name, "_") != 0)
 			{
-				if (ft_strncmp(list->box[i].name, "_", 1) == 0)
-					continue ;
 				ft_printf("declare -x ");
 				ft_printf("%s", list->box[i].name);
 				if (list->box[i].equal == 1)
@@ -64,8 +62,6 @@ void	output_env(t_export *list, int len, int flag)
 				ft_printf("\n");
 			}
 		}
-		if (flag == FLAGENV && i == len - 1)
-			break ;
 	}
 }
 
@@ -129,7 +125,7 @@ int	output_export(t_data *data)
 	if (!list)
 		return (0);
 	quick_sort(list->box, 0, av_amount(tmp_env) - 1);
-	output_env(list, av_amount(tmp_env), FLAGEXPORT);
+	output_env(list, av_amount(tmp_env));
 	i = 0;
 	while (i < av_amount(tmp_env))
 	{
