@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/12 16:00:20 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/12 20:29:09 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,7 +186,7 @@ int	execute_script_without_shebang(char **cmd, char **env)
 }
  */
 
-char	**fill_current_cmd(t_list *lst, int pos)
+char	**fill_current_cmd(t_list *lst, int pos, char **envp)
 {
 	char	**cmd;
 	t_list	*tmp;
@@ -208,7 +208,7 @@ char	**fill_current_cmd(t_list *lst, int pos)
 	while (tmp && tmp->cmd_pos == pos)
 	{
 		if (tmp->type == WORD || tmp->type == PIPE_LINE)
-			cmd[++i] = tmp->content;
+			cmd[++i] = expander(tmp->content, envp);
 		tmp = tmp->next;
 	}
 	cmd[++i] = NULL;
@@ -316,7 +316,7 @@ int	executer(char *outfile, t_list *lst, int cmd_number, \
 		ft_printf("Current cmd pos: %d, pos val: %d\n", lst->cmd_pos, pos);
 		if (lst->cmd_pos == pos)
 		{
-			cmd = fill_current_cmd(lst, pos);
+			cmd = fill_current_cmd(lst, pos, data->env);
 			get_iofiles_fd(fd, lst, pos);
 			get_heredoc_input(lst, pos);
 			//redirect input
@@ -357,7 +357,7 @@ int	executer(char *outfile, t_list *lst, int cmd_number, \
 			int	j = -1;
 			while (cmd[++j])
 				ft_printf("cmd[%d] = %s\n", j, cmd[j]);
-
+			ft_printf("\n");
 			int is_builtin = check_builtin(cmd, data);
 			ft_printf("\nCheck builtin return: %d\n", is_builtin);
 			if (is_builtin >= 0)

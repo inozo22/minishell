@@ -147,6 +147,7 @@ int	compose_expanded(char *expanded, char **str, int dollar_pos, int end_pos_var
 	char	*preceding;
 	char	*following;
 	char	*str_expanded;
+	int		len;
 	
 	preceding = ft_substr(*str, 0, dollar_pos);
 	if (!preceding)
@@ -167,7 +168,11 @@ int	compose_expanded(char *expanded, char **str, int dollar_pos, int end_pos_var
 		return (free(preceding), free(following), -1);
 	free(*str);
 	*str = str_expanded;
-	return (ft_strlen(preceding) + ft_strlen(expanded) - 1);
+	len = ft_strlen(preceding) + ft_strlen(expanded) - 1;
+	free(preceding);
+	free(following);
+	free(expanded);
+	return (len);
 }
 
 /**
@@ -205,7 +210,7 @@ int	expand(char **str, int *pos, int quotes, char *env[])
 /**
  * @param pos[2] to keep and free string 
  */
-char	*expanser(char *str, char *env[])
+char	*expander(char *str, char *env[])
 {
 	int	i;
 	int quotes;
@@ -225,7 +230,7 @@ char	*expanser(char *str, char *env[])
 	return (str);
 }
 
-int	main(int argc, char *argv[], char *envp[])
+/* int	main(int argc, char *argv[], char *envp[])
 {
 	char	*input[] = {"'$HOME': $HOME aaa", "   '$USER':  	\"$USER\" ei", "'$PWD':\"$PWD\"", "'$OLDPWD':$OLDPWD", "$INVENT:\"$INVENT\"", "'$?'\"$?\"", "'$-':\"$-\"", "'$0':\"$0\"", "'$1':\"$1\"", NULL};
 	char	*str;
@@ -243,8 +248,8 @@ int	main(int argc, char *argv[], char *envp[])
 		free(expanded);
 	}
 	return (0);
-}
+} */
 
 // cc -Wall -Wextra -g3 -fsanitize=address -Ilib/libft -Iinclude src/expanser3.c src/lexer.c src/error_msgs.c src/terminate.c lib/libft/libft.a && ./a.out
 
-// cc -Wall -Wextra -g3 -Ilib/libft -Iinclude src/expanser3.c src/lexer.c src/error_msgs.c src/terminate.c lib/libft/libft.a && valgrind ./a.out
+// cc -Wall -Wextra -g3 -Ilib/libft -Iinclude src/expanser3.c src/lexer.c src/error_msgs.c src/terminate.c lib/libft/libft.a && valgrind --leak-check=full --show-leak-kinds=all ./a.out

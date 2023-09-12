@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:32:33 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/12 17:14:23 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/12 20:27:16 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,14 +118,14 @@ int	process_input(char *line_read, t_data *data)
 	if (cmd_nb == -1)
 		return (1);
 //	parser(line_read);//230807add
-	tmp = cmd_list;
+/* 	tmp = cmd_list;
 	while (tmp)
 	{
 		tmp->content = expander(tmp, data);
 		printf("%sEXPANDER: Line: %d, content: %s, type: %d, pos: %d%s\n", \
 				COLOR_BLUE, __LINE__, tmp->content, tmp->type, tmp->cmd_pos, COLOR_RESET);
 		tmp = tmp->next;
-	}
+	} */
 	tmp = cmd_list;
 	if (cmd_nb == 0)
 	{

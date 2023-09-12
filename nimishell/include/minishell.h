@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 19:10:38 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/12 15:12:10 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/12 20:23:17 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,7 +198,7 @@ int		av_amount(char **strs);
 
 //Expanser
 //char	*expanser(char *arg, char *envp[], t_data *data);
-char	*expander(t_list *list, t_data *data);
+char	*expander(char *str, char *env[]);
 //char	*expand(t_list *list, t_data *data, char *str);
 
 //Redirect
