@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:18:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/12 10:46:48 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/12 18:29:55 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,7 +179,15 @@ int	built_export(char **input, t_data *data)
 	char		**new_envp;
 	int			i;
 	int			len;
+	char		**tmp;
 
+	i = 0;
+	while (input[i])
+	{
+		printf("input[%d]: %s\n", i,  input[i]);
+		i++;
+	}
+	tmp = NULL;
 	len = av_amount(input);
 	new_envp = NULL;
 	if (/* av_amount(input) */len == 1)
@@ -189,20 +197,60 @@ int	built_export(char **input, t_data *data)
 		return (0);
 	}
 	i = 0;
-	while (/* input[++i] */++i < len /* av_amount(input) */)
+	printf("input[%d]: %s\n", i, input[i]);
+	printf("input[%d]: %s\n", i + 1, input[i + 1]);
+	printf("input[%d]: %s\n", i + 2, input[i + 2]);
+	printf("input[%d]: %s\n", i + 3, input[i + 3]);
+
+
+	i = 0;
+	tmp =  input;
+	while (tmp[i] && ++i < len)
 	{
-		if (!check_input(input[i], data))
+		printf("tmp[%d]: %s\n", i, tmp[i]);
+		printf("tmp[%d]: %s\n", i + 1, tmp[i + 1]);
+		if (!check_input(tmp[i], data))
 		{
-			new_envp = envp_strs_join(input[i], data);
+			new_envp = envp_strs_join(tmp[i], data);
 			if (!new_envp)
 				return (printf("ERROR: Line: %d\n", __LINE__), 1);
 			data->env = new_envp;
 		}
 		else
-			envp_strs_mod(input[i], data);
+			envp_strs_mod(tmp[i], data);
 	}
 	return (0);
 }
+
+// int	built_export(char **input, t_data *data)
+// {
+// 	char		**new_envp;
+// 	int			i;
+// 	int			len;
+
+// 	len = av_amount(input);
+// 	new_envp = NULL;
+// 	if (/* av_amount(input) */len == 1)
+// 	{
+// 		if (!output_export(data))
+// 			return (printf("Error: output_export\n"), 1);
+// 		return (0);
+// 	}
+// 	i = 0;
+// 	while (/* input[++i] */++i < len /* av_amount(input) */)
+// 	{
+// 		if (!check_input(input[i], data))
+// 		{
+// 			new_envp = envp_strs_join(input[i], data);
+// 			if (!new_envp)
+// 				return (printf("ERROR: Line: %d\n", __LINE__), 1);
+// 			data->env = new_envp;
+// 		}
+// 		else
+// 			envp_strs_mod(input[i], data);
+// 	}
+// 	return (0);
+// }
 
 /**
  * BEHAVIOUR ON BASH
@@ -227,4 +275,9 @@ int	built_export(char **input, t_data *data)
  * export OLDPWA: add in export, but doesn't print with env command
  * export OLDPWA=aaa: add new variable
  * export OLDPWA="aaa": doesn't work (ask how will I receive)
+ * 
+ * 
+ * ******************************************************************
+ * Command to check
+ * export a b c=aaa
  */

@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 10:02:30 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/12 11:23:41 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/12 18:03:31 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,52 @@ int	g_return_val;
 //test
 
 //TEST/////TEST////////TEST///////TEST/////////TEST////TEST////////
+
+int	built_export_test(t_data *data)
+{
+	char	**input_ex;
+	char	**input_export;
+
+	input_export = ft_calloc(1, 1);
+	input_export[0] = "export";
+	input_ex = ft_calloc(4, 1);
+	input_ex[0] = "export";
+	input_ex[1] = "a";
+	input_ex[2] = "b";
+	input_ex[3] = "c=aaa";
+
+	built_export(input_ex, data);
+	printf(COLOR_GREEN"=== I did export! ===%s\n", COLOR_RESET);
+	printf(COLOR_BLUE"=== check check ===%s\n", COLOR_RESET);
+	built_export(input_export, data);
+	printf(COLOR_BLUE"=== check check ===%s\n\n", COLOR_RESET);
+
+//	sleep (1);
+
+	// char	**input1;
+
+	// input1 = ft_calloc(2, 1);
+	// input1[0] = "unset";
+	// input1[1] = "PWD";
+
+	// built_unset(input1, data);
+	// printf(COLOR_GREEN"=== I did unset! ===%s\n", COLOR_RESET);
+
+	// printf(COLOR_BLUE"=== check check ===%s\n", COLOR_RESET);
+	// built_export(input_export, data);
+	// printf(COLOR_BLUE"=== check check ===%s\n\n", COLOR_RESET);
+
+	// char	*input_cd[2];
+	// input_cd[0] = "cd";
+	// input_cd[1] = "/users/nimai/42/42cursus";
+
+	// built_cd(input_cd, data);
+	// printf(COLOR_GREEN"=== I did cd! ===%s\n", COLOR_RESET);
+	// printf(COLOR_BLUE"=== check check ===%s\n", COLOR_RESET);
+	// built_export(input_export, data);
+	// printf(COLOR_BLUE"=== check check ===%s\n\n", COLOR_RESET);
+	return (0);
+}
 
 int	built_cd_oldpwd_unset_test(t_data *data)
 {
@@ -273,8 +319,8 @@ int	main(int argc, char *argv[], char *envp[])
 //	input_test(data);
 //	built_cd_oldpwd_test(data);
 //	built_unset_test(data);
-	built_cd_oldpwd_unset_test(data);
-
+//	built_cd_oldpwd_unset_test(data);
+	built_export_test(data);
 
 	////////////////////////////////////////
 

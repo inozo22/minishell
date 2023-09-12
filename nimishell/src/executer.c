@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 23:43:32 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/04 13:31:19 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/12 12:33:32 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -395,7 +395,7 @@ int executer(char *infile, char *outfile, t_list *lst, int cmd_number, char **pa
 		ft_printf("Check builtin return: %d\n", is_builtin);
 		if (is_builtin >= 0)
 			return (is_builtin);
-		
+
 		// Create child process
 		pid = fork();
 		if (pid == 0)
