@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 19:41:45 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/07/03 14:41:47 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/05 15:15:40 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ char	*ft_strjoin_array(char **list)
 	return (joined);
 }
 
-int	main(void)
+/* int	main(void)
 {
 	char	*str;
 	char	**list;
@@ -72,4 +72,4 @@ int	main(void)
 		free(list[i]);
 	free(list);
 	free(str);
-}
+} */

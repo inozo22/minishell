@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 19:10:38 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/08/22 14:30:20 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/07 13:30:48 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,15 @@
 # include <sys/wait.h>
 # include <sys/types.h>//it's not necessary in POSIX.1
 # include <termios.h>
-# include "libft.h"
+# include "../lib/libft/libft.h"
+//# include "libft.h"
 # include "built.h"
 # include "signals.h"
 //# include "../lib/libft/libft.h"
+
+# ifndef TCSASOFT
+#  define TCSASOFT 0
+# endif
 
 //test
 extern int	g_return_val;
@@ -64,18 +69,12 @@ extern int	g_return_val;
 	APPEND,
 	INVALID,
 };
-/*
-enum e_state
-{
-	IN_DQUOTE,
-	IN_QUOTE,
-	GENERAL,
-}; */
 
 # define READ_END 0
 # define WRITE_END 1
 
 # define SHELL_NAME "nimishell"
+# define DEFAULT_PATH "PATH=/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin"
 
 typedef struct s_tokens
 {
@@ -123,7 +122,7 @@ typedef struct s_tokens
 # define BACKGROUND_COL_CYAN             "46"
 # define BACKGROUND_COL_WHITE            "47"
 
-# define SHELL_COLOR_ESCAPE_SEQ(X) "\x1b["X"m"
+# define SHELL_COLOR_ESCAPE_SEQ(X) "\033["X"m"
 # define SHELL_FORMAT_RESET ANSI_COLOR_ESCAPE_SEQ(GEN_FORMAT_RESET)
 
 //"\001" and "\002" are escape sequence, which is necessary to work with readline 
@@ -132,7 +131,7 @@ typedef struct s_tokens
 # define COLOR_YELLOW	"\001\033[1;33m\002"
 # define COLOR_GRAY		"\001\033[2;37m\002"
 # define COLOR_CURSIVE	"\001\033[3m\002"
-# define COLOR_RED		"\001\x1b[31m\002"
+# define COLOR_RED		"\001\033[31m\002"
 # define COLOR_BLUE		"\001\033[1;34m\002"
 # define COLOR_CYAN 	"\001\033[1;36m\002"
 # define COLOR_ACCENT	"\001\033[92;3;4;1m\002"
@@ -149,6 +148,7 @@ pid_t	get_my_pid(void);
 
 int		minishell(t_data *data);
 int		check_builtin(char **input, t_data *data);
+int		process_input(char *line_read, t_data *data);
 
 //	Lexer
 
@@ -171,8 +171,7 @@ int		error_msg(char *prog_name, char *cmd, int mode);
 
 //	Executor
 //int child_creation(t_data *data, char **cmd);
-int		child_creation(char *infile, char *outfile, t_list *lst, int cmd_number, char **path, char **env, t_data *data);
-
+int		executer(char *outfile, t_list *lst, int cmd_number, char **path, char **env, t_data *data);
 
 //	Split
 char	**split_input(char *str);
@@ -182,6 +181,8 @@ int		ft_isquote(int c);
 void	*del(void **ptr);
 void	*del_array(void ***ptr);
 void	*del_err_array(char ***ptr, int i);
+void	*del_triple_array(char ****ptr);
+int		update_last_executed_cmd(t_data *data, char *cmd);
 
 //Bultin
 //	errors
@@ -196,7 +197,11 @@ int		av_amount(char **strs);
 
 //Expanser
 //char	*expanser(char *arg, char *envp[], t_data *data);
-char	*expanser(t_list *list, t_data *data);
+char	*expander(t_list *list, t_data *data);
 //char	*expand(t_list *list, t_data *data, char *str);
+
+//Redirect
+
+int		heredoc_read(char *eof);
 
 #endif

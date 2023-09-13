@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 12:44:12 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/23 16:40:42 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/12 11:44:14 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,10 @@ void	print_export(char	*str)
  * @author nimai
  * @param flag control between env and export (230526)
  * @note maybe adjust to some list too.
+ * @note 230905bde-mada: added condition to skip '_' variable
+ * @note 230912nimai: removed flags and fixed condition to skip '_' variable
  */
-void	output_env(t_export *list, int len, int flag)
+void	output_env(t_export *list, int len)
 {
 	int	i;
 	int	j;
@@ -48,7 +50,7 @@ void	output_env(t_export *list, int len, int flag)
 		i = -1;
 		while (++i < len)
 		{
-			if (list->box[i].id == j && flag == FLAGEXPORT)
+			if (list->box[i].id == j && ft_strcmp(list->box[i].name, "_") != 0)
 			{
 				ft_printf("declare -x ");
 				ft_printf("%s", list->box[i].name);
@@ -61,8 +63,6 @@ void	output_env(t_export *list, int len, int flag)
 				ft_printf("\n");
 			}
 		}
-		if (flag == FLAGENV && i == len - 1)
-			break ;
 	}
 }
 
@@ -70,7 +70,8 @@ void	output_env(t_export *list, int len, int flag)
  * @brief a part of initiation t_data
  * @author nimai
  * @param strs it's copy of envp
- * @note It's not beautiful to allocate 2000 each box[i].name and val, but it's necessary to sort.
+ * @note It's not beautiful to allocate 2000 each box[i].name and val,
+ * but it's necessary to sort.
  * i[0] = i
  * i[1] = len
  * i[2] = c
@@ -104,9 +105,8 @@ t_export	*fill_list(char **env, t_export *ret)
 }
 
 /**
- * @brief print export, until free t_export
+ * @brief print export, then free t_export
  * @author nimai
- * @note I have taken from the built_export because of the amount of line
  */
 int	output_export(t_data *data)
 {
@@ -125,7 +125,7 @@ int	output_export(t_data *data)
 	if (!list)
 		return (0);
 	quick_sort(list->box, 0, av_amount(tmp_env) - 1);
-	output_env(list, av_amount(tmp_env), FLAGEXPORT);
+	output_env(list, av_amount(tmp_env));
 	i = 0;
 	while (i < av_amount(tmp_env))
 	{

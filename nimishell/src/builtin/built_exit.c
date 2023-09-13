@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_exit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
+/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 13:05:08 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/11 17:56:19 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/05 16:29:35 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ int	is_numeric(char *num)
  * @author nimai
  * @note maybe it's not necessary to have as a function. 
  */
-int	error_exit_msg(int ret, char *msg)
+static int	error_exit_msg(void)
 {
-	ft_printf("exit\n%s\n", msg);
-	return (ret);
+	ft_putendl_fd("minishell: exit: too many arguments", 2);
+	return (1);
 }
 
 /**
@@ -51,7 +51,7 @@ int	av_amount(char **strs)
 	int	ret;
 
 	ret = 0;
-	while (strs[ret])
+	while (strs && strs[ret])
 	{
 		ret++;
 	}
@@ -62,31 +62,33 @@ int	av_amount(char **strs)
  * @brief manage "builtin" exit cmd.
  * @author nimai
  * @param **av "exit", "0"
- * @return if there are more than <cmd + 1 argument>, return to minishell prompt, without execute any function after this.
+ * @return if there are more than <cmd + 1 argument>, return to minishell
+ * prompt, without execute any function after this.
  * @note 230611nimai: free in the main, so don't have to free memory here.
  */
-int	built_exit(char **input)
+int	built_exit(char **input, t_data *data, int cmd_num)
 {
 	int	amount;
 
+	g_return_val = 0;
 	amount = av_amount(input);
-	if (amount == 2)
-		exit (0);
-	if (!is_numeric(input[1]))
+	if (amount >= 3)
+	{
+		//230523nimai:when return it, it will not move to next command,
+		//but return to minishell prompt
+		return (error_exit_msg());
+	}
+	else if (amount > 1 && !is_numeric(input[1]))
 	{
 		//230523nimai:give you error msg, but exit works. (as working bash)
 		ft_printf("minishell: exit: %s: numeric argument required\n", input[1]);
 	//230523nimai:will be eliminated
-		ft_printf("receive error message, but EXIT!\n");
-		exit (1);
+		g_return_val = 255;
 	}
-	if (amount > 3)
-	{
-		//230523nimai:when return it, it will not move to next command, but return to minishell prompt
-		return (error_exit_msg(1, "minishell: exit: too many arguments"));
-	}
+	else if (amount == 2)
+		g_return_val = ft_atoi(input[1]);
 	ft_printf("EXIT!\n");
-
-	exit (ft_atoi(input[1]));
+	if (cmd_num == 0)
+		data->exit_status = 1;
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 10:02:30 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/01 12:21:04 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/12 18:03:31 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,139 @@
 //test
 int	g_return_val;
 //test
-static int	process_input(char *line_read, t_data *data);
 
 //TEST/////TEST////////TEST///////TEST/////////TEST////TEST////////
+
+int	built_export_test(t_data *data)
+{
+	char	**input_ex;
+	char	**input_export;
+
+	input_export = ft_calloc(1, 1);
+	input_export[0] = "export";
+	input_ex = ft_calloc(4, 1);
+	input_ex[0] = "export";
+	input_ex[1] = "a";
+	input_ex[2] = "b";
+	input_ex[3] = "c=aaa";
+
+	built_export(input_ex, data);
+	printf(COLOR_GREEN"=== I did export! ===%s\n", COLOR_RESET);
+	printf(COLOR_BLUE"=== check check ===%s\n", COLOR_RESET);
+	built_export(input_export, data);
+	printf(COLOR_BLUE"=== check check ===%s\n\n", COLOR_RESET);
+
+//	sleep (1);
+
+	// char	**input1;
+
+	// input1 = ft_calloc(2, 1);
+	// input1[0] = "unset";
+	// input1[1] = "PWD";
+
+	// built_unset(input1, data);
+	// printf(COLOR_GREEN"=== I did unset! ===%s\n", COLOR_RESET);
+
+	// printf(COLOR_BLUE"=== check check ===%s\n", COLOR_RESET);
+	// built_export(input_export, data);
+	// printf(COLOR_BLUE"=== check check ===%s\n\n", COLOR_RESET);
+
+	// char	*input_cd[2];
+	// input_cd[0] = "cd";
+	// input_cd[1] = "/users/nimai/42/42cursus";
+
+	// built_cd(input_cd, data);
+	// printf(COLOR_GREEN"=== I did cd! ===%s\n", COLOR_RESET);
+	// printf(COLOR_BLUE"=== check check ===%s\n", COLOR_RESET);
+	// built_export(input_export, data);
+	// printf(COLOR_BLUE"=== check check ===%s\n\n", COLOR_RESET);
+	return (0);
+}
+
+int	built_cd_oldpwd_unset_test(t_data *data)
+{
+	char	**input_ex;
+	char	**input_export;
+
+	input_export = ft_calloc(1, 1);
+	input_export[0] = "export";
+	input_ex = ft_calloc(2, 1);
+	input_ex[0] = "export";
+	input_ex[1] = "OLDPWD=/users/nimai";
+
+	built_export(input_ex, data);
+	printf(COLOR_GREEN"=== I did export! ===%s\n", COLOR_RESET);
+	printf(COLOR_BLUE"=== check check ===%s\n", COLOR_RESET);
+	built_export(input_export, data);
+	printf(COLOR_BLUE"=== check check ===%s\n\n", COLOR_RESET);
+
+//	sleep (1);
+
+	char	**input1;
+
+	input1 = ft_calloc(2, 1);
+	input1[0] = "unset";
+	input1[1] = "PWD";
+
+	built_unset(input1, data);
+	printf(COLOR_GREEN"=== I did unset! ===%s\n", COLOR_RESET);
+
+	printf(COLOR_BLUE"=== check check ===%s\n", COLOR_RESET);
+	built_export(input_export, data);
+	printf(COLOR_BLUE"=== check check ===%s\n\n", COLOR_RESET);
+
+	char	*input_cd[2];
+	input_cd[0] = "cd";
+	input_cd[1] = "/users/nimai/42/42cursus";
+
+	built_cd(input_cd, data);
+	printf(COLOR_GREEN"=== I did cd! ===%s\n", COLOR_RESET);
+	printf(COLOR_BLUE"=== check check ===%s\n", COLOR_RESET);
+	built_export(input_export, data);
+	printf(COLOR_BLUE"=== check check ===%s\n\n", COLOR_RESET);
+	return (0);
+}
+
+
+int	built_unset_test(t_data *data)
+{
+	char	**input1;
+
+	input1 = ft_calloc(2, 1);
+	input1[0] = "unset";
+	input1[1] = "HOME";
+	built_unset(input1, data);
+	printf("I did unset!\n");
+
+	sleep (1);
+
+	char	**input2;
+
+	input2 = ft_calloc(1, 1);
+	input2[0] = "export";
+	built_export(input2, data);
+	printf("I did export!\n");
+
+	return (0);
+}
+
+int	built_cd_oldpwd_test(t_data *data)
+{
+	char	**input_ex;
+	char	*input_cd[2];
+
+	input_ex = ft_calloc(2, 1);
+	input_ex[0] = "export";
+	input_ex[1] = "OLDPWD=/users/nimai";
+
+	built_export(input_ex, data);
+
+	input_cd[0] = "cd";
+	input_cd[1] = "-";
+
+	built_cd(input_cd, data);
+	return (0);
+}
 
 int	input_test(t_data *data)
 {
@@ -46,78 +176,51 @@ int	input_mult_test(t_data *data, char *test)
 	return (0);
 }
 
-int	test_childcreation(t_data *data)
-{
-	t_list	*list;
-	t_list	*tmp;
-//	char	*input = "$HOME $? \'$HOME\' $?\'$HOME\'$?";
-	char	*input = "echo ${HOM} ${HOME} \'${HOME}\' $HO{ME} ";
-//	char	*input = "echo | cd | pwd | env";
-//	char	*input = "cat < infile| cat >outfile";
-//	char	*input = "cat < infile";
-//	char	*input2 = "$$ $$$USER";
-	char	*ret;
-	int		cmd_nb;
+// int	test_childcreation(t_data *data)
+// {
+// 	t_list	*list;
+// 	t_list	*tmp;
+// //	char	*input = "$HOME $? \'$HOME\' $?\'$HOME\'$?";
+// 	char	*input = "echo ${HOM} ${HOME} \'${HOME}\' $HO{ME} ";
+// //	char	*input = "echo | cd | pwd | env";
+// //	char	*input = "cat < infile| cat >outfile";
+// //	char	*input = "cat < infile";
+// //	char	*input2 = "$$ $$$USER";
+// 	char	*ret;
+// 	int		cmd_nb;
 
-	cmd_nb = lexer(input, &list);
-	tmp = list;
-	while (tmp)
-	{
-		ret = expanser(tmp, data);
-		printf("%sEXPANSER: Line: %d, ret: %s, type: %d, pos: %d%s\n", COLOR_BLUE, __LINE__, ret, tmp->type, tmp->cmd_pos, COLOR_RESET);
-		tmp = tmp->next;
-	}
-	child_creation(NULL, NULL, list, cmd_nb, data->path, data->env, data);
-	return(0);
-}
+// 	cmd_nb = lexer(input, &list);
+// 	tmp = list;
+// 	while (tmp)
+// 	{
+// 		ret = expanser(tmp, data);
+// 		printf("%sEXPANSER: Line: %d, ret: %s, type: %d, pos: %d%s\n", COLOR_BLUE, __LINE__, ret, tmp->type, tmp->cmd_pos, COLOR_RESET);
+// 		tmp = tmp->next;
+// 	}
+// 	child_creation(NULL, NULL, list, cmd_nb, data->path, data->env, data);
+// 	return(0);
+// }
 
-int	test_expand(t_data *data)
-{
-	t_list	*list;
-//	char	*input = "$HOME $? \'$HOME\' $?\'$HOME\'$?";
-//	char	*input = "echo $HOME$USERa $HOME $? \'$HOME\' $?\'$HOME\'$?$$";
-	char	*input = "echo cd pwd env";
-//	char	*input2 = "$$ $$$USER";
-	char	*ret;
+// int	test_expand(t_data *data)
+// {
+// 	t_list	*list;
+// //	char	*input = "$HOME $? \'$HOME\' $?\'$HOME\'$?";
+// //	char	*input = "echo $HOME$USERa $HOME $? \'$HOME\' $?\'$HOME\'$?$$";
+// 	char	*input = "echo cd pwd env";
+// //	char	*input2 = "$$ $$$USER";
+// 	char	*ret;
 
-	lexer(input, &list);
-	while (list)
-	{
-		ret = expanser(list, data);
-		printf("%sEXPANSER: Line: %d, ret: %s, type: %d, pos: %d%s\n", COLOR_BLUE, __LINE__, ret, list->type, list->cmd_pos, COLOR_RESET);
-		list = list->next;
-	}
-	return(0);
-}
+// 	lexer(input, &list);
+// 	while (list)
+// 	{
+// 		ret = expanser(list, data);
+// 		printf("%sEXPANSER: Line: %d, ret: %s, type: %d, pos: %d%s\n", COLOR_BLUE, __LINE__, ret, list->type, list->cmd_pos, COLOR_RESET);
+// 		list = list->next;
+// 	}
+// 	return(0);
+// }
 
 //TEST/////TEST////////TEST///////TEST/////////TEST////TEST////////
-
-static int	process_input(char *line_read, t_data *data)
-{
-//	int		j;
-//	char	**input;
-	t_list	*cmd_list;
-//	t_list	*cmd;
-	int		cmd_nb;
-	t_list	*tmp;
-
-	cmd_nb = lexer(line_read, &cmd_list);
-	parser(line_read);//230807add
-	tmp = cmd_list;
-	while (tmp)
-	{
-		tmp->content = expanser(tmp, data);
-		printf("%sEXPANSER: Line: %d, content: %s, type: %d, pos: %d%s\n", COLOR_BLUE, __LINE__, tmp->content, tmp->type, tmp->cmd_pos, COLOR_RESET);
-		tmp = tmp->next;
-	}
-	data->return_val = child_creation(NULL, NULL, cmd_list, cmd_nb, data->path, data->env, data);
-	ft_lstclear(&cmd_list, free);
-//	if (data->return_val == INT_MAX)
-//		return (check_exit(input, data));
-//	del_array((void ***) &input);
-//	ft_printf("Command executed: %s with return: %d\n", input[0], data->return_val);
-	return (data->return_val);
-}
 
 /**
  * @note added SHLVL increment
@@ -180,7 +283,6 @@ static t_data	*init_data(char *envp[], char *prog_name)
 	data = (t_data *)ft_calloc(1, sizeof(t_data));
 	if (!data)
 		errors(12, data);
-	data->return_val = 0;
 	if (!*envp)
 		define_basic_env(data, prog_name);
 	else
@@ -213,10 +315,12 @@ int	main(int argc, char *argv[], char *envp[])
 //	test_expand(data);
 //	test_childcreation(data);
 //test_checkquotes();
-	input_mult_test(data, "u_echo.test");
+//	input_mult_test(data, "u_echo.test");
 //	input_test(data);
-
-
+//	built_cd_oldpwd_test(data);
+//	built_unset_test(data);
+//	built_cd_oldpwd_unset_test(data);
+	built_export_test(data);
 
 	////////////////////////////////////////
 

@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 09:43:46 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/26 11:29:12 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/12 17:37:05 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,20 +25,22 @@ char	*get_dest_path_wl_sign(t_data *data, char *cur, char *pwd)
 
 	ret = NULL;
 	(void)data;
-	if (cur)//move to where you are, you will get OLDPWD
+	if (cur) //move to where you are, you will get OLDPWD
 	{
 		if (chdir(cur) == -1)
 		{
-			data->return_val = 1;
-			return (error_built("cd", "failuer to move to current directory\n"), NULL);
+			g_return_val = 1;
+			return (error_built("cd", \
+					"failure to move to current directory\n"), NULL);
 		}
 		ret = ft_strdup(cur);
 	}
-	else if (!cur)//move to where you are, but if it's not exist
+	else if (!cur) //move to where you are, but if it's not exist
 	{
 		// I think I should put input instead of "./" because could be any string
 		ret = ft_strjoin(pwd, "./");
-		ft_printf("cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory");//temporary error control
+		ft_printf("cd: error retrieving current directory: getcwd: \
+				cannot access parent directories: No such file or directory"); //temporary error control
 	}
 	return (ret);
 }
@@ -57,13 +59,15 @@ char	*get_dest_path_env(t_data *data, char *envtype)
 	ret = get_env(data->env, envtype);
 	if (!ret)
 	{
-		data->return_val = 1;
+		g_return_val = 1;
 		return (error_notset("cd", envtype), NULL);
 	}
 	if (chdir(ret) == -1)
 	{
-		data->return_val = 1;
+		g_return_val = 1;
 		return (error_built("cd", "failed chdir"), NULL);
 	}
+	if (!ft_strcmp("OLDPWD", envtype))
+		ft_printf("%s\n", ret);
 	return (ret);
 }

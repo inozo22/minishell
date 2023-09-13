@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:12:28 by nimai             #+#    #+#             */
-/*   Updated: 2023/08/08 11:23:52 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/12 11:37:16 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ typedef struct s_data
 {
 	char		**env;
 	char		**path;
-	int			return_val;
 	pid_t		pid;
+	short int	exit_status;
 //	t_tokens	*head;
 //this is test for control sign
 //	struct termios	termios_save;
@@ -62,7 +62,7 @@ typedef struct s_export
 	int				plen;
 }	t_export;
 
-int			built_exit(char **input);
+int			built_exit(char **input, t_data *data, int cmd_num);
 int			built_pwd(t_data *data);
 int			built_echo(char **input);
 int			built_cd(char **input, t_data *data);
@@ -76,7 +76,7 @@ int			built_unset(char **input, t_data *data);
 int			av_amount(char **strs);
 char		**fake_env(void);
 t_export	*fill_list(char **strs, t_export *ret);
-void		output_env(t_export *data, int len, int flag);
+void		output_env(t_export *data, int len);
 int			output_export(t_data *data);
 char		**envp_strs_join(char *input, t_data *data);
 void		envp_strs_mod(char *input, t_data *data);
@@ -91,11 +91,11 @@ int			check_input(char *input, t_data *data);
 
 t_data		*envp_cd_mod(t_data *data, char *dest, int path);
 char		*ft_strlower(char *str);
-char		*str_mod(char *cur, char *str, int i);
+char		*str_mod(char *cur, char *str, int i, int len);
 char		*path_modify(char *cur, char *str);
 int			get_pos_above_path(char *str);
-char		*get_above_path(char *cur, t_data *data);
-void		error_cd(char *cmd, t_data *data);
+char		*get_above_path(char *current);
+void		error_cd(char *cmd);
 char		*get_dest_path_wl_sign(t_data *data, char *cur, char *pwd);
 char		*get_dest_path_env(t_data *data, char *envtype);
 /**
@@ -106,7 +106,7 @@ char		*get_dest_path_env(t_data *data, char *envtype);
  * functions from utils
  */
 
-int			check_valid(char *str, char *cmd, t_data *data);
+int			check_valid(char *str, char *cmd);
 char		*get_env(char **env, char *type);
 /**
  * functions from utils

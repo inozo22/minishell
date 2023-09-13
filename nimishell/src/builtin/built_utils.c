@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 11:52:54 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/21 12:05:50 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/12 11:45:53 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,15 @@
  * @author nimai
  * @return 1 if it's valid, otherwise 0.
  * @note in built_utils.
- * @note builtin global function
  */
-int	check_valid(char *str, char *cmd, t_data *data)
+int	check_valid(char *str, char *cmd)
 {
 	int	i;
 
 	i = 0;
 	if (!(ft_isalpha(str[i]) || str[i] == '_'))
 	{
-		data->return_val = 1;
+		g_return_val = 1;
 		return (error_id_built(cmd, str, "not a valid identifier"), 0);
 	}
 	i++;
@@ -35,7 +34,7 @@ int	check_valid(char *str, char *cmd, t_data *data)
 		if (!ft_isalnum(str[i]) && str[i] != '_' && (str[i] != '=' && \
 		ft_strncmp(cmd, "export", 6) == 0))
 		{
-			data->return_val = 1;
+			g_return_val = 1;
 			return (error_id_built(cmd, str, "not a valid identifier"), 0);
 		}
 		i++;
@@ -67,5 +66,24 @@ char	*get_env(char **env, char *type)
 	if (env[i] && ft_strrchr(env[i], '='))
 		return (ft_strdup(env[i] + ft_strlen(type) + 1));
 	else
-		return (NULL);//not set error coco?
+		return (NULL);
+}
+		//not set error coco?
+
+/**
+ * @note this function is used in check_builtin too, maybe change the file
+  */
+char	*ft_strlower(char *str)
+{
+	int		i;
+	char	*tmp;
+
+	i = 0;
+	tmp = str;
+	while (tmp[i])
+	{
+		tmp[i] = ft_tolower(str[i]);
+		i++;
+	}
+	return (tmp);
 }

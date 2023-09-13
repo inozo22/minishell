@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 16:00:17 by nimai             #+#    #+#             */
-/*   Updated: 2023/08/04 15:45:29 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/08 17:13:12 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ t_data	*envp_cd_mod(t_data *data, char *path, int type)
 	}
 	else if (type == 2)
 	{
+		//230908nimai: I have to put a condition that there is no PWD
+		//OLDPWD=""
 		tmp = ft_calloc(ft_strlen(path) + 8, sizeof(char));
 		if (!tmp)
 			return (heap_error(1), NULL);
@@ -48,36 +50,83 @@ t_data	*envp_cd_mod(t_data *data, char *path, int type)
 	return (data);
 }
 
-/**
- * @note this function is used in check_builtin too, maybe change the file
-  */
-char	*ft_strlower(char *str)
-{
-	int		i;
-	char	*tmp;
+// /**
+//  * @note this function is used in check_builtin too, maybe change the file
+//   */
+// char	*ft_strlower(char *str)
+// {
+// 	int		i;
+// 	char	*tmp;
 
-	i = 0;
-	tmp = str;
-	while (tmp[i])
-	{
-		tmp[i] = ft_tolower(str[i]);
-		i++;
-	}
-	return (tmp);
-}
+// 	i = 0;
+// 	tmp = str;
+// 	while (tmp[i])
+// 	{
+// 		tmp[i] = ft_tolower(str[i]);
+// 		i++;
+// 	}
+// 	return (tmp);
+// }
 
-char	*str_mod(char *cur, char *str, int i)
+char	*str_mod(char *cur, char *str, int i, int len)
 {
 	int	j;
 
 	j = 0;
-	while (cur[i])
+//	printf("%scur: %s len: %d%s\n", COLOR_YELLOW, cur, len, COLOR_RESET);
+	while (i < len && cur && cur[i])
 	{
+//		printf("cur: %s i: %d%s\n", cur, i, COLOR_RESET);
 		cur[i] = str[j];
 		i++;
 		j++;
 	}
 	return (cur);
+}
+
+int	strcount(char *str1, char *str2, int len)
+{
+	// int	ret;
+
+	// ret = 0;
+	// while (ret < len && ft_strcmp(str1, str2))
+	// {
+	// 	str1++;
+	// 	str2++;
+	// 	ret++;
+	// }
+	// return (ret);
+	// int	ret;
+	// int	i;
+	// int	j;
+
+	// ret = 0;
+	// i = -1;
+	// while (ret < len && str1[++i]/*  && ft_strcmp(str1, str2) */)
+	// {
+	// 	j = -1;
+	// 	while (str2[++j])
+	// 	{
+	// 		printf("&str1[%d]: %s, &str2[%d]: %s\n", i, &str1[i], i, &str2[j]);
+	// 		if (ft_strcmp(&str1[i], &str2[j]) == 0)
+	// 			return (ret);
+	// 		ret++;
+	// 	}
+	// }
+	// return (ret);
+	int	ret;
+	int	i;
+
+	ret = 0;
+	i = -1;
+	while (ret < len && str1[++i]/*  && ft_strcmp(str1, str2) */)
+	{
+		//printf("&str1[%d]: %s, str2: %s\n", i, &str1[i], str2);
+		if (ft_strcmp(&str1[i], str2) == 0)
+			return (ret);
+		ret++;
+	}
+	return (ret);
 }
 
 /**
@@ -90,11 +139,21 @@ char	*path_modify(char *cur, char *str)
 	int		i;
 	char	*tmp;
 
-	tmp = malloc(ft_strlen(str) + 1);
-	ft_strlcpy(tmp, str, ft_strlen(str) + 1);
+	if (str[ft_strlen(str) - 1] == '/' && ft_strlen(cur) <= ft_strlen(str))
+	{
+		tmp = malloc(ft_strlen(cur));
+		if (!tmp)
+			return (NULL);//error memory allocation
+		ft_strlcpy(tmp, str, ft_strlen(cur));
+		return (tmp);
+	}
+	tmp = ft_strdup(str);
 	ft_strlower(tmp);
-	i = ft_strnstr(cur, tmp, ft_strlen(cur)) - cur;
-	cur = str_mod(cur, str, i);
+	i = strcount(cur, tmp, ft_strlen(cur));
+//	printf("cur: %s\ntmp: %s\ni: %d\n", cur, tmp, i);
+//	i = ft_strnstr(cur, tmp, ft_strlen(cur)) - cur;
+//	printf("%sLINE: %d	cur: %s i: %d%s\n", COLOR_YELLOW, __LINE__, cur, i, COLOR_YELLOW);
+	cur = str_mod(cur, str, i, ft_strlen(cur));
 	free (tmp);
 	return (cur);
 }

@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:18:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/08/22 15:37:59 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/12 19:02:30 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 /**
  * 
- * @param flag if there is no '=', you will put one more length to allocate memory
+ * @param flag if there is no '=', you will put one more length to
+ * allocate memory
  */
 char	*envp_str_mod(char *str, char *input, int i, int flag)
 {
@@ -30,7 +31,9 @@ char	*envp_str_mod(char *str, char *input, int i, int flag)
 }
 
 /**
- * @note 230802nimai: changed counter i[1] because of the Werror, check how works in MacOS
+ * @note 230802nimai: changed counter i[1] because of the Werror,
+ * check how works in MacOS
+ * @note error wit fsanitize=address when executing "cd" in line 53
  */
 void	envp_strs_mod(char *input, t_data *data)
 {
@@ -43,17 +46,19 @@ void	envp_strs_mod(char *input, t_data *data)
 		while (data->env[i[0]])
 		{
 			i[1] = -1;
-			if (ft_strncmp(data->env[i[0]], input, i[2] + 1) == 0)//with '='
+			if (ft_strncmp(data->env[i[0]], input, i[2] + 1) == 0) //with '='
 				data->env[i[0]] = envp_str_mod(data->env[i[0]], input, i[2], 0);
 			else if (ft_strncmp(data->env[i[0]], input, i[2]) == 0)
 			{
-/* 				while (data->env[i[0]][++i[1]] == input[i[1]])
-					; */
+				while (data->env[i[0]][++i[1]] == input[i[1]])
+					;
 				while (data->env[i[0]][i[1]] == input[i[1]])
 					i[1]++;
 				if (data->env[i[0]][i[1]] == '\0' && input[i[1]] == '=')
-					data->env[i[0]] = envp_str_mod(data->env[i[0]], \
-					input, i[2], 1);
+				{
+					data->env[i[0]] = envp_str_mod(data->env[i[0]], input, i[2], 1);
+					break ;
+				}
 			}
 			i[0]++;
 		}
@@ -107,7 +112,7 @@ char	*mod_path(char *input)
 		i[0]++;
 	}
 	ret[i[1]] = '\0';
-	free (input);
+	//free (input);
 	return (ret);
 }
 
@@ -134,7 +139,7 @@ char	**envp_strs_join(char *input, t_data *data)
 	free (data->env);
 	data->env = NULL;
 	input = mod_path(input);
-	if (check_valid(input, "export", data))
+	if (check_valid(input, "export"))
 		ret[i] = input;
 	ret[++i] = NULL;
 	return (ret);
@@ -146,12 +151,12 @@ int	check_input(char *input, t_data *data)
 	int	i;
 	int	j;
 
-
 	i = 0;
 	while (data->env[i])
 	{
 		c = 0;
 		j = -1;
+
 		while (data->env[i][++j] == input[c] && input[c] != '=' \
 		&& input[c] != '\0' && data->env[i][j])
 			c++;
@@ -173,48 +178,119 @@ int	built_export(char **input, t_data *data)
 {
 	char		**new_envp;
 	int			i;
+	int			len;
+	char		**tmp;
 
+/* 	i = 0;
+	while (input[i])
+	{
+		printf("input[%d]: %s\n", i,  input[i]);
+		i++;
+	} */
+	tmp = NULL;
+	len = av_amount(input);
 	new_envp = NULL;
-	if (av_amount(input) == 1)
+	if (/* av_amount(input) */len == 1)
 	{
 		if (!output_export(data))
 			return (printf("Error: output_export\n"), 1);
 		return (0);
 	}
 	i = 0;
-	while (input[++i])
+	printf("input[%d]: %s\n", i, input[i]);
+	printf("input[%d]: %s\n", i + 1, input[i + 1]);
+	printf("input[%d]: %s\n", i + 2, input[i + 2]);
+	printf("input[%d]: %s\n", i + 3, input[i + 3]);
+
+	tmp = (char **)ft_calloc(len + 1, sizeof (char *));
+	while (i < len)
 	{
-		if (!check_input(input[i], data))
+	//	tmp[i] = ft_strdup(input[i]);
+		tmp[i] = ft_strdup("aaa");
+		printf("tmp[%d]: %s input[%d]: %s len: %d\n", i,  tmp[i], i, input[i], len);
+		i++;
+	}
+	tmp[i] = NULL;
+	i = 0;
+	while (tmp[i])
+	{
+		printf("tmp[%d]: %s\n", i,  tmp[i]);
+		i++;
+	}
+	i = 0;
+	while (++i < len)
+	{
+		printf("tmp[%d]: %s\n", i, tmp[i]);
+		printf("tmp[%d]: %s\n", i + 1, tmp[i + 1]);
+		if (!check_input(tmp[i], data))
 		{
-			new_envp = envp_strs_join(input[i], data);
+			new_envp = envp_strs_join(tmp[i], data);
 			if (!new_envp)
 				return (printf("ERROR: Line: %d\n", __LINE__), 1);
 			data->env = new_envp;
 		}
 		else
-			envp_strs_mod(input[i], data);
+			envp_strs_mod(tmp[i], data);
 	}
 	return (0);
 }
+
+// int	built_export(char **input, t_data *data)
+// {
+// 	char		**new_envp;
+// 	int			i;
+// 	int			len;
+
+// 	len = av_amount(input);
+// 	new_envp = NULL;
+// 	if (/* av_amount(input) */len == 1)
+// 	{
+// 		if (!output_export(data))
+// 			return (printf("Error: output_export\n"), 1);
+// 		return (0);
+// 	}
+// 	i = 0;
+// 	while (/* input[++i] */++i < len /* av_amount(input) */)
+// 	{
+// 		if (!check_input(input[i], data))
+// 		{
+// 			new_envp = envp_strs_join(input[i], data);
+// 			if (!new_envp)
+// 				return (printf("ERROR: Line: %d\n", __LINE__), 1);
+// 			data->env = new_envp;
+// 		}
+// 		else
+// 			envp_strs_mod(input[i], data);
+// 	}
+// 	return (0);
+// }
 
 /**
  * BEHAVIOUR ON BASH
  * when execute export, the list should be ascending order, 
  * separated by capital letter and small letter-> done
- * If there is more than one argument after command, add as a variable, 
+ * If there is more than one argument after command, add as a variable,
  * except if there is no space
  * 
- * 230601nimai: I have doubt with $<variable name> ->treate as I have received a path
+ * 230601nimai: I have doubt with $<variable name> ->treate as I have received
+ * a path
  * 
  * ??? Is it OK if we control in the minishell?	-> OK!
- * For example, it's ok if do sth in bash, but doesn't affect to the minishell? ->OK!
+ * For example, it's ok if do sth in bash, but doesn't affect to the
+ * minishell? ->OK!
  * 
  * ******************************************************************
  * 230613nimai:
  * export OLDPWD: do nothing
  * export OLDPWD=aaa: overwrite
- * export OLDPWD="aaa": doesn't work (ask how will I receive) <- 230614nimai: I think will receive as a string
+ * export OLDPWD="aaa": doesn't work (ask how will I receive)
+ * <- 230614nimai: I think will receive as a string
  * export OLDPWA: add in export, but doesn't print with env command
  * export OLDPWA=aaa: add new variable
  * export OLDPWA="aaa": doesn't work (ask how will I receive)
+ * 
+ * 
+ * ******************************************************************
+ * Command to check
+ * export a b c=aaa
  */

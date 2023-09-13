@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 09:50:35 by nimai             #+#    #+#             */
-/*   Updated: 2023/08/22 15:42:12 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/12 10:41:58 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,19 +49,33 @@ t_data	*unset_env(t_data *data, char *str)
  * @brief manage "builtin" unset cmd.
  * @author nimai
  * @param **av "unset", "ABC", "DEF"
- * @note if it's not valid, receive error message, but if it's valid and doesn't exist will not receive anything
+ * @note if it's not valid, receive error message, but if it's valid and doesn't
+ *  exist will not receive anything
  */
 int	built_unset(char **input, t_data *data)
 {
 	int		i;
+	int		len;
 
 	i = 1;
-	while (input[i])
+	len = av_amount(input);
+	while (i < len - 1)
 	{
-		if (check_valid(input[i], "unset", data) == 1)
+		if (check_valid(input[i], "unset") == 1)
+		{
 			data = unset_env(data, input[i]);
+		}
 		i++;
 	}
+
+// test print=======================
+	// int j = 0;
+	// while (data->env[j])
+	// {
+	// 	printf("env: %s\n", data->env[j]);
+	// 	j++;
+	// }
+// test print=======================
 	return (0);
 }
 
@@ -70,8 +84,10 @@ int	built_unset(char **input, t_data *data)
  * 
  * 
  * 230601nimai: 
- * unset: kind of did it, but should be started over after it've been decided on the structure."
-[main b02d1eb] unset: kind of did it, but should be started over after it've been decided on the structure
+ * unset: kind of did it, but should be started over after it've been decided
+ *  on the structure."
+[main b02d1eb] unset: kind of did it, but should be started over after it've
+ been decided on the structure
  * 230615nimai: done.
  * 
  */

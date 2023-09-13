@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   executor.c                                         :+:      :+:    :+:   */
+/*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 23:43:32 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/08/21 15:33:58 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/12 12:33:32 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -325,7 +325,7 @@ int	check_exit_status(int e_status)
  * @param fdin[1] = fdout
 */
 //int child_creation(char *infile, char *outfile, char ***cmd, int cmd_number, char **path, char **env, t_data *data)
-int child_creation(char *infile, char *outfile, t_list *lst, int cmd_number, char **path, char **env, t_data *data)
+int executer(char *infile, char *outfile, t_list *lst, int cmd_number, char **path, char **env, t_data *data)
 {
 	//save in/out
 	int tmp_stdin;
@@ -388,21 +388,32 @@ int child_creation(char *infile, char *outfile, t_list *lst, int cmd_number, cha
 		close(fdout);
 		//set singnal handlers for child process
 		set_signal_handlers(0);
+		printf("cmd[i][0] = %s\n", lst->content);
+		char **cmd = ft_calloc(2, sizeof(char *));
+		cmd[0] = lst->content;
+		int is_builtin = check_builtin(cmd, data);
+		ft_printf("Check builtin return: %d\n", is_builtin);
+		if (is_builtin >= 0)
+			return (is_builtin);
+
 		// Create child process
 		pid = fork();
 		if (pid == 0)
 		{
 			//child
-			printf("cmd[i][0] = %s\n", lst->content);
-			char **cmd = ft_calloc(2, sizeof(char *));
-			cmd[0] = lst->content;
-			int builtin = check_builtin(cmd, data);
-			ft_printf("Check builtin return: %d\n", builtin);
-			if (builtin != -1)
-				exit(builtin);
 			char *cmd_path = NULL;
 			cmd_path = get_cmd_path(lst->content, path);
-			execve(cmd_path, cmd, env);
+			if (execve(cmd_path, cmd, env) == -1)
+			{
+				if (errno == ENOEXEC)
+				{
+					char *new_argv[2];
+					new_argv[0] = cmd_path;
+					new_argv[1] = NULL;
+					if (execve("/bin/sh", new_argv, env) == -1)
+						perror("execve");
+				}
+			}
 			//as doesn't return when execute the command well, there is no protection
 			perror("execve");
 			//free all the data if execve fails
@@ -420,7 +431,7 @@ int child_creation(char *infile, char *outfile, t_list *lst, int cmd_number, cha
 	close(tmp_stdin);
 	close(tmp_stdout);
 
-	waitpid(pid, &e_status, 0);
+	waitpid(pid, &e_status, WUNTRACED);
 	return (check_exit_status(e_status));
 }
 

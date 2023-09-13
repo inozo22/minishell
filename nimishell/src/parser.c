@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
+/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 15:43:39 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/08/22 14:26:16 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/05 15:29:54 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ static char	*dquote(char *str)
 
 	ft_bzero(tmp, 2 * sizeof(char *));
 	ft_printf("Input in dquote: %s\n", str);
-	while (check_quotes(str) || !ft_strcmp(str, "\\") \
-			|| str[ft_strlen(str) - 1] == '|')
+	while (*str && (check_quotes(str) || !ft_strcmp(str, "\\") \
+			|| str[ft_strlen(str) - 1] == '|'))
 	{
 		tmp[0] = readline(">");
 		tmp[1] = str;
@@ -75,7 +75,7 @@ char	*ft_remove_char(char *str, int c)
 	if (char_pos[1])
 		cleaned = ft_strjoin(cleaned, char_pos + flag);
 	else
-		cleaned = ft_strndup(cleaned, ft_strlen(cleaned) - 1);
+		cleaned = ft_substr(cleaned, 0, ft_strlen(cleaned) - 1);
 	free (tmp);
 	printf("Line: %d, cleaned: %s\n", __LINE__, cleaned);
 	//exit (0);
@@ -274,7 +274,7 @@ t_list	*parser(char *str)
 	cmd = fill_cmd_list(str);
 	if (!cmd)
 	{
-		printf("Error");
+		printf("Empty input\n");
 		return (NULL);		
 	}
 	t_list *tmp;
