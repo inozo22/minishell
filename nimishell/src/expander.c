@@ -13,9 +13,9 @@
 #include "minishell.h"
 
 //DELETE
-// #include "../lib/libft/libft.h"
+//#include "../lib/libft/libft.h"
 
-// volatile int	g_return_val = 0;
+//volatile int	g_return_val = 0;
 
 char	*get_var_value(char *env_var, char *envp[], int len)
 {
@@ -30,8 +30,8 @@ char	*get_var_value(char *env_var, char *envp[], int len)
 		if (!ft_strncmp(env_var, envp[i], len) && envp[i][len] == '=')
 			return (ft_strdup(envp[i] + len + 1));
 	}
-	ft_printf(SHELL_NAME": %s: Undefined variable.\n", env_var);
-	return (ft_substr(env_var, 0, len));
+//	ft_printf(SHELL_NAME": %s: Undefined variable.\n", env_var);
+	return (remove_quotes(ft_substr(env_var, 0, len)));
 }
 
 //$- returns a string representing the flags of the shell
@@ -152,7 +152,7 @@ int	compose_expanded(char *expanded, char **str, int dollar_pos, int end_pos_var
 	preceding = ft_substr(*str, 0, dollar_pos);
 	if (!preceding)
 		return (0);
-	ft_printf("preceding: %s\n", preceding);
+//	ft_printf("preceding: %s\n", preceding);
 	preceding = remove_quotes(preceding);
 /* 	if (!str[end_pos_var])
 		dollar_pos = end_pos_var - 1;
@@ -161,7 +161,7 @@ int	compose_expanded(char *expanded, char **str, int dollar_pos, int end_pos_var
 	following = ft_substr(*str, end_pos_var, ft_strlen(*str) - end_pos_var);
 	if (!following)
 		return (free(preceding), -1);
-	ft_printf("following: %s\n", following);
+//	ft_printf("following: %s\n", following);
 	following = remove_quotes(following);
 	str_expanded = ft_strjoin_many(3, preceding, expanded, following);
 	if (!str_expanded)
@@ -179,7 +179,7 @@ int	compose_expanded(char *expanded, char **str, int dollar_pos, int end_pos_var
  * @note pieces[1] expanded var
  * @note pieces[2] after var 
  */
-int	expand(char **str, int *pos, int quotes, char *env[])
+int	expand(char **str, int *pos, int quotes, char **env)
 {
 	int		i[2];
 	char	*expanded_var;
@@ -189,17 +189,17 @@ int	expand(char **str, int *pos, int quotes, char *env[])
 	if (!ft_isdigit((*str)[*pos]))
 		while ((*str)[i[0]] && !ft_isspace((*str)[i[0]]) && (*str)[i[0]] != quotes)
 			i[0]++;
-	expanded_var = is_expand(str[*pos], i[0] - *pos, env);
+	expanded_var = is_expand(&(*str)[*pos], i[0] - *pos, env);
 	if (!expanded_var)
 		return (1);
-	ft_printf("Expanded_var: %s\n", expanded_var);
+//	ft_printf("Expanded_var: %s\n", expanded_var);
 	if (!expanded_var)
 		return (0);
 	*pos = compose_expanded(expanded_var, str, *pos, i[0]);
 	if (*pos == -1)
 		return (1);
 	is_quote(quotes);
-	if (!*str)
+	if (!(*str))
 		return (1);
 	return (0);
 }
@@ -218,8 +218,8 @@ char	*expander(char *str, char *env[])
 		quotes = is_quote(str[i]);
 		if (str[i] == '$' && quotes != '\'')
 		{
-			ft_printf("quotes status: %d in str: %s\n", quotes, str + i);
-			ft_printf("str pos: %s\n", str + i);	
+//			ft_printf("quotes status: %d in str: %s\n", quotes, str + i);
+//			ft_printf("str pos: %s\n", str + i);	
 			if (expand(&str, &i, quotes, env))
 				return (NULL);
 		}
@@ -229,7 +229,7 @@ char	*expander(char *str, char *env[])
 
 /* int	main(int argc, char *argv[], char *envp[])
 {
-	char	*input[] = {"'$HOME': $HOME aaa", "   '$USER':  	\"$USER\" ei", "'$PWD':\"$PWD\"", "'$OLDPWD':$OLDPWD", "$INVENT:\"$INVENT\"", "'$?'\"$?\"", "'$-':\"$-\"", "'$0':\"$0\"", "'$1':\"$1\"", NULL};
+	char	*input[] = {"'$HOME': $HOME aaa", "   '$USER':  	\"$USER\"$USER ei", "'$PWD':\"$PWD\"", "'$OLDPWD':\"$OLDPWD\"\"$USER\"", "$INVENT:\"$INVENT\"", "'$?'\"$?\"", "'$-':\"$-\"", "'$0':\"$0\"", "'$1':\"$1\"", NULL};
 	char	*str;
 	char	*expanded;
 	int		i = -1;
@@ -240,13 +240,13 @@ char	*expander(char *str, char *env[])
 	{
 		ft_printf("Expanding %s\n", input[i]);
 		str = ft_strdup(input[i]);
-		expanded = expanser(str, envp);
+		expanded = expander(str, envp);
 		printf("expanded: %s\n\n", expanded);
 		free(expanded);
 	}
 	return (0);
 } */
 
-// cc -Wall -Wextra -g3 -fsanitize=address -Ilib/libft -Iinclude src/expanser3.c src/lexer.c src/error_msgs.c src/terminate.c lib/libft/libft.a && ./a.out
+// cc -Wall -Wextra -g3 -fsanitize=address -Ilib/libft -Iinclude src/expander.c src/lexer.c src/error_msgs.c src/terminate.c lib/libft/libft.a && ./a.out
 
-// cc -Wall -Wextra -g3 -Ilib/libft -Iinclude src/expanser3.c src/lexer.c src/error_msgs.c src/terminate.c lib/libft/libft.a && valgrind --leak-check=full --show-leak-kinds=all ./a.out
+// cc -Wall -Wextra -g3 -Ilib/libft -Iinclude src/expander.c src/lexer.c src/error_msgs.c src/terminate.c lib/libft/libft.a && valgrind --leak-check=full --show-leak-kinds=all ./a.out
