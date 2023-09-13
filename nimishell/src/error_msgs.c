@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 16:04:56 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/05 14:45:19 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/12 16:41:56 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	error_msg(char *prog_name, char *cmd, int mode)
 		ft_putstr_fd(": syntax error near unexpected token `", 2);
 		ft_putstr_fd(cmd, 2);
 		ft_putendl_fd("'", 2);
-		return (2);
+		return (258);
 	}
 	return (0);
 }

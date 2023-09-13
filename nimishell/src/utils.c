@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 12:49:14 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/05 16:09:55 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/07 18:37:01 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,21 +22,21 @@ int	ft_isquote(int c)
 void	*del(void **ptr)
 {
 	free(*ptr);
-	ptr = NULL;
+	*ptr = NULL;
 	return (ptr);
 }
 
-void	*del_array(void ***ptr)
-{
-	int	i;
-
-	i = -1;
 /*	int j = 0;
  	while (*ptr && *ptr[j])
 	{
 		ft_printf("lis: %d content: %s\n", j, *(ptr[j]));
 		j++;
 	} */
+void	*del_array(void ***ptr)
+{
+	int	i;
+
+	i = -1;
 	while (*ptr && *ptr[++i] != NULL)
 		del((void **)ptr[i]);
 	free(*ptr);

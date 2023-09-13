@@ -6,11 +6,13 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 19:41:45 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/05 15:15:40 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/12 18:23:09 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdarg.h>
+#include <stdio.h>
 
 char	*ft_strjoin_many(int n, char const *s1, ...)
 {
@@ -21,14 +23,17 @@ char	*ft_strjoin_many(int n, char const *s1, ...)
 
 	va_start(args, s1);
 	str = ft_strjoin(s1, va_arg(args, char *));
+	printf("str %d: %s\n", n, str);
 	n--;
 	while (--n)
 	{
 		tmp = str;
 		read = va_arg(args, char *);
-		if (!read)
+		if (!read || !*read)
 			break ;
 		str = ft_strjoin(tmp, read);
+		printf("str %d: %s\n", n, str);
+
 		free(tmp);
 	}
 	va_end(args);

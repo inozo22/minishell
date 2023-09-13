@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_split.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
+/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 15:43:39 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/08/21 15:19:02 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/07 17:38:10 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ static int	count_args(char *str)
 			i[0] = 0;
 			str++;
 		}
-		if (i[0] == 0 && ft_isquote(*str) && ft_isquote(*(str + 1) != ft_isquote(*str)))
+		if (i[0] == 0 && ft_isquote(*str) \
+			&& ft_isquote(*(str + 1) != ft_isquote(*str)))
 			i[0] = ft_isquote(*str);
 		else if (ft_isquote(*str))
 			*str = ' ';

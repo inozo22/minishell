@@ -5,132 +5,13 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/23 23:43:32 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/12 12:33:32 by nimai            ###   ########.fr       */
+/*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
+/*   Updated: 2023/09/13 11:24:29 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <fcntl.h>
-
-/* char	*get_cmd_path(char *cmd, char **path)
-{
-	int		i;
-	char	*cmd_path;
-	char	*tmp_path;
-
-	i = -1;
-	tmp_path = NULL;
-	if (!access(cmd, F_OK))
-		return (cmd);
-	while (path && path[++i])
-	{
-		tmp_path = ft_strjoin(path[i], "/");
-		if (tmp_path && cmd)
-			cmd_path = ft_strjoin(tmp_path, cmd);
-		free(tmp_path);
-		if (!access(cmd_path, F_OK))
-			break ;
-		del((void **)&(cmd_path));
-	}
-	ft_printf("cmd_path: %s\n", cmd_path);
-	return (cmd_path);
-}
-
-void	execute(char *cmd_path, char **cmd, char **envp)
-{
-	if (execve(cmd_path, cmd, envp) == -1)
-	{
-		error_msg("minishell", cmd[0], 1);
-//		if (errno == 13 && !last)
-//			errors(0, param);
-//		else
-//			errors(8, param);
-		exit(1);
-	} 
-}
-
-int	exit_child(t_data *data, int *fd_pipe, char ***cmd)
-{
-	del_array((void ***)&data->env);
-	del_array((void ***)&data->path);
-	close(fd_pipe[WRITE_END]);
-	error_msg("minishell: ", *cmd[0], 1);
-	errno = 2;
-	del_array((void ***)cmd);
-	exit(127);
-}
-
-static void	execute_child(int *fd_pipe, t_data *data, char **cmd, int redir)
-{
-	char	*cmd_path;
-	
-	close(fd_pipe[READ_END]);
-	if (redir)
-		dup2(fd_pipe[WRITE_END], STDOUT_FILENO);
-	ft_printf("I'm in child\n");
-	cmd_path = get_cmd_path(cmd[0], data->path);
-	if (!cmd_path)
-		exit_child(data, fd_pipe, &cmd);
-	execute(cmd_path, cmd, data->env);
-}
-
-static int	execute_father(int *fd_pipe, int redir)
-{
-	int		exit_status;
-	int		alt_fd;
-
-	exit_status = 0;
-	close(fd_pipe[WRITE_END]);
-	if (redir)
-	{
-		alt_fd = dup(STDIN_FILENO);
-		dup2(fd_pipe[READ_END], alt_fd);
-		close(alt_fd);
-	}
-	close(fd_pipe[READ_END]);
-// 	else
-//	{
-//		alt_fd = dup(STDOUT_FILENO);
-//		dup2(fd_pipe[READ_END], alt_fd);
-//	}
-	waitpid(0, &exit_status, 0);
-//	if (!WIFEXITED(exit_status))
-//		errors(38, param);
-//	if (WIFEXITED(exit_status) && WEXITSTATUS(exit_status))
-//		errors(exit_status, param);
-	ft_printf("I'm in father\n");
-	return (exit_status);
-}
-
-int	child_creation(t_data *data, char **cmd)
-{
-	int		fd_pipe[2];
-	pid_t	pid;
-	
-//Check to disable:
-	if (!cmd)
-		return (0);
-//Actual function:
-	if (pipe(fd_pipe) == -1)
-		return (1);
-	ft_printf("Hey\n");
-	pid = fork();
-	if (pid == -1)
-	{
-//		close(param->fd_in);
-//		close(param->fd_out);
-		close(fd_pipe[READ_END]);
-		close(fd_pipe[WRITE_END]);
-		return (2);
-	}
-	if (pid == 0)
-		execute_child(fd_pipe, data, cmd, 0);
-	else
-		wait(NULL);
-		data->return_val = execute_father(fd_pipe, 0);
-	return (0);
-} */
 
 char	*get_cmd_path(char *cmd, char **path)
 {
@@ -140,6 +21,7 @@ char	*get_cmd_path(char *cmd, char **path)
 
 	i = -1;
 	tmp_path = NULL;
+	cmd_path = NULL;
 	if (!access(cmd, F_OK))
 		return (cmd);
 	while (path && path[++i])
@@ -151,158 +33,20 @@ char	*get_cmd_path(char *cmd, char **path)
 		if (!access(cmd_path, F_OK))
 			break ;
 		free(cmd_path);
+		cmd_path = NULL;
 	}
-	ft_printf("cmd_path: %s\n", cmd_path);
+	//DELETE
+	ft_printf("cmd_path: %s\n\n", cmd_path);
 	return (cmd_path);
 }
 
-/* void	execute(char *cmd_path, char **cmd, char **envp)
-{
-	if (execve(cmd_path, cmd, envp) == -1)
-	{
-		ft_printf("Execution failed with command: %s\n", cmd[0]);
-//		error_msg("minishell", cmd[0], 1);
-//		if (errno == 13 && !last)
-//			errors(0, param);
-//		else
-//			errors(8, param);
-		exit(1);
-	} 
-} */
-
-/* int	exit_child(int *fd_pipe, char ***cmd)
-{
-// 	del_array((void ***)&data->env);
-//	del_array((void ***)&data->path);
-	close(fd_pipe[WRITE_END]);
-	error_msg("minishell: ", *cmd[0], 1);
-//	errno = 2;
-	del_array((void ***)cmd);
-	exit(127);
-} */
-
-/* static void	execute_child(int *fd_pipe, char **path, char **cmd, char **env)
-{
-	char	*cmd_path;
-	
-	ft_printf("I'm in child\n");
-	cmd_path = get_cmd_path(cmd[0], path);
-	if (!cmd_path)
-		exit (1);
-//		exit_child(data, fd_pipe, &cmd);
-	execute(cmd_path, cmd, env);
-}
-
-static int	execute_father(int *fd_pipe, int redir)
-{
-	int		exit_status;
-	int		alt_fd;
-
-	exit_status = 0;
-	close(fd_pipe[WRITE_END]);
-	if (redir)
-	{
-		alt_fd = dup(STDIN_FILENO);
-		dup2(fd_pipe[READ_END], alt_fd);
-		close(alt_fd);
-	}
-	close(fd_pipe[READ_END]);
-// 	else
-//	{
-//		alt_fd = dup(STDOUT_FILENO);
-//		dup2(fd_pipe[READ_END], alt_fd);
-//	}
-
-//		errors(38, param);
-//	if (WIFEXITED(exit_status) && WEXITSTATUS(exit_status))
-//		errors(exit_status, param);
-	ft_printf("I'm in father\n");
-	return (exit_status);
-}
-
-int	close_selected_pipes(int **fd_pipe, int cmd_nb)
-{
-	int	i;
-	int	return_val;
-
-	i = -1;
-	return_val = 0;
-	while (++i < cmd_nb)
-	{
-		if (i != cmd_nb - 1)
-			if (close(fd_pipe[i][READ_END]))
-				return_val = 1;
-		if (i != cmd_nb)
-			if (close(fd_pipe[i][WRITE_END]))
-				return_val = 1;
-	}
-	return (return_val);
-}
-
-int	close_free_all_pipes(int **fd_pipe, int cmd_nb)
-{
-	int	i;
-	int	return_val;
-
-	i = -1;
-	return_val = 1;
-	while (++i < cmd_nb)
-	{
-		if (close(fd_pipe[i][READ_END]) || close(fd_pipe[i][WRITE_END]))
-			return_val = 2;
-		free(fd_pipe[i]);
-	}
-	free(fd_pipe);
-	return (return_val);
-} */
-
-/* int	child_creation(char ***cmd, int cmd_nb, char **path, char **envp)
-{
-	int		**fd_pipe;
-	int		i;
-	int		exit_status;
-	pid_t	pid;
-	
-//Check to disable:
-	if (!cmd)
-		return (0);
-//Actual function:
-	i = 1;
-	fd_pipe = malloc(sizeof(int *) * (cmd_nb - 1));
-	if (!fd_pipe)
-		return (1);
-	while (--cmd_nb)
-	{
-		fd_pipe[cmd_nb - 1] = malloc(sizeof(int) * 2);
-		if (!fd_pipe[cmd_nb - 1])
-			return (1);
-		if (pipe(fd_pipe[cmd_nb - 1]) == -1)
-			return (1);
-	}
-	ft_printf("Hey\n");
-	pid = fork();
-	if (pid == -1)
-		return (close_free_all_pipes(fd_pipe, cmd_nb));
-	if (pid == 0)
-		execute_child(fd_pipe, cmd[i - 1], 0, envp);
-	while (++i < cmd_nb && pid != 0)
-	{
-		pid = fork();
-		if (pid == -1)
-			return (close_free_all_pipes(fd_pipe, cmd_nb));
-		if (pid == 0)
-			execute_child(fd_pipe, cmd[i - 1], i, envp);
-	}
-	waitpid(0, &exit_status, 0);
-	return (0);
-} */
-
 /**
- * @note 230811nimai: add g_return_val, check if there is another way to reset g_return_val
+ * @note 230811nimai: add g_return_val, check if there is another way to
+ * reset g_return_val
  */
 int	check_exit_status(int e_status)
 {
-	int	ret;
+/* 	int	ret;
 
 	ret = 0;
 	if (g_return_val)
@@ -310,11 +54,23 @@ int	check_exit_status(int e_status)
 		ret = g_return_val;
 		g_return_val = 0;
 		return (ret);
-	}
+	} */
 	if (WIFEXITED(e_status))
 		return (WEXITSTATUS(e_status));
 	if (WIFSIGNALED(e_status))
 		return (128 + WTERMSIG(e_status));
+	return (0);
+}
+
+int	execute_script_without_shebang(char **cmd, char **env)
+{
+	char	*new_argv[2];
+	
+	new_argv[0] = cmd[0];
+	new_argv[1] = NULL;
+	free_list(cmd);
+	if (execve("/bin/bash", new_argv, env) == -1)
+		return (1);
 	return (0);
 }
 
@@ -324,8 +80,8 @@ int	check_exit_status(int e_status)
  * @param fdin[0] = fdin
  * @param fdin[1] = fdout
 */
-//int child_creation(char *infile, char *outfile, char ***cmd, int cmd_number, char **path, char **env, t_data *data)
-int executer(char *infile, char *outfile, t_list *lst, int cmd_number, char **path, char **env, t_data *data)
+/* int executer(char *infile, char *outfile, t_list *lst, int cmd_number,
+				char **path, char **env, t_data *data)
 {
 	//save in/out
 	int tmp_stdin;
@@ -336,8 +92,9 @@ int executer(char *infile, char *outfile, t_list *lst, int cmd_number, char **pa
 	int e_status;
 	int i;
 
-	tmp_stdin = dup(0);
-	tmp_stdout = dup(1);
+	e_status = 0;
+	tmp_stdin = dup(STDIN_FILENO);
+	tmp_stdout = dup(STDOUT_FILENO);
 	i = -1;
 	//set the initial input
 	if (infile)
@@ -348,8 +105,8 @@ int executer(char *infile, char *outfile, t_list *lst, int cmd_number, char **pa
 		fdin = dup(tmp_stdin);
 	}
 	// IMPORTANTE: check if the last command is exit
-/* 	if (ft_strcmp(cmd[cmd_number - 1][0], "exit"))
-		return (0); */
+// 	if (ft_strcmp(cmd[cmd_number - 1][0], "exit"))
+//		return (0);
 	while (lst && (lst->type == WORD || lst->type == PIPE_LINE))
 //	while (++i < cmd_number)
 	{
@@ -357,70 +114,62 @@ int executer(char *infile, char *outfile, t_list *lst, int cmd_number, char **pa
 		if (lst->type == WORD || lst->type == PIPE_LINE)
 		{
 			
-		//redirect input
-		dup2(fdin, 0);
-		close(fdin);
-		//setup output
-		if(i == cmd_number)
-		{
-			// Last simple command
-			if(outfile)
-				fdout = open(outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-			else
+			//redirect input
+			dup2(fdin, 0);
+			close(fdin);
+			//setup output
+			if(i == cmd_number)
 			{
-				// Use default output 
-				fdout = dup(tmp_stdout);
-			}
-		}
-		else
-		{
-			// Not last
-			//simple command 
-			//create pipe
-			int fdpipe[2];
-			pipe(fdpipe);
-			fdout = fdpipe[1];
-			fdin = fdpipe[0];
-		}
-		// if/else
-		// Redirect output
-		dup2(fdout,1);
-		close(fdout);
-		//set singnal handlers for child process
-		set_signal_handlers(0);
-		printf("cmd[i][0] = %s\n", lst->content);
-		char **cmd = ft_calloc(2, sizeof(char *));
-		cmd[0] = lst->content;
-		int is_builtin = check_builtin(cmd, data);
-		ft_printf("Check builtin return: %d\n", is_builtin);
-		if (is_builtin >= 0)
-			return (is_builtin);
-
-		// Create child process
-		pid = fork();
-		if (pid == 0)
-		{
-			//child
-			char *cmd_path = NULL;
-			cmd_path = get_cmd_path(lst->content, path);
-			if (execve(cmd_path, cmd, env) == -1)
-			{
-				if (errno == ENOEXEC)
+				// Last simple command
+				if(outfile)
+					fdout = open(outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+				else
 				{
-					char *new_argv[2];
-					new_argv[0] = cmd_path;
-					new_argv[1] = NULL;
-					if (execve("/bin/sh", new_argv, env) == -1)
-						perror("execve");
+					// Use default output 
+					fdout = dup(tmp_stdout);
 				}
 			}
-			//as doesn't return when execute the command well, there is no protection
-			perror("execve");
-			//free all the data if execve fails
-			//230809nimai: comment free to avoid double freeing.
-			//free(cmd_path);
-			exit(1);
-		}
+			else
+			{
+				// Not last
+				//simple command 
+				//create pipe
+				int fdpipe[2];
+				pipe(fdpipe);
+				fdout = fdpipe[1];
+				fdin = fdpipe[0];
+			}
+			// if/else
+			// Redirect output
+			dup2(fdout,1);
+			close(fdout);
+			//set singnal handlers for child process
+			set_signal_handlers(0);
+			printf("cmd[i][0] = %s\n", lst->content);
+			char **cmd = ft_calloc(2, sizeof(char *));
+			cmd[0] = lst->content;
+			int is_builtin = check_builtin(cmd, data);
+			ft_printf("Check builtin return: %d\n", is_builtin);
+			if (is_builtin >= 0)
+				return (is_builtin);
+			
+			// Create child process
+			pid = fork();
+			if (pid == 0)
+			{
+				//child
+				char *cmd_path = NULL;
+				cmd_path = get_cmd_path(lst->content, path);
+				update_last_executed_cmd(data, cmd_path);
+				if (execve(cmd_path, cmd, env) == -1 && errno == ENOEXEC)
+					execute_script_without_shebang(cmd, env);
+				//as doesn't return when execute the command well, there is no protection
+				perror("execve");
+				//free all the data if execve fails
+				//230809nimai: comment free to avoid double freeing.
+				//free(cmd_path);
+				exit(1);
+			}
 		}
 		lst = lst->next;
 	}
@@ -431,87 +180,207 @@ int executer(char *infile, char *outfile, t_list *lst, int cmd_number, char **pa
 	close(tmp_stdin);
 	close(tmp_stdout);
 
-	waitpid(pid, &e_status, WUNTRACED);
+	wait(&e_status);
+//	waitpid(pid, &e_status, WUNTRACED);
 	return (check_exit_status(e_status));
 }
+ */
 
-/* int child_creation(char ***cmd, int cmd_number, char **path, char **env) 
+char	**fill_current_cmd(t_list *lst, int pos, char **envp)
 {
-	pid_t pid;
-	int e_status;
-	int i;
-
-	i = -1;
-	while (++i < cmd_number)
-	{
-		pid = fork(); 
-		if (pid == 0)
-		{
-			//child
-			printf("cmd[%d][0] = %s\n", i, cmd[i][0]);
-			execve(get_cmd_path(cmd[i][0], path), cmd[i], env);
-			perror("execve");
-			exit(1);
-		}
-		else if (pid < 0)
-		{
-			perror("fork");
-			return (1);
-		}
-	}
-	// Parent shell continue } // for
-	// wait for last process
-	waitpid(pid, &e_status, 0);
-	return (check_exit_status(e_status));
-}
-
-int	main(int ac, char **av, char **envp)
-{
-	char	***cmd;
-	char 	**path;
-	int		ret;
+	char	**cmd;
+	t_list	*tmp;
 	int		i;
-	int		j;
-	
-	i = -1;
-	j = -1;
-	cmd = calloc(sizeof(char **), 4);
-	cmd[0] = calloc(sizeof(char *), 4);
-	cmd[0][0] = ft_strdup("ls");
- 	cmd[0][1] = ft_strdup("-l");
-	cmd[0][2] = ft_strdup("../../Documents");
-	cmd[1] = calloc(sizeof(char *), 3);
-	cmd[1][0] = ft_strdup("cat");
-	cmd[2] = calloc(sizeof(char *), 4);
-	cmd[2][0] = ft_strdup("cat");
- 	cmd[2][1] = ft_strdup("-l");
-	cmd[2][2] = ft_strdup("../../Desktop");
-	while(*envp)
+
+	i = 0;
+	tmp = lst;
+	while (tmp && tmp->cmd_pos == pos)
 	{
-		if (ft_strncmp(*envp, "PATH=", 5) == 0)
-		{
-			path = ft_split(*(envp)+ 5, ':');
-			break ;
-		}
-		envp++;
+		if (tmp->type == WORD || tmp->type == PIPE_LINE)
+			++i;
+		tmp = tmp->next;
 	}
-//	while(path[++i])
-//		ft_printf("%s\n", path[i]);
-//	ret = child_creation(cmd, 3, path, envp);
-	ret = child_creation2(NULL, NULL, cmd, 3, path, envp);
-	ft_printf("ret = %d\n", ret);
+	cmd = (char **)ft_calloc(i + 1, sizeof(char *));
+	if (!cmd)
+		return (NULL);
 	i = -1;
-	while (cmd[++i])
+	tmp = lst;
+	while (tmp && tmp->cmd_pos == pos)
 	{
-		j = -1;
-		while (cmd[i][++j])
-			free(cmd[i][j]);
-		free(cmd[i]);
+		if (tmp->type == WORD || tmp->type == PIPE_LINE)
+			cmd[++i] = expander(tmp->content, envp);
+		tmp = tmp->next;
 	}
-	free(cmd);
-	i = -1;
-	while(path[++i])
-		free(path[i]);
-	free(path);
+	cmd[++i] = NULL;
+	return (cmd);
+}
+
+/**
+ * @note protect function open
+ * 
+ */
+int	get_iofiles_fd(int *fd, t_list *lst, int pos)
+{
+	ft_bzero(fd, 2 * sizeof(int));
+	while (lst && lst->cmd_pos == pos)
+	{
+		if (lst->type == REDIR_IN)
+			fd[0] = open(lst->content, O_RDONLY);
+		if (lst->type == REDIR_OUT)
+			fd[1] = open(lst->content, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		if (lst->type == APPEND)
+			fd[1] = open(lst->content, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		if (fd[0] == -1 || fd[1] == -1)
+			return (1);
+		lst = lst->next;
+	}
 	return (0);
-} */
+}
+
+int	get_heredoc_input(t_list *lst, int pos)
+{
+	char	*tmp_eof;
+
+	tmp_eof = NULL;
+	while (lst && lst->cmd_pos == pos)
+	{
+		if (lst->type == HERE_DOC)
+			tmp_eof = lst->content;
+		lst = lst->next;
+	}
+	if (tmp_eof && heredoc_read(tmp_eof))
+		return (1);
+	return (0);
+}
+
+int	child_execution(char **cmd, char **env, char **path, t_data *data)
+{
+	char	*cmd_path;
+	int		return_val;
+	
+	//child
+	cmd_path = get_cmd_path(cmd[0], path);
+	if (!cmd_path)
+	{
+		return_val = error_msg(SHELL_NAME, cmd[0], 1);
+		free_list(cmd);
+		free_alloc(data);
+		exit(return_val);
+	}
+//	update_last_executed_cmd(data, cmd_path);
+	if (execve(cmd_path, cmd, env) == -1 && errno == ENOEXEC)
+		execute_script_without_shebang(cmd, env);
+	//as doesn't return when execute the command well, there is no protection
+	else
+	{
+		perror("execve");
+		//free all the data if execve fails
+		//230809nimai: comment free to avoid double freeing.
+		free(cmd_path);
+		free_list(cmd);
+		free_alloc(data);		
+	}
+	exit(1);
+}
+
+int	executer(char *outfile, t_list *lst, int cmd_number, \
+				char **path, char **env, t_data *data)
+{
+	int		tmp_stdin;
+	int		tmp_stdout;
+	pid_t	pid;
+	int		fd[2];
+	int		e_status;
+	int		pos;
+	char	**cmd;
+
+	e_status = 0;
+	tmp_stdin = dup(STDIN_FILENO);
+	tmp_stdout = dup(STDOUT_FILENO);
+	pos = 0;
+	//set the initial input
+/* 	if (infile)
+		fdin = open(infile, O_RDONLY);
+	else
+	{
+		// Use default input
+		fdin = dup(tmp_stdin);
+	} */
+	// IMPORTANTE: check if the last command is exit
+/* 	if (ft_strcmp(cmd[cmd_number - 1][0], "exit"))
+		return (0); */
+	while (lst)
+//	while (++i < cmd_number)
+	{
+		cmd = NULL;
+		ft_printf("Current cmd pos: %d, pos val: %d\n", lst->cmd_pos, pos);
+		if (lst->cmd_pos == pos)
+		{
+			cmd = fill_current_cmd(lst, pos, data->env);
+			get_iofiles_fd(fd, lst, pos);
+			get_heredoc_input(lst, pos);
+			//redirect input
+			if (pos != 0)
+			{
+ 				dup2(fd[0], STDIN_FILENO);
+				close(fd[0]);		
+			}
+			//setup output
+			if (pos == cmd_number)
+			{
+				// Last simple command
+				if (outfile)
+					fd[1] = open(outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+				else
+				{
+					// Use default output 
+					fd[1] = dup(tmp_stdout);
+				}
+			}
+			else
+			{
+				// Not last
+				//simple command 
+				//create pipe
+				int	fdpipe[2];
+				pipe(fdpipe);
+				fd[1] = fdpipe[1];
+				fd[0] = fdpipe[0];
+			}
+			// if/else
+			// Redirect output
+			dup2(fd[1], STDOUT_FILENO);
+			close(fd[1]);
+			//set singnal handlers for child process
+			set_signal_handlers(0);
+
+			int	j = -1;
+			while (cmd[++j])
+				ft_printf("cmd[%d] = %s\n", j, cmd[j]);
+			ft_printf("\n");
+			int is_builtin = check_builtin(cmd, data);
+			ft_printf("\nCheck builtin return: %d\n", is_builtin);
+			if (is_builtin >= 0)
+				return (free(cmd), is_builtin);
+			
+			// Create child process
+			pid = fork();
+			if (pid == 0)
+				child_execution(cmd, env, path, data);
+			while (lst && lst->cmd_pos == pos)
+				lst = lst->next;
+			pos++;
+			free(cmd);
+		}
+	}
+	//for
+	//restore in/out defaults
+	dup2(tmp_stdin, 0);
+	dup2(tmp_stdout, 1);
+	close(tmp_stdin);
+	close(tmp_stdout);
+
+	waitpid(0, &e_status, WUNTRACED);
+//	waitpid(pid, &e_status, WUNTRACED);
+	return (check_exit_status(e_status));
+}

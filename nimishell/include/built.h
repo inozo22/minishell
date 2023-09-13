@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:12:28 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/12 11:37:16 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/13 11:22:20 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,6 @@ typedef struct s_data
 	char		**path;
 	pid_t		pid;
 	short int	exit_status;
-//	t_tokens	*head;
-//this is test for control sign
-//	struct termios	termios_save;
 }				t_data;
 
 typedef struct s_export_box
@@ -62,6 +59,10 @@ typedef struct s_export
 	int				plen;
 }	t_export;
 
+/**
+ * Main built-in functions
+*/
+
 int			built_exit(char **input, t_data *data, int cmd_num);
 int			built_pwd(t_data *data);
 int			built_echo(char **input);
@@ -73,6 +74,7 @@ int			built_unset(char **input, t_data *data);
 /**
  * functions from export
  */
+
 int			av_amount(char **strs);
 char		**fake_env(void);
 t_export	*fill_list(char **strs, t_export *ret);
@@ -98,9 +100,6 @@ char		*get_above_path(char *current);
 void		error_cd(char *cmd);
 char		*get_dest_path_wl_sign(t_data *data, char *cur, char *pwd);
 char		*get_dest_path_env(t_data *data, char *envtype);
-/**
- * functions from cd
-  */
 
 /**
  * functions from utils
@@ -118,8 +117,6 @@ void		error_built(char *cmd, char *comment);
 int			error_notset(char *cmd, char *input);
 void		heap_error(int flag);
 void		quick_sort(t_export_box box[], int left, int right);
-
-
 
 void		**ptr_free(void **ptr);
 void		*arr_free(t_export *list);

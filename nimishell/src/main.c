@@ -6,14 +6,30 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 18:22:41 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/05 15:40:16 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/07 18:02:56 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <termios.h>
 
 //global variable for return value
-int	g_return_val;
+volatile int	g_return_val;
+
+/**
+ * @brief set terminal attributes to remove ^C in the prompt
+  */
+static int	set_terminal_attributes(struct termios *termios_save)
+{
+	struct termios	term;
+
+	if (tcgetattr(0, termios_save))
+		return (1);
+	term = *termios_save;
+	term.c_lflag &= ~ECHOCTL;
+	tcsetattr(0, TCSASOFT, &term);
+	return (0);
+}
 
 /**
  * @note added SHLVL increment
@@ -27,7 +43,7 @@ static int	fill_env(t_data *data, char *envp[])
 		i++;
 	data->env = (char **)ft_calloc(i + 2, sizeof(char *));
 	if (!data->env)
-		return(errors(12, data));
+		return (errors(12, data));
 	i = -1;
 	while (envp[++i])
 	{
@@ -44,7 +60,6 @@ static int	fill_env(t_data *data, char *envp[])
 		if (!data->env[i] && envp[i])
 			return (errors(ENOMEM, data));
 	}
-	ft_printf("Environment loaded\n");
 	return (0);
 }
 
@@ -56,7 +71,7 @@ static int	define_basic_env(t_data *data, char *prog_name)
 	ptr = getcwd(NULL, 0);
 	data->env = (char **)ft_calloc(5 + 1, sizeof(char *));
 	if (!data->env)
-		return(errors(12, data));
+		return (errors(12, data));
 	data->env[0] = ft_strdup(DEFAULT_PATH);
 	data->env[1] = ft_strjoin("PWD=", ptr);
 	data->env[2] = ft_strdup("OLDPWD");
@@ -75,6 +90,7 @@ static int	init_data(t_data *data, char *envp[], char *prog_name)
 		return (1);
 	else if (*envp && fill_env(data, envp))
 		return (1);
+	ft_printf("Environment loaded\n");
 	set_path_list(data);
 	data->exit_status = 0;
 	return (0);
@@ -82,7 +98,8 @@ static int	init_data(t_data *data, char *envp[], char *prog_name)
 
 int	main(int argc, char *argv[], char *envp[])
 {
-	t_data	data;
+	t_data			data;
+	struct termios	termios_save;
 
 	g_return_val = 0;
 	data.pid = get_my_pid();
@@ -90,9 +107,6 @@ int	main(int argc, char *argv[], char *envp[])
 		return (1);
 	if (init_data(&data, envp, argv[0]))
 		return (1);
-/* 	ft_printf("PID obtained: %d\n", data.pid);
-	ft_printf("argc: %d\n", argc);
-	ft_printf("PID with getpid(): %d\n", getpid()); */
 	if (argc != 1)
 	{
 		if ((argc == 3 && !ft_strcmp(argv[1], "-c")))
@@ -100,7 +114,13 @@ int	main(int argc, char *argv[], char *envp[])
 		else
 			exit (error_file(argv[0], argv[1]));
 	}
+	// these remove ^C in the prompt
+	// CORREGIR MENSAJE DE ERROR
+	if (set_terminal_attributes(&termios_save) == 1)
+		return (1);
+		//return (errors(12, data));
 	minishell(&data);
 	free_alloc(&data);
+	tcsetattr(0, 0, &termios_save);
 	return (g_return_val);
 }

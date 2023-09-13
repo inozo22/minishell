@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 19:10:38 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/07 13:30:48 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/13 11:22:26 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,8 @@
 # include <readline/history.h>
 # include <sys/wait.h>
 # include <sys/types.h>//it's not necessary in POSIX.1
-# include <termios.h>
-# include "../lib/libft/libft.h"
-//# include "libft.h"
+
+# include "libft.h"
 # include "built.h"
 # include "signals.h"
 //# include "../lib/libft/libft.h"
@@ -34,8 +33,7 @@
 #  define TCSASOFT 0
 # endif
 
-//test
-extern int	g_return_val;
+extern volatile int	g_return_val;
 
 //  enum e_token
 // {
@@ -53,7 +51,7 @@ extern int	g_return_val;
 // 	APPEND,//64
 // 	INVALID,//65
 // };
- enum e_token
+enum e_token
 {
 	WORD = -1,
 	IS_SPACE = ' ',
@@ -122,10 +120,10 @@ typedef struct s_tokens
 # define BACKGROUND_COL_CYAN             "46"
 # define BACKGROUND_COL_WHITE            "47"
 
-# define SHELL_COLOR_ESCAPE_SEQ(X) "\033["X"m"
-# define SHELL_FORMAT_RESET ANSI_COLOR_ESCAPE_SEQ(GEN_FORMAT_RESET)
+//# define SHELL_COLOR_ESCAPE_SEQ(X) "\033["X"m"
+//# define SHELL_FORMAT_RESET ANSI_COLOR_ESCAPE_SEQ(GEN_FORMAT_RESET)
 
-//"\001" and "\002" are escape sequence, which is necessary to work with readline 
+//"\001" and "\002" are escape sequence, necessary to work with readline
 # define COLOR_RESET	"\001\033[0m\002"
 # define COLOR_GREEN	"\001\033[1;32m\002"
 # define COLOR_YELLOW	"\001\033[1;33m\002"
@@ -153,6 +151,7 @@ int		process_input(char *line_read, t_data *data);
 //	Lexer
 
 int		lexer(char *input, t_list **token_list);
+int		is_quote(char c);
 
 //	Parser
 
@@ -168,10 +167,12 @@ void	*free_list(char **list);
 //	Error messages
 int		error_file(char *prog_name, char *in_file);
 int		error_msg(char *prog_name, char *cmd, int mode);
+int		command_not_found_handler(char *name, char *cmd);
 
 //	Executor
 //int child_creation(t_data *data, char **cmd);
-int		executer(char *outfile, t_list *lst, int cmd_number, char **path, char **env, t_data *data);
+int		executer(char *outfile, t_list *lst, int cmd_number, \
+					char **path, char **env, t_data *data);
 
 //	Split
 char	**split_input(char *str);
@@ -197,7 +198,7 @@ int		av_amount(char **strs);
 
 //Expanser
 //char	*expanser(char *arg, char *envp[], t_data *data);
-char	*expander(t_list *list, t_data *data);
+char	*expander(char *str, char *env[]);
 //char	*expand(t_list *list, t_data *data, char *str);
 
 //Redirect
