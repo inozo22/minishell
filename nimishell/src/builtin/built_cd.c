@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 18:40:39 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/13 15:31:55 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/13 18:34:59 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,75 +23,6 @@ void	error_cd(char *cmd)
 	ft_printf("minishell: cd: %s: No such file or directory\n", cmd);
 }
 
-/**
- * @brief obtain above path from array
- * @author nimai
- * @note 
- */
-// int	get_pos_above_path(char *str)
-// {
-// 	int		len;
-
-// 	len = ft_strlen(str);
-// 	while (str[--len])
-// 	{
-// 		if (str[len] == '/')
-// 			break ;
-// 	}
-// 	if (len == 0)
-// 		len++;
-// 	return (len);
-// }
-
-/* char	*get_above_path(char *current)
-{
-	int		cut;
-	char	*ret;
-
-	cut = get_pos_above_path(current);
-	ret = malloc(sizeof(char) * (cut + 1));
-	if (!ret)
-		return (heap_error(1), NULL);
-	ft_strlcpy(ret, current, cut + 1);
-	if (chdir(ret) == -1)
-		return (error_cd(ret), NULL);
-	return (ret);
-} */
-
-/**
- * @brief obtain destination path
- * @author nimai
- * @note first try to obtain PWD by get_env, if it doesn't succeed, try getcwd
- */
-/* char	*get_dest_path(char *dest, char *pwd)
-{
-	char	*ret;
-	char	*cur;
-	int		i;
-
-	i = 1;
-	if (ft_strcmp("..", dest) == 0 || ft_strcmp("../", dest) == 0 || \
-	ft_strncmp("..//", dest, 4) == 0)
-	{
-		while (dest[++i])
-			if (dest[i] != '/')
-				return (error_cd(dest), NULL);
-	//	ret = get_above_path(pwd);
-		return (get_above_path(pwd));
-	}
-	else
-	{
-		if (chdir(dest) == -1)
-			return (g_return_val = 1, error_cd(dest), NULL);
-		cur = getcwd(NULL, 0);
-		ret = ft_strdup(dest);
-		if (ft_strlen(cur) > ft_strlen(ret))
-			return (path_modify(cur, ret));
-		else if (!ft_strcmp("//", ret))
-			return (free (cur), ret);
-		return (free (ret), cur);
-	}
-} */
 /**
  * @brief obtain destination path
  * @author nimai
@@ -113,7 +44,7 @@ char	*get_dest_path(char *dest/* , char *pwd */)
 		return (path_modify(cur, ret));
 	else if (ft_strlen(cur) <= ft_strlen(ret))
 	{
-		if (ret[ft_strlen(ret) - 1] == '/')
+		if (ft_strlen(ret) > 1 && ret[ft_strlen(ret) - 1] == '/')
 			return (path_modify(cur, ret));
 		return (free (cur), ret);
 	}
