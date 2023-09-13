@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 09:43:46 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/12 17:37:05 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/13 15:29:03 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,13 @@
  * @return 
  * @note you will get OLDPWD
  */
-char	*get_dest_path_wl_sign(t_data *data, char *cur, char *pwd)
+char	*get_dest_path_wl_sign(char *cur, char *pwd, char *input)
 {
 	char	*ret;
+	char	*tmp;
 
 	ret = NULL;
-	(void)data;
+	tmp = NULL;
 	if (cur) //move to where you are, you will get OLDPWD
 	{
 		if (chdir(cur) == -1)
@@ -37,12 +38,11 @@ char	*get_dest_path_wl_sign(t_data *data, char *cur, char *pwd)
 	}
 	else if (!cur) //move to where you are, but if it's not exist
 	{
-		// I think I should put input instead of "./" because could be any string
-		ret = ft_strjoin(pwd, "./");
-		ft_printf("cd: error retrieving current directory: getcwd: \
-				cannot access parent directories: No such file or directory"); //temporary error control
+		tmp = ft_strdup(input);
+		ret = ft_strjoin(pwd, tmp);
+		ft_printf("%s\n", MSG_CD_CANT_ACCESS);
 	}
-	return (ret);
+	return (free (tmp), ret);
 }
 
 /**

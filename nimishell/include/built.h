@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:12:28 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/13 11:22:20 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/13 15:28:54 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # define SORT_ID 0
 # define FLAGEXPORT 1
 # define FLAGENV 0
+# define MSG_CD_CANT_ACCESS "cd: error retrieving current directory: \
+getcwd: cannot access parent directories: No such file or directory"
 
 //# include <termios.h>
 
@@ -98,7 +100,7 @@ char		*path_modify(char *cur, char *str);
 int			get_pos_above_path(char *str);
 char		*get_above_path(char *current);
 void		error_cd(char *cmd);
-char		*get_dest_path_wl_sign(t_data *data, char *cur, char *pwd);
+char		*get_dest_path_wl_sign(char *cur, char *pwd, char *input);
 char		*get_dest_path_env(t_data *data, char *envtype);
 
 /**
