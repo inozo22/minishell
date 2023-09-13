@@ -8,6 +8,7 @@ TODO: Check leaks in non interactive mode and interactive exit
 TODO: Include cmd_list in executer to get all the arguments of the command
 TODO: Include a break in executer when cd is used in multiple pipes. It should work just when it is alone, but show error messages in the path if invalid
 TODO: Fix expanser with 2 consecutive variables without space in the middle
+TODO: Fix expanding with not found variables to return null
 
 
 
