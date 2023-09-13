@@ -21,16 +21,12 @@ char	*get_var_value(char *env_var, char *envp[], int len)
 {
 	int	i;
 
-//	printf("\n\nenv var: %s len: %d\n", env_var, len);
 	i = -1;
 	while (envp[++i])
 	{
-//		printf("pos of = : %c, envp[%d]: %s\n", envp[i][len], i, envp[i]);
-//		ft_printf("Env var: %s, envp[%d]: %s\n", env_var, i, envp[i]);
 		if (!ft_strncmp(env_var, envp[i], len) && envp[i][len] == '=')
 			return (ft_strdup(envp[i] + len + 1));
 	}
-//	ft_printf(SHELL_NAME": %s: Undefined variable.\n", env_var);
 	return (remove_quotes(ft_substr(env_var, 0, len)));
 }
 
@@ -54,17 +50,10 @@ char	*get_var_value(char *env_var, char *envp[], int len)
  * @note ($$) Expands to the pid of the current shell.
  * @note ($1-9) Expands to the corresponding arguments passed to bash
  */
-char	*is_expand(char *env_var, int len, char *env[])
+char	*is_expand(char *env_var, int len, char *env[], pid_t pid)
 {
-	//GET PID FROM DATA
-	int	pid;
-
-	ft_printf("Input in is_expand: %s, with len: %d\n", env_var, len);
-	pid = 123;	
 	if (!ft_strncmp(env_var, "$?", len))
-	{
 		return (ft_itoa(g_return_val));
-	}
 	if (!ft_strncmp(env_var, "$!", len))
 		return (ft_itoa(g_return_val));
 	if (!ft_strncmp(env_var, "$$", len))
@@ -75,25 +64,18 @@ char	*is_expand(char *env_var, int len, char *env[])
 		return (ft_strdup(""));
 	if (!ft_strncmp(env_var, "$#", len))
 		return (ft_itoa(0));
-	//keep opening the input if I put "minishell", at this moment put a space at the end of the string to escape
 	if (!ft_strncmp(env_var, "$0", len))
 		return (ft_strdup(SHELL_NAME));
 	if (!ft_strncmp(env_var, "$IFS", len))
 		return (ft_strdup("\t\n"));
 	if (ft_isdigit(env_var[1]))
-	{
-//		printf("%sLine: %d HERE I AM%s\n", COLOR_RED, __LINE__, COLOR_RESET);
 		return (ft_strdup(""));
-	}
 	if (!(env_var[1]) || (!ft_isalnum(env_var[1]) && env_var[1] != '_'))
-	{
-//		printf("%sLine: %d HERE I AM%s\n", COLOR_RED, __LINE__, COLOR_RESET);
 		return (NULL);
-	}
-	return(get_var_value(env_var + 1, env, len - 1));
+	return (get_var_value(env_var + 1, env, len - 1));
 }
 
-char	*obtain_expanded(char *tmp, char *ret, char *arg)
+/* char	*obtain_expanded(char *tmp, char *ret, char *arg)
 {
 	if (ft_strcmp(ret, arg) != 0)
 		ret = ft_strjoin(ret, tmp);
@@ -104,8 +86,7 @@ char	*obtain_expanded(char *tmp, char *ret, char *arg)
 		ft_strcpy(ret, tmp);
 	}
 	return (ret);
-}
-
+} */
 
 /**
  * @note i[0] i
@@ -127,41 +108,30 @@ char	*remove_quotes(char *str)
 	}
 	ret = ft_calloc(i[2] + 1, sizeof(char));
 	if (!ret)
-		return (NULL);//malloc error
-	//copy
+		return (NULL);
 	while (--i[0] > -1)
 	{
 		if (str[i[0]] != '\'' && str[i[0]] != '\"')
-		{
 			ret[--i[2]] = str[i[0]];
-//			ft_printf("%c", ret[i[2]]);
-		}
 	}
-//	ft_printf("\n");
 	free(str);
 	return (ret);
 }
 
-int	compose_expanded(char *expanded, char **str, int dollar_pos, int end_pos_var)
+int	compose_expanded(char *expanded, char **str, int dollar_pos, int end_pos)
 {
 	char	*preceding;
 	char	*following;
 	char	*str_expanded;
 	int		len;
-	
+
 	preceding = ft_substr(*str, 0, dollar_pos);
 	if (!preceding)
 		return (0);
-//	ft_printf("preceding: %s\n", preceding);
 	preceding = remove_quotes(preceding);
-/* 	if (!str[end_pos_var])
-		dollar_pos = end_pos_var - 1;
-	else
-		dollar_pos = end_pos_var; */
-	following = ft_substr(*str, end_pos_var, ft_strlen(*str) - end_pos_var);
+	following = ft_substr(*str, end_pos, ft_strlen(*str) - end_pos);
 	if (!following)
 		return (free(preceding), -1);
-//	ft_printf("following: %s\n", following);
 	following = remove_quotes(following);
 	str_expanded = ft_strjoin_many(3, preceding, expanded, following);
 	if (!str_expanded)
@@ -179,7 +149,7 @@ int	compose_expanded(char *expanded, char **str, int dollar_pos, int end_pos_var
  * @note pieces[1] expanded var
  * @note pieces[2] after var 
  */
-int	expand(char **str, int *pos, int quotes, char **env)
+int	expand(char **str, int *pos, int quotes, char **env, pid_t pid)
 {
 	int		i[2];
 	char	*expanded_var;
@@ -187,12 +157,12 @@ int	expand(char **str, int *pos, int quotes, char **env)
 	ft_bzero(i, 2 * sizeof(int));
 	i[0] = *pos;
 	if (!ft_isdigit((*str)[*pos]))
-		while ((*str)[i[0]] && !ft_isspace((*str)[i[0]]) && (*str)[i[0]] != quotes)
+		while ((*str)[i[0]] && !ft_isspace((*str)[i[0]]) \
+					&& (*str)[i[0]] != quotes)
 			i[0]++;
-	expanded_var = is_expand(&(*str)[*pos], i[0] - *pos, env);
+	expanded_var = is_expand(&(*str)[*pos], i[0] - *pos, env, pid);
 	if (!expanded_var)
 		return (1);
-//	ft_printf("Expanded_var: %s\n", expanded_var);
 	if (!expanded_var)
 		return (0);
 	*pos = compose_expanded(expanded_var, str, *pos, i[0]);
@@ -207,29 +177,28 @@ int	expand(char **str, int *pos, int quotes, char **env)
 /**
  * @param pos[2] to keep and free string 
  */
-char	*expander(char *str, char *env[])
+char	*expander(char *str, char *env[], pid_t pid)
 {
 	int	i;
-	int quotes;
+	int	quotes;
 
 	i = -1;
 	while (str[++i])
 	{
 		quotes = is_quote(str[i]);
 		if (str[i] == '$' && quotes != '\'')
-		{
-//			ft_printf("quotes status: %d in str: %s\n", quotes, str + i);
-//			ft_printf("str pos: %s\n", str + i);	
-			if (expand(&str, &i, quotes, env))
+			if (expand(&str, &i, quotes, env, pid))
 				return (NULL);
-		}
 	}
 	return (str);
 }
 
 /* int	main(int argc, char *argv[], char *envp[])
 {
-	char	*input[] = {"'$HOME': $HOME aaa", "   '$USER':  	\"$USER\"$USER ei", "'$PWD':\"$PWD\"", "'$OLDPWD':\"$OLDPWD\"\"$USER\"", "$INVENT:\"$INVENT\"", "'$?'\"$?\"", "'$-':\"$-\"", "'$0':\"$0\"", "'$1':\"$1\"", NULL};
+	char	*input[] = {"'$HOME': $HOME aaa", "   '$USER':  	\
+			\"$USER\"$USER ei", "'$PWD':\"$PWD\"", "'$OLDPWD':\"$OLDPWD\ \
+			"\"$USER\"", "$INVENT:\"$INVENT\"", "'$?'\"$?\"", "'$-':\"$-\"", \
+			"'$0':\"$0\"", "'$1':\"$1\"", NULL};
 	char	*str;
 	char	*expanded;
 	int		i = -1;
@@ -247,6 +216,9 @@ char	*expander(char *str, char *env[])
 	return (0);
 } */
 
-// cc -Wall -Wextra -g3 -fsanitize=address -Ilib/libft -Iinclude src/expander.c src/lexer.c src/error_msgs.c src/terminate.c lib/libft/libft.a && ./a.out
+// cc -Wall -Wextra -g3 -fsanitize=address -Ilib/libft -Iinclude src/expander.c
+// src/lexer.c src/error_msgs.c src/terminate.c lib/libft/libft.a && ./a.out
 
-// cc -Wall -Wextra -g3 -Ilib/libft -Iinclude src/expander.c src/lexer.c src/error_msgs.c src/terminate.c lib/libft/libft.a && valgrind --leak-check=full --show-leak-kinds=all ./a.out
+// cc -Wall -Wextra -g3 -Ilib/libft -Iinclude src/expander.c src/lexer.c
+// src/error_msgs.c src/terminate.c lib/libft/libft.a && valgrind
+// --leak-check=full --show-leak-kinds=all ./a.out

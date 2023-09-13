@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:32:33 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/13 17:27:16 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/13 18:31:12 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ int	minishell(t_data *data)
 		if (*line_read)
 			add_history(line_read);
 		process_input(line_read, data);
-		ft_printf("\n\nReturn val: %d\n", g_return_val);
+		ft_printf(COLOR_BLUE"\nReturn val: %d\n"COLOR_RESET, g_return_val);
 		if (data->exit_status)
 			break ;
 		free(line_read);

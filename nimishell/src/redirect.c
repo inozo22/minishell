@@ -37,7 +37,7 @@ int	heredoc_to_stdin(char *input)
 	return (0);
 }
 
-int	heredoc_read(char *eof, char **envp)
+int	heredoc_read(char *eof, char **envp, pid_t pid)
 {
 	char	*line_read;
 	char	*input;
@@ -51,7 +51,7 @@ int	heredoc_read(char *eof, char **envp)
 		line_read = readline(">");
 		if (!line_read || !ft_strcmp(eof, line_read))
 			break ;
-		line_read = expander(line_read, envp);
+		line_read = expander(line_read, envp, pid);
 		tmp = input;
 		input = ft_strjoin_many(3, input, "\n", line_read);
 		free(tmp);

@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/13 18:01:14 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/13 18:30:29 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,15 +46,11 @@ char	*get_cmd_path(char *cmd, char **path)
  */
 int	check_exit_status(int e_status)
 {
-/* 	int	ret;
+ 	int	ret;
 
 	ret = 0;
 	if (g_return_val)
-	{
-		ret = g_return_val;
-		g_return_val = 0;
-		return (ret);
-	} */
+		return (g_return_val);
 	if (WIFEXITED(e_status))
 		return (WEXITSTATUS(e_status));
 	if (WIFSIGNALED(e_status))
@@ -186,7 +182,7 @@ int	execute_script_without_shebang(char **cmd, char **env)
 }
  */
 
-char	**fill_current_cmd(t_list *lst, int pos, char **envp)
+char	**fill_current_cmd(t_list *lst, int pos, char **envp, pid_t pid)
 {
 	char	**cmd;
 	t_list	*tmp;
@@ -210,7 +206,7 @@ char	**fill_current_cmd(t_list *lst, int pos, char **envp)
 	while (tmp && tmp->cmd_pos == pos)
 	{
 		if (tmp->type == WORD || tmp->type == PIPE_LINE)
-			cmd[++i] = expander(tmp->content, envp);
+			cmd[++i] = expander(tmp->content, envp, pid);
 		tmp = tmp->next;
 	}
 	cmd[++i] = NULL;
@@ -239,7 +235,7 @@ int	get_iofiles_fd(int *fd, t_list *lst, int pos)
 	return (0);
 }
 
-int	get_heredoc_input(t_list *lst, int pos, char **envp)
+int	get_heredoc_input(t_list *lst, int pos, char **envp, pid_t pid)
 {
 	char	*tmp_eof;
 
@@ -250,7 +246,7 @@ int	get_heredoc_input(t_list *lst, int pos, char **envp)
 			tmp_eof = lst->content;
 		lst = lst->next;
 	}
-	if (tmp_eof && heredoc_read(tmp_eof, envp))
+	if (tmp_eof && heredoc_read(tmp_eof, envp, pid))
 		return (1);
 	return (0);
 }
@@ -318,7 +314,7 @@ int	executer(char *outfile, t_list *lst, int cmd_number, \
 		if (lst->cmd_pos == pos)
 		{
 			get_iofiles_fd(fd, lst, pos);
-			get_heredoc_input(lst, pos, data->env);
+			get_heredoc_input(lst, pos, data->env, data->pid);
 			//redirect input
 			if (pos != 0)
 			{
@@ -354,7 +350,7 @@ int	executer(char *outfile, t_list *lst, int cmd_number, \
 			//set singnal handlers for child process
 			set_signal_handlers(0);
 			ft_printf("I'm in line %d\n", __LINE__);
-			cmd = fill_current_cmd(lst, pos, data->env);
+			cmd = fill_current_cmd(lst, pos, data->env, data->pid);
 			if (!cmd)
 			{	
 				if (lst->cmd_pos == cmd_number)

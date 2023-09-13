@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 18:22:41 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/13 17:07:43 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/13 18:26:54 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <termios.h>
 
 //global variable for return value
-volatile int	g_return_val = 0;
+volatile int	g_return_val;
 
 /**
  * @brief set terminal attributes to remove ^C in the prompt
