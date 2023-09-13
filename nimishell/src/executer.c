@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
+/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/13 11:24:29 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/13 15:18:26 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,6 +200,8 @@ char	**fill_current_cmd(t_list *lst, int pos, char **envp)
 			++i;
 		tmp = tmp->next;
 	}
+	if (!i)
+		return (NULL);
 	cmd = (char **)ft_calloc(i + 1, sizeof(char *));
 	if (!cmd)
 		return (NULL);
@@ -237,7 +239,7 @@ int	get_iofiles_fd(int *fd, t_list *lst, int pos)
 	return (0);
 }
 
-int	get_heredoc_input(t_list *lst, int pos)
+int	get_heredoc_input(t_list *lst, int pos, char **envp)
 {
 	char	*tmp_eof;
 
@@ -248,7 +250,7 @@ int	get_heredoc_input(t_list *lst, int pos)
 			tmp_eof = lst->content;
 		lst = lst->next;
 	}
-	if (tmp_eof && heredoc_read(tmp_eof))
+	if (tmp_eof && heredoc_read(tmp_eof, envp))
 		return (1);
 	return (0);
 }
@@ -267,7 +269,6 @@ int	child_execution(char **cmd, char **env, char **path, t_data *data)
 		free_alloc(data);
 		exit(return_val);
 	}
-//	update_last_executed_cmd(data, cmd_path);
 	if (execve(cmd_path, cmd, env) == -1 && errno == ENOEXEC)
 		execute_script_without_shebang(cmd, env);
 	//as doesn't return when execute the command well, there is no protection
@@ -313,12 +314,11 @@ int	executer(char *outfile, t_list *lst, int cmd_number, \
 //	while (++i < cmd_number)
 	{
 		cmd = NULL;
-		ft_printf("Current cmd pos: %d, pos val: %d\n", lst->cmd_pos, pos);
+		ft_printf("Current cmd pos: %d, cmd_number: %d\n", lst->cmd_pos, cmd_number);
 		if (lst->cmd_pos == pos)
 		{
-			cmd = fill_current_cmd(lst, pos, data->env);
 			get_iofiles_fd(fd, lst, pos);
-			get_heredoc_input(lst, pos);
+			get_heredoc_input(lst, pos, data->env);
 			//redirect input
 			if (pos != 0)
 			{
@@ -353,6 +353,15 @@ int	executer(char *outfile, t_list *lst, int cmd_number, \
 			close(fd[1]);
 			//set singnal handlers for child process
 			set_signal_handlers(0);
+			
+			cmd = fill_current_cmd(lst, pos, data->env);
+			if (!cmd)
+			{	
+				if (lst->cmd_pos == cmd_number)
+					break ;
+				else
+					continue ;
+			}
 
 			int	j = -1;
 			while (cmd[++j])
