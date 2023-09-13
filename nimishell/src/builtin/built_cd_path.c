@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 16:00:17 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/13 11:21:30 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/13 18:13:15 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,42 +86,13 @@ char	*str_mod(char *cur, char *str, int i, int len)
 
 int	strcount(char *str1, char *str2, int len)
 {
-	// int	ret;
-
-	// ret = 0;
-	// while (ret < len && ft_strcmp(str1, str2))
-	// {
-	// 	str1++;
-	// 	str2++;
-	// 	ret++;
-	// }
-	// return (ret);
-	// int	ret;
-	// int	i;
-	// int	j;
-
-	// ret = 0;
-	// i = -1;
-	// while (ret < len && str1[++i]/*  && ft_strcmp(str1, str2) */)
-	// {
-	// 	j = -1;
-	// 	while (str2[++j])
-	// 	{
-	// 		printf("&str1[%d]: %s, &str2[%d]: %s\n", i, &str1[i], i, &str2[j]);
-	// 		if (ft_strcmp(&str1[i], &str2[j]) == 0)
-	// 			return (ret);
-	// 		ret++;
-	// 	}
-	// }
-	// return (ret);
 	int	ret;
 	int	i;
 
 	ret = 0;
 	i = -1;
-	while (ret < len && str1[++i]/*  && ft_strcmp(str1, str2) */)
+	while (ret < len && str1[++i])
 	{
-		//printf("&str1[%d]: %s, str2: %s\n", i, &str1[i], str2);
 		if (ft_strcmp(&str1[i], str2) == 0)
 			return (ret);
 		ret++;
