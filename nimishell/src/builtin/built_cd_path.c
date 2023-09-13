@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 16:00:17 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/13 18:13:15 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/13 18:50:49 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ char	*path_modify(char *cur, char *str)
 	int		i;
 	char	*tmp;
 
-	if (str[ft_strlen(str) - 1] == '/' && ft_strlen(cur) <= ft_strlen(str))
+	if (ft_strlen(cur) > 1 && str[ft_strlen(str) - 1] == '/' && ft_strlen(cur) <= ft_strlen(str))
 	{
 		tmp = malloc(ft_strlen(cur));
 		if (!tmp)

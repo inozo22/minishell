@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 18:40:39 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/13 18:34:59 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/13 18:48:47 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	*get_dest_path(char *dest/* , char *pwd */)
 		return (path_modify(cur, ret));
 	else if (ft_strlen(cur) <= ft_strlen(ret))
 	{
-		if (ft_strlen(ret) > 1 && ret[ft_strlen(ret) - 1] == '/')
+		if (ret[ft_strlen(ret) - 1] == '/')
 			return (path_modify(cur, ret));
 		return (free (cur), ret);
 	}
