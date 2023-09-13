@@ -184,7 +184,7 @@ int	expand(char **str, int *pos, int quotes, char **env)
 	int		i[2];
 	char	*expanded_var;
 
-	ft_bzero(i, 2 * sizeof(i));
+	ft_bzero(i, 2 * sizeof(int));
 	i[0] = *pos;
 	if (!ft_isdigit((*str)[*pos]))
 		while ((*str)[i[0]] && !ft_isspace((*str)[i[0]]) && (*str)[i[0]] != quotes)

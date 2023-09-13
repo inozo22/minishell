@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/13 15:18:26 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/13 18:01:14 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -353,7 +353,7 @@ int	executer(char *outfile, t_list *lst, int cmd_number, \
 			close(fd[1]);
 			//set singnal handlers for child process
 			set_signal_handlers(0);
-			
+			ft_printf("I'm in line %d\n", __LINE__);
 			cmd = fill_current_cmd(lst, pos, data->env);
 			if (!cmd)
 			{	

@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 19:10:38 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/13 11:29:38 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/13 17:07:31 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@
 # include "libft.h"
 # include "built.h"
 # include "signals.h"
-//# include "../lib/libft/libft.h"
 
 # ifndef TCSASOFT
 #  define TCSASOFT 0
@@ -35,22 +34,6 @@
 
 extern volatile int	g_return_val;
 
-//  enum e_token
-// {
-// 	WORD = -1,
-// 	IS_SPACE = 32,
-// 	NEW_LINE = 10,
-// 	QOUTE = 39,
-// 	DOUBLE_QUOTE = 34,
-// 	ESCAPE = 92,
-// 	ENV = 36,
-// 	PIPE_LINE = 124,
-// 	REDIR_IN = 60,
-// 	REDIR_OUT = 62,
-// 	HERE_DOC,//63
-// 	APPEND,//64
-// 	INVALID,//65
-// };
 enum e_token
 {
 	WORD = -1,
