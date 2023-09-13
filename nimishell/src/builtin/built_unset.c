@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 09:50:35 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/12 10:41:58 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/13 12:03:54 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	built_unset(char **input, t_data *data)
 
 	i = 1;
 	len = av_amount(input);
-	while (i < len - 1)
+	while (i < len)
 	{
 		if (check_valid(input[i], "unset") == 1)
 		{

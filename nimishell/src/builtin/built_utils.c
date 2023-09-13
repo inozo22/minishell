@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 11:52:54 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/12 11:45:53 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/13 12:12:13 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	check_valid(char *str, char *cmd)
 	int	i;
 
 	i = 0;
-	if (!(ft_isalpha(str[i]) || str[i] == '_'))
+	if (!(ft_isalpha(str[i]) || str[i] == '_'))//if it's not alpha neither '_'
 	{
 		g_return_val = 1;
 		return (error_id_built(cmd, str, "not a valid identifier"), 0);

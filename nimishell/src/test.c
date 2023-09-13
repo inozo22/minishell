@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 10:02:30 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/12 18:03:31 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/13 12:26:35 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <fcntl.h>
 #include <stdlib.h>
 //test
-int	g_return_val;
+volatile int	g_return_val;
 //test
 
 //TEST/////TEST////////TEST///////TEST/////////TEST////TEST////////
@@ -26,9 +26,9 @@ int	built_export_test(t_data *data)
 	char	**input_ex;
 	char	**input_export;
 
-	input_export = ft_calloc(1, 1);
+	input_export = ft_calloc(1, sizeof(char *));
 	input_export[0] = "export";
-	input_ex = ft_calloc(4, 1);
+	input_ex = ft_calloc(4, sizeof(char *));
 	input_ex[0] = "export";
 	input_ex[1] = "a";
 	input_ex[2] = "b";

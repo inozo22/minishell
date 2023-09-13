@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:18:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/12 19:02:30 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/13 12:34:41 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,6 @@ int	check_input(char *input, t_data *data)
 	{
 		c = 0;
 		j = -1;
-
 		while (data->env[i][++j] == input[c] && input[c] != '=' \
 		&& input[c] != '\0' && data->env[i][j])
 			c++;
@@ -178,59 +177,26 @@ int	built_export(char **input, t_data *data)
 {
 	char		**new_envp;
 	int			i;
-	int			len;
-	char		**tmp;
 
-/* 	i = 0;
-	while (input[i])
-	{
-		printf("input[%d]: %s\n", i,  input[i]);
-		i++;
-	} */
-	tmp = NULL;
-	len = av_amount(input);
 	new_envp = NULL;
-	if (/* av_amount(input) */len == 1)
+	if (av_amount(input) == 1)
 	{
 		if (!output_export(data))
 			return (printf("Error: output_export\n"), 1);
 		return (0);
 	}
 	i = 0;
-	printf("input[%d]: %s\n", i, input[i]);
-	printf("input[%d]: %s\n", i + 1, input[i + 1]);
-	printf("input[%d]: %s\n", i + 2, input[i + 2]);
-	printf("input[%d]: %s\n", i + 3, input[i + 3]);
-
-	tmp = (char **)ft_calloc(len + 1, sizeof (char *));
-	while (i < len)
+	while (++i < av_amount(input))
 	{
-	//	tmp[i] = ft_strdup(input[i]);
-		tmp[i] = ft_strdup("aaa");
-		printf("tmp[%d]: %s input[%d]: %s len: %d\n", i,  tmp[i], i, input[i], len);
-		i++;
-	}
-	tmp[i] = NULL;
-	i = 0;
-	while (tmp[i])
-	{
-		printf("tmp[%d]: %s\n", i,  tmp[i]);
-		i++;
-	}
-	i = 0;
-	while (++i < len)
-	{
-		printf("tmp[%d]: %s\n", i, tmp[i]);
-		printf("tmp[%d]: %s\n", i + 1, tmp[i + 1]);
-		if (!check_input(tmp[i], data))
+		if (!check_input(input[i], data))
 		{
-			new_envp = envp_strs_join(tmp[i], data);
+			new_envp = envp_strs_join(input[i], data);
 			if (!new_envp)
 				return (printf("ERROR: Line: %d\n", __LINE__), 1);
 			data->env = new_envp;
 		}
 		else
-			envp_strs_mod(tmp[i], data);
+			envp_strs_mod(input[i], data);
 	}
 	return (0);
 }
