@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 19:10:38 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/14 12:01:03 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/14 14:33:11 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,8 @@ void	*del(void **ptr);
 void	*del_array(void ***ptr);
 void	*del_err_array(char ***ptr, int i);
 void	*del_triple_array(char ****ptr);
-int		update_last_executed_cmd(t_data *data, char *cmd);
+int		update_last_executed_cmd(t_data *data, char **input);
+// int		update_last_executed_cmd(t_data *data, char *cmd);
 
 //Bultin
 //	errors

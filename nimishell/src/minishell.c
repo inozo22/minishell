@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:32:33 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/13 18:31:12 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/14 14:33:07 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,8 @@ int	check_builtin(char **input, t_data *data)
 /* 	int i = -1;
 	while (data->env[++i])
 		ft_printf("env %d: %s\n", i, data->env[i]); */
-	update_last_executed_cmd(data, input[0]);
+	// update_last_executed_cmd(data, input[0]);
+	update_last_executed_cmd(data, input);
 	if (!input[0])
 		return (-1);
 	if (!ft_strcmp(input[0], "export"))

@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 16:04:56 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/14 12:02:39 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/14 12:22:19 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	errors(int error_id, t_data *data)
 }
 
 /**
- * @note give warning message, but return 0 as success
+ * @note give warning message, but return 0 as successed
  * @param type 1: shlvl
  */
 int	warning_message(int type, int num)

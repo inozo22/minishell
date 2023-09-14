@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 18:22:41 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/14 12:11:14 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/14 12:19:54 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	set_path_list(t_data *data)
  * 3. if it will be more than 1000, gain message and change to 1
  * MSG=> bash: warning: shell level (1011) too high, resetting to 1
  * 4. if it's out of the int(2147483647), change to 0
- * 4. otherwise add 1
+ * 5. otherwise add 1
  */
 char	*get_shlvl(const char *envp)
 {
