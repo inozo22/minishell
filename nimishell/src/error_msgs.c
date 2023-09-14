@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_msgs.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 16:04:56 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/12 16:41:56 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/14 12:02:39 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,19 @@ int	errors(int error_id, t_data *data)
 		ft_printf("Cannot allocate memory\n");
 	free_alloc(data);
 	return (error_id);
+}
+
+/**
+ * @note give warning message, but return 0 as success
+ * @param type 1: shlvl
+ */
+int	warning_message(int type, int num)
+{
+	if (type == 1)
+	{
+		ft_putstr_fd("minishell: warning: shell level (", 1);
+		ft_printf("%d", num);
+		ft_putendl_fd(") too high, resetting to 1", 1);
+	}
+	return (0);
 }
