@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:11:50 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/14 12:48:52 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/14 16:04:08 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,10 @@ void	action(int sig)
 	//	rl_redisplay();
 		g_return_val = 1;
 	}
+	else if (sig == SIGQUIT)
+	{
+		g_return_val = 0;
+	}
 }
 
 void	sigquit_ignore(void)
@@ -66,7 +70,7 @@ void	sigquit_ignore(void)
 	sa.sa_handler = SIG_IGN;
 	sigaction(SIGQUIT, &sa, NULL);
 	sa.sa_flags = SA_SIGINFO | SA_RESTART;
-	g_return_val = 0;
+//	g_return_val = 0;
 }
 
 void	set_signal_handlers(pid_t pid)
@@ -77,10 +81,11 @@ void	set_signal_handlers(pid_t pid)
 	if (pid)
 	{
 		write(1, "Im pappy\n", 9);
-		sigquit_ignore();
+	//	sigquit_ignore();
 		sa.sa_handler = &action;
 		sa.sa_flags = SA_SIGINFO | SA_RESTART;
 		sigaction(SIGINT, &sa, NULL);
+		sigaction(SIGQUIT, &sa, NULL);
 	}
 	else
 	{

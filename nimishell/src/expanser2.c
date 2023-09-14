@@ -53,6 +53,7 @@ char	*get_var_value(char *env_var, char *envp[], int len)
  */
 char	*is_expand(char *token, int len, char *envp[], t_data *data)
 {
+	// printf("g_return_val: %d\n", g_return_val);
 	if (!ft_strncmp(token, "$?", 2))
 		return (ft_itoa(g_return_val));
 	if (!ft_strncmp(token, "$!", 2))

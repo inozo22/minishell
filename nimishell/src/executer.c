@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/13 18:30:29 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/14 15:30:01 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,6 @@ char	*get_cmd_path(char *cmd, char **path)
  */
 int	check_exit_status(int e_status)
 {
- 	int	ret;
-
-	ret = 0;
 	if (g_return_val)
 		return (g_return_val);
 	if (WIFEXITED(e_status))
@@ -290,6 +287,8 @@ int	executer(char *outfile, t_list *lst, int cmd_number, \
 	int		e_status;
 	int		pos;
 	char	**cmd;
+
+	printf(COLOR_RED"%d/%s	g_return_val: %d%s\n", __LINE__, __FILE__, g_return_val, COLOR_RESET);
 
 	e_status = 0;
 	tmp_stdin = dup(STDIN_FILENO);

@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 12:49:14 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/14 14:46:14 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/14 15:08:48 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ void	*del_err_array(char ***ptr, int i)
 }
 
 /**
- * @note in bash, not only print last command, but also last variable
+ * @note in bash, not only print last command, but also last variable.
+ * @note if there is variable and value, only keep variable.
  */
 int	update_last_executed_cmd(t_data *data, char **input)
 {
@@ -73,8 +74,6 @@ int	update_last_executed_cmd(t_data *data, char **input)
 	}
 	else
 		cmd = ft_strdup(input[av_amount(input) - 1]);
-	if (!ft_strcmp(cmd, "$_"))
-		return (free (cmd), 0);
 	tmp_input = (char **)ft_calloc(2 + 1, sizeof(char *));
 	if (!tmp_input)
 		return (free (cmd), errors(ENOMEM, data));

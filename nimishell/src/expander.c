@@ -52,6 +52,11 @@ char	*get_var_value(char *env_var, char *envp[], int len)
  */
 char	*is_expand(char *env_var, int len, char *env[], pid_t pid)
 {
+	printf(COLOR_RED"%d/%s	g_return_val: %d%s\n", __LINE__, __FILE__, g_return_val, COLOR_RESET);
+
+
+
+
 	if (!ft_strncmp(env_var, "$?", len))
 		return (ft_itoa(g_return_val));
 	if (!ft_strncmp(env_var, "$!", len))
