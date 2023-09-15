@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
+/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 19:10:38 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/14 14:33:11 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/15 17:51:43 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ int		warning_message(int type, int num);//2309114nimai: added
 
 //	Executor
 //int child_creation(t_data *data, char **cmd);
-int		executer(char *outfile, t_list *lst, int cmd_number, \
+int		executer(t_list *lst, int cmd_number, \
 					char **path, char **env, t_data *data);
 
 //	Split

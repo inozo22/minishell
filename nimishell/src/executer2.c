@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   executer.c                                         :+:      :+:    :+:   */
+/*   executer2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/15 18:19:48 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/15 19:56:03 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,7 +236,10 @@ int	get_iofiles_fd(int *fd, t_list *lst, int pos)
 			fd[1] = open(lst->content, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		}
 		if (lst->type == APPEND)
+		{
+			ft_printf("Opening output file: %s\n", lst->content);
 			fd[1] = open(lst->content, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		}
 		if (fd[1] == -1)
 		{
 			close (fd[0]);
@@ -245,7 +248,8 @@ int	get_iofiles_fd(int *fd, t_list *lst, int pos)
 		lst = lst->next;
 	}
 	if (fd[1] == 0)
-		fd[1] = dup(STDOUT_FILENO);
+		fd[1] = STDOUT_FILENO;
+	ft_printf("Output in get_iofiles fd[0]: %d, fd[1]: %d\n", fd[0], fd[1]);
 	return (0);
 }
 
@@ -297,18 +301,17 @@ int	child_execution(char **cmd, char **env, char **path, t_data *data)
 int	executer(t_list *lst, int cmd_number, \
 				char **path, char **env, t_data *data)
 {
-	int		tmp_stdin;
-	int		tmp_stdout;
+	int		tmp_stdio_fd[2];
 	pid_t	pid;
-	int		fd[2];
+	int		process_fd[2];
 	int		e_status;
 	int		pos;
 	char	**cmd;
-	int		fdpipe[2];
+	int		pipe_fd[2];
 
 	e_status = 0;
-	tmp_stdin = dup(STDIN_FILENO);
-	tmp_stdout = dup(STDOUT_FILENO);
+	tmp_stdio_fd[0] = dup(STDIN_FILENO);
+	tmp_stdio_fd[1] = dup(STDOUT_FILENO);
 	pos = 0;
 	//set the initial input
 /* 	if (infile)
@@ -316,7 +319,7 @@ int	executer(t_list *lst, int cmd_number, \
 	else
 	{
 		// Use default input
-		fdin = dup(tmp_stdin);
+		fdin = dup(tmp_stdio_fd[0]);
 	} */
 	// IMPORTANTE: check if the last command is exit
 /* 	if (ft_strcmp(cmd[cmd_number - 1][0], "exit"))
@@ -325,13 +328,12 @@ int	executer(t_list *lst, int cmd_number, \
 	if (lst)
 		ft_printf("lst_content: %s\n", lst->content);
 	while (lst)
-//	while (++i < cmd_number)
 	{
 		cmd = NULL;
 		ft_printf("Current cmd pos: %d, cmd_number: %d\n", lst->cmd_pos, cmd_number);
 		if (lst->cmd_pos == pos)
 		{
-			if (get_iofiles_fd(fd, lst, pos) == 0 \
+			if (get_iofiles_fd(process_fd, lst, pos) == 0 \
 				&& get_heredoc_input(lst, pos, data->env, data->pid) == 0)
 			{
 				ft_printf("Files opened\n");
@@ -341,24 +343,76 @@ int	executer(t_list *lst, int cmd_number, \
 				// Not last
 				//simple command 
 				//create pipe
-				pipe(fdpipe);
-				if (pos != 0)
+				if (pipe(pipe_fd) == -1)
+					return (-1);
+				if (pos == 0)
 				{
-					if (fd[0] == 0)
+					if (process_fd[0] == 0)
+						ft_printf("Process %d input is default\n", pos);
+					else
+						dup2(process_fd[0], STDIN_FILENO);
+					if (process_fd[1] == STDOUT_FILENO && cmd_number > 0)
 					{
-						close(fd[0]);
-						fd[0] = fdpipe[0];
+						ft_printf("Process %d sending output to pipe\n", pos);
+						dup2(pipe_fd[1], STDOUT_FILENO);	
 					}
-					if (fd[1] == STDOUT_FILENO)
+					else if (process_fd[1] == STDOUT_FILENO)
 					{
-						dup2(fdpipe[1], STDOUT_FILENO);
+						ft_printf("Process %d sending output to terminal\n", pos, process_fd[1]);
+						dup2(tmp_stdio_fd[1], STDOUT_FILENO);
+					}
+					else 
+					{
+						ft_printf("Process %d sending output to file %d\n", pos, process_fd[1]);
+						dup2(process_fd[1], STDOUT_FILENO);
+					}
+				}
+				else if (pos == cmd_number)
+				{
+					if (process_fd[0] == 0)
+					{	
+						ft_printf("Process %d input is default\n", pos);
+						dup2(pipe_fd[0], STDIN_FILENO);
 					}
 					else
-						close(fdpipe[1]);
+						dup2(process_fd[0], STDIN_FILENO);
+					if (process_fd[1] == STDOUT_FILENO)
+					{
+						ft_printf("Process %d sending output to pipe\n", pos);
+						dup2(tmp_stdio_fd[1], STDOUT_FILENO);	
+					}
+					else
+					{
+						ft_printf("Process %d sending output to file %d\n", pos, process_fd[1]);
+						dup2(process_fd[1], STDOUT_FILENO);
+					}
 				}
-				if (pos == cmd_number)
-					if (fd[1] == 1)
-						fd[1] = tmp_stdout;
+				else
+				{
+					if (process_fd[1] == STDOUT_FILENO)
+					{
+						dup2(pipe_fd[1], STDOUT_FILENO);
+					}
+					else
+						dup2(process_fd[1], STDOUT_FILENO);
+				}
+
+				if (process_fd[0] != 0 && pos != 0)
+				{
+					ft_printf("Process %d input is in file with fd %d\n", pos, process_fd[0]);
+					dup2(process_fd[0], STDIN_FILENO);
+					close(process_fd[0]);
+				}
+				if (pid == 0)
+					close (pipe_fd[0]);
+				if (process_fd[1] == STDOUT_FILENO)
+				{
+					process_fd[1] = pipe_fd[1];
+				}
+				if (process_fd[0] == STDIN_FILENO)
+					process_fd[0] = pipe_fd[0];
+				else
+					close(pipe_fd[1]);
 				// if/else
 				// Redirect output
 /* 				dup2(fd[1], STDOUT_FILENO);
@@ -379,14 +433,16 @@ int	executer(t_list *lst, int cmd_number, \
 				while (cmd[++j])
 					ft_printf("cmd[%d] = %s\n", j, cmd[j]);
 				ft_printf("\n");
+				g_return_val = 0;
 				int is_builtin = check_builtin(cmd, data);
 				ft_printf("\nCheck builtin return: %d\n", is_builtin);
-				g_return_val = 0;
 				if (is_builtin >= 0)
 					return (free(cmd), is_builtin);
 				
 				// Create child process
 				pid = fork();
+				if (pid == -1)
+					return (-1);
 				if (pid == 0)
 					child_execution(cmd, env, path, data);
 			}
@@ -398,19 +454,18 @@ int	executer(t_list *lst, int cmd_number, \
 	}
 	//for
 	//restore in/out defaults
-	dup2(tmp_stdin, STDIN_FILENO);
-	dup2(tmp_stdout, STDOUT_FILENO);
-	close(tmp_stdin);
-	close(tmp_stdout);
-	int count = -1;
+	dup2(tmp_stdio_fd[0], STDIN_FILENO);
+	dup2(tmp_stdio_fd[1], STDOUT_FILENO);
+	close(tmp_stdio_fd[0]);
+	close(tmp_stdio_fd[1]);
 	while (1)
 	{
 		if (waitpid(0, &e_status, WUNTRACED))
-			count++;
+			cmd_number--;
 		g_return_val = check_exit_status(e_status);
-		if (count == cmd_number)
+		if (cmd_number < 0)
 			break ;
 	}
 //	waitpid(pid, &e_status, WUNTRACED);
-	return (g_return_val);
+	return (0);
 }
