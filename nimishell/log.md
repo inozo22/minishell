@@ -1,7 +1,6 @@
 - printf("%sI'm here%s\n", COLOR_YELLOW, COLOR_RESET);
 	
 ---------------------------------
-TODO: make lexer and expanser works
 TODO: obtain file name in parser(?)
 TODO: put protect for open function in redir
 TODO: Check leaks in non interactive mode and interactive exit
@@ -21,6 +20,7 @@ DONE~~: control {} in expanser~~
 DONE~~: put builtins's exit in sig_eof ~~
 DONE~~: make simpletest(unset)~~
 DONE~~: expanser: "$USER"'$USER' doesn't work~~
+DONE~~: make lexer and expanser works~~
 
 
 

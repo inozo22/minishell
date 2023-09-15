@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
+/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:32:33 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/15 10:52:30 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/15 17:06:50 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ int	process_input(char *line_read, t_data *data)
 			tmp = tmp->next;
 		}
 	}
-	g_return_val = executer(NULL, cmd_list, cmd_nb, data->path, data->env, data);
+	executer(NULL, cmd_list, cmd_nb, data->path, data->env, data);
 	ft_lstclear(&cmd_list, free);
 	return (g_return_val);
 }
@@ -142,6 +142,7 @@ int	minishell(t_data *data)
 	prompt = get_prompt(data);
 	while (1)
 	{
+		g_return_val = 0;
 		set_signal_handlers(1); //230808nimai: changed from above, to recall it after child process
 		line_read = readline(prompt);
 		if (!line_read)

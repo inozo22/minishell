@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
+/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 12:49:14 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/14 15:08:48 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/15 15:29:49 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,16 @@ int	update_last_executed_cmd(t_data *data, char **input)
 	int		len;
 	char	*cmd;
 
-	if (ft_strchr(input[av_amount(input) - 1], '='))
+	cmd = NULL;
+	if (!(*input))
+	{
+		tmp_input = (char **)ft_calloc(2 + 1, sizeof(char *));
+		tmp_input[0] = ft_strdup("export");
+		tmp_input[1] = ft_strdup("_=");
+		built_export(tmp_input, data);
+		return (free_list(tmp_input), free (cmd), 0);
+	}
+	else if (ft_strchr(input[av_amount(input) - 1], '='))
 	{
 		len = ft_strlen(input[av_amount(input) - 1]) - \
 		ft_strlen(ft_strchr(input[av_amount(input) - 1], '='));

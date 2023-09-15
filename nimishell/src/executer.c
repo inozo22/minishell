@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
+/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/15 10:53:00 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/15 17:09:08 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,16 @@ char	*get_cmd_path(char *cmd, char **path)
  */
 int	check_exit_status(int e_status)
 {
-	if (g_return_val)
-		return (g_return_val);
-	if (WIFEXITED(e_status))
+/* 	if ((g_return_val == 130 || g_return_val == 131) && WIFEXITED(e_status))
 		return (WEXITSTATUS(e_status));
+	else if (g_return_val)
+		return (g_return_val); */
+	if (g_return_val == 1)
+		return (g_return_val);
 	if (WIFSIGNALED(e_status))
 		return (128 + WTERMSIG(e_status));
+	if (WIFEXITED(e_status))
+		return (WEXITSTATUS(e_status));
 	return (0);
 }
 
@@ -348,7 +352,7 @@ int	executer(char *outfile, t_list *lst, int cmd_number, \
 			set_signal_handlers(0);
 			ft_printf("I'm in line %d\n", __LINE__);
 			cmd = fill_current_cmd(lst, pos, data->env, data->pid);
-			if (!cmd)
+			if (!cmd || !(*cmd))
 			{	
 				if (lst->cmd_pos == cmd_number)
 					break ;
@@ -381,8 +385,15 @@ int	executer(char *outfile, t_list *lst, int cmd_number, \
 	dup2(tmp_stdout, 1);
 	close(tmp_stdin);
 	close(tmp_stdout);
-
-	waitpid(0, &e_status, WUNTRACED);
+	int count = -1;
+	while (1)
+	{
+		if (waitpid(0, &e_status, WUNTRACED))
+			count++;
+		g_return_val = check_exit_status(e_status);
+		if (count == cmd_number)
+			break ;
+	}
 //	waitpid(pid, &e_status, WUNTRACED);
-	return (check_exit_status(e_status));
+	return (g_return_val);
 }

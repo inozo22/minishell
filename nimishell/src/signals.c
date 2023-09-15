@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
+/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:11:50 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/15 11:00:24 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/15 16:56:20 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,12 @@ void	action_child(int sig, siginfo_t *info, void *context)//looks working this, 
 	if (sig == SIGINT)
 	{
 		write(STDOUT_FILENO, "^C\n", 3);
-		g_return_val = 130;
+//		g_return_val = 130;
 	}
 	else if (sig == SIGQUIT)
 	{
 		write (STDOUT_FILENO, "^\\Quit: 3\n", 10);
-		g_return_val = 131;
+//		g_return_val = 131;
 	}
 	return ;
 }

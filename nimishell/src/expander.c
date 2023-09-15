@@ -27,7 +27,7 @@ char	*get_var_value(char *env_var, char *envp[], int len)
 		if (!ft_strncmp(env_var, envp[i], len) && envp[i][len] == '=')
 			return (ft_strdup(envp[i] + len + 1));
 	}
-	return (remove_quotes(ft_substr(env_var, 0, len)));
+	return (NULL);
 }
 
 //$- returns a string representing the flags of the shell
@@ -122,7 +122,6 @@ int	compose_expanded(char *expanded, char **str, int dollar_pos, int end_pos)
 {
 	char	*preceding;
 	char	*following;
-	char	*str_expanded;
 	int		len;
 
 	preceding = ft_substr(*str, 0, dollar_pos);
@@ -133,11 +132,16 @@ int	compose_expanded(char *expanded, char **str, int dollar_pos, int end_pos)
 	if (!following)
 		return (free(preceding), -1);
 	following = remove_quotes(following);
-	str_expanded = ft_strjoin_many(3, preceding, expanded, following);
-	if (!str_expanded)
+	if (!expanded)
+		*str = ft_strjoin(preceding, following);
+	else
+		*str = ft_strjoin_many(3, preceding, expanded, following);
+	if (!(*str))
 		return (free(preceding), free(following), -1);
-	*str = str_expanded;
-	len = ft_strlen(preceding) + ft_strlen(expanded) - 1;
+	if (expanded)
+		len = ft_strlen(preceding) + ft_strlen(expanded) - 1;
+	else
+		len = ft_strlen(preceding) - 1;
 	free(preceding);
 	free(following);
 	free(expanded);
@@ -161,10 +165,6 @@ int	expand(char **str, int *pos, int quotes, char **env, pid_t pid)
 					&& (*str)[i[0]] != quotes)
 			i[0]++;
 	expanded_var = is_expand(&(*str)[*pos], i[0] - *pos, env, pid);
-	if (!expanded_var)
-		return (1);
-	if (!expanded_var)
-		return (0);
 	*pos = compose_expanded(expanded_var, str, *pos, i[0]);
 	if (*pos == -1)
 		return (1);
@@ -195,10 +195,8 @@ char	*expander(char *str, char *env[], pid_t pid)
 
 /* int	main(int argc, char *argv[], char *envp[])
 {
-	char	*input[] = {"'$HOME': $HOME aaa", "   '$USER':  	\
-			\"$USER\"$USER ei", "'$PWD':\"$PWD\"", "'$OLDPWD':\"$OLDPWD\ \
-			"\"$USER\"", "$INVENT:\"$INVENT\"", "'$?'\"$?\"", "'$-':\"$-\"", \
-			"'$0':\"$0\"", "'$1':\"$1\"", NULL};
+	char	*input[] = {"'$HOME': $HOME aaa", "   '$USER':  \"$USER\"$USER ei", "'$PWD':\"$PWD\"", "'$OLDPWD':\"$OLDPWD\"", "\"$USER\"", "'$INVENT':\"$INVENT\"", "'$?'\"$?\"", "'$-':\"$-\"",
+			"'$0':\"$0\"", "'$1':\"$1\"", "'$USER$HOME':$USER$HOME", NULL};
 	char	*str;
 	char	*expanded;
 	int		i = -1;
@@ -209,7 +207,7 @@ char	*expander(char *str, char *env[], pid_t pid)
 	{
 		ft_printf("Expanding %s\n", input[i]);
 		str = ft_strdup(input[i]);
-		expanded = expander(str, envp);
+		expanded = expander(str, envp, 123);
 		printf("expanded: %s\n\n", expanded);
 		free(expanded);
 	}
