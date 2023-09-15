@@ -1,7 +1,6 @@
 - printf("%sI'm here%s\n", COLOR_YELLOW, COLOR_RESET);
 	
 ---------------------------------
-TODO: obtain file name in parser(?)
 TODO: put protect for open function in redir
 TODO: Check leaks in non interactive mode and interactive exit
 TODO: Include cmd_list in executer to get all the arguments of the command

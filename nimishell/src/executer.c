@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/15 17:09:08 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/15 17:58:33 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,12 @@ int	check_exit_status(int e_status)
 		return (WEXITSTATUS(e_status));
 	else if (g_return_val)
 		return (g_return_val); */
+	printf("e_status: %d\n", e_status);
+	printf("WIFSIGNALED(e_status): %d\n", WIFSIGNALED(e_status));
+	printf("WTERMSIG(e_status): %d\n", WTERMSIG(e_status));
+	printf("WIFEXITED(e_status): %d\n", WIFEXITED(e_status));
+	printf("WEXITSTATUS(e_status): %d\n", WEXITSTATUS(e_status));
+
 	if (g_return_val == 1)
 		return (g_return_val);
 	if (WIFSIGNALED(e_status))
@@ -62,7 +68,7 @@ int	check_exit_status(int e_status)
 int	execute_script_without_shebang(char **cmd, char **env)
 {
 	char	*new_argv[2];
-	
+
 	new_argv[0] = cmd[0];
 	new_argv[1] = NULL;
 	free_list(cmd);
@@ -366,9 +372,11 @@ int	executer(char *outfile, t_list *lst, int cmd_number, \
 			ft_printf("\n");
 			int is_builtin = check_builtin(cmd, data);
 			ft_printf("\nCheck builtin return: %d\n", is_builtin);
+			g_return_val = 0;
 			if (is_builtin >= 0)
+			{
 				return (free(cmd), is_builtin);
-			
+			}
 			// Create child process
 			pid = fork();
 			if (pid == 0)
