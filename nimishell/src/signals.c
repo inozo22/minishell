@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:11:50 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/15 10:44:56 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/15 11:00:24 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,27 +57,28 @@ void	action(int sig)
 	//	rl_redisplay();
 		g_return_val = 1;
 	}
-	else if (sig == SIGQUIT)
-	{
-		rl_redisplay();
-		g_return_val = 0;
-	}
+	// else if (sig == SIGQUIT)
+	// {
+	// 	rl_redisplay();
+	// 	g_return_val = 0;
+	// }
 }
 
-// void	sigquit_ignore(void)
-// {
-// 	struct sigaction	sa;
+void	sigquit_ignore(void)
+{
+	struct sigaction	sa;
 
-// 	ft_bzero(&sa, sizeof(struct sigaction));
-// 	sa.sa_handler = SIG_IGN;
-// 	sigaction(SIGQUIT, &sa, NULL);
-// 	sa.sa_flags = SA_SIGINFO | SA_RESTART;
-// //	g_return_val = 0;
-// }
+	ft_bzero(&sa, sizeof(struct sigaction));
+	sa.sa_handler = SIG_IGN;
+	sigaction(SIGQUIT, &sa, NULL);
+	sa.sa_flags = SA_SIGINFO | SA_RESTART;
+//	g_return_val = 0;
+}
 
 /**
  * @note 230915nimai: put sigaction for sigquit in parent process instead of 
  * 		sigquit_ignore to make ctrl+\ change g_return_val and "ignore" the sign
+ * @note 230915nimai: The above is a misunderstanding. Revert to original.
  */
 void	set_signal_handlers(pid_t pid)
 {
@@ -87,11 +88,11 @@ void	set_signal_handlers(pid_t pid)
 	if (pid)
 	{
 		write(1, "Im pappy\n", 9);
-		// sigquit_ignore();
+		sigquit_ignore();
 		sa.sa_handler = &action;
 		sa.sa_flags = SA_SIGINFO | SA_RESTART;
 		sigaction(SIGINT, &sa, NULL);
-		sigaction(SIGQUIT, &sa, NULL);
+		// sigaction(SIGQUIT, &sa, NULL);
 	}
 	else
 	{

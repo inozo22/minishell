@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/14 15:30:01 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/15 10:53:00 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -287,8 +287,6 @@ int	executer(char *outfile, t_list *lst, int cmd_number, \
 	int		e_status;
 	int		pos;
 	char	**cmd;
-
-	printf(COLOR_RED"%d/%s	g_return_val: %d%s\n", __LINE__, __FILE__, g_return_val, COLOR_RESET);
 
 	e_status = 0;
 	tmp_stdin = dup(STDIN_FILENO);

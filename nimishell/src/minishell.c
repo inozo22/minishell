@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:32:33 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/14 15:49:31 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/15 10:52:30 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,6 @@ int	check_builtin(char **input, t_data *data)
 		ft_printf("env %d: %s\n", i, data->env[i]); */
 	// update_last_executed_cmd(data, input[0]);
 	update_last_executed_cmd(data, input);
-	printf(COLOR_RED"%d/%s	g_return_val: %d%s\n", __LINE__, __FILE__, g_return_val, COLOR_RESET);
-
 	if (!input[0])
 		return (-1);
 	if (!ft_strcmp(input[0], "export"))
@@ -113,8 +111,6 @@ int	process_input(char *line_read, t_data *data)
 	t_list	*cmd_list;
 	t_list	*tmp;
 	int		cmd_nb;
-
-	printf(COLOR_RED"%d/%s	g_return_val: %d%s\n", __LINE__, __FILE__, g_return_val, COLOR_RESET);
 
 	cmd_nb = lexer(line_read, &cmd_list);
 	if (cmd_nb == -1)
@@ -144,21 +140,15 @@ int	minishell(t_data *data)
 	char			*prompt;
 
 	prompt = get_prompt(data);
-	set_signal_handlers(999); //230808nimai: changed from above, to recall it after child process
-
 	while (1)
 	{
-		printf(COLOR_RED"%d/%s	g_return_val: %d%s\n", __LINE__, __FILE__, g_return_val, COLOR_RESET);
-
 		set_signal_handlers(1); //230808nimai: changed from above, to recall it after child process
-		printf(COLOR_RED"%d/%s	g_return_val: %d%s\n", __LINE__, __FILE__, g_return_val, COLOR_RESET);
 		line_read = readline(prompt);
 		if (!line_read)
 		{
 			g_return_val = 0;
 			break ;
 		}
-
 		if (*line_read)
 			add_history(line_read);
 		process_input(line_read, data);
