@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 18:40:39 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/13 18:48:47 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/15 11:27:14 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,16 @@ void	error_cd(char *cmd)
  * @brief obtain destination path
  * @author nimai
  */
-char	*get_dest_path(char *dest/* , char *pwd */)
+char	*get_dest_path(char *dest)
 {
 	char	*ret;
 	char	*cur;
 
-//	(void)pwd;
 	if (chdir(dest) == -1)
 		return (g_return_val = 1, error_cd(dest), NULL);
 	cur = getcwd(NULL, 0);
 	ret = ft_strdup(dest);
 	printf("cur: %s	\ndest: %s\nret: %s\n", cur, dest, ret);
-	printf(COLOR_RED"%d/%s: Hello, Im here%s\n", __LINE__, __FILE__, COLOR_RESET);
-
 	if (ft_strlen(cur) > ft_strlen(ret) && ft_strncmp("..", ret, 2) != 0)
 		return (path_modify(cur, ret));
 	else if (ft_strlen(cur) <= ft_strlen(ret))
@@ -101,7 +98,7 @@ int	built_cd(char **input, t_data *data)
 	if (!input)
 		return (ft_printf("%s\n", pwd), 0);
 	cur = getcwd(NULL, 0);
-	if (cur && ft_strcmp("-", input[1]) == 0)//you have to obtain OLDPWD to move before change it
+	if (/* cur &&  */ft_strcmp("-", input[1]) == 0)//you have to obtain OLDPWD to move before change it
 	{
 		dest = get_dest_path_env(data, "OLDPWD");
 		if (!dest)
@@ -111,12 +108,12 @@ int	built_cd(char **input, t_data *data)
 
 	printf("%sOLDPWD: %s%s\n", COLOR_YELLOW, pwd, COLOR_RESET);
 	printf("%sinput[1]: %s%s\n", COLOR_YELLOW, input[1], COLOR_RESET);
-	if (cur && (!input[1] || !ft_strcmp(input[1], "~")))//when you don't have argument after "cd", move to $HOME
+	if (!input[1] || !ft_strcmp(input[1], "~"))//when you don't have argument after "cd", move to $HOME
 		dest = get_dest_path_env(data, "HOME");
 	else if (ft_strcmp("./", input[1]) == 0 || input[1][0] == '.'/* ft_strncmp(".", input[1], 1 == 0) */)
 		dest = get_dest_path_wl_sign(cur, pwd, input[1]);
 	else if (ft_strcmp("-", input[1]) != 0)
-		dest = get_dest_path(input[1]/* , pwd */);//230524nimai: after av[3] will be ignored.
+		dest = get_dest_path(input[1]);//230524nimai: after av[3] will be ignored.
 	pwd = mod_pwd(pwd, dest);
 
 	printf("%sPWD: %s%s\n", COLOR_YELLOW, pwd, COLOR_RESET);

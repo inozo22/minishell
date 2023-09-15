@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 09:43:46 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/13 16:27:11 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/15 11:24:26 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	*get_dest_path_wl_sign(char *cur, char *pwd, char *input)
 	}
 	else if (!cur) //move to where you are, but if it's not exist
 	{
-		tmp = ft_strdup(input);
+		tmp = ft_strjoin("/", input);
 		ret = ft_strjoin(pwd, tmp);
 		ft_printf("%s\n", MSG_CD_CANT_ACCESS);
 	}
@@ -65,7 +65,7 @@ char	*get_dest_path_env(t_data *data, char *envtype)
 	if (chdir(ret) == -1)
 	{
 		g_return_val = 1;
-		return (error_built("cd", "failed chdir"), NULL);
+		return (error_cd(ret), NULL);
 	}
 	if (!ft_strcmp("OLDPWD", envtype))
 		ft_printf("%s\n", ret);
