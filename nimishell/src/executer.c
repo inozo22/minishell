@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/15 17:58:33 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/15 18:10:58 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,6 @@ int	check_exit_status(int e_status)
 		return (WEXITSTATUS(e_status));
 	else if (g_return_val)
 		return (g_return_val); */
-	printf("e_status: %d\n", e_status);
-	printf("WIFSIGNALED(e_status): %d\n", WIFSIGNALED(e_status));
-	printf("WTERMSIG(e_status): %d\n", WTERMSIG(e_status));
-	printf("WIFEXITED(e_status): %d\n", WIFEXITED(e_status));
-	printf("WEXITSTATUS(e_status): %d\n", WEXITSTATUS(e_status));
-
 	if (g_return_val == 1)
 		return (g_return_val);
 	if (WIFSIGNALED(e_status))
