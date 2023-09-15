@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+         #
+#    By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/06 19:14:40 by bde-mada          #+#    #+#              #
-#    Updated: 2023/08/11 11:29:42 by nimai            ###   ########.fr        #
+#    Updated: 2023/09/15 12:55:11 by bde-mada         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ SRC = ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c \
 	ft_split.c ft_strchr.c ft_strdup.c ft_striteri.c ft_strjoin.c \
 	ft_strlcat.c ft_strlcpy.c ft_strlen.c ft_strmapi.c ft_strncmp.c \
 	ft_strnstr.c ft_strrchr.c ft_strtrim.c ft_substr.c ft_tolower.c \
-	ft_toupper.c ft_strndup.c
+	ft_toupper.c
 
 SRC += get_next_line_bonus.c get_next_line_utils_bonus.c
 

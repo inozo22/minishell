@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:11:50 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/15 16:56:20 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/15 18:23:07 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	action(int sig)
 		rl_on_new_line();
 	//	rl_redisplay();
 		g_return_val = 1;
+		// write(1, "ctrl+C push\n", 12);
 	}
 	// else if (sig == SIGQUIT)
 	// {

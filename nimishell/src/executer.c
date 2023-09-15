@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/15 18:19:48 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/15 20:01:23 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	check_exit_status(int e_status)
 int	execute_script_without_shebang(char **cmd, char **env)
 {
 	char	*new_argv[2];
-	
+
 	new_argv[0] = cmd[0];
 	new_argv[1] = NULL;
 	free_list(cmd);
@@ -381,10 +381,11 @@ int	executer(t_list *lst, int cmd_number, \
 				ft_printf("\n");
 				int is_builtin = check_builtin(cmd, data);
 				ft_printf("\nCheck builtin return: %d\n", is_builtin);
-				g_return_val = 0;
 				if (is_builtin >= 0)
+				{
+					g_return_val = is_builtin;
 					return (free(cmd), is_builtin);
-				
+				}
 				// Create child process
 				pid = fork();
 				if (pid == 0)

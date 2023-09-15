@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 18:40:39 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/15 11:27:14 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/15 19:48:00 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,18 @@ static char	*mod_pwd(char *pwd, char *dest)
 static char	*init_pwd(t_data *data)
 {
 	char	*ret;
+	char	*tmp;
 	int		i;
 
 	i = 0;
+	ret = getcwd(NULL, 0);
 	while (data->env[i])
 	{
 		if (ft_strnstr(data->env[i], "PWD=", 4))
+		{
+			tmp = ft_strdup(data->env[i] + 4);
 			break ;
+		}
 		i++;
 	}
 	if (!data->env[i])
@@ -80,6 +85,8 @@ static char	*init_pwd(t_data *data)
 		ret = getcwd(NULL, 0);
 		return (ret);
 	}
+	if (ft_strlen(ret) > ft_strlen(tmp))
+		return (ret);
 	return (ft_strdup(data->env[i] + 4));
 }
 

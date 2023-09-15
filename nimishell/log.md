@@ -1,7 +1,6 @@
 - printf("%sI'm here%s\n", COLOR_YELLOW, COLOR_RESET);
 	
 ---------------------------------
-TODO: obtain file name in parser(?)
 TODO: put protect for open function in redir
 TODO: Check leaks in non interactive mode and interactive exit
 TODO: Include cmd_list in executer to get all the arguments of the command
@@ -31,8 +30,12 @@ DONE~~: make lexer and expanser works~~
 ~~bash-3.2$ cd $$HOME~~
 ~~bash: cd: 4180HOME: No such file or directory~~230811
 bash-3.2$ cat < file1 | grep a | wc -l > file2 > file3
-bash-3.2$ export hi1 hi2 "hi3 hi4"|ls -----> export will not work, but only ls
+bash-3.2$ export hi1 hi2 "hi3 hi4"|ls -----> export will not work, but only ls (in bash)
 bash-3.2$ cat < log.md |cat >> log.md 
+bash-3.2$ echo $
+bash-3.2$ env | grep -v -E '^_=' | sort
+export | grep -v -E '^declare -x _='
+
 
 
 
