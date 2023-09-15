@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 12:44:12 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/12 11:44:14 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/15 12:04:26 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 /**
  * @note Add '\' when the value string has '\' or '"'
+ * @note 230915nimai: add slash also there is '$'
  */
 void	print_export(char	*str)
 {
@@ -22,7 +23,7 @@ void	print_export(char	*str)
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] == '\\' || str[i] == '"')
+		if (str[i] == '\\' || str[i] == '"' || str[i] == '$')
 		{
 			ft_putchar_fd('\\', 1);
 		}
