@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:18:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/13 12:34:41 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/15 18:50:20 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,7 +198,7 @@ int	built_export(char **input, t_data *data)
 		else
 			envp_strs_mod(input[i], data);
 	}
-	return (0);
+	return (g_return_val);
 }
 
 // int	built_export(char **input, t_data *data)

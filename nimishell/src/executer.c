@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/15 18:26:14 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/15 18:46:22 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -373,7 +373,7 @@ int	executer(char *outfile, t_list *lst, int cmd_number, \
 
 			if (is_builtin >= 0)
 			{
-				g_return_val = 0;
+				g_return_val = is_builtin;
 				return (free(cmd), is_builtin);
 			}
 			// Create child process
