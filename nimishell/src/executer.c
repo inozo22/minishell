@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/15 18:10:58 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/15 18:26:14 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -366,9 +366,14 @@ int	executer(char *outfile, t_list *lst, int cmd_number, \
 			ft_printf("\n");
 			int is_builtin = check_builtin(cmd, data);
 			ft_printf("\nCheck builtin return: %d\n", is_builtin);
-			g_return_val = 0;
+
+			//230915nimai: If I put g_return_val = 0 here, heredoc siemple return 0.
+			//I put in the builtin condition.
+			// g_return_val = 0;
+
 			if (is_builtin >= 0)
 			{
+				g_return_val = 0;
 				return (free(cmd), is_builtin);
 			}
 			// Create child process
