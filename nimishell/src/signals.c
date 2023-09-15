@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:11:50 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/14 16:04:08 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/15 10:44:56 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,13 @@
  * @brief when push Ctrl + D, exit 
  * @note as the super free after the while, only write "exit" and break the loop
  * @note put exit function from builins
+ * @note 230915nimai: commented
  */
-void	sig_eof(void)
-{
-	write(STDOUT_FILENO, "exit\n", 5);
-	g_return_val = 0;
-}
+// void	sig_eof(void)
+// {
+// 	write(STDOUT_FILENO, "exit\n", 5);
+// 	g_return_val = 0;
+// }
 
 /**
  * @note I think I will remove the strs
@@ -58,21 +59,26 @@ void	action(int sig)
 	}
 	else if (sig == SIGQUIT)
 	{
+		rl_redisplay();
 		g_return_val = 0;
 	}
 }
 
-void	sigquit_ignore(void)
-{
-	struct sigaction	sa;
+// void	sigquit_ignore(void)
+// {
+// 	struct sigaction	sa;
 
-	ft_bzero(&sa, sizeof(struct sigaction));
-	sa.sa_handler = SIG_IGN;
-	sigaction(SIGQUIT, &sa, NULL);
-	sa.sa_flags = SA_SIGINFO | SA_RESTART;
-//	g_return_val = 0;
-}
+// 	ft_bzero(&sa, sizeof(struct sigaction));
+// 	sa.sa_handler = SIG_IGN;
+// 	sigaction(SIGQUIT, &sa, NULL);
+// 	sa.sa_flags = SA_SIGINFO | SA_RESTART;
+// //	g_return_val = 0;
+// }
 
+/**
+ * @note 230915nimai: put sigaction for sigquit in parent process instead of 
+ * 		sigquit_ignore to make ctrl+\ change g_return_val and "ignore" the sign
+ */
 void	set_signal_handlers(pid_t pid)
 {
 	struct sigaction	sa;
@@ -81,7 +87,7 @@ void	set_signal_handlers(pid_t pid)
 	if (pid)
 	{
 		write(1, "Im pappy\n", 9);
-	//	sigquit_ignore();
+		// sigquit_ignore();
 		sa.sa_handler = &action;
 		sa.sa_flags = SA_SIGINFO | SA_RESTART;
 		sigaction(SIGINT, &sa, NULL);
