@@ -83,7 +83,7 @@ int	check_builtin(char **input, t_data *data)
 	while (data->env[++i])
 		ft_printf("env %d: %s\n", i, data->env[i]); */
 	// update_last_executed_cmd(data, input[0]);
-	update_last_executed_cmd(data, input);
+//	update_last_executed_cmd(data, input);
 	if (!input[0])
 		return (-1);
 	if (!ft_strcmp(input[0], "export"))

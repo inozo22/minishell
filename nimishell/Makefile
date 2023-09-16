@@ -33,7 +33,7 @@ CFLAGS		= -Wall -Wextra -Werror -Wpedantic
 OS			= $(shell uname)
 
 #Optimization and valgrind debugging flags:
-DEBUG			:= -g3 -O0 -fsanitize=address 
+DEBUG			:= -g3 -O0 #-fsanitize=address 
 #change -O0 with -O1 or -O2 for faster execution but worse info
 
 LDFLAGS		= $(addprefix -L, $(LIBS_DIR))
@@ -120,8 +120,8 @@ norm:
 	@norminette src include lib
 
 leaks:
-	@valgrind --leak-check=full --show-leak-kinds=definite,indirect,possible \
-	-s --track-origins=yes ./$(NAME)
+	@valgrind --leak-check=full --show-leak-kinds=definite,indirect,possible,reachable \
+	-s --track-origins=yes --gen-suppressions=yes ./$(NAME)
 
 leaks2: $(NAME) all
 	$(eval DEBUG += leak -fsanitize=address -static-libasan)

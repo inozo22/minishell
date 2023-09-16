@@ -220,12 +220,15 @@ char	**fill_current_cmd(t_list *lst, int pos, char **envp, pid_t pid)
  */
 int	get_iofiles_fd(int *fd, t_list *lst, int pos)
 {
-	ft_bzero(fd, 2 * sizeof(int));
+	fd[0] = 0;
+	fd[1] = 1;
 	while (lst && lst->cmd_pos == pos)
 	{
 		if (lst->type == REDIR_IN)
 		{
 			ft_printf("Opening input file: %s\n", lst->content);
+			if (fd[0] != 0)
+				close(fd[0]);
 			fd[0] = open(lst->content, O_RDONLY);
 		}
 		if (fd[0] == -1)
@@ -233,10 +236,16 @@ int	get_iofiles_fd(int *fd, t_list *lst, int pos)
 		if (lst->type == REDIR_OUT)
 		{
 			ft_printf("Opening output file: %s\n", lst->content);
+			if (fd[1] != 1)
+				close(fd[1]);
 			fd[1] = open(lst->content, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		}
 		if (lst->type == APPEND)
+		{
+			if (fd[1] != 1)
+				close(fd[1]);
 			fd[1] = open(lst->content, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		}
 		if (fd[1] == -1)
 		{
 			close (fd[0]);
@@ -244,8 +253,6 @@ int	get_iofiles_fd(int *fd, t_list *lst, int pos)
 		}
 		lst = lst->next;
 	}
-	if (fd[1] == 0)
-		fd[1] = dup(STDOUT_FILENO);
 	return (0);
 }
 

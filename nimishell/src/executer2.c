@@ -220,35 +220,45 @@ char	**fill_current_cmd(t_list *lst, int pos, char **envp, pid_t pid)
  */
 int	get_iofiles_fd(int *fd, t_list *lst, int pos)
 {
-	ft_bzero(fd, 2 * sizeof(int));
+	fd[0] = STDIN_FILENO;
+	fd[1] = STDOUT_FILENO;
 	while (lst && lst->cmd_pos == pos)
 	{
 		if (lst->type == REDIR_IN)
 		{
+			if (fd[0] != STDIN_FILENO)
+				close(fd[0]);
 			ft_printf("Opening input file: %s\n", lst->content);
 			fd[0] = open(lst->content, O_RDONLY);
 		}
 		if (fd[0] == -1)
+		{
+			if (fd[1] != STDOUT_FILENO)
+				close(fd[1]);
 			return (1);
+		}
 		if (lst->type == REDIR_OUT)
 		{
+			if (fd[1] != STDOUT_FILENO)
+				close(fd[1]);
 			ft_printf("Opening output file: %s\n", lst->content);
 			fd[1] = open(lst->content, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		}
 		if (lst->type == APPEND)
 		{
+			if (fd[1] != STDOUT_FILENO)
+				close(fd[1]);
 			ft_printf("Opening output file: %s\n", lst->content);
 			fd[1] = open(lst->content, O_WRONLY | O_CREAT | O_APPEND, 0644);
 		}
 		if (fd[1] == -1)
 		{
-			close (fd[0]);
+			if (fd[0] != STDIN_FILENO)
+				close (fd[0]);
 			return (1);
 		}
 		lst = lst->next;
 	}
-	if (fd[1] == 0)
-		fd[1] = STDOUT_FILENO;
 	ft_printf("Output in get_iofiles fd[0]: %d, fd[1]: %d\n", fd[0], fd[1]);
 	return (0);
 }
@@ -308,11 +318,13 @@ int	executer(t_list *lst, int cmd_number, \
 	int		pos;
 	char	**cmd;
 	int		pipe_fd[2];
+	int		max_pid;
 
 	e_status = 0;
 	tmp_stdio_fd[0] = dup(STDIN_FILENO);
 	tmp_stdio_fd[1] = dup(STDOUT_FILENO);
 	pos = 0;
+	max_pid = 0;
 	//set the initial input
 /* 	if (infile)
 		fdin = open(infile, O_RDONLY);
@@ -403,8 +415,8 @@ int	executer(t_list *lst, int cmd_number, \
 					dup2(process_fd[0], STDIN_FILENO);
 					close(process_fd[0]);
 				}
-				if (pid == 0)
-					close (pipe_fd[0]);
+/* 				if (pid == 0)
+					close (pipe_fd[0]); */
 				if (process_fd[1] == STDOUT_FILENO)
 				{
 					process_fd[1] = pipe_fd[1];
@@ -445,6 +457,8 @@ int	executer(t_list *lst, int cmd_number, \
 					return (-1);
 				if (pid == 0)
 					child_execution(cmd, env, path, data);
+				if (pid > max_pid)
+					max_pid = pid;
 			}
 		}
 		while (lst && lst->cmd_pos == pos)
@@ -460,9 +474,11 @@ int	executer(t_list *lst, int cmd_number, \
 	close(tmp_stdio_fd[1]);
 	while (1)
 	{
-		if (waitpid(0, &e_status, WUNTRACED))
-			cmd_number--;
-		g_return_val = check_exit_status(e_status);
+		if (waitpid(max_pid, &e_status, WUNTRACED) == -1)
+			g_return_val = check_exit_status(e_status);
+		else (waitpid(0, NULL, WUNTRACED))
+			;
+		cmd_number--;
 		if (cmd_number < 0)
 			break ;
 	}
