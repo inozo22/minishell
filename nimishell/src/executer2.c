@@ -472,12 +472,12 @@ int	executer(t_list *lst, int cmd_number, \
 	dup2(tmp_stdio_fd[1], STDOUT_FILENO);
 	close(tmp_stdio_fd[0]);
 	close(tmp_stdio_fd[1]);
+	int wait_ret;
 	while (1)
 	{
-		if (waitpid(max_pid, &e_status, WUNTRACED) == -1)
+		wait_ret = waitpid(-1, &e_status, WUNTRACED);
+		if (wait_ret == max_pid)
 			g_return_val = check_exit_status(e_status);
-		else (waitpid(0, NULL, WUNTRACED))
-			;
 		cmd_number--;
 		if (cmd_number < 0)
 			break ;
