@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/18 12:18:08 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/18 17:06:57 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -259,7 +259,7 @@ int	get_iofiles_fd(int *fd, t_list *lst, int pos)
 		}
 		lst = lst->next;
 	}
-	ft_printf("Output in get_iofiles fd[0]: %d, fd[1]: %d\n", fd[0], fd[1]);
+	ft_printf("Output in get_iofiles in pos %d: fd[0]: %d, fd[1]: %d\n", pos, fd[0], fd[1]);
 	return (0);
 }
 
@@ -279,7 +279,7 @@ int	get_heredoc_input(t_list *lst, int pos, char **envp, pid_t pid)
 	return (0);
 }
 
-int	child_execution(char **cmd, char **env, char **path, t_data *data)
+int	child_execution(char **cmd, char **env, char **path, t_data *data, int pos, int cmd_number, int *process_fd, int *pipe_fd, int *tmp_stdio_fd)
 {
 	char	*cmd_path;
 	int		return_val;
@@ -292,6 +292,76 @@ int	child_execution(char **cmd, char **env, char **path, t_data *data)
 		free_list(cmd);
 		free_alloc(data);
 		exit(return_val);
+	}
+	if (pos == 0)
+	{
+		close(pipe_fd[READ_END]);
+		if (process_fd[READ_END] == 0)
+		{
+			ft_printf("Process %d input is stdin\n", pos);
+		}
+		else
+		{
+			ft_printf("Process %d input is file %d\n", pos, process_fd[0]);
+			dup2(process_fd[READ_END], STDIN_FILENO);
+		}
+		if (process_fd[WRITE_END] == STDOUT_FILENO && cmd_number > 0)
+		{
+			ft_printf("Process %d sending output to pipe\n", pos);
+			dup2(pipe_fd[WRITE_END], STDOUT_FILENO);
+		}
+		else if (process_fd[WRITE_END] == STDOUT_FILENO)
+		{
+			ft_printf("Process %d sending output to terminal\n", pos, process_fd[1]);
+			dup2(tmp_stdio_fd[WRITE_END], STDOUT_FILENO);
+		}
+		else 
+		{
+			ft_printf("Process %d sending output to file %d\n", pos, process_fd[1]);
+			dup2(process_fd[WRITE_END], STDOUT_FILENO);
+		}
+	}
+	else if (pos == cmd_number && cmd_number > 0)
+	{
+		close(pipe_fd[WRITE_END]);
+		if (process_fd[READ_END] == 0)
+		{	
+			ft_printf("Process %d input is pipe\n", pos);
+//			dup2(pipe_fd[READ_END], STDIN_FILENO);
+		}
+		else
+		{
+			dup2(process_fd[READ_END], STDIN_FILENO);
+		}
+		if (process_fd[WRITE_END] == STDOUT_FILENO)
+		{
+			ft_printf("Process %d sending output to stdout\n", pos);
+			dup2(tmp_stdio_fd[1], STDOUT_FILENO);	
+		}
+		else
+		{
+			ft_printf("Process %d sending output to file %d\n", pos, process_fd[1]);
+			dup2(process_fd[WRITE_END], STDOUT_FILENO);
+		}
+	}
+	else
+	{
+		if (process_fd[WRITE_END] == STDOUT_FILENO)
+		{
+			dup2(pipe_fd[WRITE_END], STDOUT_FILENO);
+		}
+		else
+		{
+			dup2(process_fd[WRITE_END], STDOUT_FILENO);
+		}
+		if (process_fd[READ_END] == STDIN_FILENO)
+		{
+//			dup2(pipe_fd[READ_END], STDIN_FILENO);
+		}
+		else
+		{
+			dup2(process_fd[READ_END], STDIN_FILENO);
+		}
 	}
 	if (execve(cmd_path, cmd, env) == -1 && errno == ENOEXEC)
 		execute_script_without_shebang(cmd, env);
@@ -357,79 +427,8 @@ int	executer(t_list *lst, int cmd_number, \
 				//create pipe
 				if (pipe(pipe_fd) == -1)
 					return (-1);
-				if (pos == 0)
-				{
-					if (process_fd[0] == 0)
-						ft_printf("Process %d input is default\n", pos);
-					else
-						dup2(process_fd[0], STDIN_FILENO);
-					if (process_fd[1] == STDOUT_FILENO && cmd_number > 0)
-					{
-						ft_printf("Process %d sending output to pipe\n", pos);
-						dup2(pipe_fd[1], STDOUT_FILENO);	
-					}
-					else if (process_fd[1] == STDOUT_FILENO)
-					{
-						ft_printf("Process %d sending output to terminal\n", pos, process_fd[1]);
-						dup2(tmp_stdio_fd[1], STDOUT_FILENO);
-					}
-					else 
-					{
-						ft_printf("Process %d sending output to file %d\n", pos, process_fd[1]);
-						dup2(process_fd[1], STDOUT_FILENO);
-					}
-				}
-				else if (pos == cmd_number)
-				{
-					if (process_fd[0] == 0)
-					{	
-						ft_printf("Process %d input is default\n", pos);
-						dup2(pipe_fd[0], STDIN_FILENO);
-					}
-					else
-						dup2(process_fd[0], STDIN_FILENO);
-					if (process_fd[1] == STDOUT_FILENO)
-					{
-						ft_printf("Process %d sending output to pipe\n", pos);
-						dup2(tmp_stdio_fd[1], STDOUT_FILENO);	
-					}
-					else
-					{
-						ft_printf("Process %d sending output to file %d\n", pos, process_fd[1]);
-						dup2(process_fd[1], STDOUT_FILENO);
-					}
-				}
-				else
-				{
-					if (process_fd[1] == STDOUT_FILENO)
-					{
-						dup2(pipe_fd[1], STDOUT_FILENO);
-					}
-					else
-						dup2(process_fd[1], STDOUT_FILENO);
-				}
-
-				if (process_fd[0] != 0 && pos != 0)
-				{
-					ft_printf("Process %d input is in file with fd %d\n", pos, process_fd[0]);
-					dup2(process_fd[0], STDIN_FILENO);
-					close(process_fd[0]);
-				}
-/* 				if (pid == 0)
-					close (pipe_fd[0]); */
-				if (process_fd[1] == STDOUT_FILENO)
-				{
-					process_fd[1] = pipe_fd[1];
-				}
-				if (process_fd[0] == STDIN_FILENO)
-					process_fd[0] = pipe_fd[0];
-				else
-					close(pipe_fd[1]);
-				// if/else
-				// Redirect output
-/* 				dup2(fd[1], STDOUT_FILENO);
-				close(fd[1]); */
 				//set singnal handlers for child process
+				ft_printf("HEY");
 				set_signal_handlers(0);
 				ft_printf("I'm in line %d\n", __LINE__);
 				cmd = fill_current_cmd(lst, pos, data->env, data->pid);
@@ -456,9 +455,22 @@ int	executer(t_list *lst, int cmd_number, \
 				if (pid == -1)
 					return (-1);
 				if (pid == 0)
-					child_execution(cmd, env, path, data);
+					child_execution(cmd, env, path, data, pos, cmd_number, process_fd, pipe_fd, tmp_stdio_fd);
+				close(pipe_fd[WRITE_END]);
+				dup2(pipe_fd[READ_END], STDIN_FILENO);
+//				close(pipe_fd[READ_END]);
+				
 				if (pid > max_pid)
 					max_pid = pid;
+				if (process_fd[READ_END] != STDIN_FILENO)
+					close(process_fd[READ_END]);
+				if (process_fd[WRITE_END] != STDOUT_FILENO)
+					close(process_fd[WRITE_END]);
+				if (pos == cmd_number)
+				{	
+					dup2(tmp_stdio_fd[0], STDIN_FILENO);
+					dup2(tmp_stdio_fd[1], STDOUT_FILENO);
+				}
 			}
 		}
 		while (lst && lst->cmd_pos == pos)
