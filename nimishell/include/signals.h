@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 14:21:14 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/01 12:27:23 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/18 17:14:59 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,5 @@
 void	set_signal_handlers(pid_t pid);
 void	sig_eof(void);
 void	action(int sig);
-//void	set_signal_exacuting_handlers(void);
 
 #endif

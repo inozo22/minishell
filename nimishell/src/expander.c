@@ -20,7 +20,15 @@
 char	*get_var_value(char *env_var, char *envp[], int len)
 {
 	int	i;
+	int	pos;
 
+	pos = 0;
+	while (env_var[pos] != '$' && env_var[pos])
+	{
+		pos++;
+	}
+	printf("Im here!: %s, pos: %d\n", env_var, pos);
+	printf("len: %d\n", len);
 	i = -1;
 	while (envp[++i])
 	{
@@ -125,26 +133,44 @@ int	compose_expanded(char *expanded, char **str, int dollar_pos, int end_pos)
 	int		len;
 
 	preceding = ft_substr(*str, 0, dollar_pos);
-	if (!preceding)
+	printf("preceding is: %d str: %s dollar_pos: %d\n", *preceding, *str, dollar_pos);
+	if (/* !*preceding */!preceding)
+	{
+		printf("preceding is null, and return!\n");
 		return (0);
+	}
 	preceding = remove_quotes(preceding);
 	following = ft_substr(*str, end_pos, ft_strlen(*str) - end_pos);
 	if (!following)
+	{
+		printf("following is null: %s\n", following);
 		return (free(preceding), -1);
+	}
 	following = remove_quotes(following);
 	if (!expanded)
 		*str = ft_strjoin(preceding, following);
 	else
 		*str = ft_strjoin_many(3, preceding, expanded, following);
 	if (!(*str))
+	{
+		printf("str is null: %s\n", *str);
 		return (free(preceding), free(following), -1);
+	}
 	if (expanded)
+	{
 		len = ft_strlen(preceding) + ft_strlen(expanded) - 1;
+		printf("expanded is: %s\n", expanded);
+	}
 	else
+	{
+		printf("expanded is null\n");
+		printf("preceding is: %s\n", preceding);
 		len = ft_strlen(preceding) - 1;
+	}
 	free(preceding);
 	free(following);
 	free(expanded);
+	printf("len is -1: %d\n", len);
 	return (len);
 }
 
@@ -161,11 +187,18 @@ int	expand(char **str, int *pos, int quotes, char **env, pid_t pid)
 	ft_bzero(i, 2 * sizeof(int));
 	i[0] = *pos;
 	if (!ft_isdigit((*str)[*pos]))
-		while ((*str)[i[0]] && !ft_isspace((*str)[i[0]]) \
-					&& (*str)[i[0]] != quotes)
+	{
+		// while ((*str)[i[0]] && !ft_isspace((*str)[i[0]]) && (*str)[i[0]] != quotes)
+		// 	i[0]++;
+		if ((*str)[i[0]] && !ft_isspace((*str)[i[0]]) && (*str)[i[0]] != quotes)
 			i[0]++;
+		while ((*str)[i[0]] && !ft_isspace((*str)[i[0]]) && (*str)[i[0]] != quotes && (*str)[i[0]] != '$')
+			i[0]++;
+	}
 	expanded_var = is_expand(&(*str)[*pos], i[0] - *pos, env, pid);
+	printf("expanded_var: %s\n", expanded_var);
 	*pos = compose_expanded(expanded_var, str, *pos, i[0]);
+	printf("pos: %d\n", *pos);
 	if (*pos == -1)
 		return (1);
 	is_quote(quotes);
@@ -185,6 +218,7 @@ char	*expander(char *str, char *env[], pid_t pid)
 	i = -1;
 	while (str[++i])
 	{
+		printf("Line: %d:: str: %s\n", __LINE__, &str[i]);
 		quotes = is_quote(str[i]);
 		if (str[i] == '$' && quotes != '\'')
 			if (expand(&str, &i, quotes, env, pid))
