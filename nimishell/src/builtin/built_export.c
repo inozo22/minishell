@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:18:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/15 18:50:20 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/18 11:39:22 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,15 @@ void	envp_strs_mod(char *input, t_data *data)
 	{
 		while (data->env[i[0]])
 		{
-			i[1] = -1;
+			i[1] = 0;
 			if (ft_strncmp(data->env[i[0]], input, i[2] + 1) == 0) //with '='
 				data->env[i[0]] = envp_str_mod(data->env[i[0]], input, i[2], 0);
 			else if (ft_strncmp(data->env[i[0]], input, i[2]) == 0)
 			{
-				while (data->env[i[0]][++i[1]] == input[i[1]])
-					;
 				while (data->env[i[0]][i[1]] == input[i[1]])
 					i[1]++;
+/* 				while (data->env[i[0]][i[1]] == input[i[1]])
+					i[1]++; */
 				if (data->env[i[0]][i[1]] == '\0' && input[i[1]] == '=')
 				{
 					data->env[i[0]] = envp_str_mod(data->env[i[0]], input, i[2], 1);
@@ -112,7 +112,6 @@ char	*mod_path(char *input)
 		i[0]++;
 	}
 	ret[i[1]] = '\0';
-	//free (input);
 	return (ret);
 }
 
@@ -200,36 +199,6 @@ int	built_export(char **input, t_data *data)
 	}
 	return (g_return_val);
 }
-
-// int	built_export(char **input, t_data *data)
-// {
-// 	char		**new_envp;
-// 	int			i;
-// 	int			len;
-
-// 	len = av_amount(input);
-// 	new_envp = NULL;
-// 	if (/* av_amount(input) */len == 1)
-// 	{
-// 		if (!output_export(data))
-// 			return (printf("Error: output_export\n"), 1);
-// 		return (0);
-// 	}
-// 	i = 0;
-// 	while (/* input[++i] */++i < len /* av_amount(input) */)
-// 	{
-// 		if (!check_input(input[i], data))
-// 		{
-// 			new_envp = envp_strs_join(input[i], data);
-// 			if (!new_envp)
-// 				return (printf("ERROR: Line: %d\n", __LINE__), 1);
-// 			data->env = new_envp;
-// 		}
-// 		else
-// 			envp_strs_mod(input[i], data);
-// 	}
-// 	return (0);
-// }
 
 /**
  * BEHAVIOUR ON BASH

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 19:10:38 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/15 17:51:43 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/18 12:10:00 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,10 +153,11 @@ int		error_msg(char *prog_name, char *cmd, int mode);
 int		command_not_found_handler(char *name, char *cmd);
 int		warning_message(int type, int num);//2309114nimai: added
 
-//	Executor
+//	Executer
 //int child_creation(t_data *data, char **cmd);
 int		executer(t_list *lst, int cmd_number, \
 					char **path, char **env, t_data *data);
+char	**fill_current_cmd(t_list *lst, int pos, char **envp, pid_t pid);
 
 //	Split
 char	**split_input(char *str);

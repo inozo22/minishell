@@ -1,0 +1,42 @@
+Im kid
+I'm in line 434
+cmd[0] = echo
+cmd[1] = hello
+
+hello
+
+Check builtin return: 0
+[1;34m
+Return val: 0
+[0mIm pappy
+[?2004h[1;33mnimishell[0m[1;34m@nimai[0m$ [?2004l[?2004h[?2004l[92;3;4;1mLEXER START
+[0m[92;3;4;1mEXECUTER START
+[0m[1;34m
+Return val: 1
+[0mIm pappy
+[?2004h[1;33mnimishell[0m[1;34m@nimai[0m$ [?2004l[?2004h[?2004l[92;3;4;1mLEXER START
+[0m[92;3;4;1mEXECUTER START
+[0m[1;34m
+Return val: 1
+[0mIm pappy
+[?2004h[1;33mnimishell[0m[1;34m@nimai[0m$ [?2004l[?2004h[?2004l[92;3;4;1mLEXER START
+[0m[92;3;4;1mEXECUTER START
+[0m[1;34m
+Return val: 1
+[0mIm pappy
+[?2004h[1;33mnimishell[0m[1;34m@nimai[0m$ [?2004l[?2004h[?2004l[92;3;4;1mLEXER START
+[0m[92;3;4;1mEXECUTER START
+[0m[1;34m
+Return val: 1
+[0mIm pappy
+[?2004h[1;33mnimishell[0m[1;34m@nimai[0m$ [?2004l
+
+Bye 🗑
+Im kid
+I'm in line 434
+cmd[0] =  cat
+
+
+Check builtin return: -1
+cmd_path: (null)
+
