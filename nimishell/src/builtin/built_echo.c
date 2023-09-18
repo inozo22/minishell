@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_echo.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:54:13 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/05 16:31:08 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/18 11:16:28 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	built_echo(char **input)
 	ft_bzero(flag, 2 * sizeof(int));
 	if (amount < 2)
 		return (ft_printf("\n"), 0);
-	i = 1;//230523nimai: start from 1 to look for flags.
+	i = 1;
 	flag[0] = is_flag(input[i]);
 	if (flag[0] == 1 && input[i++])
 		flag[1] = 1;

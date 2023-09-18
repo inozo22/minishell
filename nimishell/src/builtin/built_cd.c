@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 18:40:39 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/15 19:48:00 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/18 11:15:53 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ char	*get_dest_path(char *dest)
 		return (g_return_val = 1, error_cd(dest), NULL);
 	cur = getcwd(NULL, 0);
 	ret = ft_strdup(dest);
-	printf("cur: %s	\ndest: %s\nret: %s\n", cur, dest, ret);
 	if (ft_strlen(cur) > ft_strlen(ret) && ft_strncmp("..", ret, 2) != 0)
 		return (path_modify(cur, ret));
 	else if (ft_strlen(cur) <= ft_strlen(ret))
@@ -105,27 +104,20 @@ int	built_cd(char **input, t_data *data)
 	if (!input)
 		return (ft_printf("%s\n", pwd), 0);
 	cur = getcwd(NULL, 0);
-	if (/* cur &&  */ft_strcmp("-", input[1]) == 0)//you have to obtain OLDPWD to move before change it
+	if (ft_strcmp("-", input[1]) == 0)
 	{
 		dest = get_dest_path_env(data, "OLDPWD");
 		if (!dest)
 			return (free (cur), 1);
 	}
-	data = envp_cd_mod(data, pwd, 2);//write OLDPWD
-
-	printf("%sOLDPWD: %s%s\n", COLOR_YELLOW, pwd, COLOR_RESET);
-	printf("%sinput[1]: %s%s\n", COLOR_YELLOW, input[1], COLOR_RESET);
-	if (!input[1] || !ft_strcmp(input[1], "~"))//when you don't have argument after "cd", move to $HOME
+	data = envp_cd_mod(data, pwd, 2);
+	if (!input[1] || !ft_strcmp(input[1], "~"))
 		dest = get_dest_path_env(data, "HOME");
-	else if (ft_strcmp("./", input[1]) == 0 || input[1][0] == '.'/* ft_strncmp(".", input[1], 1 == 0) */)
+	else if (ft_strcmp("./", input[1]) == 0 || input[1][0] == '.')
 		dest = get_dest_path_wl_sign(cur, pwd, input[1]);
 	else if (ft_strcmp("-", input[1]) != 0)
-		dest = get_dest_path(input[1]);//230524nimai: after av[3] will be ignored.
+		dest = get_dest_path(input[1]);
 	pwd = mod_pwd(pwd, dest);
-
-	printf("%sPWD: %s%s\n", COLOR_YELLOW, pwd, COLOR_RESET);
-	printf("%sgetcwd: %s%s\n", COLOR_YELLOW, getcwd(NULL, 0), COLOR_RESET);
-
 	return (envp_cd_mod(data, dest, 1), free (dest), free (cur), g_return_val);
 }
 

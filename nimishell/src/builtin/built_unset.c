@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 09:50:35 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/13 12:03:54 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/18 11:39:55 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,15 +67,6 @@ int	built_unset(char **input, t_data *data)
 		}
 		i++;
 	}
-
-// test print=======================
-	// int j = 0;
-	// while (data->env[j])
-	// {
-	// 	printf("env: %s\n", data->env[j]);
-	// 	j++;
-	// }
-// test print=======================
 	return (0);
 }
 
@@ -89,5 +80,13 @@ int	built_unset(char **input, t_data *data)
 [main b02d1eb] unset: kind of did it, but should be started over after it've
  been decided on the structure
  * 230615nimai: done.
+ // test print=======================
+	// int j = 0;
+	// while (data->env[j])
+	// {
+	// 	printf("env: %s\n", data->env[j]);
+	// 	j++;
+	// }
+// test print=======================
  * 
  */

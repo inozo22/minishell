@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_exit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 13:05:08 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/05 16:29:35 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/18 11:17:50 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,15 +74,11 @@ int	built_exit(char **input, t_data *data, int cmd_num)
 	amount = av_amount(input);
 	if (amount >= 3)
 	{
-		//230523nimai:when return it, it will not move to next command,
-		//but return to minishell prompt
 		return (error_exit_msg());
 	}
 	else if (amount > 1 && !is_numeric(input[1]))
 	{
-		//230523nimai:give you error msg, but exit works. (as working bash)
 		ft_printf("minishell: exit: %s: numeric argument required\n", input[1]);
-	//230523nimai:will be eliminated
 		g_return_val = 255;
 	}
 	else if (amount == 2)

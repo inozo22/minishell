@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 16:00:17 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/13 18:50:49 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/18 11:13:56 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,6 @@ t_data	*envp_cd_mod(t_data *data, char *path, int type)
 	}
 	else if (type == 2)
 	{
-		//230908nimai: I have to put a condition that there is no PWD
-		//OLDPWD=""
 		tmp = ft_calloc(ft_strlen(path) + 8, sizeof(char));
 		if (!tmp)
 			return (heap_error(1), NULL);
@@ -50,33 +48,13 @@ t_data	*envp_cd_mod(t_data *data, char *path, int type)
 	return (data);
 }
 
-// /**
-//  * @note this function is used in check_builtin too, maybe change the file
-//   */
-// char	*ft_strlower(char *str)
-// {
-// 	int		i;
-// 	char	*tmp;
-
-// 	i = 0;
-// 	tmp = str;
-// 	while (tmp[i])
-// 	{
-// 		tmp[i] = ft_tolower(str[i]);
-// 		i++;
-// 	}
-// 	return (tmp);
-// }
-
 char	*str_mod(char *cur, char *str, int i, int len)
 {
 	int	j;
 
 	j = 0;
-//	printf("%scur: %s len: %d%s\n", COLOR_YELLOW, cur, len, COLOR_RESET);
 	while (i < len && cur && cur[i])
 	{
-//		printf("cur: %s i: %d%s\n", cur, i, COLOR_RESET);
 		cur[i] = str[j];
 		i++;
 		j++;
@@ -110,7 +88,8 @@ char	*path_modify(char *cur, char *str)
 	int		i;
 	char	*tmp;
 
-	if (ft_strlen(cur) > 1 && str[ft_strlen(str) - 1] == '/' && ft_strlen(cur) <= ft_strlen(str))
+	if (ft_strlen(cur) > 1 && str[ft_strlen(str) - 1] == '/' \
+	&& ft_strlen(cur) <= ft_strlen(str))
 	{
 		tmp = malloc(ft_strlen(cur));
 		if (!tmp)
@@ -121,9 +100,6 @@ char	*path_modify(char *cur, char *str)
 	tmp = ft_strdup(str);
 	ft_strlower(tmp);
 	i = strcount(cur, tmp, ft_strlen(cur));
-//	printf("cur: %s\ntmp: %s\ni: %d\n", cur, tmp, i);
-//	i = ft_strnstr(cur, tmp, ft_strlen(cur)) - cur;
-//	printf("%sLINE: %d	cur: %s i: %d%s\n", COLOR_YELLOW, __LINE__, cur, i, COLOR_YELLOW);
 	cur = str_mod(cur, str, i, ft_strlen(cur));
 	free (tmp);
 	return (cur);
