@@ -3,24 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   built_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 09:50:16 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/05 16:30:34 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/18 11:17:19 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/**
- * @brief temporary error management
- * @author nimai
- * @note when decided error management, merge it.
- */
-void	error_env(char *cmd)
-{
-	ft_printf("minishell: env: %s: Dunno\n", cmd);
-}
 
 /**
  * @brief temporary error management

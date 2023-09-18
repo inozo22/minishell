@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 09:43:46 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/15 11:24:26 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/18 11:14:31 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*get_dest_path_wl_sign(char *cur, char *pwd, char *input)
 
 	ret = NULL;
 	tmp = NULL;
-	if (cur) //move to where you are, you will get OLDPWD
+	if (cur)
 	{
 		if (chdir(cur) == -1)
 		{
@@ -36,7 +36,7 @@ char	*get_dest_path_wl_sign(char *cur, char *pwd, char *input)
 		}
 		ret = ft_strdup(cur);
 	}
-	else if (!cur) //move to where you are, but if it's not exist
+	else if (!cur)
 	{
 		tmp = ft_strjoin("/", input);
 		ret = ft_strjoin(pwd, tmp);

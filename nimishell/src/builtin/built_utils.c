@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 11:52:54 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/15 19:25:43 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/18 11:41:10 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	check_valid(char *str, char *cmd)
 	i = 0;
 	if (str[i] == '-')
 		return (set_return(2), error_id_built(cmd, str, "invalid option"), 0);
-	if (!(ft_isalpha(str[i]) || str[i] == '_'))//if it's not alpha neither '_'
+	if (!(ft_isalpha(str[i]) || str[i] == '_'))
 		return (set_return(1), \
 		error_id_built(cmd, str, "not a valid identifier"), 0);
 	i++;
@@ -49,41 +49,6 @@ int	check_valid(char *str, char *cmd)
 	g_return_val = 0;
 	return (1);
 }
-/**
- * @brief string checker for variable.
- * @author nimai
- * @return 1 if it's valid, otherwise 0.
- * @note in built_utils.
- */
-// int	check_valid(char *str, char *cmd)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	if (str[i] == '-')
-// 	{
-// 		g_return_val = 2;
-// 		return (error_id_built(cmd, str, "invalid option"), 0);
-// 	}
-// 	if (!(ft_isalpha(str[i]) || str[i] == '_'))//if it's not alpha neither '_'
-// 	{
-// 		g_return_val = 1;
-// 		return (error_id_built(cmd, str, "not a valid identifier"), 0);
-// 	}
-// 	i++;
-// 	while (str[i] != '=' && str[i])
-// 	{
-// 		if (!ft_isalnum(str[i]) && str[i] != '_' && (str[i] != '=' && \
-// 		ft_strncmp(cmd, "export", 6) == 0))
-// 		{
-// 			g_return_val = 1;
-// 			return (error_id_built(cmd, str, "not a valid identifier"), 0);
-// 		}
-// 		i++;
-// 	}
-// 	g_return_val = 0;
-// 	return (1);
-// }
 
 /**
  * @brief get_env, get value of env
@@ -109,9 +74,8 @@ char	*get_env(char **env, char *type)
 	if (env[i] && ft_strrchr(env[i], '='))
 		return (ft_strdup(env[i] + ft_strlen(type) + 1));
 	else
-		return (NULL);
+		return (NULL);//error msg
 }
-		//not set error coco?
 
 /**
  * @note this function is used in check_builtin too, maybe change the file
