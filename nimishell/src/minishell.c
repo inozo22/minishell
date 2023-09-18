@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:32:33 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/15 17:24:33 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/18 11:56:55 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,10 @@ int	check_builtin(char **input, t_data *data)
 	if (!ft_strcmp(input[0], "unset"))
 		return (built_unset(input, data));
 	if (!ft_strcmp(input[0], "exit"))
+	{
+		printf("input: %s\n", input[0]);
 		return (built_exit(input, data, 1));
+	}
 	lower_input = ft_strdup(input[0]);
 	ft_strlower(lower_input);
 	if (!ft_strcmp(lower_input, "cd"))
