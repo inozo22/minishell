@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:32:33 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/18 11:56:55 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/18 12:11:57 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	check_builtin(char **input, t_data *data)
 	while (data->env[++i])
 		ft_printf("env %d: %s\n", i, data->env[i]); */
 	// update_last_executed_cmd(data, input[0]);
-	update_last_executed_cmd(data, input);
+//	update_last_executed_cmd(data, input);
 	if (!input[0])
 		return (-1);
 	if (!ft_strcmp(input[0], "export"))
@@ -92,7 +92,7 @@ int	check_builtin(char **input, t_data *data)
 		return (built_unset(input, data));
 	if (!ft_strcmp(input[0], "exit"))
 	{
-		printf("input: %s\n", input[0]);
+		//printf("input: %s\n", input[0]);
 		return (built_exit(input, data, 1));
 	}
 	lower_input = ft_strdup(input[0]);
@@ -124,7 +124,8 @@ int	process_input(char *line_read, t_data *data)
 		while (tmp)
 		{
 			//SET THE EXIT INPUT FROM NULL TO DOUBLE ARRAY
-			if (tmp->type == WORD && !ft_strcmp(tmp->content, "exit") && built_exit(NULL, data, 0) == 0)
+			char **cmd = fill_current_cmd(cmd_list, 0, data->env, data->pid);
+			if (tmp->type == WORD && !ft_strcmp(tmp->content, "exit") && built_exit(cmd, data, 0) == 0)
 			{
 				ft_lstclear(&cmd_list, free);
 				return (0);
@@ -132,7 +133,7 @@ int	process_input(char *line_read, t_data *data)
 			tmp = tmp->next;
 		}
 	}
-	executer(NULL, cmd_list, cmd_nb, data->path, data->env, data);
+	executer(cmd_list, cmd_nb, data->path, data->env, data);
 	ft_lstclear(&cmd_list, free);
 	return (g_return_val);
 }
@@ -150,7 +151,7 @@ int	minishell(t_data *data)
 		line_read = readline(prompt);
 		if (!line_read)
 		{
-			g_return_val = 0;
+
 			break ;
 		}
 		if (*line_read)

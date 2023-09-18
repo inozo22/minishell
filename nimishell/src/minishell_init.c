@@ -49,7 +49,7 @@ char	*get_shlvl(const char *envp)
 	i = 6;
 	while (envp[i])
 	{
-		if (ft_isdigit((int)&envp[i]))
+		if (!ft_isdigit((int)envp[i]))
 			return (ft_strdup("SHLVL=1"));
 		i++;
 	}
