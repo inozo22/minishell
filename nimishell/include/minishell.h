@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 19:10:38 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/18 12:10:00 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/19 18:56:10 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,6 +186,12 @@ int		av_amount(char **strs);
 //char	*expanser(char *arg, char *envp[], t_data *data);
 char	*expander(char *str, char *env[], int pid);
 //char	*expand(t_list *list, t_data *data, char *str);
+
+//	expander_utils
+
+char	*get_var_value(char *env_var, char *envp[], int len);
+char	*is_expand(char *env_var, int len, char *env[], pid_t pid);
+char	*remove_quotes(char *str);
 
 //Redirect
 
