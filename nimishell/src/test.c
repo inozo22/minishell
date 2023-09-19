@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 10:02:30 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/19 11:29:58 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/19 13:00:46 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,7 +205,7 @@ int	test_expand(t_data *data)
 {
 //	char	*input = "$HOME $? \'$HOME\' $?\'$HOME\'$?";
 //	char	*input = "$HOME $HOME";
-	char	*input = "$USER $USER";
+	char	*input = "$US$USER$US$USER$US";
 //	char	*input2 = "$$ $$$USER";
 	char	*ret;
 

@@ -146,7 +146,7 @@ int	compose_expanded(char *expanded, char **str, int dollar_pos, int end_pos)
 	if (!following)
 	{
 		printf("following is null: %s\n", following);
-		return (free(preceding), -1);
+		return (free(preceding), -9);
 	}
 	printf("following: %s\n", following);
 	following = remove_quotes(following);
@@ -163,22 +163,31 @@ int	compose_expanded(char *expanded, char **str, int dollar_pos, int end_pos)
 	if (!(*str))
 	{
 		printf("str is null: %s\n", *str);
-		return (free(preceding), free(following), -1);
+		return (free(preceding), free(following), -9);
 	}
 	printf("str: %s, strlen: %ld\n", *str, ft_strlen(*str));
-	if (expanded)
+	printf("LINE: %d HELLO\n", __LINE__);
+	if (expanded || (*preceding && !expanded))
 	{
-		if (*preceding && *following)
+		printf("LINE: %d HELLO\n", __LINE__);
+		if (*preceding && *following && expanded)
 			len = ft_strlen(preceding) + ft_strlen(expanded) - 2;
-		else if (*preceding)
+		else if (*preceding && expanded)
 			len = ft_strlen(preceding) + ft_strlen(expanded) - 1;
+		else if (!expanded)
+			len = ft_strlen(preceding) - 1;
 		else
 			len = ft_strlen(expanded) - 1;
 		printf("expanded is: %s len: %d\n", expanded, len);
 	}
-	else if (!*preceding || !*expanded)//230919nimai: added
+	// else if (preceding && !*expanded)
+	// {
+	// 	len = ft_strlen(preceding) + ft_strlen(expanded) - 2;
+	// }
+	else if (!*preceding || (!*expanded && !*preceding))//230919nimai: added
 	{
-		len = 0;
+		printf("LINE: %d HELLO\n", __LINE__);
+		len = -1;
 	}
 	else
 	{
@@ -208,8 +217,6 @@ int	expand(char **str, int *pos, int quotes, char **env, pid_t pid)
 	i[0] = *pos;
 	if (!ft_isdigit((*str)[*pos]))
 	{
-	//	while ((*str)[i[0]] && !ft_isspace((*str)[i[0]]) && (*str)[i[0]] != quotes)
-	//	 	i[0]++;
 		if ((*str)[i[0]] && !ft_isspace((*str)[i[0]]) && (*str)[i[0]] != quotes)
 			i[0]++;
 		while ((*str)[i[0]] && !ft_isspace((*str)[i[0]]) && (*str)[i[0]] != quotes && (*str)[i[0]] != '$')
@@ -217,16 +224,11 @@ int	expand(char **str, int *pos, int quotes, char **env, pid_t pid)
 	}
 	expanded_var = is_expand(&(*str)[*pos], i[0] - *pos, env, pid);
 	printf("expanded_var: %s\n", expanded_var);
-//	if (!expanded_var)
-//		return (0);
 	*pos = compose_expanded(expanded_var, str, *pos, i[0]);
 	printf("pos: %d\n", *pos);
-	if (*pos == -1)
+	if (*pos == -9)//230919nimai: changed error number to use -1 as length
 		return (1);
 	is_quote(quotes);
-//	if (expanded_var)
-//		pos++;
-	printf("Line: %d:: str: %s pos: %d last: %c\n", __LINE__, *str, *pos,(*str)[*pos] );
 	if (!(*str))
 		return (1);
 	return (0);
@@ -250,9 +252,9 @@ char	*expander(char *str, char *env[], pid_t pid)
 		if (str[i] == '$' && quotes != '\'')
 			if (expand(&str, &i, quotes, env, pid))
 				return (NULL);
-		printf("Line: %d:: str: %s i: %d\n", __LINE__, &str[i], i);
-		// if (!str[i + 1])
-		// 	break ;
+		printf("LINE: %d str: %s i: %d\n", __LINE__, str, i);
+		if (i >= 0 && !str[i])
+			break ;
 	}
 	return (str);
 }
