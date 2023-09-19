@@ -132,9 +132,10 @@ int	compose_expanded(char *expanded, char **str, int dollar_pos, int end_pos)
 	char	*following;
 	int		len;
 
-	preceding = ft_substr(*str, 0, dollar_pos);
 	printf("expanded: %s\n", expanded);
-	printf("preceding is: %d str: %s dollar_pos: %d\n", *preceding, *str, dollar_pos);
+	printf("str: %s\n", *str);
+	preceding = ft_substr(*str, 0, dollar_pos);
+	printf("preceding: %s\n", preceding);
 	if (/* !*preceding */!preceding)
 	{
 		printf("preceding is null, and return!\n");
@@ -147,8 +148,8 @@ int	compose_expanded(char *expanded, char **str, int dollar_pos, int end_pos)
 		printf("following is null: %s\n", following);
 		return (free(preceding), -1);
 	}
-	following = remove_quotes(following);
 	printf("following: %s\n", following);
+	following = remove_quotes(following);
 	if (!expanded)
 	{
 		*str = ft_strjoin(preceding, following);
@@ -167,10 +168,15 @@ int	compose_expanded(char *expanded, char **str, int dollar_pos, int end_pos)
 	printf("str: %s, strlen: %ld\n", *str, ft_strlen(*str));
 	if (expanded)
 	{
-		len = ft_strlen(preceding) + ft_strlen(expanded) - 1;
-		printf("expanded is: %s\n", expanded);
+		if (*preceding && *following)
+			len = ft_strlen(preceding) + ft_strlen(expanded) - 2;
+		else if (*preceding)
+			len = ft_strlen(preceding) + ft_strlen(expanded) - 1;
+		else
+			len = ft_strlen(expanded) - 1;
+		printf("expanded is: %s len: %d\n", expanded, len);
 	}
-	else if (!*preceding)//230919nimai: added
+	else if (!*preceding || !*expanded)//230919nimai: added
 	{
 		len = 0;
 	}
@@ -180,7 +186,6 @@ int	compose_expanded(char *expanded, char **str, int dollar_pos, int end_pos)
 		printf("preceding is: %s\n", preceding);
 		len = ft_strlen(preceding) - 1;
 	//	len = ft_strlen(*str) - 1;
-
 	}
 	free(preceding);
 	free(following);
@@ -221,7 +226,7 @@ int	expand(char **str, int *pos, int quotes, char **env, pid_t pid)
 	is_quote(quotes);
 //	if (expanded_var)
 //		pos++;
-	printf("Line: %d:: str: %s pos: %d\n", __LINE__, *str, *pos);
+	printf("Line: %d:: str: %s pos: %d last: %c\n", __LINE__, *str, *pos,(*str)[*pos] );
 	if (!(*str))
 		return (1);
 	return (0);
@@ -235,19 +240,19 @@ char	*expander(char *str, char *env[], pid_t pid)
 	int	i;
 	int	quotes;
 
-	i = 0;
-	while (str[i])
+	i = -1;
+	while (str[++i])
 	{
 		printf("Line: %d:: str: %s\n", __LINE__, &str[i]);
 		quotes = is_quote(str[i]);
-		if (i > 4)
-			exit(1);
+		while (str[i] && ft_isspace(str[i]))
+			i++;
 		if (str[i] == '$' && quotes != '\'')
 			if (expand(&str, &i, quotes, env, pid))
 				return (NULL);
 		printf("Line: %d:: str: %s i: %d\n", __LINE__, &str[i], i);
-		if (!str[i + 1])
-			break ;
+		// if (!str[i + 1])
+		// 	break ;
 	}
 	return (str);
 }

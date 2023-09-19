@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 10:02:30 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/13 12:26:35 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/19 11:29:58 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,24 +201,19 @@ int	input_mult_test(t_data *data, char *test)
 // 	return(0);
 // }
 
-// int	test_expand(t_data *data)
-// {
-// 	t_list	*list;
-// //	char	*input = "$HOME $? \'$HOME\' $?\'$HOME\'$?";
-// //	char	*input = "echo $HOME$USERa $HOME $? \'$HOME\' $?\'$HOME\'$?$$";
-// 	char	*input = "echo cd pwd env";
-// //	char	*input2 = "$$ $$$USER";
-// 	char	*ret;
+int	test_expand(t_data *data)
+{
+//	char	*input = "$HOME $? \'$HOME\' $?\'$HOME\'$?";
+//	char	*input = "$HOME $HOME";
+	char	*input = "$USER $USER";
+//	char	*input2 = "$$ $$$USER";
+	char	*ret;
 
-// 	lexer(input, &list);
-// 	while (list)
-// 	{
-// 		ret = expanser(list, data);
-// 		printf("%sEXPANSER: Line: %d, ret: %s, type: %d, pos: %d%s\n", COLOR_BLUE, __LINE__, ret, list->type, list->cmd_pos, COLOR_RESET);
-// 		list = list->next;
-// 	}
-// 	return(0);
-// }
+	ret = expander(input, data->env, 999);
+	printf("%sEXPANSER: Line: %d, ret: %s%s\n\n", COLOR_BLUE, __LINE__, ret, COLOR_RESET);
+
+	return(0);
+}
 
 //TEST/////TEST////////TEST///////TEST/////////TEST////TEST////////
 
@@ -312,7 +307,7 @@ int	main(int argc, char *argv[], char *envp[])
 
 	//if you want to put any test function, here
 
-//	test_expand(data);
+	test_expand(data);
 //	test_childcreation(data);
 //test_checkquotes();
 //	input_mult_test(data, "u_echo.test");
@@ -320,7 +315,7 @@ int	main(int argc, char *argv[], char *envp[])
 //	built_cd_oldpwd_test(data);
 //	built_unset_test(data);
 //	built_cd_oldpwd_unset_test(data);
-	built_export_test(data);
+//	built_export_test(data);
 
 	////////////////////////////////////////
 
