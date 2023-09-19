@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 10:02:30 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/19 13:00:46 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/19 17:49:50 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,12 +205,17 @@ int	test_expand(t_data *data)
 {
 //	char	*input = "$HOME $? \'$HOME\' $?\'$HOME\'$?";
 //	char	*input = "$HOME $HOME";
-	char	*input = "$US$USER$US$USER$US";
+	char	*input = "$HOME'$USER'";
 //	char	*input2 = "$$ $$$USER";
 	char	*ret;
 
 	ret = expander(input, data->env, 999);
-	printf("%sEXPANSER: Line: %d, ret: %s%s\n\n", COLOR_BLUE, __LINE__, ret, COLOR_RESET);
+	printf("%stest1	EXPANSER: Line: %d, ret: %s%s\n\n", COLOR_BLUE, __LINE__, ret, COLOR_RESET);
+
+	char	*input2 = "$HOME\"$USER\"";
+
+	ret = expander(input2, data->env, 888);
+	printf("%stest2	EXPANSER: Line: %d, ret: %s%s\n\n", COLOR_BLUE, __LINE__, ret, COLOR_RESET);
 
 	return(0);
 }
