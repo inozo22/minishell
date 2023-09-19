@@ -226,19 +226,12 @@ int	expand(char **str, int *pos, int quotes, char **env, pid_t pid)
 		expanded_var = is_expand(&(*str)[*pos], i[0] - *pos, env, pid);
 	else
 	{
-		printf("quotes: %d, str: %s pos: %d i[0]: %d\n", quotes, &(*str)[*pos], *pos, i[0]);
-		// expanded_var = not_expand(&(*str)[*pos], i[0] - *pos, quotes);
-		if ((*str)[i[0]] && (*str)[i[0]] != '\'')
-		{
-			printf("HELLO: %c\n", (*str)[i[0]]);
-			expanded_var = ft_substr(&(*str)[*pos], *pos - 1, i[0] - 1);
-			printf("%d: expanded_var: %s\n", __LINE__, expanded_var);
-		}
-		else
-		{
-			expanded_var = ft_strdup(&(*str)[*pos]);
-			printf("%d: expanded_var: %s\n", __LINE__, expanded_var);
-		}
+		while ((*str)[i[0]] && (*str)[i[0]] != '\'')
+			i[0]++;
+		printf("quotes: %d, str: %s pos: %d i[0]: %d\n", quotes, *str, *pos, i[0]);
+		expanded_var = ft_substr(*str, *pos, i[0] - *pos);
+		printf("%d: expanded_var: %s str: %s i[0]: %d\n", __LINE__, expanded_var, *str, i[0]);
+		// }
 		i[0]++;
 		expanded_var = remove_quotes(expanded_var);
 	}
