@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 18:39:55 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/12 17:27:26 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/20 16:03:00 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,10 @@ int	is_quote(char c)
 		if (quotes == 0)
 			quotes = c;
 		else if (quotes == c)
+		{
 			quotes = 0;
+			printf("reset quotes!\n");
+		}
 	}
 	return (quotes);
 }

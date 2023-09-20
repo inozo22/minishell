@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 19:10:38 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/19 18:56:10 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/20 18:58:23 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,8 @@ int		is_quote(char c);
 //	Parser
 
 t_list	*parser(char *str);
-char	*remove_quotes(char *str);
+//char	*remove_quotes(char *str);
+//char	*remove_quotes(char *str, int quotes);
 //char	*remove_quotes(char *str, char *ret);
 
 //	Terminate
@@ -192,6 +193,8 @@ char	*expander(char *str, char *env[], int pid);
 char	*get_var_value(char *env_var, char *envp[], int len);
 char	*is_expand(char *env_var, int len, char *env[], pid_t pid);
 char	*remove_quotes(char *str);
+//char	*remove_quotes(char *str, int quotes);
+
 
 //Redirect
 
