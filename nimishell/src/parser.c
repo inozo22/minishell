@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 15:43:39 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/07 18:36:14 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/20 19:17:12 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,7 +176,7 @@ int	parse_special_chars(t_list **cmd, char c)
 	//	ft_printf("parse initial value: %s\n", node->content);230808
 		if (node->content[ft_strlen(node->content) - 1] == c)
 		{
-			error_msg("minihell", "newline", 2);
+			error_msg("newline", 2);
 			return((long int) ft_lstclear(cmd, free));
 		}
 		list = ft_split(node->content, c);
@@ -198,7 +198,7 @@ int	parse_special_chars(t_list **cmd, char c)
 		{
 			if (!list[i + 1])
 				{
-					error_msg("minishell", "newline", 2);
+					error_msg("newline", 2);
 					return ((long int) ft_lstclear(cmd, free));
 				}
 		}
@@ -262,7 +262,7 @@ t_list	*parser(char *str)
 	ft_printf("\nGot input: %s\n", str);
 	if (ft_strnstr(str, "||", ft_strlen(str)))
 	{
-		return_val = error_msg("minihell", "|", 2);
+		return_val = error_msg("|", 2);
 		return (NULL);
 	}
 	if (str[0] == '\\' && str[1])

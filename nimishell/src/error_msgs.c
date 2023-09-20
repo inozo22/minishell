@@ -3,19 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   error_msgs.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
+/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 16:04:56 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/14 12:22:19 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/20 17:11:27 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int	error_file(char *prog_name, char *in_file)
+int	error_file(char *in_file)
 {
-	ft_putstr_fd(prog_name, 2);
-	ft_putstr_fd(": ", 2);
+	ft_putstr_fd(SHELL_NAME": ", 2);
 	ft_putstr_fd(in_file, 2);
 	if (errno == EACCES)
 	{
@@ -26,22 +25,26 @@ int	error_file(char *prog_name, char *in_file)
 	return (127);
 }
 
-int	error_msg(char *prog_name, char *cmd, int mode)
+int	error_msg(char *cmd, int mode)
 {
-	ft_putstr_fd(prog_name, 2);
-	ft_putstr_fd(": ", 2);
-	if (mode == 1)
-	{
-		ft_putstr_fd(cmd, 2);
-		ft_putendl_fd(": command not found", 2);
-		return (127);
-	}
+	ft_putstr_fd(SHELL_NAME": ", 2);
 	if (mode == 2)
 	{
 		ft_putstr_fd(": syntax error near unexpected token `", 2);
 		ft_putstr_fd(cmd, 2);
 		ft_putendl_fd("'", 2);
 		return (258);
+	}
+	ft_putstr_fd(cmd, 2);
+	if (mode == 1)
+	{
+		ft_putendl_fd(": command not found", 2);
+		return (127);
+	}
+	if (mode == 3)
+	{
+		ft_putendl_fd(": is a directory", 2);
+		return (126);
 	}
 	return (0);
 }
@@ -56,7 +59,7 @@ int	command_not_found_handler(char *name, char *cmd)
 
 int	errors(int error_id, t_data *data)
 {
-	perror("minishell:");
+	perror(SHELL_NAME);
 	if (error_id == ENOMEM)
 		ft_printf("Cannot allocate memory\n");
 	free_alloc(data);
@@ -71,7 +74,7 @@ int	warning_message(int type, int num)
 {
 	if (type == 1)
 	{
-		ft_putstr_fd("minishell: warning: shell level (", 1);
+		ft_putstr_fd(SHELL_NAME": warning: shell level (", 1);
 		ft_printf("%d", num);
 		ft_putendl_fd(") too high, resetting to 1", 1);
 	}

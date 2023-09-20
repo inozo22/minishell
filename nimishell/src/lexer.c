@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 18:39:55 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/12 17:27:26 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/20 19:16:16 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ int get_token(t_list **list, char *input, int *pos)
 		pos[0]++;
 	if (pos[2] == '|' && input[pos[0]] == '|')
 	{
-		g_return_val = error_msg(SHELL_NAME, "|", 2);
+		g_return_val = error_msg("|", 2);
 		return (-1);
 	}
 	pos[1] = pos[0];
@@ -198,7 +198,7 @@ int lexer(char *input, t_list **token_list)
 			continue;
 		if (input[i] == '|')
 		{
-			g_return_val = error_msg(SHELL_NAME, "|", 2);
+			g_return_val = error_msg("|", 2);
 			return (-1);
 		}
 		else

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+         #
+#    By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/30 13:14:38 by bde-mada          #+#    #+#              #
-#    Updated: 2023/09/20 11:02:45 by nimai            ###   ########.fr        #
+#    Updated: 2023/09/20 19:18:29 by bde-mada         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ CFLAGS		= -Wall -Wextra -Werror -Wpedantic
 OS			= $(shell uname)
 
 #Optimization and valgrind debugging flags:
-DEBUG			:= -g3 -O0 -fsanitize=address 
+DEBUG			:= -g3 -O0 #-fsanitize=address 
 #change -O0 with -O1 or -O2 for faster execution but worse info
 
 LDFLAGS		= $(addprefix -L, $(LIBS_DIR))
@@ -44,13 +44,13 @@ SRC_DIR		= src/
 OBJ_DIR		= obj/
 INC_DIR		= include/
 
-LIBS		:= ft #mlx
+LIBS		:= ft
 INCLUDE		:= minishell.h
 SRC_FILES	:=  main.c minishell_init.c minishell.c terminate.c error_msgs.c \
 				utils.c cmd_split.c redirect.c expander.c lexer.c parser.c \
-				executer2.c builtin/built_cd_path.c builtin/built_cd.c \
-				builtin/built_cd_utils.c builtin/built_echo.c \
-				builtin/built_env.c builtin/built_exit.c \
+				executer2.c executer_utils.c builtin/built_cd_path.c \
+				builtin/built_cd.c builtin/built_cd_utils.c \
+				builtin/built_echo.c builtin/built_env.c builtin/built_exit.c \
 				builtin/built_export.c builtin/built_export_output.c \
 				builtin/built_utils.c builtin/built_export_sort.c \
 				builtin/built_pwd.c builtin/built_unset.c builtin/errors.c \
@@ -120,8 +120,8 @@ norm:
 	@norminette src include lib
 
 leaks:
-	@valgrind --leak-check=full --show-leak-kinds=definite,indirect,possible,reachable \
-	-s --track-origins=yes --gen-suppressions=yes ./$(NAME)
+	@valgrind --leak-check=full --show-leak-kinds=definite,indirect,possible \
+	-s --track-origins=yes --gen-suppressions=yes --track-fds=yes ./$(NAME)
 
 leaks2: $(NAME) all
 	$(eval DEBUG += leak -fsanitize=address -static-libasan)

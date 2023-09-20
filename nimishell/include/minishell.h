@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
+/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 19:10:38 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/19 18:56:10 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/20 19:22:10 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,21 +143,36 @@ char	*remove_quotes(char *str);
 //char	*remove_quotes(char *str, char *ret);
 
 //	Terminate
+
 int		errors(int error_id, t_data *data);
 void	free_alloc(t_data *data);
 void	*free_list(char **list);
 
 //	Error messages
-int		error_file(char *prog_name, char *in_file);
-int		error_msg(char *prog_name, char *cmd, int mode);
+
+int		error_file(char *in_file);
+int		error_msg(char *cmd, int mode);
 int		command_not_found_handler(char *name, char *cmd);
 int		warning_message(int type, int num);//2309114nimai: added
 
 //	Executer
+
 //int child_creation(t_data *data, char **cmd);
 int		executer(t_list *lst, int cmd_number, \
 					char **path, char **env, t_data *data);
 char	**fill_current_cmd(t_list *lst, int pos, char **envp, pid_t pid);
+
+//	Executer_utils
+
+int		check_is_directory(char *cmd);
+char	*get_cmd_path(char *cmd, char **path, int *return_val);
+int		execute_script_without_shebang(char **cmd, char **env);
+int 	close_files_if_error(int fd[2], char *file_name);
+int		check_exit_status(int e_status);
+
+// 	Redir_setup
+
+void	redir_setup(int pos, int cmd_number, int *process_fd, int *pipe_fd, int *tmp_stdio_fd);
 
 //	Split
 char	**split_input(char *str);

@@ -77,3 +77,35 @@ int	heredoc_read(char *eof, char **envp, pid_t pid)
 		return (heredoc_read(command[1]));
 	return (-1);
 } */
+
+void	redir_setup(int pos, int cmd_number, int *process_fd, int *pipe_fd, int *tmp_stdio_fd)
+{
+	if (pos == 0)
+	{
+		if (process_fd[READ_END] != STDIN_FILENO)
+			dup2(process_fd[READ_END], STDIN_FILENO);
+		if (process_fd[WRITE_END] == STDOUT_FILENO && cmd_number > 0)
+			dup2(pipe_fd[WRITE_END], STDOUT_FILENO);
+		else if (process_fd[WRITE_END] != STDOUT_FILENO)
+			dup2(process_fd[WRITE_END], STDOUT_FILENO);
+	}
+	if (pos > 0 && pos == cmd_number)
+	{
+		close(pipe_fd[WRITE_END]);
+		if (process_fd[READ_END] != STDIN_FILENO)
+			dup2(process_fd[READ_END], STDIN_FILENO);
+		if (process_fd[WRITE_END] == STDOUT_FILENO)
+			dup2(tmp_stdio_fd[WRITE_END], STDOUT_FILENO);
+		else
+			dup2(process_fd[WRITE_END], STDOUT_FILENO);
+	}
+	else
+	{
+		if (process_fd[READ_END] == STDIN_FILENO)
+			dup2(pipe_fd[READ_END], STDIN_FILENO);
+		else
+			dup2(process_fd[READ_END], STDIN_FILENO);
+		if (process_fd[WRITE_END] != STDOUT_FILENO)
+			dup2(process_fd[WRITE_END], STDOUT_FILENO);
+	}
+}
