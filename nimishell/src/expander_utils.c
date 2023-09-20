@@ -6,16 +6,11 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 18:46:11 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/19 18:53:14 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/20 11:11:29 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-//DELETE
-//#include "../lib/libft/libft.h"
-
-//volatile int	g_return_val = 0;
 
 char	*get_var_value(char *env_var, char *envp[], int len)
 {
@@ -35,6 +30,7 @@ char	*get_var_value(char *env_var, char *envp[], int len)
 	}
 	return (NULL);
 }
+
 
 //$- returns a string representing the flags of the shell
 //$@ $< and $> not implemented, return empty
@@ -84,34 +80,20 @@ char	*is_expand(char *env_var, int len, char *env[], pid_t pid)
 	return (get_var_value(env_var + 1, env, len - 1));
 }
 
-/* char	*obtain_expanded(char *tmp, char *ret, char *arg)
-{
-	if (ft_strcmp(ret, arg) != 0)
-		ret = ft_strjoin(ret, tmp);
-	else
-	{
-		free (ret);
-		ret = ft_calloc(ft_strlen(tmp), 1);
-		ft_strcpy(ret, tmp);
-	}
-	return (ret);
-} */
-
-/**
- * @note i[0] i
- * @note i[1] j
- * @note i[2] len
-  */
 char	*remove_quotes(char *str)
 {
 	char	*ret;
 	int		i[3];
+	int		quotes;
 
 	ft_bzero(i, 3 * sizeof(int));
 	ret = NULL;
+	quotes = str[0];
+	if (quotes != '\"' && quotes != '\'')
+		return (str);
 	while (str[i[0]])
 	{
-		if (str[i[0]] != '\'' && str[i[0]] != '\"')
+		if (str[i[0]] != quotes)
 			i[2]++;
 		i[0]++;
 	}
@@ -120,10 +102,9 @@ char	*remove_quotes(char *str)
 		return (NULL);
 	while (--i[0] > -1)
 	{
-		if (str[i[0]] != '\'' && str[i[0]] != '\"')
+		if (str[i[0]] != quotes)
 			ret[--i[2]] = str[i[0]];
 	}
 	free(str);
 	return (ret);
 }
-
