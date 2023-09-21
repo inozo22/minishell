@@ -68,7 +68,7 @@ char	*is_expand(char *env_var, int len, char *env[], pid_t pid)
 		return (ft_strdup(SHELL_NAME));
 	if (!ft_strncmp(env_var, "$IFS", 4))
 		return (ft_strdup("\t\n"));
-	if (!ft_strncmp(env_var, "$\0", 2))
+	if (!ft_strncmp(env_var, "$\0", 2) || !ft_strncmp(env_var, "$\"", 2) ||!ft_strncmp(env_var, "$ ", 2))
 		return (ft_strdup("$"));
 	if (ft_isdigit(env_var[1]))
 		return (ft_strdup(""));
@@ -112,8 +112,8 @@ int	expand(char **str, int *pos, int quotes, char **env, pid_t pid)
 	expanded_var = NULL;
 	ft_bzero(i, 2 * sizeof(int));
 	i[0] = *pos;
-	if (!ft_isdigit((*str)[*pos]))
-	{
+	// if (!ft_isdigit((*str)[*pos]))
+	// {
 		if ((*str)[i[0]] && !ft_isspace((*str)[i[0]]) && (*str)[i[0]] != quotes)
 			i[0]++;
 		while ((*str)[i[0]] && !ft_isspace((*str)[i[0]]) && (*str)[i[0]] != quotes\
@@ -121,9 +121,11 @@ int	expand(char **str, int *pos, int quotes, char **env, pid_t pid)
 			i[0]++;
 		if (ft_strncmp(&(*str)[*pos], "$$", 2) == 0)
 			i[0]++;
-	}
+	// }
 	expanded_var = is_expand(&(*str)[*pos], i[0] - *pos, env, pid);
 	*pos = compose_expanded(expanded_var, str, *pos, i[0]);
+	if (*str[0] == '\"' && (ft_strncmp(*str, "$\"", 2) || ft_strncmp(*str, "$ ", 2)))
+		*pos += 1;
 	if (*pos == -9)//230919nimai: changed error number to use -1 as length
 		return (1);
 //	is_quote(quotes);
@@ -144,12 +146,22 @@ char	*expander(char *str, char *env[], pid_t pid)
 	char	*ret;
 
 	tab = split_quotes(str);
+//test printer
+	c = 0;
+	while (tab[c])
+	{
+		printf("tab[%d]: %s\n", c, tab[c]);
+		c++;
+	}
+//test printer
 	c = -1;
 	while (tab[++c])
 	{
 		i = -1;
 		while (tab[c][++i])
 		{
+			char *tmp = &tab[c][i];
+			printf("tmp: %s\n", tmp);
 			quotes = is_quote(tab[c][i]);
 			if (tab[c][i] == '$' && quotes != '\'')
 			{
