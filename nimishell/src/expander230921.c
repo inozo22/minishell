@@ -252,95 +252,15 @@ int	expand(char **str, int *pos, int quotes, char **env, pid_t pid)
 	return (0);
 }
 
-int amount_quotes(char *str)
-{
-	int		i;
-	int		ret;
-	int		quote;
-//	char	*tmp;
-
-	i = -1;
-	ret = 0;
-	quote = 0;
-	if (str[0] != '\'' && str[0] != '\"')
-		ret++;
-	while (str[++i])
-	{
-		// tmp = &str[i];
-		// printf("tmp: %s\n", tmp);
-		if (quote && str[i] == quote)//end of quote
-		{
-			quote = 0;
-			if (str[i + 1] && str[i + 1] != '\'' && str[i + 1] != '\"')
-				ret++;
-		}
-		else if (!quote && (str[i] == '\'' || str[i] == '\"'))
-		{
-			ret++;
-			quote = str[i];
-		}
-	}
-	// printf("c: %d\n", c);
-	return (ret);
-}
-
-/**
- * @param i[0]: position for str, start pos
- * @param i[1]: position for ret
- * @param i[2]: quotes type(0, 34, 39)
- * @param i[3]: position for str, end pos
- */
-char	**split_quotes(char *str)
-{
-	char	**ret;
-	int		len;
-	int		i[4];
-
-	len = amount_quotes(str);
-	ret = (char **)ft_calloc(len + 1, sizeof(char *));
-	if (!ret)
-		return (NULL);
-	ft_bzero(i, 4 * sizeof(int));
-	while (i[3] < (int)ft_strlen(str))
-	{
-		i[0] = i[3];
-		i[2] = is_quote(str[i[0]]);
-		if (i[2])
-			i[3]++;
-		while (str[i[3]] && ((i[2] && str[i[3]] != i[2]) || (!i[2] && str[i[3] + 1] && str[i[3] + 1] != '\'' && str[i[3] + 1] != '\"')))
-			i[3]++;
-		ret[i[1]] = ft_substr(str, i[0], i[3] - i[0] + 1);
-		is_quote(str[i[3]]);
-		i[3]++;
-		i[1]++;
-	}
-	return (ret);
-}
-
 /**
  * @param pos[2] to keep and free string 
  */
 char	*expander(char *str, char *env[], pid_t pid)
 {
-	int		i;
-	int		quotes;
-	char	**tab;
+	int	i;
+	int	quotes;
 
 	i = -1;
-//str is not null
-	tab = split_quotes(str);
-
-//test printer
-	int	c = 0;
-	while (tab[c])
-	{
-		printf("tab[%d]: %s\n", c, tab[c]);
-		c++;
-	}
-	exit (1);
-
-//test printer
-
 	while (str[++i])
 	{
 		printf("Line: %d:: str: %s\n", __LINE__, &str[i]);

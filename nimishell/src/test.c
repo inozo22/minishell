@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 10:02:30 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/20 18:54:00 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/21 12:41:46 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,16 +223,22 @@ int	test_expand(t_data *data)
 	// printf("%stest3	EXPANSER: Line: %d, ret: %s%s\n\n", COLOR_BLUE, __LINE__, ret, COLOR_RESET);
 
 
-	char *input4 = "123\"$USER\"456\"$HOME\"\"$USER\"\"aaa\"";
-	printf("%stest3	EXPANSER: Line: %d, ret: %s%s\n", COLOR_GREEN, __LINE__, input4, COLOR_RESET);
+	// char *input4 = "123\"$USER\"456\"$HOME\"\"$USER\"\"aaa\"";
+	// printf("%stest3	EXPANSER: Line: %d, ret: %s%s\n", COLOR_GREEN, __LINE__, input4, COLOR_RESET);
 
-	ret = expander(input4, data->env, 666);
-	printf("%stest3	EXPANSER: Line: %d, ret: %s%s\n\n", COLOR_BLUE, __LINE__, ret, COLOR_RESET);
+	// ret = expander(input4, data->env, 666);
+	// printf("%stest3	EXPANSER: Line: %d, ret: %s%s\n\n", COLOR_BLUE, __LINE__, ret, COLOR_RESET);
 
 	// char *input5 = "\"$PWD\"$USER'$HOME'";
 	// printf("%stest4	EXPANSER: Line: %d, ret: %s%s\n", COLOR_GREEN, __LINE__, input5, COLOR_RESET);
 	// ret = expander(input5, data->env, 555);
 	// printf("%stest4	EXPANSER: Line: %d, ret: %s%s\n\n", COLOR_BLUE, __LINE__, ret, COLOR_RESET);
+
+	char *input6 = "555$USER'aaa'\"'\"'\"'\"\"''$$";
+	printf("%stest5	EXPANSER: Line: %d, ret: %s%s\n", COLOR_GREEN, __LINE__, input6, COLOR_RESET);
+
+	ret = expander(input6, data->env, 666);
+	printf("%stest5	EXPANSER: Line: %d, ret: %s%s\n\n", COLOR_BLUE, __LINE__, ret, COLOR_RESET);
 
 	return(0);
 }
