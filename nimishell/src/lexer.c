@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 18:39:55 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/20 16:03:00 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/21 15:25:03 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,12 @@ int	is_quote(char c)
 	static char	quotes = 0;
 
 	if (c == '\'' || c == '\"')
-	{	
+	{
 		if (quotes == 0)
 			quotes = c;
 		else if (quotes == c)
 		{
 			quotes = 0;
-			printf("reset quotes!\n");
 		}
 	}
 	return (quotes);

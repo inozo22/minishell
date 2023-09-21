@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 19:10:38 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/20 18:58:23 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/21 15:59:01 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,9 +190,9 @@ char	*expander(char *str, char *env[], int pid);
 
 //	expander_utils
 
-char	*get_var_value(char *env_var, char *envp[], int len);
-char	*is_expand(char *env_var, int len, char *env[], pid_t pid);
+int		expanded_len(char *expanded, char *preceding, char *following);
 char	*remove_quotes(char *str);
+char	**split_quotes(char *str);
 //char	*remove_quotes(char *str, int quotes);
 
 
