@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 10:02:30 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/21 12:41:46 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/21 14:28:30 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,6 +209,12 @@ int	test_expand(t_data *data)
 	char	*ret;
 	// char	*input = "\"$HOME\"'$USER'";
 
+	char *input1 = "$HOME$USER$PWD$$";
+	printf("%stest1	EXPANSER: Line: %d, ret: %s%s\n", COLOR_GREEN, __LINE__, input1, COLOR_RESET);
+	ret = expander(input1, data->env, 111);
+	printf("%stest1	ret: %s%s\n", COLOR_BLUE, ret, COLOR_RESET);
+	printf("%stest1	expected: %s%s\n\n", COLOR_GREEN, "/Users/nimainimai/Users/nimai/42/42cursus/minishell/nimishell111", COLOR_RESET);
+
 	// ret = expander(input, data->env, 999);
 	// printf("%stest1	EXPANSER: Line: %d, ret: %s%s\n\n", COLOR_BLUE, __LINE__, ret, COLOR_RESET);
 
@@ -223,22 +229,25 @@ int	test_expand(t_data *data)
 	// printf("%stest3	EXPANSER: Line: %d, ret: %s%s\n\n", COLOR_BLUE, __LINE__, ret, COLOR_RESET);
 
 
-	// char *input4 = "123\"$USER\"456\"$HOME\"\"$USER\"\"aaa\"";
-	// printf("%stest3	EXPANSER: Line: %d, ret: %s%s\n", COLOR_GREEN, __LINE__, input4, COLOR_RESET);
+	char *input4 = "123\"$USER\"456\"$HOME\"\"$USER\"\"aaa\"";
+	printf("%stest3	EXPANSER: Line: %d, ret: %s%s\n", COLOR_GREEN, __LINE__, input4, COLOR_RESET);
 
-	// ret = expander(input4, data->env, 666);
-	// printf("%stest3	EXPANSER: Line: %d, ret: %s%s\n\n", COLOR_BLUE, __LINE__, ret, COLOR_RESET);
+	ret = expander(input4, data->env, 666);
+	printf("%stest3	ret: %s%s\n", COLOR_BLUE, ret, COLOR_RESET);
+	printf("%stest3	expected: %s%s\n\n", COLOR_GREEN, "123nimai456/Users/nimainimaiaaa", COLOR_RESET);
 
-	// char *input5 = "\"$PWD\"$USER'$HOME'";
-	// printf("%stest4	EXPANSER: Line: %d, ret: %s%s\n", COLOR_GREEN, __LINE__, input5, COLOR_RESET);
-	// ret = expander(input5, data->env, 555);
-	// printf("%stest4	EXPANSER: Line: %d, ret: %s%s\n\n", COLOR_BLUE, __LINE__, ret, COLOR_RESET);
+	char *input5 = "\"$PWD\"$USER'$HOME'";
+	printf("%stest4	EXPANSER: Line: %d, ret: %s%s\n", COLOR_GREEN, __LINE__, input5, COLOR_RESET);
+	ret = expander(input5, data->env, 555);
+	printf("%stest4	ret: %s%s\n", COLOR_BLUE, ret, COLOR_RESET);
+	printf("%stest4	expected: %s%s\n\n", COLOR_GREEN, "/Users/nimai/42/42cursus/minishell/nimishellnimai$HOME", COLOR_RESET);
 
 	char *input6 = "555$USER'aaa'\"'\"'\"'\"\"''$$";
 	printf("%stest5	EXPANSER: Line: %d, ret: %s%s\n", COLOR_GREEN, __LINE__, input6, COLOR_RESET);
 
 	ret = expander(input6, data->env, 666);
-	printf("%stest5	EXPANSER: Line: %d, ret: %s%s\n\n", COLOR_BLUE, __LINE__, ret, COLOR_RESET);
+	printf("%stest5	ret: %s%s\n", COLOR_BLUE, ret, COLOR_RESET);
+	printf("%stest5	expected: %s%s\n\n", COLOR_GREEN, "555nimaiaaa'\"666", COLOR_RESET);
 
 	return(0);
 }

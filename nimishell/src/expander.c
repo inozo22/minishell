@@ -105,32 +105,43 @@ char	*is_expand(char *env_var, int len, char *env[], pid_t pid)
  * @note i[1] j
  * @note i[2] len
   */
+// char	*remove_quotes(char *str)
+// {
+// 	char	*ret;
+// 	int		i[3];
+// //	int		quotes;
+
+// 	ft_bzero(i, 3 * sizeof(int));
+// 	ret = NULL;
+// //	quotes = str[0];
+// //	printf("quotes in removing: %d\n", quotes);
+// 	// if (quotes != '\"' && quotes != '\'')
+// 	// 	return (str);
+// 	while (str[i[0]])
+// 	{
+// 		if (/* str[i[0]] != quotes */str[i[0]] != '\'' && str[i[0]] != '\"')
+// 			i[2]++;
+// 		i[0]++;
+// 	}
+// 	ret = ft_calloc(i[2] + 1, sizeof(char));
+// 	if (!ret)
+// 		return (NULL);
+// 	while (--i[0] > -1)
+// 	{
+// 		if (/* str[i[0]] != quotes */str[i[0]] != '\'' && str[i[0]] != '\"')
+// 			ret[--i[2]] = str[i[0]];
+// 	}
+// 	free(str);
+// 	return (ret);
+// }
+
 char	*remove_quotes(char *str)
 {
 	char	*ret;
-	int		i[3];
-//	int		quotes;
+	int		len;
 
-	ft_bzero(i, 3 * sizeof(int));
-	ret = NULL;
-//	quotes = str[0];
-//	printf("quotes in removing: %d\n", quotes);
-	// if (quotes != '\"' && quotes != '\'')
-	// 	return (str);
-	while (str[i[0]])
-	{
-		if (/* str[i[0]] != quotes */str[i[0]] != '\'' && str[i[0]] != '\"')
-			i[2]++;
-		i[0]++;
-	}
-	ret = ft_calloc(i[2] + 1, sizeof(char));
-	if (!ret)
-		return (NULL);
-	while (--i[0] > -1)
-	{
-		if (/* str[i[0]] != quotes */str[i[0]] != '\'' && str[i[0]] != '\"')
-			ret[--i[2]] = str[i[0]];
-	}
+	len = ft_strlen(str) - 2;
+	ret = ft_substr(str, 1, len);
 	free(str);
 	return (ret);
 }
@@ -146,16 +157,16 @@ int	compose_expanded(char *expanded, char **str, int dollar_pos, int end_pos)
 	printf("preceding: %s\n", preceding);
 	if (!preceding)
 		return (0);
-	preceding = remove_quotes(preceding);
-	printf("preceding after remove quotes: %s\n", preceding);
+	// preceding = remove_quotes(preceding);
+	// printf("preceding after remove quotes: %s\n", preceding);
 	following = ft_substr(*str, end_pos, ft_strlen(*str) - end_pos);
 	if (!following)
 		return (free(preceding), -9);
 	printf("following: %s\n", following);
 //	if (ft_strlen(following) == 1 || *following == '\"')
-	if (!ft_strchr(following, '$'))
-		following = remove_quotes(following);
-	printf("following after remove quotes: %s\n", following);
+	// if (!ft_strchr(following, '$'))
+	// 	following = remove_quotes(following);
+	// printf("following after remove quotes: %s\n", following);
 	if (!expanded)
 	{
 		*str = ft_strjoin(preceding, following);
@@ -218,8 +229,8 @@ int	expand(char **str, int *pos, int quotes, char **env, pid_t pid)
 	printf("quotes: %d\n", quotes);
 	if (!ft_isdigit((*str)[*pos]))
 	{
-		if ((*str)[i[0]] == '\'')
-			i[0]++;
+		// if ((*str)[i[0]] == '\'')
+		// 	i[0]++;
 		if ((*str)[i[0]] && !ft_isspace((*str)[i[0]]) && (*str)[i[0]] != quotes)
 			i[0]++;
 		while ((*str)[i[0]] && !ft_isspace((*str)[i[0]]) && (*str)[i[0]] != quotes && (*str)[i[0]] != '$' && (*str)[i[0]] != '\'' && (*str)[i[0]] != '\"')
@@ -238,7 +249,7 @@ int	expand(char **str, int *pos, int quotes, char **env, pid_t pid)
 		expanded_var = ft_substr(*str, *pos, i[0] - *pos);
 		printf("%d: expanded_var: %s str: %s i[0]: %d\n", __LINE__, expanded_var, *str, i[0]);
 		i[0]++;
-		expanded_var = remove_quotes(expanded_var);
+		// expanded_var = remove_quotes(expanded_var);
 	}
 	printf("str: %s\n", *str);
 	printf("expanded_var: %s\n", expanded_var);
@@ -246,7 +257,7 @@ int	expand(char **str, int *pos, int quotes, char **env, pid_t pid)
 	printf("pos: %d\n", *pos);
 	if (*pos == -9)//230919nimai: changed error number to use -1 as length
 		return (1);
-	is_quote(quotes);
+//	is_quote(quotes);
 	if (!(*str))
 		return (1);
 	return (0);
@@ -257,7 +268,7 @@ int amount_quotes(char *str)
 	int		i;
 	int		ret;
 	int		quote;
-//	char	*tmp;
+	// char	*tmp;
 
 	i = -1;
 	ret = 0;
@@ -280,7 +291,7 @@ int amount_quotes(char *str)
 			quote = str[i];
 		}
 	}
-	// printf("c: %d\n", c);
+	// printf("ret: %d\n", ret);
 	return (ret);
 }
 
@@ -304,7 +315,9 @@ char	**split_quotes(char *str)
 	while (i[3] < (int)ft_strlen(str))
 	{
 		i[0] = i[3];
+		printf("Line: %d: str[%d]: %s\n", __LINE__, i[0], &str[i[0]]);
 		i[2] = is_quote(str[i[0]]);
+		printf("Line: %d: i[2]: %c\n", __LINE__, i[2]);
 		if (i[2])
 			i[3]++;
 		while (str[i[3]] && ((i[2] && str[i[3]] != i[2]) || (!i[2] && str[i[3] + 1] && str[i[3] + 1] != '\'' && str[i[3] + 1] != '\"')))
@@ -323,42 +336,47 @@ char	**split_quotes(char *str)
 char	*expander(char *str, char *env[], pid_t pid)
 {
 	int		i;
+	int		c;
 	int		quotes;
 	char	**tab;
+	char	*ret;
 
-	i = -1;
 //str is not null
 	tab = split_quotes(str);
 
 //test printer
-	int	c = 0;
+	c = 0;
 	while (tab[c])
 	{
 		printf("tab[%d]: %s\n", c, tab[c]);
 		c++;
 	}
-	exit (1);
-
 //test printer
-
-	while (str[++i])
+	c = 0;
+	while (tab[c])
 	{
-		printf("Line: %d:: str: %s\n", __LINE__, &str[i]);
-		quotes = is_quote(str[i]);
-		while (str[i] && ft_isspace(str[i]))
-			i++;
-		if (str[i] == '$' || (quotes == '\'' && str[i + 1] == '$')/*  || (quotes == '\"' && str[i + 1] == '$') */)
+		i = -1;
+		printf(COLOR_RED"tab[%d]: %s%s\n", c, tab[c], COLOR_RESET);
+		while (tab[c][++i])
 		{
-			if (expand(&str, &i, quotes, env, pid))
-				return (NULL);
+			quotes = is_quote(tab[c][i]);
+			if (tab[c][i] == '$' && quotes != '\'')
+			{
+				if (expand(&tab[c], &i, quotes, env, pid))
+					return (NULL);
+			}
 		}
-		// if (quotes)
-		// 	str = remove_quotes(str);
-		printf("LINE: %d str: %s i: %d\n", __LINE__, str, i);
-		if (i >= 0 && !str[i])
-			break ;
+		printf("BEFORE REMOVING tab[%d]: %s%s\n", c, tab[c], COLOR_RESET);
+		if (tab[c][0] == '\'' || tab[c][0] == '\"')
+			tab[c] = remove_quotes(tab[c]);
+		printf("AFTER REMOVING tab[%d]: %s%s\n\n", c, tab[c], COLOR_RESET);
+		if (c == 0)
+			ret = ft_strdup(tab[c]);
+		else
+			ret = ft_strjoin(ret, tab[c]);
+		c++;
 	}
-	return (str);
+	return (ret);
 }
 
 /* int	main(int argc, char *argv[], char *envp[])
