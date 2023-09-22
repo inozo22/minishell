@@ -101,6 +101,41 @@ int	compose_expanded(char *expanded, char **str, int dollar_pos, int end_pos)
 
 int	*is_special_expand(char *str, int *ret)
 {
+	if (str[*ret] == '?' || str[*ret] == '!' || str[*ret] == '$' || str[*ret] == '-' || str[*ret] == '@' || str[*ret] == '*' || str[*ret] == '#' || str[*ret] == '0')
+		return (ret);
+	if (!ft_strncmp(str, "IFS", 3))
+	{
+		*ret += 2;
+		return (ret);
+	}
+	if (ft_isspace(str[*ret] || ft_isdigit(str[*ret]) || str[*ret] == '\"'))//return 1
+		return (ret);
+	if (!str[*ret] || (!ft_isalnum(str[*ret]) && str[*ret] != '_'))//return 1
+		return (ret);
+	
+//	if (!ft_strncmp(env_var, "$?", 2))
+//		return (ft_itoa(g_return_val));
+//	if (!ft_strncmp(env_var, "$!", 2))
+//		return (ft_itoa(g_return_val));
+//	if (!ft_strncmp(env_var, "$$", 2))
+//		return (ft_itoa(pid));
+//	if (!ft_strncmp(env_var, "$-", 2))
+//		return (ft_strdup("himBH"));
+//	if (!ft_strncmp(env_var, "$@", 2) || !ft_strncmp(env_var, "$*", 2))
+//		return (ft_strdup(""));
+//	if (!ft_strncmp(env_var, "$#", 2))
+//		return (ft_itoa(0));
+//	if (!ft_strncmp(env_var, "$0", 2))
+//		return (ft_strdup(SHELL_NAME));
+//	if (!ft_strncmp(env_var, "$IFS", 4))
+//		return (ft_strdup("\t\n"));
+//	if (!ft_strncmp(env_var, "$\0", 2) || !ft_strncmp(env_var, "$\"", 2) ||!ft_strncmp(env_var, "$ ", 2))
+//		return (ft_strdup("$"));
+//	if (ft_isdigit(env_var[1]))
+//		return (ft_strdup(""));
+//	if (!(env_var[1]) || (!ft_isalnum(env_var[1]) && env_var[1] != '_'))
+//		return (NULL);
+//	return (get_var_value(env_var + 1, env, len - 1));
 	//look for special caracters which we control
 	return (ret);
 }
@@ -112,14 +147,14 @@ int	check_valiable_len(char *str, int start, int quotes)
 	printf("str[%d]: %s\n", 0, &str[0]);
 	ret = 1;//I think always start with '$', so skip it
 	printf("str[%d]: %s\n", ret, &str[ret]);
-	if (is_special_expand(str, &ret, ))
+	if (is_special_expand(str, &ret))
 		return (start + ret);
 	while (str[ret])
 	{
 		//count until you find the end of the variable
-		if (str[ret] != quotes)
+		if (str[ret] && str[ret] != quotes && !ft_isspace(str[ret]) && (!ft_isalnum(str[ret]) && str[ret] != '_'))
+			ret++;
 	}
-
 	printf("str[%d]: %s\n", ret, &str[ret]);
 	return (start + ret);
 }
@@ -144,14 +179,19 @@ int	expand(char **str, int *pos, int quotes, char **env, pid_t pid)
 	i[0] = check_valiable_len(&(*str)[*pos], i[0], quotes);
 	//WIP
 
-	if ((*str)[i[0]] && !ft_isspace((*str)[i[0]]) && (*str)[i[0]] != quotes)
+/* 	if ((*str)[i[0]] && !ft_isspace((*str)[i[0]]) && (*str)[i[0]] != quotes)
 		i[0]++;
 	while ((*str)[i[0]] && !ft_isspace((*str)[i[0]]) && (*str)[i[0]] != quotes \
 	&& (*str)[i[0]] != '$' && (*str)[i[0]] != '\'' && (*str)[i[0]] != '\"')
 		i[0]++;
 	if (ft_strncmp(&(*str)[*pos], "$$", 2) == 0)
-		i[0]++;
+		i[0]++; */
 	// }
+
+	//230923 start from here
+	printf("&(*str)[*pos]: %s, *pos: %d, i[0]: %d\n", &(*str)[*pos], *pos, i[0]);
+	char *test = ft_substr(&(*str)[*pos], *pos, i[0] - *pos + 1);
+	printf("test* %s\n", test);
 	expanded_var = is_expand(&(*str)[*pos], i[0] - *pos, env, pid);
 	*pos = compose_expanded(expanded_var, str, *pos, i[0]);
 	if (*str[0] == '\"' && (ft_strncmp(*str, "$\"", 2) || ft_strncmp(*str, "$ ", 2)))
