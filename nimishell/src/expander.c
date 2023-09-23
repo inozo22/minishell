@@ -99,6 +99,7 @@ int	compose_expanded(char *expanded, char **str, int dollar_pos, int end_pos)
 	if (!(*str))
 		return (free(preceding), free(following), -9);
 	len = expanded_len(expanded, preceding, following);
+	printf("Line: %d\n", __LINE__);
 	return (free(preceding), free(following), free(expanded), len);
 }
 
@@ -205,9 +206,9 @@ int	expand(char **str, int *pos, int quotes, char **env, pid_t pid)
 	// }
 
 	//230923 start from here
-	printf("&(*str)[*pos]: %s, *pos: %d, i[0]: %d\n", &(*str)[*pos], *pos, i[0]);
-	char *test = ft_substr(&(*str)[*pos], *pos, i[0] - *pos);
-	printf("test* %s\n", test);
+	// printf("&(*str)[*pos]: %s, *pos: %d, i[0]: %d\n", &(*str)[*pos], *pos, i[0]);
+	// char *test = ft_substr(&(*str)[*pos], *pos, i[0] - *pos);
+	// printf("test* %s\n", test);
 	expanded_var = is_expand(&(*str)[*pos], i[0] - *pos, env, pid);
 	*pos = compose_expanded(expanded_var, str, *pos, i[0]);
 	if (*str[0] == '\"' && (ft_strncmp(*str, "$\"", 2) || ft_strncmp(*str, "$ ", 2)))

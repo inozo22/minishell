@@ -29,7 +29,10 @@ char	*ft_strjoin_many(int n, char const *s1, ...)
 		tmp = str;
 		read = va_arg(args, char *);
 		if (!read || !*read)
+		{
+			printf("Line: %d\n", __LINE__);
 			break ;
+		}
 		str = ft_strjoin(tmp, read);
 		free(tmp);
 	}
