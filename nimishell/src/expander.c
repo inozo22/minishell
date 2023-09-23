@@ -82,7 +82,9 @@ int	compose_expanded(char *expanded, char **str, int dollar_pos, int end_pos)
 	char	*preceding;
 	char	*following;
 	int		len;
+	char	*tmp;
 
+	tmp = *str;
 	preceding = ft_substr(*str, 0, dollar_pos);
 	if (!preceding)
 		return (0);
@@ -93,6 +95,7 @@ int	compose_expanded(char *expanded, char **str, int dollar_pos, int end_pos)
 		*str = ft_strjoin(preceding, following);
 	else
 		*str = ft_strjoin_many(3, preceding, expanded, following);
+	free (tmp);
 	if (!(*str))
 		return (free(preceding), free(following), -9);
 	len = expanded_len(expanded, preceding, following);
