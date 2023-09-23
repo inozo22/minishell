@@ -23,6 +23,8 @@ char	*ft_strjoin_many(int n, char const *s1, ...)
 
 	va_start(args, s1);
 	str = ft_strjoin(s1, va_arg(args, char *));
+	printf("Line: %d str: %p %s\n", __LINE__, str, str);
+
 	n--;
 	while (--n)
 	{
@@ -34,13 +36,17 @@ char	*ft_strjoin_many(int n, char const *s1, ...)
 			// printf("Line: %d\n", __LINE__);
 			break ;
 		}
+		printf("Line: %d tmp: %p %s\n", __LINE__, tmp, tmp);
+		printf("Line: %d read: %p %s\n", __LINE__, read, read);
+		system ("leaks test");
 		str = ft_strjoin(tmp, read);
+		printf("Line: %d str: %p %s\n", __LINE__, str, str);
+
 		free(tmp);
-		tmp = NULL;
 	}
 	printf("Line: %d p_tmp: %p\n", __LINE__, tmp);
 	va_end(args);
-	return (free(tmp), str);
+	return (str);
 }
 
 char	*ft_strjoin_array(char **list)
