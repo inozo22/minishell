@@ -12,6 +12,23 @@
 
 #include "minishell.h"
 
+/**
+ * @note call in function expander
+ */
+char	*arrange_str(char **tab, char *str, int c)
+{
+	char	*ret;
+
+	if (tab[c][0] == '\'' || tab[c][0] == '\"')
+		tab[c] = remove_quotes(tab[c]);
+	ret = ft_strjoin(str, tab[c]);
+	free (str);
+	free (tab[c]);
+	str = NULL;
+	tab[c] = NULL;
+	return (ret);
+}
+
 char	*remove_quotes(char *str)
 {
 	char	*ret;
@@ -38,10 +55,6 @@ int	expanded_len(char *expanded, char *preceding, char *following)
 		else
 			ret = ft_strlen(expanded) - 1;
 	}
-	// else if (!*preceding || (!*expanded && !*preceding))//230919nimai: added
-	// {
-	// 	len = -1;
-	// }
 	else
 		ret = ft_strlen(preceding) - 1;
 	return (ret);

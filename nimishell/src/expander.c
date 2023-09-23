@@ -112,45 +112,9 @@ int	is_special_expand(char *str, int ret)
 	if (!str[ret] || str[ret] == '\"')//return 1, there is only '$'
 		return (ret);
 	if (!ft_strncmp(str, "IFS", 3))
-	{
 		return (ret + 3);
-	}
 	if (ft_isspace(str[ret]) || (!ft_isalnum(str[ret]) && str[ret] != '_'))// return 2, there is '$' and something will not be a variable
 		return (ret + 1);
-
-
-
-
-
-	// if (ft_isspace(str[ret] || ft_isdigit(str[ret]) || str[ret] == '\"'))//return 1
-	// 	return (ret);
-	// if (!str[ret] || (!ft_isalnum(str[ret]) && str[ret] != '_'))//return 1
-	// 	return (ret);
-	
-//	if (!ft_strncmp(env_var, "$?", 2))
-//		return (ft_itoa(g_return_val));
-//	if (!ft_strncmp(env_var, "$!", 2))
-//		return (ft_itoa(g_return_val));
-//	if (!ft_strncmp(env_var, "$$", 2))
-//		return (ft_itoa(pid));
-//	if (!ft_strncmp(env_var, "$-", 2))
-//		return (ft_strdup("himBH"));
-//	if (!ft_strncmp(env_var, "$@", 2) || !ft_strncmp(env_var, "$*", 2))
-//		return (ft_strdup(""));
-//	if (!ft_strncmp(env_var, "$#", 2))
-//		return (ft_itoa(0));
-//	if (!ft_strncmp(env_var, "$0", 2))
-//		return (ft_strdup(SHELL_NAME));
-//	if (!ft_strncmp(env_var, "$IFS", 4))
-//		return (ft_strdup("\t\n"));
-//	if (!ft_strncmp(env_var, "$\0", 2) || !ft_strncmp(env_var, "$\"", 2) ||!ft_strncmp(env_var, "$ ", 2))
-//		return (ft_strdup("$"));
-//	if (ft_isdigit(env_var[1]))
-//		return (ft_strdup(""));
-//	if (!(env_var[1]) || (!ft_isalnum(env_var[1]) && env_var[1] != '_'))
-//		return (NULL);
-//	return (get_var_value(env_var + 1, env, len - 1));
-	//look for special caracters which we control
 	return (0);
 }
 
@@ -158,21 +122,15 @@ int	check_valiable_len(char *str, int start, int quotes)
 {
 	int	ret;
 
-	printf("str[%d]: %s\n", 0, &str[0]);
 	ret = 1;//I think always start with '$', so skip it
-	printf("str[%d]: %s\n", ret, &str[ret]);
 	ret = is_special_expand(str, ret);
 	if (ret)//if it's special expand, you already know the length and exit
 		return (start + ret);
 	while (str[++ret])
 	{
-		//count until you find the end of the variable
-		printf("str[%d]: %c\n", ret, str[ret]);
-
 		if (!str[ret] || str[ret] == quotes || ft_isspace(str[ret]) || (!ft_isalnum(str[ret]) && str[ret] != '_'))
 			break ;
 	}
-	printf("Line: %d: str[%d]: %s\n", __LINE__, ret, &str[ret]);
 	return (start + ret);
 }
 
@@ -189,33 +147,13 @@ int	expand(char **str, int *pos, int quotes, char **env, pid_t pid)
 	expanded_var = NULL;
 	ft_bzero(i, 2 * sizeof(int));
 	i[0] = *pos;
-	// if (!ft_isdigit((*str)[*pos]))
-	// {
-
-	//WIP
 	i[0] = check_valiable_len(&(*str)[*pos], i[0], quotes);
-	//WIP
-
-/* 	if ((*str)[i[0]] && !ft_isspace((*str)[i[0]]) && (*str)[i[0]] != quotes)
-		i[0]++;
-	while ((*str)[i[0]] && !ft_isspace((*str)[i[0]]) && (*str)[i[0]] != quotes \
-	&& (*str)[i[0]] != '$' && (*str)[i[0]] != '\'' && (*str)[i[0]] != '\"')
-		i[0]++;
-	if (ft_strncmp(&(*str)[*pos], "$$", 2) == 0)
-		i[0]++; */
-	// }
-
-	//230923 start from here
-	// printf("&(*str)[*pos]: %s, *pos: %d, i[0]: %d\n", &(*str)[*pos], *pos, i[0]);
-	// char *test = ft_substr(&(*str)[*pos], *pos, i[0] - *pos);
-	// printf("test* %s\n", test);
 	expanded_var = is_expand(&(*str)[*pos], i[0] - *pos, env, pid);
 	*pos = compose_expanded(expanded_var, str, *pos, i[0]);
 	if (*str[0] == '\"' && (ft_strncmp(*str, "$\"", 2) || ft_strncmp(*str, "$ ", 2)))
 		*pos += 1;
 	if (*pos == -9)//230919nimai: changed error number to use -1 as length
 		return (1);
-//	is_quote(quotes);
 	if (!(*str))
 		return (1);
 	return (0);
@@ -231,14 +169,12 @@ char	*expander(char *str, char *env[], pid_t pid)
 	int		quotes;
 	char	**tab;
 	char	*ret;
-	char	*tmp;
 
 	ret = NULL;
 	tab = split_quotes(str);
 	c = -1;
 	while (tab[++c])
 	{
-		tmp = ret;
 		i = -1;
 		while (tab[c][++i])
 		{
@@ -249,13 +185,7 @@ char	*expander(char *str, char *env[], pid_t pid)
 					return (NULL);
 			}
 		}
-		if (tab[c][0] == '\'' || tab[c][0] == '\"')
-			tab[c] = remove_quotes(tab[c]);
-		ret = ft_strjoin(ret, tab[c]);
-		free (tmp);
-		free (tab[c]);
-		tab[c] = NULL;
-		tmp = NULL;
+		ret = arrange_str(tab, ret, c);
 	}
 	return (strs_free(tab), ret);
 }

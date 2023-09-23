@@ -193,6 +193,7 @@ char	*expander(char *str, char *env[], int pid);
 int		expanded_len(char *expanded, char *preceding, char *following);
 char	*remove_quotes(char *str);
 char	**split_quotes(char *str);
+char	*arrange_str(char **tab, char *str, int c);
 //char	*remove_quotes(char *str, int quotes);
 
 
