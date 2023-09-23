@@ -232,6 +232,7 @@ char	*expander(char *str, char *env[], pid_t pid)
 	char	**tab;
 	char	*ret;
 
+	ret = NULL;
 	tab = split_quotes(str);
 //test printer
 	c = 0;
