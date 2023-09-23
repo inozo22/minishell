@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 19:41:45 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/23 13:58:47 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/23 15:39:51 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,18 @@ char	*ft_strjoin_many(int n, char const *s1, ...)
 			// printf("Line: %d\n", __LINE__);
 			break ;
 		}
-		printf("Line: %d tmp: %p %s\n", __LINE__, tmp, tmp);
-		printf("Line: %d read: %p %s\n", __LINE__, read, read);
-		system ("leaks test");
-		str = ft_strjoin(tmp, read);
-		printf("Line: %d str: %p %s\n", __LINE__, str, str);
+		// printf("Line: %d tmp: %p %s\n", __LINE__, tmp, tmp);
+		// printf("Line: %d read: %p %s\n", __LINE__, read, read);
+		str = ft_strjoin(str, read);
+		// printf("Line: %d str: %p %s\n", __LINE__, str, str);
+		// printf("Line: %d tmp: %p %s\n", __LINE__, tmp, tmp);
 
 		free(tmp);
+		tmp = NULL;
+		printf("Line: %d tmp: %p %s\n", __LINE__, tmp, tmp);
 	}
-	printf("Line: %d p_tmp: %p\n", __LINE__, tmp);
+	// printf("Line: %d p_tmp: %p\n", __LINE__, tmp);
+	// printf("Line: %d tmp: %p %s\n", __LINE__, tmp, tmp);
 	va_end(args);
 	return (str);
 }
