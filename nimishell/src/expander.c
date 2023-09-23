@@ -68,12 +68,12 @@ char	*is_expand(char *env_var, int len, char *env[], pid_t pid)
 		return (ft_strdup(SHELL_NAME));
 	if (!ft_strncmp(env_var, "$IFS", 4))
 		return (ft_strdup("\t\n"));
-	if (!ft_strncmp(env_var, "$\0", 2) || !ft_strncmp(env_var, "$\"", 2) ||!ft_strncmp(env_var, "$ ", 2))
+	if (!ft_strncmp(env_var, "$\0", 2) || !ft_strncmp(env_var, "$\"", 2))
 		return (ft_strdup("$"));
 	if (ft_isdigit(env_var[1]))
 		return (ft_strdup(""));
-	if (!(env_var[1]) || (!ft_isalnum(env_var[1]) && env_var[1] != '_'))
-		return (NULL);
+	if (!(env_var[1]) || (!ft_isalnum(env_var[1]) && env_var[1] != '_') || !ft_strncmp(env_var, "$ ", 2))
+		return (ft_substr(env_var, 0, 2));//should be printed literally instead of null
 	return (get_var_value(env_var + 1, env, len - 1));
 }
 
@@ -99,19 +99,29 @@ int	compose_expanded(char *expanded, char **str, int dollar_pos, int end_pos)
 	return (free(preceding), free(following), free(expanded), len);
 }
 
-int	*is_special_expand(char *str, int *ret)
+int	is_special_expand(char *str, int ret)
 {
-	if (str[*ret] == '?' || str[*ret] == '!' || str[*ret] == '$' || str[*ret] == '-' || str[*ret] == '@' || str[*ret] == '*' || str[*ret] == '#' || str[*ret] == '0')
+	if (str[ret] == '?' || str[ret] == '!' || str[ret] == '$' || str[ret] == '-' || str[ret] == '@' || str[ret] == '*' || str[ret] == '#' || str[ret] == '0')
+		return (ret + 1);
+	if (ft_isdigit(str[ret]))
+		return (ret + 1);
+	if (!str[ret] || str[ret] == '\"')//return 1, there is only '$'
 		return (ret);
 	if (!ft_strncmp(str, "IFS", 3))
 	{
-		*ret += 2;
-		return (ret);
+		return (ret + 3);
 	}
-	if (ft_isspace(str[*ret] || ft_isdigit(str[*ret]) || str[*ret] == '\"'))//return 1
-		return (ret);
-	if (!str[*ret] || (!ft_isalnum(str[*ret]) && str[*ret] != '_'))//return 1
-		return (ret);
+	if (ft_isspace(str[ret]) || (!ft_isalnum(str[ret]) && str[ret] != '_'))// return 2, there is '$' and something will not be a variable
+		return (ret + 1);
+
+
+
+
+
+	// if (ft_isspace(str[ret] || ft_isdigit(str[ret]) || str[ret] == '\"'))//return 1
+	// 	return (ret);
+	// if (!str[ret] || (!ft_isalnum(str[ret]) && str[ret] != '_'))//return 1
+	// 	return (ret);
 	
 //	if (!ft_strncmp(env_var, "$?", 2))
 //		return (ft_itoa(g_return_val));
@@ -137,7 +147,7 @@ int	*is_special_expand(char *str, int *ret)
 //		return (NULL);
 //	return (get_var_value(env_var + 1, env, len - 1));
 	//look for special caracters which we control
-	return (ret);
+	return (0);
 }
 
 int	check_valiable_len(char *str, int start, int quotes)
@@ -147,15 +157,18 @@ int	check_valiable_len(char *str, int start, int quotes)
 	printf("str[%d]: %s\n", 0, &str[0]);
 	ret = 1;//I think always start with '$', so skip it
 	printf("str[%d]: %s\n", ret, &str[ret]);
-	if (is_special_expand(str, &ret))
+	ret = is_special_expand(str, ret);
+	if (ret)//if it's special expand, you already know the length and exit
 		return (start + ret);
-	while (str[ret])
+	while (str[++ret])
 	{
 		//count until you find the end of the variable
-		if (str[ret] && str[ret] != quotes && !ft_isspace(str[ret]) && (!ft_isalnum(str[ret]) && str[ret] != '_'))
-			ret++;
+		printf("str[%d]: %c\n", ret, str[ret]);
+
+		if (!str[ret] || str[ret] == quotes || ft_isspace(str[ret]) || (!ft_isalnum(str[ret]) && str[ret] != '_'))
+			break ;
 	}
-	printf("str[%d]: %s\n", ret, &str[ret]);
+	printf("Line: %d: str[%d]: %s\n", __LINE__, ret, &str[ret]);
 	return (start + ret);
 }
 
@@ -190,7 +203,7 @@ int	expand(char **str, int *pos, int quotes, char **env, pid_t pid)
 
 	//230923 start from here
 	printf("&(*str)[*pos]: %s, *pos: %d, i[0]: %d\n", &(*str)[*pos], *pos, i[0]);
-	char *test = ft_substr(&(*str)[*pos], *pos, i[0] - *pos + 1);
+	char *test = ft_substr(&(*str)[*pos], *pos, i[0] - *pos);
 	printf("test* %s\n", test);
 	expanded_var = is_expand(&(*str)[*pos], i[0] - *pos, env, pid);
 	*pos = compose_expanded(expanded_var, str, *pos, i[0]);
