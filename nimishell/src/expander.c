@@ -231,25 +231,17 @@ char	*expander(char *str, char *env[], pid_t pid)
 	int		quotes;
 	char	**tab;
 	char	*ret;
+	char	*tmp;
 
 	ret = NULL;
 	tab = split_quotes(str);
-//test printer
-	c = 0;
-	while (tab[c])
-	{
-		printf("tab[%d]: %s\n", c, tab[c]);
-		c++;
-	}
-//test printer
 	c = -1;
 	while (tab[++c])
 	{
+		tmp = ret;
 		i = -1;
 		while (tab[c][++i])
 		{
-			char *tmp = &tab[c][i];
-			printf("tmp: %s\n", tmp);
 			quotes = is_quote(tab[c][i]);
 			if (tab[c][i] == '$' && quotes != '\'')
 			{
@@ -259,10 +251,11 @@ char	*expander(char *str, char *env[], pid_t pid)
 		}
 		if (tab[c][0] == '\'' || tab[c][0] == '\"')
 			tab[c] = remove_quotes(tab[c]);
-		if (c == 0)
-			ret = ft_strdup(tab[c]);
-		else
-			ret = ft_strjoin(ret, tab[c]);
+		ret = ft_strjoin(ret, tab[c]);
+		free (tmp);
+		free (tab[c]);
+		tab[c] = NULL;
+		tmp = NULL;
 	}
 	return (strs_free(tab), ret);
 }

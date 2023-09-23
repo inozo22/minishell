@@ -23,31 +23,16 @@ char	*ft_strjoin_many(int n, char const *s1, ...)
 
 	va_start(args, s1);
 	str = ft_strjoin(s1, va_arg(args, char *));
-	printf("Line: %d str: %p %s\n", __LINE__, str, str);
-
 	n--;
 	while (--n)
 	{
 		tmp = str;
-		// printf("Line: %d p_tmp: %p\n", __LINE__, tmp);
 		read = va_arg(args, char *);
 		if (!read || !*read)
-		{
-			// printf("Line: %d\n", __LINE__);
 			break ;
-		}
-		// printf("Line: %d tmp: %p %s\n", __LINE__, tmp, tmp);
-		// printf("Line: %d read: %p %s\n", __LINE__, read, read);
 		str = ft_strjoin(str, read);
-		// printf("Line: %d str: %p %s\n", __LINE__, str, str);
-		// printf("Line: %d tmp: %p %s\n", __LINE__, tmp, tmp);
-
 		free(tmp);
-		tmp = NULL;
-		printf("Line: %d tmp: %p %s\n", __LINE__, tmp, tmp);
 	}
-	// printf("Line: %d p_tmp: %p\n", __LINE__, tmp);
-	// printf("Line: %d tmp: %p %s\n", __LINE__, tmp, tmp);
 	va_end(args);
 	return (str);
 }
