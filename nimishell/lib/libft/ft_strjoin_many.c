@@ -27,11 +27,11 @@ char	*ft_strjoin_many(int n, char const *s1, ...)
 	while (--n)
 	{
 		tmp = str;
-		printf("Line: %d p_tmp: %p\n", __LINE__, tmp);
+		// printf("Line: %d p_tmp: %p\n", __LINE__, tmp);
 		read = va_arg(args, char *);
 		if (!read || !*read)
 		{
-			printf("Line: %d\n", __LINE__);
+			// printf("Line: %d\n", __LINE__);
 			break ;
 		}
 		str = ft_strjoin(tmp, read);
@@ -40,7 +40,7 @@ char	*ft_strjoin_many(int n, char const *s1, ...)
 	}
 	printf("Line: %d p_tmp: %p\n", __LINE__, tmp);
 	va_end(args);
-	return (str);
+	return (free(tmp), str);
 }
 
 char	*ft_strjoin_array(char **list)
