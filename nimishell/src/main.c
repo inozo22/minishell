@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 18:22:41 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/13 18:26:54 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/25 14:40:07 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,10 @@ static int	fill_env(t_data *data, char *envp[])
 				return (errors(ENOMEM, data));
 		}
 		else if (ft_strncmp(envp[i], "OLDPWD=", 7))
+		{
+			printf(COLOR_RED"oldpwd: %s%s\n", envp[i], COLOR_RESET);
 			data->env[i] = ft_strdup(envp[i]);
+		}
 		else
 			data->env[i] = ft_strdup("OLDPWD");
 		if (!data->env[i] && envp[i])
