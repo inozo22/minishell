@@ -99,7 +99,6 @@ int	compose_expanded(char *expanded, char **str, int dollar_pos, int end_pos)
 	if (!(*str))
 		return (free(preceding), free(following), -9);
 	len = expanded_len(expanded, preceding, following);
-	printf("Line: %d\n", __LINE__);
 	return (free(preceding), free(following), free(expanded), len);
 }
 
@@ -187,5 +186,6 @@ char	*expander(char *str, char *env[], pid_t pid)
 		}
 		ret = arrange_str(tab, ret, c);
 	}
+	printf(COLOR_YELLOW"I'm in expander! ret: %s%s\n", ret, COLOR_RESET);
 	return (strs_free(tab), ret);
 }

@@ -131,6 +131,16 @@ int	process_input(char *line_read, t_data *data)
 				return (0);
 			}
 			tmp = tmp->next;
+
+			///////0925nimai add to remove memory leaks from expander
+			int j = -1;
+			while (cmd[++j])
+			{
+				free (cmd[j]);
+				cmd[j] = NULL;
+			}
+			free (cmd);
+			///////0925nimai add to remove memory leaks from expander
 		}
 	}
 	executer(cmd_list, cmd_nb, data->path, data->env, data);

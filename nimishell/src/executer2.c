@@ -448,7 +448,17 @@ int	executer(t_list *lst, int cmd_number, \
 				int is_builtin = check_builtin(cmd, data);
 				ft_printf("\nCheck builtin return: %d\n", is_builtin);
 				if (is_builtin >= 0)
+				{
+					///////0925nimai add to remove memory leaks from expander
+					j = -1;
+					while (cmd[++j])
+					{
+						free (cmd[j]);
+						cmd[j] = NULL;
+					}
+					///////0925nimai add to remove memory leaks from expander
 					return (free(cmd), is_builtin);
+				}
 
 				// Create child process
 				pid = fork();
