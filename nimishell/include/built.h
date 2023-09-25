@@ -124,5 +124,6 @@ void		**ptr_free(void **ptr);
 void		*arr_free(t_export *list);
 /* void		*all_tmp_free(t_temp *temp); */
 char		**strs_free(char **strs);
+void		my_free(void *ptr);
 
 #endif

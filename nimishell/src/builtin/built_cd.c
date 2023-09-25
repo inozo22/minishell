@@ -70,6 +70,7 @@ static char	*init_pwd(t_data *data)
 
 	i = 0;
 	ret = getcwd(NULL, 0);
+	tmp = NULL;
 	while (data->env[i])
 	{
 		if (ft_strnstr(data->env[i], "PWD=", 4))
@@ -80,13 +81,10 @@ static char	*init_pwd(t_data *data)
 		i++;
 	}
 	if (!data->env[i])
-	{
-	//	ret = getcwd(NULL, 0);
-		return (ret);
-	}
+		return (free (tmp), ret);
 	if (ft_strlen(ret) > ft_strlen(tmp))
 		return (free (tmp), ret);
-	return (free (tmp), free (ret), ft_strdup(data->env[i] + 4));
+	return (free (ret), tmp);
 }
 
 /**
@@ -100,15 +98,7 @@ int	built_cd(char **input, t_data *data, int flag)
 	static char	*pwd = NULL;
 
 	if (flag == 1)
-	{
-		printf("before free pwd: %s\n", pwd);
-
-		printf("flag is 1, exit from here!\n");
-		free (pwd);
-		pwd = NULL;
-		printf("after free pwd: %s\n", pwd);
-		return (0);
-	}
+		return (my_free(pwd), 0);
 	g_return_val = 0;
 	if (!pwd)
 		pwd = init_pwd(data);

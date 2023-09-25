@@ -12,6 +12,12 @@
 
 #include "minishell.h"
 
+void	my_free(void *ptr)
+{
+	free (ptr);
+	ptr = NULL;
+}
+
 void	*arr_free(t_export *list)
 {
 	int	i;
