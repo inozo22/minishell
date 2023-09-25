@@ -81,23 +81,34 @@ static char	*init_pwd(t_data *data)
 	}
 	if (!data->env[i])
 	{
-		ret = getcwd(NULL, 0);
+	//	ret = getcwd(NULL, 0);
 		return (ret);
 	}
 	if (ft_strlen(ret) > ft_strlen(tmp))
-		return (ret);
-	return (ft_strdup(data->env[i] + 4));
+		return (free (tmp), ret);
+	return (free (tmp), free (ret), ft_strdup(data->env[i] + 4));
 }
 
 /**
  * @note should be modified, but yet IDK if it's work with the current directory absense, so after merge check and modify
+ * @param flag if it's positive, to delete static char
  */
-int	built_cd(char **input, t_data *data)
+int	built_cd(char **input, t_data *data, int flag)
 {
 	char		*dest;
 	char		*cur;
 	static char	*pwd = NULL;
 
+	if (flag == 1)
+	{
+		printf("before free pwd: %s\n", pwd);
+
+		printf("flag is 1, exit from here!\n");
+		free (pwd);
+		pwd = NULL;
+		printf("after free pwd: %s\n", pwd);
+		return (0);
+	}
 	g_return_val = 0;
 	if (!pwd)
 		pwd = init_pwd(data);

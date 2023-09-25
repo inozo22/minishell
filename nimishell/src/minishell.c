@@ -98,7 +98,7 @@ int	check_builtin(char **input, t_data *data)
 	lower_input = ft_strdup(input[0]);
 	ft_strlower(lower_input);
 	if (!ft_strcmp(lower_input, "cd"))
-		return (free(lower_input), built_cd(input, data));
+		return (free(lower_input), built_cd(input, data, 0));
 	if (!ft_strcmp(lower_input, "echo"))
 		return (free(lower_input), built_echo(input));
 	if (!ft_strcmp(lower_input, "pwd"))
@@ -175,6 +175,7 @@ int	minishell(t_data *data)
 	rl_clear_history();
 	free(line_read);
 	free(prompt);
+	built_cd(NULL, NULL, 1);
 	printf("\nBye 🗑\n");
 	return (0);
 }

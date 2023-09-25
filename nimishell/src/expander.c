@@ -186,6 +186,6 @@ char	*expander(char *str, char *env[], pid_t pid)
 		}
 		ret = arrange_str(tab, ret, c);
 	}
-	printf(COLOR_YELLOW"I'm in expander! ret: %s%s\n", ret, COLOR_RESET);
+	// printf(COLOR_YELLOW"I'm in expander! ret: %s%s\n", ret, COLOR_RESET);
 	return (strs_free(tab), ret);
 }
