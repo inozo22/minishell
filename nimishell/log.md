@@ -5,8 +5,6 @@ TODO: put protect for open function in redir
 TODO: Check leaks in non interactive mode and interactive exit
 TODO: Include cmd_list in executer to get all the arguments of the command
 TODO: Include a break in executer when cd is used in multiple pipes. It should work just when it is alone, but show error messages in the path if invalid
-TODO: Fix expanser with 2 consecutive variables without space in the middle
-TODO: Fix expanding with not found variables to return null
 TODO: error in lexer when redir is placed right after a pipe
 
 
@@ -21,7 +19,8 @@ DONE~~: put builtins's exit in sig_eof ~~
 DONE~~: make simpletest(unset)~~
 DONE~~: expanser: "$USER"'$USER' doesn't work~~
 DONE~~: make lexer and expanser works~~
-
+DONE: Fix expanser with 2 consecutive variables without space in the middle
+DONE: Fix expanding with not found variables to return null
 
 
 
