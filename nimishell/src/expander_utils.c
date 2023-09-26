@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 15:48:45 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/21 17:25:10 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/26 15:50:19 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,7 @@ char	*arrange_str(char **tab, char *str, int c)
 		tab[c] = remove_quotes(tab[c]);
 	ret = ft_strjoin(str, tab[c]);
 	free (str);
-	free (tab[c]);
 	str = NULL;
-	tab[c] = NULL;
 	return (ret);
 }
 
