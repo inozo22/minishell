@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
+/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:12:28 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/13 15:28:54 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/26 17:49:15 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int			check_input(char *input, t_data *data);
 
 /**
  * functions from cd
-  */
+ */
 
 t_data		*envp_cd_mod(t_data *data, char *dest, int path);
 char		*ft_strlower(char *str);

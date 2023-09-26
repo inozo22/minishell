@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
+/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:32:33 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/26 15:48:13 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/26 17:48:31 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <readline/history.h>
 
 /**
  * @note 230804nimai: at the moment, when there is no environment valur,
@@ -57,12 +58,12 @@ char	*get_prompt(t_data *data)
 	return (prompt);
 }
 
-int	check_exit(char **input)
+/* int	check_exit(char **input)
 {
 	if (input[1])
 		g_return_val = ft_atoi(input[1]);
 	return (INT_MAX);
-}
+} */
 
 /**
  * @note modified to control any kind of letters for pwd, echo, env

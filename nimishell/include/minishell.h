@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 19:10:38 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/26 17:30:53 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/26 17:48:48 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,9 @@
 
 # include <stdio.h>
 # include <stdlib.h>
-# include <string.h>
 # include <errno.h>
-# include <limits.h>
 # include <unistd.h>
 # include <readline/readline.h>
-# include <readline/history.h>
-# include <sys/wait.h>
-# include <sys/types.h>//it's not necessary in POSIX.1
-
 # include "libft.h"
 # include "built.h"
 # include "signals.h"

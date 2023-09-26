@@ -6,12 +6,14 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/26 17:28:48 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/26 17:44:04 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <fcntl.h>
+#include <sys/wait.h>
+#include <sys/types.h>//it's not necessary in POSIX.1
 
 /**
  * @author bde-mada

@@ -12,6 +12,7 @@
 
 #include "minishell.h"
 #include <fcntl.h>
+#include <sys/wait.h>
 
 int	heredoc_to_stdin(char *input)
 {
