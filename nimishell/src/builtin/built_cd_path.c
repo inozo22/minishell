@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 16:00:17 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/18 11:13:56 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/26 18:57:44 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,16 +91,15 @@ char	*path_modify(char *cur, char *str)
 	if (ft_strlen(cur) > 1 && str[ft_strlen(str) - 1] == '/' \
 	&& ft_strlen(cur) <= ft_strlen(str))
 	{
-		tmp = malloc(ft_strlen(cur));
+		tmp = malloc(ft_strlen(cur) + 1);
 		if (!tmp)
 			return (NULL);//error memory allocation
-		ft_strlcpy(tmp, str, ft_strlen(cur));
-		return (tmp);
+		ft_strlcpy(tmp, str, ft_strlen(cur) + 1);
+		return (free (str),free (cur), tmp);
 	}
 	tmp = ft_strdup(str);
 	ft_strlower(tmp);
 	i = strcount(cur, tmp, ft_strlen(cur));
 	cur = str_mod(cur, str, i, ft_strlen(cur));
-	free (tmp);
-	return (cur);
+	return (free (tmp), free (str), cur);
 }

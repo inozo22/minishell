@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 18:40:39 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/18 11:15:53 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/26 18:59:44 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,9 @@ char	*get_dest_path(char *dest)
 	cur = getcwd(NULL, 0);
 	ret = ft_strdup(dest);
 	if (ft_strlen(cur) > ft_strlen(ret) && ft_strncmp("..", ret, 2) != 0)
+	{
 		return (path_modify(cur, ret));
+	}
 	else if (ft_strlen(cur) <= ft_strlen(ret))
 	{
 		if (ret[ft_strlen(ret) - 1] == '/')
@@ -114,7 +116,7 @@ int	built_cd(char **input, t_data *data, int flag)
 	data = envp_cd_mod(data, pwd, 2);
 	if (!input[1] || !ft_strcmp(input[1], "~"))
 		dest = get_dest_path_env(data, "HOME");
-	else if (ft_strcmp("./", input[1]) == 0 || input[1][0] == '.')
+	else if (ft_strcmp("..", input[1]) && (ft_strcmp("./", input[1]) == 0 || input[1][0] == '.'))
 		dest = get_dest_path_wl_sign(cur, pwd, input[1]);
 	else if (ft_strcmp("-", input[1]) != 0)
 		dest = get_dest_path(input[1]);
