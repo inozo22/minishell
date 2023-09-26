@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:32:33 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/18 12:11:57 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/26 15:15:42 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,19 +128,19 @@ int	process_input(char *line_read, t_data *data)
 			if (tmp->type == WORD && !ft_strcmp(tmp->content, "exit") && built_exit(cmd, data, 0) == 0)
 			{
 				ft_lstclear(&cmd_list, free);
-				return (0);
+				return (free_list(cmd), 0);
 			}
 			tmp = tmp->next;
-
-			///////0925nimai add to remove memory leaks from expander
-			int j = -1;
-			while (cmd[++j])
-			{
-				free (cmd[j]);
-				cmd[j] = NULL;
-			}
-			free (cmd);
-			///////0925nimai add to remove memory leaks from expander
+			free_list(cmd)
+			// ///////0925nimai add to remove memory leaks from expander
+			// int j = -1;
+			// while (cmd[++j])
+			// {
+			// 	free (cmd[j]);
+			// 	cmd[j] = NULL;
+			// }
+			// free (cmd);
+			// ///////0925nimai add to remove memory leaks from expander
 		}
 	}
 	executer(cmd_list, cmd_nb, data->path, data->env, data);

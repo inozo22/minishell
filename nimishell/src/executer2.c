@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/20 11:32:29 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/26 15:12:23 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -449,15 +449,15 @@ int	executer(t_list *lst, int cmd_number, \
 				ft_printf("\nCheck builtin return: %d\n", is_builtin);
 				if (is_builtin >= 0)
 				{
-					///////0925nimai add to remove memory leaks from expander
-					j = -1;
-					while (cmd[++j])
-					{
-						free (cmd[j]);
-						cmd[j] = NULL;
-					}
-					///////0925nimai add to remove memory leaks from expander
-					return (free(cmd), is_builtin);
+					// ///////0925nimai add to remove memory leaks from expander
+					// j = -1;
+					// while (cmd[++j])
+					// {
+					// 	free (cmd[j]);
+					// 	cmd[j] = NULL;
+					// }
+					// ///////0925nimai add to remove memory leaks from expander
+					return (free_list(cmd), free(cmd), is_builtin);
 				}
 
 				// Create child process
@@ -486,6 +486,16 @@ int	executer(t_list *lst, int cmd_number, \
 		while (lst && lst->cmd_pos == pos)
 			lst = lst->next;
 		pos++;
+		free_list(cmd);
+		// strs_free(cmd);
+		///////0925nimai add to remove memory leaks from expander
+		// int j = -1;
+		// while (cmd[++j])
+		// {
+		// 	free (cmd[j]);
+		// 	cmd[j] = NULL;
+		// }
+		///////0925nimai add to remove memory leaks from expander
 		free(cmd);
 	}
 	//for
