@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:54:13 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/18 11:16:28 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/26 19:44:53 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	built_echo(char **input)
 		if (is_flag(input[i]) != 1)
 			flag[1] = 0;
 		if (flag[1] == 0)
-			ft_printf(input[i]);
+			ft_putstr_fd(input[i], 1);
 		if (i < amount - 1 && flag[1] == 0)
 			ft_printf(" ");
 		i++;

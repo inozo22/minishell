@@ -73,7 +73,10 @@ char	*is_expand(char *env_var, int len, char *env[], pid_t pid)
 	if (ft_isdigit(env_var[1]))
 		return (ft_strdup(""));
 	if (!(env_var[1]) || (!ft_isalnum(env_var[1]) && env_var[1] != '_') || !ft_strncmp(env_var, "$ ", 2))
+	{
+		printf("env_var[1]: %c\n", env_var[1]);
 		return (ft_substr(env_var, 0, 2));//should be printed literally instead of null
+	}
 	return (get_var_value(env_var + 1, env, len - 1));
 }
 
