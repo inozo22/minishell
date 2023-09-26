@@ -54,7 +54,7 @@ char	*is_expand(char *env_var, int len, char *env[], pid_t pid)
 {
 	if (!ft_strncmp(env_var, "$?", 2))
 		return (ft_itoa(g_return_val));
-	if (!ft_strncmp(env_var, "$!", 2))
+	if (!ft_strncmp(env_var, "$!", 2))//it should return process ID of the job most recently placed into the background, now, return last return value
 		return (ft_itoa(g_return_val));
 	if (!ft_strncmp(env_var, "$$", 2))
 		return (ft_itoa(pid));
@@ -186,7 +186,6 @@ char	*expander(char *str, char *env[], pid_t pid)
 		}
 		ret = arrange_str(tab, ret, c);
 	}
-	// printf(COLOR_YELLOW"I'm in expander! ret: %s%s\n", ret, COLOR_RESET);
 	free_list(tab);
 	return (ret);
 }
