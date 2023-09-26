@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 09:43:46 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/18 11:14:31 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/26 19:19:02 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,10 @@ char	*get_dest_path_wl_sign(char *cur, char *pwd, char *input)
 	}
 	else if (!cur)
 	{
-		tmp = ft_strjoin("/", input);
+		if (pwd[ft_strlen(pwd) - 1] != '/')
+			tmp = ft_strjoin("/", input);
+		else
+			tmp = ft_strdup(input);
 		ret = ft_strjoin(pwd, tmp);
 		ft_printf("%s\n", MSG_CD_CANT_ACCESS);
 	}
