@@ -6,57 +6,12 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:32:33 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/26 17:48:31 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/26 19:30:15 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <readline/history.h>
-
-/**
- * @note 230804nimai: at the moment, when there is no environment valur,
- * user name will be "noname"
-  */
-static char	*get_user(char **env)
-{
-	int	i;
-
-	i = -1;
-	while (env[++i])
-		if (ft_strnstr(env[i], "USER=", 5))
-			break ;
-	if (env[i])
-		return (ft_strdup(env[i] + 5));
-	else
-		return (ft_strdup("noname"));
-	return (NULL);
-}
-
-char	*get_prompt(t_data *data)
-{
-	char	*user;
-	char	*prompt;
-	int		prompt_len;
-	int		color_len;
-
-	user = get_user(data->env);
-	prompt_len = ft_strlen(SHELL_NAME) + ft_strlen(user);
-	color_len = ft_strlen(COLOR_YELLOW) + ft_strlen(COLOR_RESET) + \
-	ft_strlen(COLOR_BLUE) + ft_strlen(COLOR_RESET);
-	prompt = (char *)ft_calloc(prompt_len + color_len + 5, sizeof(char));
-	if (!prompt)
-		return (NULL);
-	ft_strcpy(prompt, COLOR_YELLOW);
-	ft_strcat(prompt, SHELL_NAME);
-	ft_strcat(prompt, COLOR_RESET);
-	ft_strcat(prompt, COLOR_BLUE);
-	ft_strcat(prompt, "@");
-	ft_strcat(prompt, user);
-	free(user);
-	ft_strcat(prompt, COLOR_RESET);
-	ft_strcat(prompt, "$ ");
-	return (prompt);
-}
 
 /* int	check_exit(char **input)
 {
@@ -126,22 +81,15 @@ int	process_input(char *line_read, t_data *data)
 		{
 			//SET THE EXIT INPUT FROM NULL TO DOUBLE ARRAY
 			char **cmd = fill_current_cmd(cmd_list, 0, data->env, data->pid);
-			if (tmp->type == WORD && !ft_strcmp(tmp->content, "exit") && built_exit(cmd, data, 0) == 0)
+			if (tmp->type == WORD && !ft_strcmp(tmp->content, "exit")  \
+				 && built_exit(cmd, data, 0) == 0)
 			{
 				ft_lstclear(&cmd_list, free);
-				return (free_list(cmd), 0);
+				free_list(cmd);
+				return (0);
 			}
 			tmp = tmp->next;
 			free_list(cmd);
-			// ///////0925nimai add to remove memory leaks from expander
-			// int j = -1;
-			// while (cmd[++j])
-			// {
-			// 	free (cmd[j]);
-			// 	cmd[j] = NULL;
-			// }
-			// free (cmd);
-			// ///////0925nimai add to remove memory leaks from expander
 		}
 	}
 	executer(cmd_list, cmd_nb, data->path, data->env, data);
@@ -161,10 +109,7 @@ int	minishell(t_data *data)
 		set_signal_handlers(1); //230808nimai: changed from above, to recall it after child process
 		line_read = readline(prompt);
 		if (!line_read)
-		{
-
 			break ;
-		}
 		if (*line_read)
 			add_history(line_read);
 		process_input(line_read, data);

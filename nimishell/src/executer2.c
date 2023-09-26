@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/26 17:44:04 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/26 19:34:43 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,9 +110,9 @@ int	child_execution(char **cmd, char **env, char **path, t_data *data, int pos, 
 		exit(return_val);
 	}
 	redir_setup(pos, cmd_number, process_fd, pipe_fd, tmp_stdio_fd);
+	ft_printf("cmd_path: %s\n", cmd_path);
 	if (execve(cmd_path, cmd, env) == -1 && errno == ENOEXEC)
 		execute_script_without_shebang(cmd, env);
-		
 	//as doesn't return when execute the command well, there is no protection
 	ft_printf(SHELL_NAME": %s: %s", cmd[0], strerror(errno));
 	//free all the data if execve fails
@@ -254,6 +254,5 @@ int	executer(t_list *lst, int cmd_number, \
 		if (cmd_number < 0)
 			break ;
 	}
-//	waitpid(pid, &e_status, WUNTRACED);
 	return (0);
 }

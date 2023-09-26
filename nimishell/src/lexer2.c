@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 18:39:55 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/18 16:31:49 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/26 19:10:59 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,38 @@ int	is_quote(char c)
 	return (quotes);
 }
 
+/**
+ * @return 1 if c is an invalid metacharacter
+ * @return 2 if c is a redirection
+ * @return 3 if c is a pipe
+ */
+int is_metacharacter(char *str)
+{
+	if (check_literal_metacharacter(*str))
+		return (WORD);
+	if (*str == '<')
+	{
+		if (*(str + 1) == *str)
+			return (HERE_DOC);
+		else
+			return (REDIR_IN);
+	}
+	if (*str == '>')
+	{
+		if (*(str + 1) == *str)
+			return (APPEND);
+		else
+			return (REDIR_OUT);
+	}
+	if (*str == '|' && *(str + 1) == '|')
+		return (INVALID);
+	if (*str == '|')
+		return (PIPE_LINE);
+	if (ft_isspace(*str))
+		return (IS_SPACE);
+	return (WORD);
+}
+
 int	count_tokens(char *str)
 {
 	int count;
@@ -63,7 +95,19 @@ int	count_tokens(char *str)
 	
 }
 
+/**
+ * @param pos[0] current index
+ * @param pos[1] word start index
+ * @param pos[2] word end index
+ * @param pos[3] type
+ * @param pos[4] max_pipe4
+ * @note invalid (, ), ;, \, *
+ */
 int	lexer(char *input, t_list **token_list)
 {
-	
+	int	pos[5];
+	//DELETE
+	t_list	*tmp;
+
+	ft_bzero(pos, 5 * sizeof(int));
 }

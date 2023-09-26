@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 19:10:38 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/26 17:48:48 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/26 19:13:05 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,16 +57,6 @@ typedef struct s_tokens
 	int				len;
 	struct s_list	*next;
 }				t_tokens;
-/* 	enum			e_token;
-	enum			e_flag; */
-
-/* typedef struct s_data
-{
-	char		**env;
-	char		**path;
-	int			return_val;
-//	t_tokens	*head;
-}				t_data; */
 
 //General Formatting
 # define GEN_FORMAT_RESET                "0"
@@ -111,12 +101,13 @@ typedef struct s_tokens
 # define COLOR_CYAN 	"\001\033[1;36m\002"
 # define COLOR_ACCENT	"\001\033[92;3;4;1m\002"
 
-//Functions
-
+//FUNCTION PROTOTYPES
 // minishell_init
+
 void	set_path_list(t_data *data);
 char	*get_shlvl(const char *envp);
 pid_t	get_my_pid(void);
+char	*get_prompt(t_data *data);
 //static int	fill_env(t_data *data, char *envp[]);
 
 //	minishell
@@ -129,6 +120,10 @@ int		process_input(char *line_read, t_data *data);
 
 int		lexer(char *input, t_list **token_list);
 int		is_quote(char c);
+
+//	Lexer_utils
+
+int		check_valid_input(char *input);
 
 //	Parser
 
@@ -152,7 +147,6 @@ int		warning_message(int type, int num);//2309114nimai: added
 
 //	Executer
 
-//int child_creation(t_data *data, char **cmd);
 int		executer(t_list *lst, int cmd_number, \
 					char **path, char **env, t_data *data);
 char	**fill_current_cmd(t_list *lst, int pos, char **envp, pid_t pid);
@@ -170,9 +164,11 @@ int		check_exit_status(int e_status);
 void	redir_setup(int pos, int cmd_number, int *process_fd, int *pipe_fd, int *tmp_stdio_fd);
 
 //	Split
+
 char	**split_input(char *str);
 
 //	Utils
+
 int		ft_isquote(int c);
 void	*del(void **ptr);
 void	*del_array(void ***ptr);
@@ -183,6 +179,7 @@ int		update_last_executed_cmd(t_data *data, char **input);
 
 //Bultin
 //	errors
+
 void	heap_error(int flag);
 //void	error_built(char *cmd, char *av, char *comment);
 
@@ -193,7 +190,7 @@ char	*path_modify(char *cur, char *str);
 int		av_amount(char **strs);
 
 //Expanser
-//char	*expanser(char *arg, char *envp[], t_data *data);
+
 char	*expander(char *str, char *env[], int pid);
 //char	*expand(t_list *list, t_data *data, char *str);
 
@@ -203,8 +200,6 @@ int		expanded_len(char *expanded, char *preceding, char *following);
 char	*remove_quotes(char *str);
 char	**split_quotes(char *str);
 char	*arrange_str(char **tab, char *str, int c);
-//char	*remove_quotes(char *str, int quotes);
-
 
 //Redirect
 

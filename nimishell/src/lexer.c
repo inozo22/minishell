@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 18:39:55 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/26 17:29:05 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/26 18:28:59 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ static int	check_literal_metacharacter(int c)
 	|| c == ']' || c == '{' || c == '}')
 	{
 		ft_printf(COLOR_YELLOW"Used metacharacter: %c\n"COLOR_RESET, c);
-		ft_printf("Special characters like (), [], {}, *, \\, &, ``... will \
-					be treated as literal characters\n\n");	
+		ft_putstr_fd("Special characters like (), [], {}, *, \\, &, ``...", 1);
+		ft_putendl_fd(" will be treated as literal characters\n\n", 1);	
 		return (1);
 	}
 	return (0);
@@ -177,6 +177,8 @@ int get_token(t_list **list, char *input, int *pos)
 	return (max_pipe);
 }
 
+
+
 /**
  * @param pos[0] start index
  * @param pos[1] end index
@@ -194,18 +196,8 @@ int lexer(char *input, t_list **token_list)
 	i = -1;
 	ft_bzero(pos, 4 * sizeof(int));
 	ft_printf(COLOR_ACCENT"LEXER START\n"COLOR_RESET);
-	while (input && input[++i])
-	{
-		if (ft_isspace(input[i]))
-			continue;
-		if (input[i] == '|')
-		{
-			g_return_val = error_msg("|", 2);
-			return (-1);
-		}
-		else
-			break ;
-	}
+	if (check_valid_input(input))
+		return (-1);
 	i = -1;
 	while (input && input[++i])
 	{

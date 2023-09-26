@@ -3,14 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_init.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
+/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 18:22:41 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/14 12:19:54 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/26 19:26:39 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/**
+ * @note 230804nimai: at the moment, when there is no environment valur,
+ * user name will be "unknown"
+  */
+char	*get_prompt(t_data *data)
+{
+	char	*user;
+	char	*prompt;
+	int	i;
+
+	i = -1;
+	while (data->env[++i])
+		if (ft_strnstr(data->env[i], "USER=", 5))
+			break ;
+	if (data->env[i])
+		user = ft_strdup(data->env[i] + 5);
+	else
+		user = ft_strdup("unknown");
+	if (!user)
+		errors(ENOMEM, data);
+	prompt = ft_strjoin_many(7, COLOR_YELLOW, SHELL_NAME, COLOR_BLUE, \
+							"@", user, COLOR_RESET, "$ ");
+	if (!prompt)
+		errors(ENOMEM, data);
+	free(user);
+	return (prompt);
+}
 
 void	set_path_list(t_data *data)
 {

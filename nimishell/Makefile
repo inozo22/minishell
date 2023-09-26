@@ -6,7 +6,7 @@
 #    By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/30 13:14:38 by bde-mada          #+#    #+#              #
-#    Updated: 2023/09/26 17:29:15 by bde-mada         ###   ########.fr        #
+#    Updated: 2023/09/26 19:19:51 by bde-mada         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,6 +48,7 @@ LIBS		:= ft
 INCLUDE		:= minishell.h
 SRC_FILES	:=  main.c minishell_init.c minishell.c terminate.c error_msgs.c \
 				utils.c cmd_split.c redirect.c expander.c lexer.c parser.c \
+				lexer_utils.c \
 				executer2.c executer_utils.c builtin/built_cd_path.c \
 				builtin/built_cd.c builtin/built_cd_utils.c \
 				builtin/built_echo.c builtin/built_env.c builtin/built_exit.c \

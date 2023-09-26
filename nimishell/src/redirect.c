@@ -73,7 +73,7 @@ void	redir_setup(int pos, int cmd_number, int *process_fd, int *pipe_fd, int *tm
 		else if (process_fd[WRITE_END] != STDOUT_FILENO)
 			dup2(process_fd[WRITE_END], STDOUT_FILENO);
 	}
-	if (pos > 0 && pos == cmd_number)
+	else if (pos > 0 && pos == cmd_number)
 	{
 		close(pipe_fd[WRITE_END]);
 		if (process_fd[READ_END] != STDIN_FILENO)
