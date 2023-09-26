@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/26 16:18:38 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/26 17:05:14 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	check_exit_status(int e_status)
 int	execute_script_without_shebang(char **cmd, char **env)
 {
 	char	*new_argv[2];
-	
+
 	new_argv[0] = cmd[0];
 	new_argv[1] = NULL;
 	free_list(cmd);
