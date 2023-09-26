@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin_many.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 19:41:45 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/13 12:17:17 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/23 15:39:51 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*ft_strjoin_many(int n, char const *s1, ...)
 		read = va_arg(args, char *);
 		if (!read || !*read)
 			break ;
-		str = ft_strjoin(tmp, read);
+		str = ft_strjoin(str, read);
 		free(tmp);
 	}
 	va_end(args);

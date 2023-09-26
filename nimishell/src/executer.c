@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/15 20:01:23 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/21 16:06:56 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -293,10 +293,9 @@ int	child_execution(char **cmd, char **env, char **path, t_data *data)
 	{
 		perror("execve");
 		//free all the data if execve fails
-		//230809nimai: comment free to avoid double freeing.
 		free(cmd_path);
 		free_list(cmd);
-		free_alloc(data);		
+		free_alloc(data);
 	}
 	exit(1);
 }

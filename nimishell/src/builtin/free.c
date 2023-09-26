@@ -6,11 +6,17 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 15:44:25 by nimai             #+#    #+#             */
-/*   Updated: 2023/06/02 13:07:58 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/26 15:11:40 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	my_free(void *ptr)
+{
+	free (ptr);
+	ptr = NULL;
+}
 
 void	*arr_free(t_export *list)
 {

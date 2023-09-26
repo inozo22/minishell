@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 18:39:55 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/20 19:16:16 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/26 17:29:05 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,13 @@ int	is_quote(char c)
 	static char	quotes = 0;
 
 	if (c == '\'' || c == '\"')
-	{	
+	{
 		if (quotes == 0)
 			quotes = c;
 		else if (quotes == c)
+		{
 			quotes = 0;
+		}
 	}
 	return (quotes);
 }

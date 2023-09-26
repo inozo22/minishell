@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/20 19:34:39 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/26 17:28:48 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,6 +165,7 @@ int	executer(t_list *lst, int cmd_number, \
 				if (pipe(pipe_fd) == -1)
 					return (-1);
 				//set singnal handlers for child process
+				ft_printf("HEY\n");
 				set_signal_handlers(0);
 				cmd = fill_current_cmd(lst, pos, data->env, data->pid);
 				if (!cmd || !(*cmd))
@@ -183,7 +184,17 @@ int	executer(t_list *lst, int cmd_number, \
 				int is_builtin = check_builtin(cmd, data);
 				ft_printf("\nCheck builtin return: %d\n", is_builtin);
 				if (is_builtin >= 0)
-					return (free(cmd), is_builtin);
+				{
+					// ///////0925nimai add to remove memory leaks from expander
+					// j = -1;
+					// while (cmd[++j])
+					// {
+					// 	free (cmd[j]);
+					// 	cmd[j] = NULL;
+					// }
+					// ///////0925nimai add to remove memory leaks from expander
+					return (free_list(cmd), is_builtin);
+				}
 
 				// Create child process
 				pid = fork();
@@ -211,7 +222,17 @@ int	executer(t_list *lst, int cmd_number, \
 		while (lst && lst->cmd_pos == pos)
 			lst = lst->next;
 		pos++;
-		free(cmd);
+		free_list(cmd);
+		// strs_free(cmd);
+		///////0925nimai add to remove memory leaks from expander
+		// int j = -1;
+		// while (cmd[++j])
+		// {
+		// 	free (cmd[j]);
+		// 	cmd[j] = NULL;
+		// }
+		///////0925nimai add to remove memory leaks from expander
+	//	free(cmd);
 	}
 	//for
 	//restore in/out defaults

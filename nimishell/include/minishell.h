@@ -6,7 +6,11 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 19:10:38 by bde-mada          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/09/20 19:22:10 by bde-mada         ###   ########.fr       */
+=======
+/*   Updated: 2023/09/21 15:59:01 by nimai            ###   ########.fr       */
+>>>>>>> 34f08f64188c618975d723f0a4c512844fdc9d97
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +143,8 @@ int		is_quote(char c);
 //	Parser
 
 t_list	*parser(char *str);
-char	*remove_quotes(char *str);
+//char	*remove_quotes(char *str);
+//char	*remove_quotes(char *str, int quotes);
 //char	*remove_quotes(char *str, char *ret);
 
 //	Terminate
@@ -204,9 +209,12 @@ char	*expander(char *str, char *env[], int pid);
 
 //	expander_utils
 
-char	*get_var_value(char *env_var, char *envp[], int len);
-char	*is_expand(char *env_var, int len, char *env[], pid_t pid);
+int		expanded_len(char *expanded, char *preceding, char *following);
 char	*remove_quotes(char *str);
+char	**split_quotes(char *str);
+char	*arrange_str(char **tab, char *str, int c);
+//char	*remove_quotes(char *str, int quotes);
+
 
 //Redirect
 

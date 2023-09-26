@@ -22,7 +22,7 @@
  */
 int	built_pwd(t_data *data)
 {
-	built_cd(NULL, data);
+	built_cd(NULL, data, 0);
 	return (0);
 }
 

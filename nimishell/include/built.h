@@ -68,7 +68,7 @@ typedef struct s_export
 int			built_exit(char **input, t_data *data, int cmd_num);
 int			built_pwd(t_data *data);
 int			built_echo(char **input);
-int			built_cd(char **input, t_data *data);
+int			built_cd(char **input, t_data *data, int flag);
 int			built_export(char **input, t_data *data);
 int			built_env(char **input, t_data *data);
 int			built_unset(char **input, t_data *data);
@@ -124,5 +124,6 @@ void		**ptr_free(void **ptr);
 void		*arr_free(t_export *list);
 /* void		*all_tmp_free(t_temp *temp); */
 char		**strs_free(char **strs);
+void		my_free(void *ptr);
 
 #endif

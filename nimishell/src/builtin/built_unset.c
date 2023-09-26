@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 09:50:35 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/18 11:39:55 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/25 15:55:45 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ t_data	*unset_env(t_data *data, char *str)
 		data->env[i][len] == '\0'))
 			;
 		else
-			tmp[++j] = data->env[i];
+			tmp[++j] = ft_strdup(data->env[i]);
+		free (data->env[i]);
 		data->env[i] = NULL;
 	}
 	tmp[++j] = NULL;

@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:32:33 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/18 12:11:57 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/26 15:48:13 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int	check_builtin(char **input, t_data *data)
 	lower_input = ft_strdup(input[0]);
 	ft_strlower(lower_input);
 	if (!ft_strcmp(lower_input, "cd"))
-		return (free(lower_input), built_cd(input, data));
+		return (free(lower_input), built_cd(input, data, 0));
 	if (!ft_strcmp(lower_input, "echo"))
 		return (free(lower_input), built_echo(input));
 	if (!ft_strcmp(lower_input, "pwd"))
@@ -128,9 +128,19 @@ int	process_input(char *line_read, t_data *data)
 			if (tmp->type == WORD && !ft_strcmp(tmp->content, "exit") && built_exit(cmd, data, 0) == 0)
 			{
 				ft_lstclear(&cmd_list, free);
-				return (0);
+				return (free_list(cmd), 0);
 			}
 			tmp = tmp->next;
+			free_list(cmd);
+			// ///////0925nimai add to remove memory leaks from expander
+			// int j = -1;
+			// while (cmd[++j])
+			// {
+			// 	free (cmd[j]);
+			// 	cmd[j] = NULL;
+			// }
+			// free (cmd);
+			// ///////0925nimai add to remove memory leaks from expander
 		}
 	}
 	executer(cmd_list, cmd_nb, data->path, data->env, data);
@@ -165,6 +175,7 @@ int	minishell(t_data *data)
 	rl_clear_history();
 	free(line_read);
 	free(prompt);
+	built_cd(NULL, NULL, 1);
 	printf("\nBye 🗑\n");
 	return (0);
 }
