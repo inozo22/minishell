@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/26 15:12:23 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/26 16:18:38 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -428,7 +428,7 @@ int	executer(t_list *lst, int cmd_number, \
 				if (pipe(pipe_fd) == -1)
 					return (-1);
 				//set singnal handlers for child process
-				ft_printf("HEY");
+				ft_printf("HEY\n");
 				set_signal_handlers(0);
 				ft_printf("I'm in line %d\n", __LINE__);
 				cmd = fill_current_cmd(lst, pos, data->env, data->pid);
@@ -457,7 +457,7 @@ int	executer(t_list *lst, int cmd_number, \
 					// 	cmd[j] = NULL;
 					// }
 					// ///////0925nimai add to remove memory leaks from expander
-					return (free_list(cmd), free(cmd), is_builtin);
+					return (free_list(cmd), is_builtin);
 				}
 
 				// Create child process
@@ -496,7 +496,7 @@ int	executer(t_list *lst, int cmd_number, \
 		// 	cmd[j] = NULL;
 		// }
 		///////0925nimai add to remove memory leaks from expander
-		free(cmd);
+	//	free(cmd);
 	}
 	//for
 	//restore in/out defaults
