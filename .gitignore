@@ -5,3 +5,4 @@
 test
 minishell
 *.rpt
+*.dSYM
