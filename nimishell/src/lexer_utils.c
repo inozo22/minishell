@@ -15,10 +15,10 @@
 int	check_valid_input(char *input)
 {
 	int	i;
-	int	quotes;
+	// int	quotes;
 
 	i = -1;
-	quotes = 0;
+	// quotes = 0;
 	while (input && input[++i])
 	{
 		if (ft_isspace(input[i]))

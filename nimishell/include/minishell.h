@@ -21,6 +21,7 @@
 # include "libft.h"
 # include "built.h"
 # include "signals.h"
+# include <sys/wait.h>
 
 # ifndef TCSASOFT
 #  define TCSASOFT 0
