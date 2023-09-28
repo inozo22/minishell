@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:12:28 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/28 11:27:29 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/28 16:00:23 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ char		*get_above_path(char *current);
 void		error_cd(char *cmd);
 char		*get_dest_path_wl_sign(char *cur, char *pwd, char *input);
 char		*get_dest_path_env(t_data *data, char *envtype);
+char		*obtain_pwd_home(char **env, int flag);
 
 /**
  * functions from utils

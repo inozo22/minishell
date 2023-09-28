@@ -168,7 +168,6 @@ char	*tilde_expantion(char *tilde, char **env)
 	ret = get_env(env, "HOME");
 	if (!ret)
 		ret = obtain_pwd_home(env, 2);
-	printf("expand ~: %s\n", ret);
 	my_free(tilde);
 	return (ret);
 }
@@ -190,10 +189,7 @@ char	*expander(char *str, char *env[], pid_t pid)
 	while (tab[++c])
 	{
 		if (!ft_strcmp(tab[c], "~"))
-		{
 			tab[c] = tilde_expantion(tab[c], env);
-			continue ;
-		}
 		else
 		{
 			i = -1;
