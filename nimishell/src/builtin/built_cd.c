@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 18:40:39 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/28 16:21:56 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/28 16:25:15 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,37 +90,7 @@ void	init_pwd_home(char **pwd, char **home, char **env)
 		}
 		*home = ft_substr(*pwd, 0, i - 1);
 	}
-	printf("init set! pwd: %s, home: %s\n", *pwd, *home);
 }
-
-// /**
-//  * @note to fill static pwd in cd function, if there is no PWD in env, obtain by getcwd.
-//  */
-// static char	*init_pwd(t_data *data)
-// {
-// 	char	*ret;
-// 	char	*tmp;
-// 	int		i;
-
-// 	i = 0;
-// 	ret = getcwd(NULL, 0);
-// 	tmp = NULL;
-// 	while (data->env[i])
-// 	{
-// 		if (ft_strnstr(data->env[i], "PWD=", 4))
-// 		{
-// 			tmp = ft_strdup(data->env[i] + 4);
-// 			break ;
-// 		}
-// 		i++;
-// 	}
-// 	if (!data->env[i])
-// 		return (free (tmp), ret);
-// 	if (ft_strlen(ret) > ft_strlen(tmp))
-// 		return (free (tmp), ret);
-// 	return (free (ret), tmp);
-// }
-
 
 /**
  * @param flag 99 to free all
@@ -168,21 +138,8 @@ int	built_cd(char **input, t_data *data)
 	char		*dest;
 	char		*cur;
 	char		*tmp_pwd;
-	// static char	*pwd = NULL;
-	// static char	*home = NULL;
 
-	obtain_pwd_home(data->env, 0);//this is for next 3 checks
-	// ************************************************
-	// if (flag == 1)
-	// 	return (my_free(pwd), my_free(home), 0);
-	// if (!pwd || !home)
-		//pwd = init_pwd(data);
-//		init_pwd_home(&pwd, &home, data->env);
-	// if (!input)
-	// 	return (ft_printf("%s\n", pwd), 0);
-	// ************************************************
-	// g_return_val = 0;
-
+	obtain_pwd_home(data->env, 0);//this is for next 3 check
 	cur = getcwd(NULL, 0);
 	if (ft_strcmp("-", input[1]) == 0)
 	{
@@ -192,7 +149,7 @@ int	built_cd(char **input, t_data *data)
 	}
 	tmp_pwd = obtain_pwd_home(data->env, 3);
 	data = envp_cd_mod(data, tmp_pwd, 2);
-	if (!input[1]/*  || !ft_strcmp(input[1], "~") */)
+	if (!input[1])
 		dest = get_dest_path_env(data, "HOME");
 	else if (ft_strcmp("..", input[1]) && (ft_strcmp("./", input[1]) == 0 || input[1][0] == '.'))
 		dest = get_dest_path_wl_sign(cur, tmp_pwd, input[1]);
@@ -200,8 +157,7 @@ int	built_cd(char **input, t_data *data)
 		dest = get_dest_path(input[1]);
 	envp_cd_mod(data, dest, 1);
 	obtain_pwd_home(data->env, 4);
-//	mod_pwd(pwd, dest);
-	return (/* envp_cd_mod(data, dest, 1), */free (tmp_pwd), free (dest), free (cur), g_return_val);
+	return (free (tmp_pwd), free (dest), free (cur), g_return_val);
 }
 
 /**

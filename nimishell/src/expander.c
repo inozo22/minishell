@@ -73,10 +73,7 @@ char	*is_expand(char *env_var, int len, char *env[], pid_t pid)
 	if (ft_isdigit(env_var[1]))
 		return (ft_strdup(""));
 	if (!(env_var[1]) || (!ft_isalnum(env_var[1]) && env_var[1] != '_') || !ft_strncmp(env_var, "$ ", 2))
-	{
-		printf("env_var[1]: %c\n", env_var[1]);
 		return (ft_substr(env_var, 0, 2));//should be printed literally instead of null
-	}
 	return (get_var_value(env_var + 1, env, len - 1));
 }
 
@@ -105,32 +102,42 @@ int	compose_expanded(char *expanded, char **str, int dollar_pos, int end_pos)
 	return (free(preceding), free(following), free(expanded), len);
 }
 
+/**
+ * @return 1 when there is only '$'
+ * @return 2 when there are '$' and sth will not be a variable such as '%'
+ */
 int	is_special_expand(char *str, int ret)
 {
-	if (str[ret] == '?' || str[ret] == '!' || str[ret] == '$' || str[ret] == '-' || str[ret] == '@' || str[ret] == '*' || str[ret] == '#' || str[ret] == '0')
+	if (str[1] == '?' || str[1] == '!' || str[1] == '$' || \
+	str[1] == '-' || str[1] == '@' || str[1] == '*' || str[1] == '#' || \
+	str[1] == '0')
 		return (ret + 1);
 	if (ft_isdigit(str[ret]))
 		return (ret + 1);
-	if (!str[ret] || str[ret] == '\"')//return 1, there is only '$'
+	if (!str[ret] || str[ret] == '\"')
 		return (ret);
 	if (!ft_strncmp(str, "IFS", 3))
 		return (ret + 3);
-	if (ft_isspace(str[ret]) || (!ft_isalnum(str[ret]) && str[ret] != '_'))// return 2, there is '$' and something will not be a variable
+	if (ft_isspace(str[ret]) || (!ft_isalnum(str[ret]) && str[ret] != '_'))
 		return (ret + 1);
 	return (0);
 }
 
+/**
+ * @note ret  always start with '$', so skip it and the start from 1
+ */
 int	check_valiable_len(char *str, int start, int quotes)
 {
 	int	ret;
 
-	ret = 1;//I think always start with '$', so skip it
+	ret = 1;
 	ret = is_special_expand(str, ret);
-	if (ret)//if it's special expand, you already know the length and exit
+	if (ret)
 		return (start + ret);
 	while (str[++ret])
 	{
-		if (!str[ret] || str[ret] == quotes || ft_isspace(str[ret]) || (!ft_isalnum(str[ret]) && str[ret] != '_'))
+		if (!str[ret] || str[ret] == quotes || ft_isspace(str[ret]) || \
+		(!ft_isalnum(str[ret]) && str[ret] != '_'))
 			break ;
 	}
 	return (start + ret);
