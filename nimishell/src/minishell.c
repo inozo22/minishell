@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:32:33 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/26 19:30:15 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/28 11:28:35 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,8 @@ int	minishell(t_data *data)
 	rl_clear_history();
 	free(line_read);
 	free(prompt);
-	built_cd(NULL, NULL, 1);
+//	built_cd(NULL, NULL, 1);
+	obtain_pwd_home(NULL, 99);
 	printf("\nBye 🗑\n");
 	return (0);
 }

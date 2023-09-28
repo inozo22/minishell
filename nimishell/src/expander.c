@@ -161,6 +161,18 @@ int	expand(char **str, int *pos, int quotes, char **env, pid_t pid)
 	return (0);
 }
 
+char	*tilde_expantion(char *tilde, char **env)
+{
+	char	*ret;
+
+	ret = get_env(env, "HOME");
+	if (!ret)
+		ret = obtain_pwd_home(env, 2);
+	printf("expand ~: %s\n", ret);
+	my_free(tilde);
+	return (ret);
+}
+
 /**
  * @param pos[2] to keep and free string 
  */
@@ -177,14 +189,22 @@ char	*expander(char *str, char *env[], pid_t pid)
 	c = -1;
 	while (tab[++c])
 	{
-		i = -1;
-		while (tab[c][++i])
+		if (!ft_strcmp(tab[c], "~"))
 		{
-			quotes = is_quote(tab[c][i]);
-			if (tab[c][i] == '$' && quotes != '\'')
+			tab[c] = tilde_expantion(tab[c], env);
+			continue ;
+		}
+		else
+		{
+			i = -1;
+			while (tab[c][++i])
 			{
-				if (expand(&tab[c], &i, quotes, env, pid))
-					return (NULL);
+				quotes = is_quote(tab[c][i]);
+				if (tab[c][i] == '$' && quotes != '\'')
+				{
+					if (expand(&tab[c], &i, quotes, env, pid))
+						return (NULL);
+				}
 			}
 		}
 		ret = arrange_str(tab, ret, c);

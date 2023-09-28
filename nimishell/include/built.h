@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:12:28 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/26 17:49:15 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/28 11:27:29 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ typedef struct s_export
 int			built_exit(char **input, t_data *data, int cmd_num);
 int			built_pwd(t_data *data);
 int			built_echo(char **input);
-int			built_cd(char **input, t_data *data, int flag);
+int			built_cd(char **input, t_data *data);
 int			built_export(char **input, t_data *data);
 int			built_env(char **input, t_data *data);
 int			built_unset(char **input, t_data *data);

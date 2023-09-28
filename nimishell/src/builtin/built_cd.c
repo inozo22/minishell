@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 18:40:39 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/26 18:59:44 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/28 11:31:42 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,48 +64,109 @@ static char	*mod_pwd(char *pwd, char *dest)
 /**
  * @note to fill static pwd in cd function, if there is no PWD in env, obtain by getcwd.
  */
-static char	*init_pwd(t_data *data)
+void	init_pwd_home(char **pwd, char **home, char **env)
 {
-	char	*ret;
-	char	*tmp;
 	int		i;
+	int		j;
 
-	i = 0;
-	ret = getcwd(NULL, 0);
-	tmp = NULL;
-	while (data->env[i])
+	i = -1;
+	while (env[++i])
 	{
-		if (ft_strnstr(data->env[i], "PWD=", 4))
-		{
-			tmp = ft_strdup(data->env[i] + 4);
-			break ;
-		}
-		i++;
+		if (!ft_strncmp(env[i], "PWD=", 4))
+			*pwd = ft_strdup(env[i] + 4);
+		else if (!ft_strncmp(env[i], "HOME=", 5))
+			*home = ft_strdup(env[i] + 5);
 	}
-	if (!data->env[i])
-		return (free (tmp), ret);
-	if (ft_strlen(ret) > ft_strlen(tmp))
-		return (free (tmp), ret);
-	return (free (ret), tmp);
+	if (!*pwd)
+		*pwd = getcwd(NULL, 0);
+	if (!*home)
+	{
+		i = -1;
+		j = 0;
+		while ((*pwd)[++i] && j < 3)
+		{
+			if ((*pwd)[i] == '/')
+				j++;
+		}
+		*home = ft_substr(*pwd, 0, i - 1);
+	}
+	printf("init set! pwd: %s, home: %s\n", *pwd, *home);
+}
+
+// /**
+//  * @note to fill static pwd in cd function, if there is no PWD in env, obtain by getcwd.
+//  */
+// static char	*init_pwd(t_data *data)
+// {
+// 	char	*ret;
+// 	char	*tmp;
+// 	int		i;
+
+// 	i = 0;
+// 	ret = getcwd(NULL, 0);
+// 	tmp = NULL;
+// 	while (data->env[i])
+// 	{
+// 		if (ft_strnstr(data->env[i], "PWD=", 4))
+// 		{
+// 			tmp = ft_strdup(data->env[i] + 4);
+// 			break ;
+// 		}
+// 		i++;
+// 	}
+// 	if (!data->env[i])
+// 		return (free (tmp), ret);
+// 	if (ft_strlen(ret) > ft_strlen(tmp))
+// 		return (free (tmp), ret);
+// 	return (free (ret), tmp);
+// }
+
+
+/**
+ * @param flag 99 to free all
+ * @param flag 0 to function cd normal
+ * @param flag 1 to function pwd
+ * @param flag 2 for '~', to send char * to expand
+ * 
+ * 
+ */
+char	*obtain_pwd_home(char **env, int flag)
+{
+	static char	*pwd = NULL;
+	static char	*home = NULL;
+
+	if (flag == 99)
+		return (my_free(pwd), my_free(home), NULL);
+	if (!pwd || !home)
+		init_pwd_home(&pwd, &home, data->env);
+	if (flag == 1)
+		return (ft_printf("%s\n", pwd), NULL);
+	if (flag == 2)
+		return (ft_strdup(home));
+	return (NULL);
 }
 
 /**
  * @note should be modified, but yet IDK if it's work with the current directory absense, so after merge check and modify
- * @param flag if it's positive, to delete static char
+ * @param flag if it's 1, to delete static char
+ * @param flag if it's 7, to expand the string
  */
-int	built_cd(char **input, t_data *data, int flag)
+int	built_cd(char **input, t_data *data)
 {
 	char		*dest;
 	char		*cur;
-	static char	*pwd = NULL;
+	// static char	*pwd = NULL;
+	// static char	*home = NULL;
 
-	if (flag == 1)
-		return (my_free(pwd), 0);
+	// if (flag == 1)
+	// 	return (my_free(pwd), my_free(home), 0);
 	g_return_val = 0;
-	if (!pwd)
-		pwd = init_pwd(data);
-	if (!input)
-		return (ft_printf("%s\n", pwd), 0);
+	// if (!pwd || !home)
+		//pwd = init_pwd(data);
+	obtain_pwd_home(data->env, 0);//
+//		init_pwd_home(&pwd, &home, data->env);
+	// if (!input)
+	// 	return (ft_printf("%s\n", pwd), 0);
 	cur = getcwd(NULL, 0);
 	if (ft_strcmp("-", input[1]) == 0)
 	{
@@ -114,7 +175,7 @@ int	built_cd(char **input, t_data *data, int flag)
 			return (free (cur), 1);
 	}
 	data = envp_cd_mod(data, pwd, 2);
-	if (!input[1] || !ft_strcmp(input[1], "~"))
+	if (!input[1]/*  || !ft_strcmp(input[1], "~") */)
 		dest = get_dest_path_env(data, "HOME");
 	else if (ft_strcmp("..", input[1]) && (ft_strcmp("./", input[1]) == 0 || input[1][0] == '.'))
 		dest = get_dest_path_wl_sign(cur, pwd, input[1]);

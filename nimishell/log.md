@@ -7,6 +7,7 @@ TODO: Include cmd_list in executer to get all the arguments of the command
 TODO: Include a break in executer when cd is used in multiple pipes. It should work just when it is alone, but show error messages in the path if invalid
 TODO: error in lexer when redir is placed right after a pipe
 TODO: Fix path entering in executer. Must use the path inside data->path
+TODO: Add static variable home in built_cd to make the '~' expantion works
 
 
 

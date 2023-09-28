@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_pwd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:11:36 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/05 16:28:12 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/09/28 11:27:12 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@
  */
 int	built_pwd(t_data *data)
 {
-	built_cd(NULL, data, 0);
+	obtain_pwd_home(data->env, 1);
+//	built_cd(NULL, data, 0);
 	return (0);
 }
 
