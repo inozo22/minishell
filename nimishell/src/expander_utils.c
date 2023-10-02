@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 15:48:45 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/26 15:50:19 by nimai            ###   ########.fr       */
+/*   Updated: 2023/10/02 14:45:49 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ char	**split_quotes(char *str)
 	len = amount_quotes(str);
 	ret = (char **)ft_calloc(len + 1, sizeof(char *));
 	if (!ret)
-		return (NULL);//
+		return (NULL);//memory error
 	ft_bzero(i, 4 * sizeof(int));
 	while (i[3] < (int)ft_strlen(str))
 	{

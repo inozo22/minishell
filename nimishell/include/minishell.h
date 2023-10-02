@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 19:10:38 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/26 19:13:05 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/10/02 16:29:16 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,7 @@ char	**fill_current_cmd(t_list *lst, int pos, char **envp, pid_t pid);
 int		check_is_directory(char *cmd);
 char	*get_cmd_path(char *cmd, char **path, int *return_val);
 int		execute_script_without_shebang(char **cmd, char **env);
-int 	close_files_if_error(int fd[2], char *file_name);
+int		close_files_if_error(int fd[2], char *file_name);
 int		check_exit_status(int e_status);
 
 // 	Redir_setup
@@ -201,6 +201,13 @@ int		expanded_len(char *expanded, char *preceding, char *following);
 char	*remove_quotes(char *str);
 char	**split_quotes(char *str);
 char	*arrange_str(char **tab, char *str, int c);
+
+// expand_utils
+char	*get_var_value(char *env_var, char *envp[], int len);
+char	*is_expand(char *env_var, int len, char *env[], pid_t pid);
+int		compose_expanded(char *expanded, char **str, int start, int end);
+int		is_special_expand(char *str, int ret);
+int		check_valiable_len(char *str, int start, int quotes);
 
 //Redirect
 
