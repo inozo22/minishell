@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 18:40:39 by nimai             #+#    #+#             */
-/*   Updated: 2023/10/02 14:39:25 by nimai            ###   ########.fr       */
+/*   Updated: 2023/10/02 14:44:08 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,9 @@ char	*obtain_pwd_home(char **env, int flag)
 	return (NULL);
 }
 
+/**
+ * @note if there are more than 1 path, it will ignore after the first.
+ */
 int	built_cd(char **input, t_data *data)
 {
 	char		*dest;
@@ -146,6 +149,3 @@ int	built_cd(char **input, t_data *data)
 	obtain_pwd_home(data->env, 4);
 	return (free (tmp_pwd), free (dest), free (cur), g_return_val);
 }
-/**
- * if there are more than 1 path, it will ignore after the first.
- */
