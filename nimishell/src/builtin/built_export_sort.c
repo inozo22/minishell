@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_export_sort.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 16:17:55 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/05 16:25:08 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/10/02 14:07:09 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,3 @@ void	quick_sort(t_export_box box[], int left, int right)
 		quick_sort(box, pivot + 1, right);
 	}
 }
-
-/**
- * 
- * 
- */

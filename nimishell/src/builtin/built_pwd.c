@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:11:36 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/28 11:27:12 by nimai            ###   ########.fr       */
+/*   Updated: 2023/10/02 14:32:19 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@
 int	built_pwd(t_data *data)
 {
 	obtain_pwd_home(data->env, 1);
-//	built_cd(NULL, data, 0);
 	return (0);
 }
 

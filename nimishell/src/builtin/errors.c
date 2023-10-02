@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 17:20:27 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/18 11:42:00 by nimai            ###   ########.fr       */
+/*   Updated: 2023/10/02 14:34:51 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ void	error_built(char *cmd, char *comment)
 	}
 	ft_putendl_fd(comment, 2);
 }
-		//return (127);
 
 /**
  * @brief error message in builtin with argument

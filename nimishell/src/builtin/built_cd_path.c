@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 16:00:17 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/26 18:57:44 by nimai            ###   ########.fr       */
+/*   Updated: 2023/10/02 14:38:50 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,8 @@ int	strcount(char *str1, char *str2, int len)
 
 /**
  * @brief modifying path
- * @author nimai
- * @note get the whole path from cur, but change the string if it's input (cause should accept lower-case if it was)  
+ * @note get the whole path from cur, but change the string if it's input 
+ * (cause should accept lower-case if it was)  
  */
 char	*path_modify(char *cur, char *str)
 {
@@ -93,9 +93,9 @@ char	*path_modify(char *cur, char *str)
 	{
 		tmp = malloc(ft_strlen(cur) + 1);
 		if (!tmp)
-			return (NULL);//error memory allocation
+			return (NULL);
 		ft_strlcpy(tmp, str, ft_strlen(cur) + 1);
-		return (free (str),free (cur), tmp);
+		return (free (str), free (cur), tmp);
 	}
 	tmp = ft_strdup(str);
 	ft_strlower(tmp);

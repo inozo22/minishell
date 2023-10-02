@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:12:28 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/28 16:00:23 by nimai            ###   ########.fr       */
+/*   Updated: 2023/10/02 14:30:26 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ int			output_export(t_data *data);
 char		**envp_strs_join(char *input, t_data *data);
 void		envp_strs_mod(char *input, t_data *data);
 int			check_input(char *input, t_data *data);
+char		*envp_str_mod(char *str, char *input, int i, int flag);
 /**
  * functions from export
  */

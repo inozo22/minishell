@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 09:50:35 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/25 15:55:45 by nimai            ###   ########.fr       */
+/*   Updated: 2023/10/02 14:33:17 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,24 +70,3 @@ int	built_unset(char **input, t_data *data)
 	}
 	return (0);
 }
-
-/**
- * BEHAVIOUR IN BASH
- * 
- * 
- * 230601nimai: 
- * unset: kind of did it, but should be started over after it've been decided
- *  on the structure."
-[main b02d1eb] unset: kind of did it, but should be started over after it've
- been decided on the structure
- * 230615nimai: done.
- // test print=======================
-	// int j = 0;
-	// while (data->env[j])
-	// {
-	// 	printf("env: %s\n", data->env[j]);
-	// 	j++;
-	// }
-// test print=======================
- * 
- */

@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 09:50:16 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/18 11:17:19 by nimai            ###   ########.fr       */
+/*   Updated: 2023/10/02 13:59:59 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,19 +53,3 @@ int	built_env(char **input, t_data *data)
 	}
 	return (0);
 }
-
-/**
- * BEHAVIOUR IN BASH
- * when execute env, the list is not ordered 
- * 230601nimai: there is no "OLDPWD"? -> When there is record of moving,
- * it will be appeared->230614nimai: done
- * 
- * MEMORY LEAKS
- * 230526nimai: When I try free it, receive errors say that I'm trying
- * free memory which is not allocated.
- * But yes, allocated.->done
- * 
- * 230614nimai: if there is option, receive error message as below
- * env: <first option>: No such file or directory
- * 
- */

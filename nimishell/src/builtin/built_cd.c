@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 18:40:39 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/28 16:25:15 by nimai            ###   ########.fr       */
+/*   Updated: 2023/10/02 14:39:25 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,18 +51,9 @@ char	*get_dest_path(char *dest)
 	return (free (ret), cur);
 }
 
-// static char	*mod_pwd(char *pwd, char *dest)
-// {
-// 	if (dest)
-// 	{
-// 		free (pwd);
-// 		return (ft_strdup(dest));
-// 	}
-// 	return (pwd);
-// }
-
 /**
- * @note to fill static pwd in cd function, if there is no PWD in env, obtain by getcwd.
+ * @note to fill static pwd in cd function, 
+ * if there is no PWD in env, obtain by getcwd.
  */
 void	init_pwd_home(char **pwd, char **home, char **env)
 {
@@ -128,18 +119,13 @@ char	*obtain_pwd_home(char **env, int flag)
 	return (NULL);
 }
 
-/**
- * @note should be modified, but yet IDK if it's work with the current directory absense, so after merge check and modify
- * @param flag if it's 1, to delete static char
- * @param flag if it's 7, to expand the string
- */
 int	built_cd(char **input, t_data *data)
 {
 	char		*dest;
 	char		*cur;
 	char		*tmp_pwd;
 
-	obtain_pwd_home(data->env, 0);//this is for next 3 check
+	obtain_pwd_home(data->env, 0);
 	cur = getcwd(NULL, 0);
 	if (ft_strcmp("-", input[1]) == 0)
 	{
@@ -151,7 +137,8 @@ int	built_cd(char **input, t_data *data)
 	data = envp_cd_mod(data, tmp_pwd, 2);
 	if (!input[1])
 		dest = get_dest_path_env(data, "HOME");
-	else if (ft_strcmp("..", input[1]) && (ft_strcmp("./", input[1]) == 0 || input[1][0] == '.'))
+	else if (ft_strcmp("..", input[1]) && (ft_strcmp("./", \
+	input[1]) == 0 || input[1][0] == '.'))
 		dest = get_dest_path_wl_sign(cur, tmp_pwd, input[1]);
 	else if (ft_strcmp("-", input[1]) != 0)
 		dest = get_dest_path(input[1]);
@@ -159,38 +146,6 @@ int	built_cd(char **input, t_data *data)
 	obtain_pwd_home(data->env, 4);
 	return (free (tmp_pwd), free (dest), free (cur), g_return_val);
 }
-
 /**
  * if there are more than 1 path, it will ignore after the first.
- * 
- * /Users/nimai/42/42cursus/minishell/inc
- * bash-3.2$ cd ..
- * bash-3.2$ ls
- * Makefile	README.md	inc		lib		minishell	questions.txt	src		test.dat
- * bash-3.2$ cd /users/nimai/42/42cursus/minishell/inc
- * bash-3.2$ pwd
- * /users/nimai/42/42cursus/minishell/inc    <= ????? ->done
- * 
- * printf("line: %d\n", __LINE__);
- * error message: ft_printf("No such file or directory\n");
- * how to treat "../" or "./", give message like above? -> treat how does work bash
- * 
- * How to managge errors? At this moment, put in each function.
- * 
- * TODO list
- * 230605 OLDPWD hasn't added yet, add when you know the structure(more or less) ->done
- * 
- * cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory
- * bash-3.2$ echo $?
- * 0
- * bash-3.2$ pwd
- * /Users/nimai/test_bash/./
- * 
- * bash-3.2$ cd -
- * bash: cd: OLDPWD not set
- * bash-3.2$ echo $?
- * 1
- * bash-3.2$ -> done
- * 
  */
-

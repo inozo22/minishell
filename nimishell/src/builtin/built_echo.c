@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:54:13 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/26 19:44:53 by nimai            ###   ########.fr       */
+/*   Updated: 2023/10/02 14:36:12 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,11 @@ int	is_flag(char *str)
 }
 
 /**
- * @brief manage "builtin" echo cmd.
+ * @brief manage "builtin" echo cmd
  * @author nimai
  * @param **av "echo", "-n", "str (could be in large numbers as 10,000 byte)"
  * @param flag[0] the first flag check, for '\n'
  * @param flag[1] from second flag, to check if it should be printed
- * @return anyway print what you put after cmd, if there is no argument put "\n".
  */
 int	built_echo(char **input)
 {

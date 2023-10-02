@@ -6,35 +6,12 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:18:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/18 17:07:31 by nimai            ###   ########.fr       */
+/*   Updated: 2023/10/02 14:30:20 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/**
- * 
- * @param flag if there is no '=', you will put one more length to
- * allocate memory
- */
-char	*envp_str_mod(char *str, char *input, int i, int flag)
-{
-	free (str);
-	str = ft_calloc(ft_strlen(input) + 1 + flag, sizeof(char));
-	if (!str)
-	{
-		return (NULL);
-	}
-	ft_strlcpy(str, input, i + 2);
-	ft_strcat(str, (input + i + 1));
-	return (str);
-}
-
-/**
- * @note 230802nimai: changed counter i[1] because of the Werror,
- * check how works in MacOS
- * @note error wit fsanitize=address when executing "cd" in line 53
- */
 void	envp_strs_mod(char *input, t_data *data)
 {
 	int		i[3];
@@ -46,7 +23,7 @@ void	envp_strs_mod(char *input, t_data *data)
 		while (data->env[i[0]])
 		{
 			i[1] = 0;
-			if (ft_strncmp(data->env[i[0]], input, i[2] + 1) == 0) //with '='
+			if (ft_strncmp(data->env[i[0]], input, i[2] + 1) == 0)
 				data->env[i[0]] = envp_str_mod(data->env[i[0]], input, i[2], 0);
 			else if (ft_strncmp(data->env[i[0]], input, i[2]) == 0)
 			{
@@ -54,7 +31,8 @@ void	envp_strs_mod(char *input, t_data *data)
 					++i[1];
 				if (data->env[i[0]][i[1]] == '\0' && input[i[1]] == '=')
 				{
-					data->env[i[0]] = envp_str_mod(data->env[i[0]], input, i[2], 1);
+					data->env[i[0]] = envp_str_mod(data->env[i[0]], \
+					input, i[2], 1);
 					break ;
 				}
 			}
@@ -140,28 +118,6 @@ char	**envp_strs_join(char *input, t_data *data)
 		ret[i] = input;
 	ret[++i] = NULL;
 	return (ret);
-}
-
-int	check_input(char *input, t_data *data)
-{
-	int	c;
-	int	i;
-	int	j;
-
-	i = 0;
-	while (data->env[i])
-	{
-		c = 0;
-		j = -1;
-		while (data->env[i][++j] == input[c] && input[c] != '=' \
-		&& input[c] != '\0' && data->env[i][j])
-			c++;
-		if ((input[c] == '=' && data->env[i][j] == '\0') || (data->env[i][j] \
-		== '=' && input[c] == '\0') || (data->env[i][j] == input[c]))
-			return (c);
-		i++;
-	}
-	return (0);
 }
 
 /**

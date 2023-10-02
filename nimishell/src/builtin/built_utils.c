@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 11:52:54 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/18 11:41:10 by nimai            ###   ########.fr       */
+/*   Updated: 2023/10/02 14:34:39 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ char	*get_env(char **env, char *type)
 	if (env[i] && ft_strrchr(env[i], '='))
 		return (ft_strdup(env[i] + ft_strlen(type) + 1));
 	else
-		return (NULL);//error msg
+		return (NULL);
 }
 
 /**
