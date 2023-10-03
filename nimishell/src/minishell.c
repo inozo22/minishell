@@ -80,7 +80,7 @@ int	process_input(char *line_read, t_data *data)
 		while (tmp)
 		{
 			//SET THE EXIT INPUT FROM NULL TO DOUBLE ARRAY
-			char **cmd = fill_current_cmd(cmd_list, 0, data->env, data->pid);
+			char **cmd = fill_current_cmd(cmd_list, 0, data);
 			if (tmp->type == WORD && !ft_strcmp(tmp->content, "exit")  \
 				 && built_exit(cmd, data, 0) == 0)
 			{

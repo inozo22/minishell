@@ -18,7 +18,7 @@
 /**
  * @author bde-mada
  */
-char	**fill_current_cmd(t_list *lst, int pos, char **envp, pid_t pid)
+/* char	**fill_current_cmd(t_list *lst, int pos, char **envp, pid_t pid)
 {
 	char	**cmd;
 	t_list	*tmp;
@@ -42,6 +42,35 @@ char	**fill_current_cmd(t_list *lst, int pos, char **envp, pid_t pid)
 	{
 		if (lst->type == WORD || lst->type == PIPE_LINE)
 			cmd[++i] = expander(lst->content, envp, pid);
+		lst = lst->next;
+	}
+	return (cmd);
+} */
+
+char	**fill_current_cmd(t_list *lst, int pos, t_data *data)
+{
+	char	**cmd;
+	t_list	*tmp;
+	int		i;
+
+	i = 0;
+	tmp = lst;
+	while (tmp && tmp->cmd_pos == pos)
+	{
+		if (tmp->type == WORD || tmp->type == PIPE_LINE)
+			++i;
+		tmp = tmp->next;
+	}
+	if (!i)
+		return (NULL);
+	cmd = (char **)ft_calloc(i + 1, sizeof(char *));
+	if (!cmd)
+		return (NULL);
+	i = -1;
+	while (lst && lst->cmd_pos == pos)
+	{
+		if (lst->type == WORD || lst->type == PIPE_LINE)
+			cmd[++i] = expander(lst->content, data);
 		lst = lst->next;
 	}
 	return (cmd);
@@ -77,7 +106,7 @@ int	get_iofiles_fd(int *fd, t_list *lst, int pos)
 }
 //	ft_printf("Output in get_iofiles in pos %d: fd[0]: %d, fd[1]: %d\n", pos, fd[0], fd[1]);
 
-int	get_heredoc_input(t_list *lst, int pos, char **envp, pid_t pid)
+/* int	get_heredoc_input(t_list *lst, int pos, char **envp, pid_t pid)
 {
 	char	*tmp_eof;
 
@@ -89,6 +118,22 @@ int	get_heredoc_input(t_list *lst, int pos, char **envp, pid_t pid)
 		lst = lst->next;
 	}
 	if (tmp_eof && heredoc_read(tmp_eof, envp, pid))
+		return (1);
+	return (0);
+} */
+
+int	get_heredoc_input(t_list *lst, int pos, t_data *data)
+{
+	char	*tmp_eof;
+
+	tmp_eof = NULL;
+	while (lst && lst->cmd_pos == pos)
+	{
+		if (lst->type == HERE_DOC)
+			tmp_eof = lst->content;
+		lst = lst->next;
+	}
+	if (tmp_eof && heredoc_read(tmp_eof, data))
 		return (1);
 	return (0);
 }
@@ -161,7 +206,7 @@ int	executer(t_list *lst, int cmd_number, \
 		if (lst->cmd_pos == pos)
 		{
 			if (get_iofiles_fd(process_fd, lst, pos) == 0 \
-				&& get_heredoc_input(lst, pos, data->env, data->pid) == 0)
+				&& get_heredoc_input(lst, pos, data) == 0)
 			{
 				ft_printf("FDs set\n");
 				if (pipe(pipe_fd) == -1)
@@ -169,7 +214,7 @@ int	executer(t_list *lst, int cmd_number, \
 				//set singnal handlers for child process
 				ft_printf("HEY\n");
 				set_signal_handlers(0);
-				cmd = fill_current_cmd(lst, pos, data->env, data->pid);
+				cmd = fill_current_cmd(lst, pos, data);
 				if (!cmd || !(*cmd))
 				{	
 					if (lst->cmd_pos == cmd_number)

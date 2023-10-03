@@ -38,7 +38,7 @@ int	heredoc_to_stdin(char *input)
 	return (0);
 }
 
-int	heredoc_read(char *eof, char **envp, pid_t pid)
+/* int	heredoc_read(char *eof, char **envp, pid_t pid)
 {
 	char	*line_read;
 	char	*input;
@@ -53,6 +53,30 @@ int	heredoc_read(char *eof, char **envp, pid_t pid)
 		if (!line_read || !ft_strcmp(eof, line_read))
 			break ;
 		line_read = expander(line_read, envp, pid);
+		tmp = input;
+		input = ft_strjoin_many(3, input, "\n", line_read);
+		free(tmp);
+		del((void **)&line_read);
+	}
+	del((void **)&line_read);
+	return (heredoc_to_stdin(input));
+} */
+
+int	heredoc_read(char *eof, t_data *data)
+{
+	char	*line_read;
+	char	*input;
+	char	*tmp;
+
+	input = NULL;
+	line_read = NULL;
+	g_return_val = -1;
+	while (g_return_val < 0)
+	{
+		line_read = readline(">");
+		if (!line_read || !ft_strcmp(eof, line_read))
+			break ;
+		line_read = expander(line_read, data);
 		tmp = input;
 		input = ft_strjoin_many(3, input, "\n", line_read);
 		free(tmp);

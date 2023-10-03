@@ -150,7 +150,8 @@ int		warning_message(int type, int num);//2309114nimai: added
 
 int		executer(t_list *lst, int cmd_number, \
 					char **path, char **env, t_data *data);
-char	**fill_current_cmd(t_list *lst, int pos, char **envp, pid_t pid);
+//char	**fill_current_cmd(t_list *lst, int pos, char **envp, pid_t pid);
+char	**fill_current_cmd(t_list *lst, int pos, t_data *data);
 
 //	Executer_utils
 
@@ -192,7 +193,8 @@ int		av_amount(char **strs);
 
 //Expanser
 
-char	*expander(char *str, char *env[], int pid);
+//char	*expander(char *str, char *env[], int pid);
+char	*expander(char *str, t_data *data);
 //char	*expand(t_list *list, t_data *data, char *str);
 
 //	expander_utils
@@ -211,6 +213,7 @@ int		check_valiable_len(char *str, int start, int quotes);
 
 //Redirect
 
-int		heredoc_read(char *eof, char **envp, pid_t pid);
+//int		heredoc_read(char *eof, char **envp, pid_t pid);
+int		heredoc_read(char *eof, t_data *data);
 
 #endif
