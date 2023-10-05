@@ -125,6 +125,7 @@ int		is_quote(char c);
 //	Lexer_utils
 
 int		check_valid_input(char *input);
+int		check_literal_metacharacter(int c);
 
 //	Parser
 

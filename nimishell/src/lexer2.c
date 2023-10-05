@@ -92,7 +92,44 @@ int	count_tokens(char *str)
 		str++;
 	}
 	return (count);
-	
+}
+/**
+ * @note check if there are open quotes in string
+ * @return 0 if there are no open quotes
+ */
+static int	check_quotes_in_string(char *str)
+{	
+	while (*str)
+	{
+		is_quote(*str);
+		str++;
+	}
+	if (is_quote(*str))
+		return (1);
+	return (0);
+}
+
+static char	*dquote(char *input)
+{
+	char	*tmp[2];
+
+	ft_bzero(tmp, 2 * sizeof(char *));
+	ft_printf("Input in dquote: %s\n", input);
+	while (check_quotes_in_string(input))
+	{
+		tmp[0] = readline(">");
+		tmp[1] = input;
+		input = ft_strjoin(input, tmp[0]);
+		free(tmp[0]);
+		free(tmp[1]);
+	}
+	ft_printf("output in dquote: %s\n", input);
+	return (input);
+}
+
+int	che()
+{
+
 }
 
 /**
@@ -106,8 +143,21 @@ int	count_tokens(char *str)
 int	lexer(char *input, t_list **token_list)
 {
 	int	pos[5];
+	int	i;
+	char	**tokens;
 	//DELETE
 	t_list	*tmp;
 
-	ft_bzero(pos, 5 * sizeof(int));
+	token_list = NULL;
+	i = -1;
+	input = dquote(input);
+	while (input[++i])
+	{
+		if (!ft_isspace(input[i]))
+		{
+
+		}
+
+
+	}
 }
