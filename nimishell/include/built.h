@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:12:28 by nimai             #+#    #+#             */
-/*   Updated: 2023/10/02 14:30:26 by nimai            ###   ########.fr       */
+/*   Updated: 2023/10/06 16:36:30 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,13 +79,14 @@ int			built_unset(char **input, t_data *data);
 
 int			av_amount(char **strs);
 char		**fake_env(void);
-t_export	*fill_list(char **strs, t_export *ret);
-void		output_env(t_export *data, int len);
+t_list		*fill_list(char **strs, t_list *ret);
+// void		output_env(t_export *data, int len);
 int			output_export(t_data *data);
 char		**envp_strs_join(char *input, t_data *data);
 void		envp_strs_mod(char *input, t_data *data);
 int			check_input(char *input, t_data *data);
 char		*envp_str_mod(char *str, char *input, int i, int flag);
+void		sort_list(t_list *list);
 /**
  * functions from export
  */

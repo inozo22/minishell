@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 10:02:30 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/23 10:05:50 by nimai            ###   ########.fr       */
+/*   Updated: 2023/10/06 15:46:32 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 #include <fcntl.h>
 #include <stdlib.h>
+#include <termios.h>
 //test
 volatile int	g_return_val;
 //test
@@ -23,19 +24,24 @@ volatile int	g_return_val;
 
 int	built_export_test(t_data *data)
 {
-	char	**input_ex;
-	char	**input_export;
+	// char	**input_ex;
 
+//to change things with export	
+	// input_ex = ft_calloc(4, sizeof(char *));
+	// input_ex[0] = "export";
+	// input_ex[1] = "a";
+	// input_ex[2] = "b";
+	// input_ex[3] = "c=aaa";
+	// printf(COLOR_GREEN"=== I enter test export! ===%s\n", COLOR_RESET);
+
+	// built_export(input_ex, data);
+	// printf(COLOR_GREEN"=== I did export! ===%s\n", COLOR_RESET);
+//to change things with export
+
+//to output export
+	char	**input_export = NULL;
 	input_export = ft_calloc(1, sizeof(char *));
 	input_export[0] = "export";
-	input_ex = ft_calloc(4, sizeof(char *));
-	input_ex[0] = "export";
-	input_ex[1] = "a";
-	input_ex[2] = "b";
-	input_ex[3] = "c=aaa";
-
-	built_export(input_ex, data);
-	printf(COLOR_GREEN"=== I did export! ===%s\n", COLOR_RESET);
 	printf(COLOR_BLUE"=== check check ===%s\n", COLOR_RESET);
 	built_export(input_export, data);
 	printf(COLOR_BLUE"=== check check ===%s\n\n", COLOR_RESET);
@@ -203,10 +209,11 @@ int	input_mult_test(t_data *data, char *test)
 
 int	test_expand(t_data *data)
 {
+	(void)data;
 //	char	*input = "$HOME $? \'$HOME\' $?\'$HOME\'$?";
 //	char	*input = "\"$$\"555\"$HOME\"'$USER'$PWD"; expexted: "222555/Users/nimai$USER/Users/nimai/42/42cursus/minishell/nimishell"
 //	char	*input2 = "$$ $$$USER";
-	char	*ret;
+	// char	*ret;
 	// char	*input = "\"$HOME\"'$USER'";
 
 	// char *input1 = "$HOME$USER$PWD$$";
@@ -218,13 +225,13 @@ int	test_expand(t_data *data)
 
 
 
-	char *input10 = "ls";
+	// char *input10 = "ls";
 	// char *input1 = "\"$\"";
-	printf("%stest10	EXPANSER: Line: %d, ret: %s%s\n", COLOR_GREEN, __LINE__, input10, COLOR_RESET);
-	ret = expander(input10, data->env, 111);
-	printf("%stest10	ret		: %s%s\n", COLOR_BLUE, ret, COLOR_RESET);
-	printf("%stest10	expected	: %s%s\n\n", COLOR_GREEN, "ls", COLOR_RESET);
-	free (ret);
+	// printf("%stest10	EXPANSER: Line: %d, ret: %s%s\n", COLOR_GREEN, __LINE__, input10, COLOR_RESET);
+	// ret = expander(input10, data->env, 111);
+	// printf("%stest10	ret		: %s%s\n", COLOR_BLUE, ret, COLOR_RESET);
+	// printf("%stest10	expected	: %s%s\n\n", COLOR_GREEN, "ls", COLOR_RESET);
+	// free (ret);
 	// char *input1 = "\"$ $ $ $ $ $\"";
 	// // char *input1 = "\"$\"";
 	// printf("%stest1	EXPANSER: Line: %d, ret: %s%s\n", COLOR_GREEN, __LINE__, input1, COLOR_RESET);
@@ -274,6 +281,18 @@ int	test_expand(t_data *data)
 
 //TEST/////TEST////////TEST///////TEST/////////TEST////TEST////////
 
+static int	set_terminal_attributes(struct termios *termios_save)
+{
+	struct termios	term;
+
+	if (tcgetattr(0, termios_save))
+		return (1);
+	term = *termios_save;
+	term.c_lflag &= ~ECHOCTL;
+	tcsetattr(0, TCSASOFT, &term);
+	return (0);
+}
+
 /**
  * @note added SHLVL increment
   */
@@ -286,102 +305,130 @@ static int	fill_env(t_data *data, char *envp[])
 		i++;
 	data->env = (char **)ft_calloc(i + 2, sizeof(char *));
 	if (!data->env)
-		return(errors(12, data));
+		return (errors(12, data));
 	i = -1;
 	while (envp[++i])
 	{
 		if (ft_strncmp(envp[i], "SHLVL=", 6) == 0)
 		{
 			data->env[i] = get_shlvl(envp[i]);
-			//you can put error message when it has 1000, but I don't think anyone try to 1000 times open minishell
+			if (!data->env[i])
+				return (errors(ENOMEM, data));
 		}
 		else if (ft_strncmp(envp[i], "OLDPWD=", 7))
 			data->env[i] = ft_strdup(envp[i]);
 		else
 			data->env[i] = ft_strdup("OLDPWD");
 		if (!data->env[i] && envp[i])
-			return (errors(12, data));
+			return (errors(ENOMEM, data));
 	}
-	ft_printf("Environment loaded\n");
 	return (0);
 }
 
-static void	define_basic_env(t_data *data, char *prog_name)
+static int	define_basic_env(t_data *data, char *prog_name)
 {
 	char	*ptr;
-	char	*tmp;
+	char	*tmp_prog_name;
 
 	ptr = getcwd(NULL, 0);
 	data->env = (char **)ft_calloc(5 + 1, sizeof(char *));
-	data->env[0] = ft_strdup("PATH=/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin");
+	if (!data->env)
+		return (errors(12, data));
+	data->env[0] = ft_strdup(DEFAULT_PATH);
 	data->env[1] = ft_strjoin("PWD=", ptr);
 	data->env[2] = ft_strdup("OLDPWD");
 	data->env[3] = ft_strdup("SHLVL=1");
-	tmp = ft_strjoin("_=", ptr);
+	tmp_prog_name = ft_substr(prog_name, 2, ft_strlen(prog_name) - 2);
+	data->env[4] = ft_strjoin_many(4, "_=", ptr, "/", tmp_prog_name);
+	free(tmp_prog_name);
 	free(ptr);
-	ptr = tmp;
-	tmp = ft_strjoin(tmp, "/");
-	data->env[4] = ft_strjoin(tmp, prog_name);
-	free(ptr);
-	free(tmp);
 	ft_printf("No environment available, baseline created\n");
+	return (0);
 }
 
-static t_data	*init_data(char *envp[], char *prog_name)
+static int	init_data(t_data *data, char *envp[], char *prog_name)
 {
-	t_data	*data;
-
-	data = NULL;
-	data = (t_data *)ft_calloc(1, sizeof(t_data));
-	if (!data)
-		errors(12, data);
-	if (!*envp)
-		define_basic_env(data, prog_name);
-	else
-		if (fill_env(data, envp))
-			return (NULL);
+	if (!*envp && define_basic_env(data, prog_name))
+		return (1);
+	else if (*envp && fill_env(data, envp))
+		return (1);
+	ft_printf("Environment loaded\n");
 	set_path_list(data);
-	return (data);
+	data->exit_status = 0;
+	return (0);
 }
 
 int	main(int argc, char *argv[], char *envp[])
 {
-	t_data	*data;
-	pid_t	pid;
-	int		ret;
+	t_data			data;
+	struct termios	termios_save;
 
 	g_return_val = 0;
-	pid = get_my_pid();
-	if (!pid)
+	data.pid = get_my_pid();
+	if (!data.pid)
 		return (1);
-	if ((argc == 3 && ft_strcmp(argv[1], "-c")) || argc != 1)
-		exit (error_file(argv[0], argv[1]));
-	data = init_data(envp, argv[0]);
-	if (!data)
+	if (init_data(&data, envp, argv[0]))
 		return (1);
-	printf("env[0] %s\n", data->env[0]);
-	data->pid = pid;
+	if (argc != 1)
+	{
+		if ((argc == 3 && !ft_strcmp(argv[1], "-c")))
+			return (process_input(argv[2], &data));
+		else
+			exit (error_file(argv[1]));
+	}
+	// these remove ^C in the prompt
+	// CORREGIR MENSAJE DE ERROR
 
-	//if you want to put any test function, here
-
-	test_expand(data);
-//	test_childcreation(data);
-//test_checkquotes();
-//	input_mult_test(data, "u_echo.test");
-//	input_test(data);
-//	built_cd_oldpwd_test(data);
-//	built_unset_test(data);
-//	built_cd_oldpwd_unset_test(data);
-//	built_export_test(data);
-
-	////////////////////////////////////////
+	if (set_terminal_attributes(&termios_save) == 1)
+		return (1);
 
 
-	if (argv[1])
-		ret = minishell(data);
-	if (g_return_val)
-		ret = g_return_val;
-	free_alloc(data);
-	free(data);
-	return (ret);
+
+// 	//if you want to put any test function, here
+
+// 	// test_expand(data);
+// //	test_childcreation(data);
+// //test_checkquotes();
+// //	input_mult_test(data, "u_echo.test");
+// //	input_test(data);
+// //	built_cd_oldpwd_test(data);
+// //	built_unset_test(data);
+// //	built_cd_oldpwd_unset_test(data);
+ 	built_export_test(&data);
+
+// 	////////////////////////////////////////
+
+		//return (errors(12, data));
+//	minishell(&data);
+	free_alloc(&data);
+	tcsetattr(0, 0, &termios_save);
+	return (g_return_val);
+
+
+	
+// 	t_data	*data;
+// 	pid_t	pid;
+// 	int		ret;
+
+// 	g_return_val = 0;
+// 	pid = get_my_pid();
+// 	if (!pid)
+// 		return (1);
+// 	if ((argc == 3 && ft_strcmp(argv[1], "-c")) || argc != 1)
+// 		return (process_input(argv[2], &data));
+// 	data = init_data(envp, argv[0]);
+// 	if (!data)
+// 		return (1);
+// 	printf("env[0] %s\n", data->env[0]);
+// 	data->pid = pid;
+
+
+
+// 	if (argv[1])
+// 		ret = minishell(data);
+// 	if (g_return_val)
+// 		ret = g_return_val;
+// 	free_alloc(data);
+// 	free(data);
+// 	return (ret);
 }
