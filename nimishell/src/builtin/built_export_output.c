@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 12:44:12 by nimai             #+#    #+#             */
-/*   Updated: 2023/10/08 08:33:27 by nimai            ###   ########.fr       */
+/*   Updated: 2023/10/08 10:07:02 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,40 +32,63 @@
 // 	}
 // }
 
-// /**
-//  * @brief output all list
-//  * @author nimai
-//  * @param flag control between env and export (230526)
-//  * @note maybe adjust to some list too.
-//  * @note 230905bde-mada: added condition to skip '_' variable
-//  * @note 230912nimai: removed flags and fixed condition to skip '_' variable
-//  */
-// void	output_env(t_list *list, int len)
-// {
-// 	int	i;
-// 	int	j;
+/**
+ * @brief output all list
+ * @author nimai
+ * @param flag control between env and export (230526)
+ * @note maybe adjust to some list too.
+ * @note 230905bde-mada: added condition to skip '_' variable
+ * @note 230912nimai: removed flags and fixed condition to skip '_' variable
+ */
+void	output_env(t_list *list)
+{
+	t_list	*head;
+	int		len;
 
-// 	j = -1;
-// 	while (++j < len)
-// 	{
-// 		i = -1;
-// 		while (++i < len)
-// 		{
-// 			if (list->box[i].id == j && ft_strcmp(list->box[i].name, "_") != 0)
-// 			{
-// 				ft_printf("declare -x ");
-// 				ft_printf("%s", list->box[i].name);
-// 				if (list->box[i].equal == 1)
-// 				{
-// 					ft_printf("=\"");
-// 					print_export(list->box[i].val);
-// 					ft_printf("\"");
-// 				}
-// 				ft_printf("\n");
-// 			}
-// 		}
-// 	}
-// }
+	list = head;
+	while (list)
+	{
+		len = ft_strchr(list->content, '=') - list->content;
+		if (ft_strncmp(list->content, "_=", 2) != 0)
+		{
+			if (len)
+			{
+				write(1, list->content, len - 1);
+				ft_printf("=\"");
+				ft_printf(list->content + len);
+				ft_printf("\"");
+			}
+			else
+			{
+				ft_printf("declare -x ");
+				ft_printf("%s", list->content);
+			}
+			ft_printf("\n");
+		}
+		list = list->next;
+	}
+
+	// j = -1;
+	// while (++j < len)
+	// {
+	// 	i = -1;
+	// 	while (++i < len)
+	// 	{
+	// 		if (list->box[i].id == j && ft_strcmp(list->box[i].name, "_") != 0)
+	// 		{
+	// 			ft_printf("declare -x ");
+	// 			ft_printf("%s", list->box[i].name);
+	// 			if (list->box[i].equal == 1)
+	// 			{
+	// 				ft_printf("=\"");
+	// 				print_export(list->box[i].val);
+	// 				ft_printf("\"");
+	// 			}
+	// 			ft_printf("\n");
+	// 		}
+	// 	}
+	// }
+}
 
 /**
  * @brief a part of initiation t_data
@@ -97,14 +120,6 @@ t_list	*fill_list(char **env, t_list *list)
 		ft_lstadd_back(&list, next);
 		printf("env[%d]: %s\n", i, env[i]);
 	}
-	// list = head;
-	// i = 0;
-	// while (list)
-	// {
-	// 	printf("content[%d]: %s\n", i, list->content);
-	// 	list = list->next;
-	// 	i++;
-	// }
 	return (head);
 }
 
@@ -122,15 +137,12 @@ int	output_export(t_data *data)
 	list = NULL;
 	if (!tmp_env)
 		return (printf("Error: failure obtain env\n"), 0);
-	// list = ft_lstnew(NULL, 0, 0);
-	// if (!list)
-	// 	return (heap_error(1), 0);
 	list = fill_list(tmp_env, list);
 	if (!list)
 		return (0);
 	sort_list(list);
-	//	quick_sort(list->box, 0, av_amount(tmp_env) - 1);
-	// output_env(list, av_amount(tmp_env));
+	output_env(list/* , av_amount(tmp_env) */);
+	printf("Hello! Im here!\n");
 	i = 0;
 	while (i < av_amount(tmp_env))
 	{
