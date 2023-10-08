@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 12:44:12 by nimai             #+#    #+#             */
-/*   Updated: 2023/10/08 10:07:02 by nimai            ###   ########.fr       */
+/*   Updated: 2023/10/08 18:23:45 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,27 +42,31 @@
  */
 void	output_env(t_list *list)
 {
-	t_list	*head;
+	// t_list	*head;
 	int		len;
 
-	list = head;
+	// list = head;
 	while (list)
 	{
-		len = ft_strchr(list->content, '=') - list->content;
-		if (ft_strncmp(list->content, "_=", 2) != 0)
+		if (ft_strncmp(list->content, "_=", 2) == 0)
 		{
-			if (len)
-			{
-				write(1, list->content, len - 1);
-				ft_printf("=\"");
-				ft_printf(list->content + len);
-				ft_printf("\"");
-			}
-			else
-			{
-				ft_printf("declare -x ");
-				ft_printf("%s", list->content);
-			}
+			list = list->next;
+			continue ;
+		}
+		if (ft_strchr(list->content, '='))
+		{
+			len = ft_strchr(list->content, '=') - list->content;
+			printf("len: %d\n", len);
+			ft_printf("declare -x ");
+			write(1, list->content, len);
+			ft_printf("=\"");
+			ft_printf(list->content + len + 1);
+			ft_printf("\"");
+		}
+		else
+		{
+			ft_printf("declare -x ");
+			ft_printf("%s", list->content);
 			ft_printf("\n");
 		}
 		list = list->next;
