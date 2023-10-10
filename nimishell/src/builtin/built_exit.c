@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 13:05:08 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/18 17:00:13 by nimai            ###   ########.fr       */
+/*   Updated: 2023/10/10 10:15:30 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,15 @@ int	av_amount(char **strs)
 		ret++;
 	}
 	return (ret);
+	// int	ret;
+
+	// ret = 0;
+	// while (strs && *strs)
+	// {
+	// 	ret++;
+	// 	strs++;
+	// }
+	// return (ret);
 }
 
 /**

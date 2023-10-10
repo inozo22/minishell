@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 10:02:30 by nimai             #+#    #+#             */
-/*   Updated: 2023/10/06 15:46:32 by nimai            ###   ########.fr       */
+/*   Updated: 2023/10/10 10:59:20 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,14 @@ int	built_export_test(t_data *data)
 
 //to output export
 	char	**input_export = NULL;
-	input_export = ft_calloc(1, sizeof(char *));
+	input_export = ft_calloc(2, sizeof(char *));
 	input_export[0] = "export";
+	input_export[1] = NULL;
 	printf(COLOR_BLUE"=== check check ===%s\n", COLOR_RESET);
 	built_export(input_export, data);
 	printf(COLOR_BLUE"=== check check ===%s\n\n", COLOR_RESET);
 
+	free (input_export);
 //	sleep (1);
 
 	// char	**input1;
