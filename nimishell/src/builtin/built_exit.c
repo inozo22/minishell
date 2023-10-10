@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 13:05:08 by nimai             #+#    #+#             */
-/*   Updated: 2023/10/10 11:55:13 by nimai            ###   ########.fr       */
+/*   Updated: 2023/10/10 16:32:26 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,15 @@ int	is_numeric(char *num)
 	if (*num == '-' || *num == '+')
 	{
 		if (*num == '-')
+		{
 			i = 1;
+		}
 		num++;
 	}
 	if (ft_strlen(num) > 19)
 		return (0);
-	if (ft_strlen(num) == 19 && ((!i && ft_strcmp(num, "9223372036854775807")) \
-	|| (i && ft_strcmp(num, "9223372036854775808"))))
+	if (ft_strlen(num) == 19 && ((!i && ft_strcmp(num, "9223372036854775807") \
+	> 0) || (i && ft_strcmp(num, "9223372036854775808") > 0)))
 		return (0);
 	while (*num)
 	{

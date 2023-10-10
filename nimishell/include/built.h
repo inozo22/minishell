@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:12:28 by nimai             #+#    #+#             */
-/*   Updated: 2023/10/10 12:28:15 by nimai            ###   ########.fr       */
+/*   Updated: 2023/10/10 16:05:04 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ char		*envp_str_mod(char *str, char *input, int i, int flag);
 /**
  * functions from export
  */
+void		swap_list(t_list **list, t_list *head);
+int			check_variable_len(int len1, int len2);
 
 /**
  * functions from cd

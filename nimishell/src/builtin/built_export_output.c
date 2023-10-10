@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 12:44:12 by nimai             #+#    #+#             */
-/*   Updated: 2023/10/10 11:54:08 by nimai            ###   ########.fr       */
+/*   Updated: 2023/10/10 16:04:27 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,24 +47,56 @@ void	output_env(t_list *list)
 	}
 }
 
+// void	sort_list(t_list *list)
+// {
+// 	int		len;
+// 	t_list	*head;
+// 	char	*tmp;
+
+// 	head = list;
+// 	while (list && list->next)
+// 	{
+// 		if (ft_strchr(list->content, 61) && ft_strchr(list->next->content, 61))
+// 		{
+// 			len = ft_strchr(list->content, 61) - list->content;
+// 			if (len > ft_strchr(list->next->content, 61) - list->next->content)
+// 				len = ft_strchr(list->next->content, 61) - list->next->content;
+// 		}
+// 		else if (ft_strchr(list->content, 61))
+// 			len = ft_strchr(list->content, 61) - list->content;
+// 		else if (ft_strchr(list->next->content, 61))
+// 			len = ft_strchr(list->next->content, 61) - list->next->content;
+// 		else
+// 			len = -1;
+// 		if ((len == -1 && ft_strcmp(list->content, list->next->content) > 0) || (len && ft_strncmp(list->content, list->next->content, len) > 0))
+// 		{
+// 			tmp = list->content;
+// 			list->content = list->next->content;
+// 			list->next->content = tmp;
+// 			list = head;
+// 			continue ;
+// 		}
+// 		list = list->next;
+// 	}
+// }
+
 void	sort_list(t_list *list)
 {
 	int		len;
+	int		len1;
+	int		len2;
 	t_list	*head;
-	char	*tmp;
 
 	head = list;
-	while (list->next)
+	while (list && list->next)
 	{
-		len = ft_strchr(list->content, '=') - list->content;
-		if (len < ft_strchr(list->next->content, '=') - list->next->content)
-			len = ft_strchr(list->next->content, '=') - list->next->content;
-		if (ft_strncmp(list->content, list->next->content, len) > 0)
+		len1 = ft_strchr(list->content, 61) - list->content;
+		len2 = ft_strchr(list->next->content, 61) - list->next->content;
+		len = check_variable_len(len1, len2);
+		if ((len == -1 && ft_strcmp(list->content, list->next->content) > 0) || \
+		(len && ft_strncmp(list->content, list->next->content, len) > 0))
 		{
-			tmp = list->content;
-			list->content = list->next->content;
-			list->next->content = tmp;
-			list = head;
+			swap_list(&list, head);
 			continue ;
 		}
 		list = list->next;

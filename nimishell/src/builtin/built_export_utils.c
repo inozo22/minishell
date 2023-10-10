@@ -6,11 +6,48 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 14:25:44 by nimai             #+#    #+#             */
-/*   Updated: 2023/10/02 14:30:17 by nimai            ###   ########.fr       */
+/*   Updated: 2023/10/10 16:11:47 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/**
+ * @note 231010nimai: to swap the list to sort
+ */
+void	swap_list(t_list **list, t_list *head)
+{
+	char	*tmp;
+
+	tmp = list[0]->content;
+	list[0]->content = list[0]->next->content;
+	list[0]->next->content = tmp;
+	*list = head;
+}
+
+/**
+ * @note 231010nimai: to check the length and decide until where I should compare
+ */
+int	check_variable_len(int len1, int len2)
+{
+	int	ret;
+
+	ret = 0;
+	if (len1 && len2 < 0)
+		ret = len1;
+	else if (len1 < 0 && len2)
+		ret = len2;
+	else if (len1 && len2)
+	{
+		if (len1 > len2)
+			ret = len1;
+		else
+			ret = len2;
+	}
+	else
+		ret = -1;
+	return (ret);
+}
 
 /**
  * 
