@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 15:44:25 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/26 15:11:40 by nimai            ###   ########.fr       */
+/*   Updated: 2023/10/10 11:59:33 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,28 +16,6 @@ void	my_free(void *ptr)
 {
 	free (ptr);
 	ptr = NULL;
-}
-
-void	*arr_free(t_export *list)
-{
-	int	i;
-
-	i = 0;
-	while (list->box[i].name)
-	{
-		if (list->box[i].name)
-		{
-			free (list->box[i].name);
-			list->box[i].name = NULL;
-		}
-		if (list->box[i].val)
-		{
-			free (list->box[i].val);
-			list->box[i].val = NULL;
-		}
-		i++;
-	}
-	return (NULL);
 }
 
 char	**strs_free(char **strs)

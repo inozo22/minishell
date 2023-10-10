@@ -6,11 +6,28 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 11:52:54 by nimai             #+#    #+#             */
-/*   Updated: 2023/10/02 14:34:39 by nimai            ###   ########.fr       */
+/*   Updated: 2023/10/10 11:55:24 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/**
+ * @brief to know argv's amount.
+ * @author nimai
+ * @return how many argvs you have, in int. 
+ */
+int	av_amount(char **strs)
+{
+	int	ret;
+
+	ret = 0;
+	while (strs && strs[ret])
+	{
+		ret++;
+	}
+	return (ret);
+}
 
 /**
  * @note it's not so cool, but can I use it?

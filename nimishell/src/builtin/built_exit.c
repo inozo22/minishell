@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 13:05:08 by nimai             #+#    #+#             */
-/*   Updated: 2023/10/10 10:15:30 by nimai            ###   ########.fr       */
+/*   Updated: 2023/10/10 11:55:13 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,32 +52,6 @@ static int	error_exit_msg(void)
 {
 	ft_putendl_fd("minishell: exit: too many arguments", 2);
 	return (1);
-}
-
-/**
- * @brief to know argv's amount.
- * @author nimai
- * @return how many argvs you have, in int. 
- */
-int	av_amount(char **strs)
-{
-	int	ret;
-
-	ret = 0;
-	while (strs && strs[ret])
-	{
-		ret++;
-	}
-	return (ret);
-	// int	ret;
-
-	// ret = 0;
-	// while (strs && *strs)
-	// {
-	// 	ret++;
-	// 	strs++;
-	// }
-	// return (ret);
 }
 
 /**

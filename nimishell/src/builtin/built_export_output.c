@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 12:44:12 by nimai             #+#    #+#             */
-/*   Updated: 2023/10/10 11:42:32 by nimai            ###   ########.fr       */
+/*   Updated: 2023/10/10 11:54:08 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,10 @@ void	output_env(t_list *list)
 			write(1, list->content, len);
 			ft_printf("=\"");
 			ft_printf(list->content + len + 1);
-			ft_printf("\"");
+			ft_printf("\"\n");
 		}
 		else
-			ft_printf("%s", list->content);
-		ft_printf("\n");
+			ft_printf("%s\n", list->content);
 		list = list->next;
 	}
 }

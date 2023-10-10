@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:12:28 by nimai             #+#    #+#             */
-/*   Updated: 2023/10/06 16:36:30 by nimai            ###   ########.fr       */
+/*   Updated: 2023/10/10 12:28:15 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,6 @@ getcwd: cannot access parent directories: No such file or directory"
 
 typedef struct s_temp	t_temp;
 
-/**
- * @brief smalll boxes
- * @author nimai
- * @param index the final position number.
- * @param pos the amount of the name, do letter to long.
- * @param name keep until "="
- * @param val valor of variable, I have to put " " when I output
- */
-
 typedef struct s_data
 {
 	char		**env;
@@ -42,24 +33,6 @@ typedef struct s_data
 	pid_t		pid;
 	short int	exit_status;
 }				t_data;
-
-typedef struct s_export_box
-{
-	int		id;
-	long	pos;
-	char	*name;
-	char	*val;
-	int		equal;
-}	t_export_box;
-
-/**
- * @brief to order export list
- */
-typedef struct s_export
-{
-	t_export_box	box[ARGLIMIT];
-	int				plen;
-}	t_export;
 
 /**
  * Main built-in functions
@@ -77,7 +50,6 @@ int			built_unset(char **input, t_data *data);
  * functions from export
  */
 
-int			av_amount(char **strs);
 char		**fake_env(void);
 t_list		*fill_list(char **strs, t_list *ret);
 // void		output_env(t_export *data, int len);
@@ -86,7 +58,7 @@ char		**envp_strs_join(char *input, t_data *data);
 void		envp_strs_mod(char *input, t_data *data);
 int			check_input(char *input, t_data *data);
 char		*envp_str_mod(char *str, char *input, int i, int flag);
-void		sort_list(t_list *list);
+
 /**
  * functions from export
  */
@@ -109,7 +81,7 @@ char		*obtain_pwd_home(char **env, int flag);
 /**
  * functions from utils
  */
-
+int			av_amount(char **strs);
 int			check_valid(char *str, char *cmd);
 char		*get_env(char **env, char *type);
 /**
@@ -121,10 +93,7 @@ void		error_id_built(char *cmd, char *av, char *comment);
 void		error_built(char *cmd, char *comment);
 int			error_notset(char *cmd, char *input);
 void		heap_error(int flag);
-void		quick_sort(t_export_box box[], int left, int right);
-
 void		**ptr_free(void **ptr);
-void		*arr_free(t_export *list);
 /* void		*all_tmp_free(t_temp *temp); */
 char		**strs_free(char **strs);
 void		my_free(void *ptr);
