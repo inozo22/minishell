@@ -6,3 +6,5 @@ test
 minishell
 *.rpt
 *.dSYM
+.DS_Store
+.vscode/*
