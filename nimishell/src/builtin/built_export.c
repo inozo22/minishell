@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:18:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/10/11 15:55:33 by nimai            ###   ########.fr       */
+/*   Updated: 2023/10/11 17:53:26 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,18 +129,16 @@ int	built_export(char **input, char ***env)
 {
 	char		**new_envp;
 	int			i;
-	int			amount;
 
 	new_envp = NULL;
-	amount = av_amount(input);
-	if (amount == 1)
+	if (av_amount(input) == 1)
 	{
 		if (!output_export(*env))
 			return (printf("Error: output_export\n"), 1);
 		return (0);
 	}
 	i = 0;
-	while (++i < amount)
+	while (++i < av_amount(input))
 	{
 		if (!check_input(input[i], *env))
 		{

@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:12:28 by nimai             #+#    #+#             */
-/*   Updated: 2023/10/11 15:55:07 by nimai            ###   ########.fr       */
+/*   Updated: 2023/10/11 17:46:38 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,13 @@ typedef struct s_data
 	short int	exit_status;
 }				t_data;
 
+typedef struct s_export
+{
+	char			*content;
+	char			*name;
+	struct s_export	*next;
+}				t_export;
+
 /**
  * Main built-in functions
 */
@@ -51,19 +58,22 @@ int			built_unset(char **input, char ***env);
  */
 
 char		**fake_env(void);
-t_list		*fill_list(char **strs, t_list *ret);
+t_export	*fill_list(char **env, t_export *list);
 // void		output_env(t_export *data, int len);
 int			output_export(char **env);
 char		**envp_strs_join(char *input, char **env);
 void		envp_strs_mod(char *input, char ***env);
 int			check_input(char *input, char **env);
 char		*envp_str_mod(char *str, char *input, int i, int flag);
+t_export	*new_export(char *content, char *name);
+void		export_add_back(t_export **list, t_export *newnode);
+void		*export_clear(t_export **list, void (*del)(void *));
 
 /**
  * functions from export
  */
 void		swap_list(t_list **list, t_list *head);
-int			check_variable_len(int len1, int len2);
+int			check_variable_len(t_list *list);
 
 /**
  * functions from cd

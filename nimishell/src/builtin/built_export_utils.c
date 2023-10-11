@@ -6,47 +6,54 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 14:25:44 by nimai             #+#    #+#             */
-/*   Updated: 2023/10/11 15:50:39 by nimai            ###   ########.fr       */
+/*   Updated: 2023/10/11 17:49:44 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/**
- * @note 231010nimai: to swap the list to sort
- */
-void	swap_list(t_list **list, t_list *head)
+t_export	*new_export(char *content, char *name)
 {
-	char	*tmp;
+	t_export	*new;
 
-	tmp = list[0]->content;
-	list[0]->content = list[0]->next->content;
-	list[0]->next->content = tmp;
-	*list = head;
+	new = (t_export *)malloc(sizeof(t_export));
+	if (!new)
+		return (NULL);
+	new->content = content;
+	new->name = name;
+	new->next = NULL;
+	return (new);
 }
 
-/**
- * @note 231010nimai: to check the length and decide until where I should compare
- */
-int	check_variable_len(int len1, int len2)
+void	export_add_back(t_export **list, t_export *newnode)
 {
-	int	ret;
+	t_export	*start;
 
-	ret = 0;
-	if (len1 && len2 < 0)
-		ret = len1;
-	else if (len1 < 0 && len2)
-		ret = len2;
-	else if (len1 && len2)
+	start = *list;
+	if (*list)
 	{
-		if (len1 > len2)
-			ret = len1;
-		else
-			ret = len2;
+		while (start->next)
+			start = start->next;
+		start->next = newnode;
 	}
 	else
-		ret = -1;
-	return (ret);
+		*list = newnode;
+}
+
+void	*export_clear(t_export **list, void (*del)(void *))
+{
+	if (list && *list)
+	{
+		export_clear(&(*list)->next, del);
+		if (*list)
+		{
+			del((*list)->content);
+			del((*list)->name);
+			free (*list);
+		}
+		*list = NULL;
+	}
+	return (NULL);
 }
 
 /**

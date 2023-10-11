@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 12:44:12 by nimai             #+#    #+#             */
-/*   Updated: 2023/10/11 15:42:48 by nimai            ###   ########.fr       */
+/*   Updated: 2023/10/11 17:47:21 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
  * @note 230912nimai: removed flags and fixed condition to skip '_' variable
  * @note 231010nimai: remake this function to accept any size of string
  */
-void	output_env(t_list *list)
+void	output_env(t_export *list)
 {
 	int		len;
 
@@ -47,56 +47,27 @@ void	output_env(t_list *list)
 	}
 }
 
-// void	sort_list(t_list *list)
-// {
-// 	int		len;
-// 	t_list	*head;
-// 	char	*tmp;
-
-// 	head = list;
-// 	while (list && list->next)
-// 	{
-// 		if (ft_strchr(list->content, 61) && ft_strchr(list->next->content, 61))
-// 		{
-// 			len = ft_strchr(list->content, 61) - list->content;
-// 			if (len > ft_strchr(list->next->content, 61) - list->next->content)
-// 				len = ft_strchr(list->next->content, 61) - list->next->content;
-// 		}
-// 		else if (ft_strchr(list->content, 61))
-// 			len = ft_strchr(list->content, 61) - list->content;
-// 		else if (ft_strchr(list->next->content, 61))
-// 			len = ft_strchr(list->next->content, 61) - list->next->content;
-// 		else
-// 			len = -1;
-// 		if ((len == -1 && ft_strcmp(list->content, list->next->content) > 0) || (len && ft_strncmp(list->content, list->next->content, len) > 0))
-// 		{
-// 			tmp = list->content;
-// 			list->content = list->next->content;
-// 			list->next->content = tmp;
-// 			list = head;
-// 			continue ;
-// 		}
-// 		list = list->next;
-// 	}
-// }
-
-void	sort_list(t_list *list)
+/**
+ * @note ft_strcmp without value, strncmp with value
+ */
+void	sort_list(t_export *list)
 {
-	int		len;
-	int		len1;
-	int		len2;
-	t_list	*head;
+	t_export	*head;
+	char		*tmp_content;
+	char		*tmp_name;
 
 	head = list;
 	while (list && list->next)
 	{
-		len1 = ft_strchr(list->content, 61) - list->content;
-		len2 = ft_strchr(list->next->content, 61) - list->next->content;
-		len = check_variable_len(len1, len2);
-		if ((len == -1 && ft_strcmp(list->content, list->next->content) > 0) || \
-		(len && ft_strncmp(list->content, list->next->content, len) > 0))
+		if (ft_strcmp(list->name, list->next->name) > 0)
 		{
-			swap_list(&list, head);
+			tmp_content = list->content;
+			tmp_name = list->name;
+			list->content = list->next->content;
+			list->name = list->next->name;
+			list->next->content = tmp_content;
+			list->next->name = tmp_name;
+			list = head;
 			continue ;
 		}
 		list = list->next;
@@ -107,36 +78,41 @@ void	sort_list(t_list *list)
  * @author nimai
  * @note confirmed that there is no memory leaks
  */
-t_list	*fill_list(char **env, t_list *list)
+t_export	*fill_list(char **env, t_export *list)
 {
-	int		amount;
-	int		i;
-	t_list	*next;
-	t_list	*head;
+	int			amount;
+	int			i;
+	t_export	*next;
+	t_export	*head;
 
 	i = 0;
-	list = ft_lstnew(ft_strdup(env[i]), 0, 0);
+	list = new_export(ft_strdup(env[i]), ft_substr(env[i], 0, \
+	ft_strchr(env[i], 61) - env[i]));
 	if (!list)
 		return (heap_error(1), NULL);
 	head = list;
 	amount = av_amount(env);
 	while (++i < amount)
 	{
-		next = ft_lstnew(ft_strdup(env[i]), 0, 0);
-		ft_lstadd_back(&list, next);
+		if (ft_strchr(env[i], 61))
+			next = new_export(ft_strdup(env[i]), ft_substr(env[i], 0, \
+			ft_strchr(env[i], 61) - env[i]));
+		else
+			next = new_export(ft_strdup(env[i]), ft_strdup(env[i]));
+		export_add_back(&list, next);
 	}
 	return (head);
 }
 
 /**
- * @brief print export, then free t_list
+ * @brief print export, then free t_export
  * @author nimai
  * @note 231010nimai: remake to accept any size of string
  */
 int	output_export(char **env)
 {
 	char		**tmp_env;
-	t_list		*list;
+	t_export	*list;
 
 	tmp_env = env;
 	list = NULL;
@@ -147,6 +123,6 @@ int	output_export(char **env)
 		return (0);
 	sort_list(list);
 	output_env(list);
-	ft_lstclear(&list, free);
+	export_clear(&list, free);
 	return (1);
 }
