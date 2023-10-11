@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 09:50:16 by nimai             #+#    #+#             */
-/*   Updated: 2023/10/02 13:59:59 by nimai            ###   ########.fr       */
+/*   Updated: 2023/10/11 13:37:37 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	error_input(char *input, char *msg)
  * @note if there is no '=', understand that without value,
  * and not will print it
  */
-int	built_env(char **input, t_data *data)
+int	built_env(char **input, char **env)
 {
 	char		**tmp_env;
 	int			i;
@@ -40,7 +40,7 @@ int	built_env(char **input, t_data *data)
 	if (av_amount(input) > 1)
 		return (error_input(input[0], \
 				"with no options or arguments are required"), 1);
-	tmp_env = (char **)data->env;
+	tmp_env = env;
 	if (!tmp_env)
 		return (printf("ERROR: Line: %d\n", __LINE__), 0);
 	i = 0;

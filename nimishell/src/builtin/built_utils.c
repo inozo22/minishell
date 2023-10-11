@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 11:52:54 by nimai             #+#    #+#             */
-/*   Updated: 2023/10/10 11:55:24 by nimai            ###   ########.fr       */
+/*   Updated: 2023/10/11 13:28:27 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,15 @@ void	set_return(int val)
  * @author nimai
  * @return 1 if it's valid, otherwise 0.
  * @note in built_utils.
+ * @note 231011nimai: add condition to check to ignore '_' with unset
  */
 int	check_valid(char *str, char *cmd)
 {
 	int	i;
 
 	i = 0;
+	if (!ft_strcmp(cmd, "unset") && !ft_strcmp(str, "_"))
+		return (0);
 	if (str[i] == '-')
 		return (set_return(2), error_id_built(cmd, str, "invalid option"), 0);
 	if (!(ft_isalpha(str[i]) || str[i] == '_'))

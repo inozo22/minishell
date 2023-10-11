@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:32:33 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/28 16:00:53 by nimai            ###   ########.fr       */
+/*   Updated: 2023/10/11 13:37:15 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	check_builtin(char **input, t_data *data)
 	if (!ft_strcmp(input[0], "export"))
 		return (built_export(input, data));
 	if (!ft_strcmp(input[0], "unset"))
-		return (built_unset(input, data));
+		return (built_unset(input, &data->env));
 	if (!ft_strcmp(input[0], "exit"))
 	{
 		//printf("input: %s\n", input[0]);
@@ -58,9 +58,9 @@ int	check_builtin(char **input, t_data *data)
 	if (!ft_strcmp(lower_input, "echo"))
 		return (free(lower_input), built_echo(input));
 	if (!ft_strcmp(lower_input, "pwd"))
-		return (free(lower_input), built_pwd(data));
+		return (free(lower_input), built_pwd(data->env));
 	if (!ft_strcmp(lower_input, "env"))
-		return (free(lower_input), built_env(input, data));
+		return (free(lower_input), built_env(input, data->env));
 	free(lower_input);
 	return (-1);
 }

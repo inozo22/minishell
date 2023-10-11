@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 09:50:35 by nimai             #+#    #+#             */
-/*   Updated: 2023/10/02 14:33:17 by nimai            ###   ########.fr       */
+/*   Updated: 2023/10/11 13:28:40 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
  * @author nimai
  * @param **av "unset", "ABC", "DEF"
  */
-t_data	*unset_env(t_data *data, char *str)
+void	*unset_env(char ***env, char *str)
 {
 	int		i;
 	int		j;
@@ -26,24 +26,24 @@ t_data	*unset_env(t_data *data, char *str)
 
 	i = -1;
 	j = -1;
-	tmp = (char **)malloc(sizeof(char *) * (av_amount(data->env) + 1));
+	tmp = (char **)malloc(sizeof(char *) * (av_amount(*env) + 1));
 	if (!tmp)
 		return (heap_error(1), NULL);
 	len = ft_strlen(str);
-	while (data->env[++i])
+	while ((*env)[++i])
 	{
-		if (ft_strnstr(data->env[i], str, len) && (data->env[i][len] == '=' || \
-		data->env[i][len] == '\0'))
+		if (ft_strnstr((*env)[i], str, len) && ((*env)[i][len] == '=' || \
+		(*env)[i][len] == '\0'))
 			;
 		else
-			tmp[++j] = ft_strdup(data->env[i]);
-		free (data->env[i]);
-		data->env[i] = NULL;
+			tmp[++j] = ft_strdup((*env)[i]);
+		free ((*env)[i]);
+		(*env)[i] = NULL;
 	}
 	tmp[++j] = NULL;
-	free (data->env);
-	data->env = tmp;
-	return (data);
+	free (*env);
+	*env = tmp;
+	return (NULL);
 }
 
 /**
@@ -52,8 +52,9 @@ t_data	*unset_env(t_data *data, char *str)
  * @param **av "unset", "ABC", "DEF"
  * @note if it's not valid, receive error message, but if it's valid and doesn't
  *  exist will not receive anything
+ * @note unset not unset _???
  */
-int	built_unset(char **input, t_data *data)
+int	built_unset(char **input, char ***env)
 {
 	int		i;
 	int		len;
@@ -64,7 +65,7 @@ int	built_unset(char **input, t_data *data)
 	{
 		if (check_valid(input[i], "unset") == 1)
 		{
-			data = unset_env(data, input[i]);
+			unset_env(env, input[i]);
 		}
 		i++;
 	}

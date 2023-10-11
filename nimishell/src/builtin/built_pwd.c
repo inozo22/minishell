@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:11:36 by nimai             #+#    #+#             */
-/*   Updated: 2023/10/02 14:32:19 by nimai            ###   ########.fr       */
+/*   Updated: 2023/10/11 12:07:03 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@
  * @note obtain pwd from static pwd in built_cd. So you can also obtain
  * after unset PWD
  */
-int	built_pwd(t_data *data)
+int	built_pwd(char **env)
 {
-	obtain_pwd_home(data->env, 1);
+	obtain_pwd_home(env, 1);
 	return (0);
 }
 
