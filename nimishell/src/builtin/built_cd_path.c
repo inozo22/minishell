@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 16:00:17 by nimai             #+#    #+#             */
-/*   Updated: 2023/10/02 14:38:50 by nimai            ###   ########.fr       */
+/*   Updated: 2023/10/11 15:52:11 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@
  * @return ** pointer, then free 
  * @note 230603nimai: Doesn't show PWD on Ubuntu (moji bake)
  */
-t_data	*envp_cd_mod(t_data *data, char *path, int type)
+void	*envp_cd_mod(char ***env, char *path, int type)
 {
 	char	*tmp;
 
 	tmp = NULL;
 	if (!path)
-		return (data);
+		return (NULL);
 	if (type == 1)
 	{
 		tmp = ft_calloc(ft_strlen(path) + 5, sizeof(char));
@@ -43,9 +43,9 @@ t_data	*envp_cd_mod(t_data *data, char *path, int type)
 		ft_strcpy(tmp, "OLDPWD=");
 		ft_strcat(tmp, path);
 	}
-	envp_strs_mod(tmp, data);
+	envp_strs_mod(tmp, env);
 	free (tmp);
-	return (data);
+	return (NULL);
 }
 
 char	*str_mod(char *cur, char *str, int i, int len)

@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:12:28 by nimai             #+#    #+#             */
-/*   Updated: 2023/10/11 13:38:02 by nimai            ###   ########.fr       */
+/*   Updated: 2023/10/11 15:55:07 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ typedef struct s_data
 int			built_exit(char **input, t_data *data, int cmd_num);
 int			built_pwd(char **env);
 int			built_echo(char **input);
-int			built_cd(char **input, t_data *data);
-int			built_export(char **input, t_data *data);
+int			built_cd(char **input, char ***env);
+int			built_export(char **input, char ***env);
 int			built_env(char **input, char **env);
 int			built_unset(char **input, char ***env);
 
@@ -53,10 +53,10 @@ int			built_unset(char **input, char ***env);
 char		**fake_env(void);
 t_list		*fill_list(char **strs, t_list *ret);
 // void		output_env(t_export *data, int len);
-int			output_export(t_data *data);
-char		**envp_strs_join(char *input, t_data *data);
-void		envp_strs_mod(char *input, t_data *data);
-int			check_input(char *input, t_data *data);
+int			output_export(char **env);
+char		**envp_strs_join(char *input, char **env);
+void		envp_strs_mod(char *input, char ***env);
+int			check_input(char *input, char **env);
 char		*envp_str_mod(char *str, char *input, int i, int flag);
 
 /**
@@ -69,7 +69,7 @@ int			check_variable_len(int len1, int len2);
  * functions from cd
  */
 
-t_data		*envp_cd_mod(t_data *data, char *dest, int path);
+void		*envp_cd_mod(char ***env, char *path, int type);
 char		*ft_strlower(char *str);
 char		*str_mod(char *cur, char *str, int i, int len);
 char		*path_modify(char *cur, char *str);
@@ -77,7 +77,7 @@ int			get_pos_above_path(char *str);
 char		*get_above_path(char *current);
 void		error_cd(char *cmd);
 char		*get_dest_path_wl_sign(char *cur, char *pwd, char *input);
-char		*get_dest_path_env(t_data *data, char *envtype);
+char		*get_dest_path_env(char **env, char *envtype);
 char		*obtain_pwd_home(char **env, int flag);
 
 /**

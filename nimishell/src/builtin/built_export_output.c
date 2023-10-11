@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 12:44:12 by nimai             #+#    #+#             */
-/*   Updated: 2023/10/10 16:04:27 by nimai            ###   ########.fr       */
+/*   Updated: 2023/10/11 15:42:48 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,12 +133,12 @@ t_list	*fill_list(char **env, t_list *list)
  * @author nimai
  * @note 231010nimai: remake to accept any size of string
  */
-int	output_export(t_data *data)
+int	output_export(char **env)
 {
 	char		**tmp_env;
 	t_list		*list;
 
-	tmp_env = data->env;
+	tmp_env = env;
 	list = NULL;
 	if (!tmp_env)
 		return (printf("Error: failure obtain env\n"), 0);

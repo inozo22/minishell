@@ -6,33 +6,32 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:18:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/10/06 15:36:58 by nimai            ###   ########.fr       */
+/*   Updated: 2023/10/11 15:55:33 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	envp_strs_mod(char *input, t_data *data)
+void	envp_strs_mod(char *input, char ***env)
 {
 	int		i[3];
 
 	ft_bzero(i, 3 * sizeof(int));
-	i[2] = check_input(input, data);
+	i[2] = check_input(input, *env);
 	if (input[i[2]] == '=')
 	{
-		while (data->env[i[0]])
+		while ((*env)[i[0]])
 		{
 			i[1] = 0;
-			if (ft_strncmp(data->env[i[0]], input, i[2] + 1) == 0)
-				data->env[i[0]] = envp_str_mod(data->env[i[0]], input, i[2], 0);
-			else if (ft_strncmp(data->env[i[0]], input, i[2]) == 0)
+			if (ft_strncmp((*env)[i[0]], input, i[2] + 1) == 0)
+				(*env)[i[0]] = envp_str_mod((*env)[i[0]], input, i[2], 0);
+			else if (ft_strncmp((*env)[i[0]], input, i[2]) == 0)
 			{
-				while (data->env[i[0]][i[1]] == input[i[1]])
+				while ((*env)[i[0]][i[1]] == input[i[1]])
 					++i[1];
-				if (data->env[i[0]][i[1]] == '\0' && input[i[1]] == '=')
+				if ((*env)[i[0]][i[1]] == '\0' && input[i[1]] == '=')
 				{
-					data->env[i[0]] = envp_str_mod(data->env[i[0]], \
-					input, i[2], 1);
+					(*env)[i[0]] = envp_str_mod((*env)[i[0]], input, i[2], 1);
 					break ;
 				}
 			}
@@ -96,23 +95,23 @@ char	*mod_path(char *input)
  * @author nimai
  * @return ** pointer, then free 
  */
-char	**envp_strs_join(char *input, t_data *data)
+char	**envp_strs_join(char *input, char **env)
 {
 	char	**ret;
 	int		i;
 
-	ret = ft_calloc(av_amount(data->env) + 2, sizeof(char *));
+	ret = ft_calloc(av_amount(env) + 2, sizeof(char *));
 	if (!ret)
 		return (heap_error(1), NULL);
 	i = 0;
-	while (data->env[i])
+	while (env[i])
 	{
-		ret[i] = data->env[i];
-		data->env[i] = NULL;
+		ret[i] = env[i];
+		env[i] = NULL;
 		i++;
 	}
-	free (data->env);
-	data->env = NULL;
+	free (env);
+	env = NULL;
 	input = mod_path(input);
 	if (check_valid(input, "export"))
 		ret[i] = input;
@@ -126,7 +125,7 @@ char	**envp_strs_join(char *input, t_data *data)
  * @param **input "export", "ABC=abc". *data
  * @return 
  */
-int	built_export(char **input, t_data *data)
+int	built_export(char **input, char ***env)
 {
 	char		**new_envp;
 	int			i;
@@ -136,22 +135,22 @@ int	built_export(char **input, t_data *data)
 	amount = av_amount(input);
 	if (amount == 1)
 	{
-		if (!output_export(data))
+		if (!output_export(*env))
 			return (printf("Error: output_export\n"), 1);
 		return (0);
 	}
 	i = 0;
 	while (++i < amount)
 	{
-		if (!check_input(input[i], data))
+		if (!check_input(input[i], *env))
 		{
-			new_envp = envp_strs_join(input[i], data);
+			new_envp = envp_strs_join(input[i], *env);
 			if (!new_envp)
 				return (printf("ERROR: Line: %d\n", __LINE__), 1);
-			data->env = new_envp;
+			*env = new_envp;
 		}
 		else
-			envp_strs_mod(input[i], data);
+			envp_strs_mod(input[i], env);
 	}
 	return (g_return_val);
 }

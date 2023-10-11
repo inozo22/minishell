@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 18:40:39 by nimai             #+#    #+#             */
-/*   Updated: 2023/10/02 14:44:08 by nimai            ###   ########.fr       */
+/*   Updated: 2023/10/11 15:37:51 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,30 +122,30 @@ char	*obtain_pwd_home(char **env, int flag)
 /**
  * @note if there are more than 1 path, it will ignore after the first.
  */
-int	built_cd(char **input, t_data *data)
+int	built_cd(char **input, char ***env)
 {
 	char		*dest;
 	char		*cur;
 	char		*tmp_pwd;
 
-	obtain_pwd_home(data->env, 0);
+	obtain_pwd_home(*env, 0);
 	cur = getcwd(NULL, 0);
 	if (ft_strcmp("-", input[1]) == 0)
 	{
-		dest = get_dest_path_env(data, "OLDPWD");
+		dest = get_dest_path_env(*env, "OLDPWD");
 		if (!dest)
 			return (free (cur), 1);
 	}
-	tmp_pwd = obtain_pwd_home(data->env, 3);
-	data = envp_cd_mod(data, tmp_pwd, 2);
+	tmp_pwd = obtain_pwd_home(*env, 3);
+	envp_cd_mod(env, tmp_pwd, 2);
 	if (!input[1])
-		dest = get_dest_path_env(data, "HOME");
+		dest = get_dest_path_env(*env, "HOME");
 	else if (ft_strcmp("..", input[1]) && (ft_strcmp("./", \
 	input[1]) == 0 || input[1][0] == '.'))
 		dest = get_dest_path_wl_sign(cur, tmp_pwd, input[1]);
 	else if (ft_strcmp("-", input[1]) != 0)
 		dest = get_dest_path(input[1]);
-	envp_cd_mod(data, dest, 1);
-	obtain_pwd_home(data->env, 4);
+	envp_cd_mod(env, dest, 1);
+	obtain_pwd_home(*env, 4);
 	return (free (tmp_pwd), free (dest), free (cur), g_return_val);
 }

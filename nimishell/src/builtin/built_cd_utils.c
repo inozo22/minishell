@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 09:43:46 by nimai             #+#    #+#             */
-/*   Updated: 2023/09/26 19:19:02 by nimai            ###   ########.fr       */
+/*   Updated: 2023/10/11 15:00:09 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,11 @@ char	*get_dest_path_wl_sign(char *cur, char *pwd, char *input)
  * @return 
  * @note if there is no value, receive "??? not set" message
  */
-char	*get_dest_path_env(t_data *data, char *envtype)
+char	*get_dest_path_env(char **env, char *envtype)
 {
 	char	*ret;
 
-	ret = get_env(data->env, envtype);
+	ret = get_env(env, envtype);
 	if (!ret)
 	{
 		g_return_val = 1;

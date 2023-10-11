@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 12:49:14 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/15 15:29:49 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/10/11 15:48:20 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	update_last_executed_cmd(t_data *data, char **input)
 		tmp_input = (char **)ft_calloc(2 + 1, sizeof(char *));
 		tmp_input[0] = ft_strdup("export");
 		tmp_input[1] = ft_strdup("_=");
-		built_export(tmp_input, data);
+		built_export(tmp_input, &data->env);
 		return (free_list(tmp_input), free (cmd), 0);
 	}
 	else if (ft_strchr(input[av_amount(input) - 1], '='))
@@ -90,7 +90,7 @@ int	update_last_executed_cmd(t_data *data, char **input)
 	tmp_input[1] = ft_strjoin("_=", cmd);
 	ft_printf("tmp_input[0]: %s\n", tmp_input[0]);
 	ft_printf("tmp_input[1]: %s\n", tmp_input[1]);
-	built_export(tmp_input, data);
+	built_export(tmp_input, &data->env);
 	return (free_list(tmp_input), free (cmd), 0);
 }
 // int	update_last_executed_cmd(t_data *data, char *cmd)

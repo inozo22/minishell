@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 14:25:44 by nimai             #+#    #+#             */
-/*   Updated: 2023/10/10 16:11:47 by nimai            ###   ########.fr       */
+/*   Updated: 2023/10/11 15:50:39 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,22 +67,22 @@ char	*envp_str_mod(char *str, char *input, int i, int flag)
 	return (str);
 }
 
-int	check_input(char *input, t_data *data)
+int	check_input(char *input, char **env)
 {
 	int	c;
 	int	i;
 	int	j;
 
 	i = 0;
-	while (data->env[i])
+	while (env[i])
 	{
 		c = 0;
 		j = -1;
-		while (data->env[i][++j] == input[c] && input[c] != '=' \
-		&& input[c] != '\0' && data->env[i][j])
+		while (env[i][++j] == input[c] && input[c] != '=' \
+		&& input[c] != '\0' && env[i][j])
 			c++;
-		if ((input[c] == '=' && data->env[i][j] == '\0') || (data->env[i][j] \
-		== '=' && input[c] == '\0') || (data->env[i][j] == input[c]))
+		if ((input[c] == '=' && env[i][j] == '\0') || (env[i][j] \
+		== '=' && input[c] == '\0') || (env[i][j] == input[c]))
 			return (c);
 		i++;
 	}
