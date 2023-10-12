@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 18:24:57 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/26 18:29:03 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/10/12 13:31:30 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,20 @@ int	check_valid_input(char *input)
 		}
 		else
 			break ;
+	}
+	return (0);
+}
+
+int	check_literal_metacharacter(int c)
+{
+	if (c == '(' || c == ')' || c == ';' || c == '\\' \
+	|| c == '*' || c == '&' || c == '`' || c == '[' \
+	|| c == ']' || c == '{' || c == '}')
+	{
+		ft_printf(COLOR_YELLOW"Used metacharacter: %c\n"COLOR_RESET, c);
+		ft_putstr_fd("Special characters like (), [], {}, *, \\, &, ``...", 1);
+		ft_putendl_fd(" will be treated as literal\n\n", 1);	
+		return (1);
 	}
 	return (0);
 }

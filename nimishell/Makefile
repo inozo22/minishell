@@ -3,10 +3,14 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+         #
+#    By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/30 13:14:38 by bde-mada          #+#    #+#              #
+<<<<<<< HEAD
 #    Updated: 2023/10/10 11:22:23 by nimai            ###   ########.fr        #
+=======
+#    Updated: 2023/10/12 17:31:19 by bde-mada         ###   ########.fr        #
+>>>>>>> dev_lexer_borja
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +37,7 @@ CFLAGS		= -Wall -Wextra -Werror -Wpedantic
 OS			= $(shell uname)
 
 #Optimization and valgrind debugging flags:
-DEBUG			:= -g3 -O0 #-fsanitize=address 
+DEBUG			:= -g3 -O0 -fsanitize=address 
 #change -O0 with -O1 or -O2 for faster execution but worse info
 
 LDFLAGS		= $(addprefix -L, $(LIBS_DIR))
@@ -47,8 +51,8 @@ INC_DIR		= include/
 LIBS		:= ft
 INCLUDE		:= minishell.h
 SRC_FILES	:=  main.c minishell_init.c minishell.c terminate.c error_msgs.c \
-				utils.c cmd_split.c redirect.c expander.c lexer.c parser.c \
-				lexer_utils.c expander_utils.c expand_utils.c\
+				utils.c cmd_split.c redirect.c expander.c lexer3.c \
+				lexer_utils.c \
 				executer2.c executer_utils.c builtin/built_cd_path.c \
 				builtin/built_cd.c builtin/built_cd_utils.c \
 				builtin/built_echo.c builtin/built_env.c builtin/built_exit.c \

@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/10/12 15:36:39 by nimai            ###   ########.fr       */
+/*   Updated: 2023/10/12 17:46:46 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 	tmp = lst;
 	while (tmp && tmp->cmd_pos == pos)
 	{
-		if (tmp->type == WORD || tmp->type == PIPE_LINE)
+		if (tmp->type == WORD || tmp->type == PIPE)
 			++i;
 		tmp = tmp->next;
 	}
@@ -40,7 +40,7 @@
 	i = -1;
 	while (lst && lst->cmd_pos == pos)
 	{
-		if (lst->type == WORD || lst->type == PIPE_LINE)
+		if (lst->type == WORD || lst->type == PIPE)
 			cmd[++i] = expander(lst->content, envp, pid);
 		lst = lst->next;
 	}

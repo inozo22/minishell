@@ -7,8 +7,11 @@ TODO: Include cmd_list in executer to get all the arguments of the command
 TODO: Include a break in executer when cd is used in multiple pipes. It should work just when it is alone, but show error messages in the path if invalid
 TODO: error in lexer when redir is placed right after a pipe
 TODO: Fix path entering in executer. Must use the path inside data->path
-
-
+TODO: In expansion, exclude NULLs in the cmd array and check nulls in redir to throw "ambiguous redirect" error
+TODO: With builtins, execute in father when there is just a single command and in child with many commands
+TODO: implement dquotes when input ends in pipe
+TODO: empty _ env variable whe there are pipes
+TODO: Return value if error with input redirection
 
 
 ---------------------------------
