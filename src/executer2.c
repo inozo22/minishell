@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
+/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/10/12 18:03:11 by nimai            ###   ########.fr       */
+/*   Updated: 2023/09/26 19:34:43 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 	tmp = lst;
 	while (tmp && tmp->cmd_pos == pos)
 	{
-		if (tmp->type == WORD || tmp->type == PIPE)
+		if (tmp->type == WORD || tmp->type == PIPE_LINE)
 			++i;
 		tmp = tmp->next;
 	}
@@ -40,34 +40,27 @@
 	i = -1;
 	while (lst && lst->cmd_pos == pos)
 	{
-		if (lst->type == WORD || lst->type == PIPE)
+		if (lst->type == WORD || lst->type == PIPE_LINE)
 			cmd[++i] = expander(lst->content, envp, pid);
 		lst = lst->next;
 	}
 	return (cmd);
 } */
 
-int	count_command(t_list *tmp, int pos)
-{
-	int	ret;
-
-	ret = 0;
-	while (tmp && tmp->cmd_pos == pos)
-	{
-		if (tmp->type == WORD || tmp->type == PIPE)
-			ret++;
-		tmp = tmp->next;
-	}
-	return (ret);
-}
-
 char	**fill_current_cmd(t_list *lst, int pos, t_data *data)
 {
 	char	**cmd;
-	char	*tmp;
+	t_list	*tmp;
 	int		i;
 
-	i = count_command(lst, pos);
+	i = 0;
+	tmp = lst;
+	while (tmp && tmp->cmd_pos == pos)
+	{
+		if (tmp->type == WORD || tmp->type == PIPE_LINE)
+			++i;
+		tmp = tmp->next;
+	}
 	if (!i)
 		return (NULL);
 	cmd = (char **)ft_calloc(i + 1, sizeof(char *));
@@ -76,14 +69,8 @@ char	**fill_current_cmd(t_list *lst, int pos, t_data *data)
 	i = -1;
 	while (lst && lst->cmd_pos == pos)
 	{
-		if (lst->type == WORD || lst->type == PIPE)
-		{
-			tmp = expander(lst->content, data);
-			if (*tmp)
-				cmd[++i] = tmp;
-			else
-				free (tmp);
-		}
+		if (lst->type == WORD || lst->type == PIPE_LINE)
+			cmd[++i] = expander(lst->content, data);
 		lst = lst->next;
 	}
 	return (cmd);
