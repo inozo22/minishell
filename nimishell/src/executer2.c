@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/26 19:34:43 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/10/12 15:36:39 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,20 +47,27 @@
 	return (cmd);
 } */
 
-char	**fill_current_cmd(t_list *lst, int pos, t_data *data)
+int	count_command(t_list *tmp, int pos)
 {
-	char	**cmd;
-	t_list	*tmp;
-	int		i;
+	int	ret;
 
-	i = 0;
-	tmp = lst;
+	ret = 0;
 	while (tmp && tmp->cmd_pos == pos)
 	{
 		if (tmp->type == WORD || tmp->type == PIPE_LINE)
-			++i;
+			ret++;
 		tmp = tmp->next;
 	}
+	return (ret);
+}
+
+char	**fill_current_cmd(t_list *lst, int pos, t_data *data)
+{
+	char	**cmd;
+	char	*tmp;
+	int		i;
+
+	i = count_command(lst, pos);
 	if (!i)
 		return (NULL);
 	cmd = (char **)ft_calloc(i + 1, sizeof(char *));
@@ -70,7 +77,13 @@ char	**fill_current_cmd(t_list *lst, int pos, t_data *data)
 	while (lst && lst->cmd_pos == pos)
 	{
 		if (lst->type == WORD || lst->type == PIPE_LINE)
-			cmd[++i] = expander(lst->content, data);
+		{
+			tmp = expander(lst->content, data);
+			if (*tmp)
+				cmd[++i] = tmp;
+			else
+				free (tmp);
+		}
 		lst = lst->next;
 	}
 	return (cmd);
