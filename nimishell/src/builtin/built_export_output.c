@@ -6,11 +6,32 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 12:44:12 by nimai             #+#    #+#             */
-/*   Updated: 2023/10/11 17:47:21 by nimai            ###   ########.fr       */
+/*   Updated: 2023/10/12 11:20:30 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	print_value(char *str)
+{
+	int	i;
+
+	i = 0;
+	if (ft_strchr(str, '"') || ft_strchr(str, '$') || \
+	ft_strchr(str, '`') || ft_strchr(str, '\\'))
+	{
+		while (str[i])
+		{
+			if (str[i] == '\"' || str[i] == '$' || \
+			str[i] == '`' || str[i] == '\\')
+				ft_printf("%c", '\\');
+			ft_printf("%c", str[i]);
+			i++;
+		}
+	}
+	else
+		ft_printf(str);
+}
 
 /**
  * @brief output all list
@@ -38,7 +59,7 @@ void	output_env(t_export *list)
 			len = ft_strchr(list->content, '=') - list->content;
 			write(1, list->content, len);
 			ft_printf("=\"");
-			ft_printf(list->content + len + 1);
+			print_value(list->content + len + 1);
 			ft_printf("\"\n");
 		}
 		else
