@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
+/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/10/12 17:46:46 by nimai            ###   ########.fr       */
+/*   Updated: 2023/10/12 17:49:20 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	count_command(t_list *tmp, int pos)
 	ret = 0;
 	while (tmp && tmp->cmd_pos == pos)
 	{
-		if (tmp->type == WORD || tmp->type == PIPE_LINE)
+		if (tmp->type == WORD || tmp->type == PIPE)
 			ret++;
 		tmp = tmp->next;
 	}
@@ -76,7 +76,7 @@ char	**fill_current_cmd(t_list *lst, int pos, t_data *data)
 	i = -1;
 	while (lst && lst->cmd_pos == pos)
 	{
-		if (lst->type == WORD || lst->type == PIPE_LINE)
+		if (lst->type == WORD || lst->type == PIPE)
 		{
 			tmp = expander(lst->content, data);
 			if (*tmp)
