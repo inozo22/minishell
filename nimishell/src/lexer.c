@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 18:39:55 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/26 18:28:59 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/10/06 16:44:15 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int is_metacharacter(char *str)
 	if (*str == '|' && *(str + 1) == '|')
 		return (INVALID);
 	if (*str == '|')
-		return (PIPE_LINE);
+		return (PIPE);
 	if (ft_isspace(*str))
 		return (IS_SPACE);
 	return (WORD);
@@ -167,7 +167,7 @@ int get_token(t_list **list, char *input, int *pos)
 			max_pipe = tmp->cmd_pos;
 		tmp = tmp->next;
 	}
-	if (pos[2] == PIPE_LINE)
+	if (pos[2] == PIPE)
 		++max_pipe;
 	new = ft_lstnew(token, pos[2], max_pipe);
 	ft_printf("token: %s, type: %d, pos: %d\n", new->content, new->type, new->cmd_pos);
@@ -210,7 +210,7 @@ int lexer(char *input, t_list **token_list)
 		}
 		if (pos[2] != IS_SPACE)
 			pos[0] = i;
-		if (pos[2] == HERE_DOC || pos[2] == APPEND || (pos[2] == PIPE_LINE && input[i + 1] == input[i]))
+		if (pos[2] == HERE_DOC || pos[2] == APPEND || (pos[2] == PIPE && input[i + 1] == input[i]))
 			pos[0]++;
 		ft_printf("string start: %d, type: %d\n", pos[0], pos[2]);
 		pos[3] = get_token(token_list, input, pos);

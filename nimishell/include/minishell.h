@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 19:10:38 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/26 19:13:05 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/10/12 16:29:37 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,19 +31,19 @@ extern volatile int	g_return_val;
 
 enum e_token
 {
-	WORD = -1,
+	INVALID = -1,
+	WORD = 'a',
 	IS_SPACE = ' ',
 	NEW_LINE = '\n',
-	QOUTE = '\'',
+	QUOTE = '\'',
 	DOUBLE_QUOTE = '\"',
 	ESCAPE = '\\',
 	ENV = '$',
-	PIPE_LINE = '|',
+	PIPE = '|',
 	REDIR_IN = '<',
 	REDIR_OUT = '>',
 	HERE_DOC,
 	APPEND,
-	INVALID,
 };
 
 # define READ_END 0

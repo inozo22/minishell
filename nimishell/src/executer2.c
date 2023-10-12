@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/26 19:34:43 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/10/12 17:34:26 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	**fill_current_cmd(t_list *lst, int pos, char **envp, pid_t pid)
 	tmp = lst;
 	while (tmp && tmp->cmd_pos == pos)
 	{
-		if (tmp->type == WORD || tmp->type == PIPE_LINE)
+		if (tmp->type == WORD || tmp->type == PIPE)
 			++i;
 		tmp = tmp->next;
 	}
@@ -40,7 +40,7 @@ char	**fill_current_cmd(t_list *lst, int pos, char **envp, pid_t pid)
 	i = -1;
 	while (lst && lst->cmd_pos == pos)
 	{
-		if (lst->type == WORD || lst->type == PIPE_LINE)
+		if (lst->type == WORD || lst->type == PIPE)
 			cmd[++i] = expander(lst->content, envp, pid);
 		lst = lst->next;
 	}
