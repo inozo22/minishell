@@ -3,19 +3,19 @@
 ---------------------------------
 TODO: put protect for open function in redir
 TODO: Check leaks in non interactive mode and interactive exit
-TODO: Include cmd_list in executer to get all the arguments of the command
-TODO: Include a break in executer when cd is used in multiple pipes. It should work just when it is alone, but show error messages in the path if invalid
-TODO: error in lexer when redir is placed right after a pipe
-TODO: Fix path entering in executer. Must use the path inside data->path
+TODO: ~~Include a break in executer when cd is used in multiple pipes. It should work just when it is alone, but show error messages in the path if invalid~~
+TODO: Fix path entering in executer. Must use the path inside data->path, not path set in initial split in minishell_init
 TODO: In expansion, exclude NULLs in the cmd array and check nulls in redir to throw "ambiguous redirect" error
 TODO: With builtins, execute in father when there is just a single command and in child with many commands
-TODO: implement dquotes when input ends in pipe
 TODO: empty _ env variable whe there are pipes
 TODO: Return value if error with input redirection
 
 
 ---------------------------------
 
+DONE: implement dquotes when input ends in pipe
+DONE: error in lexer when redir is placed right after a pipe
+DONE: Include cmd_list in executer to get all the arguments of the command
 DONE~~: is expand in expanser, "$*" doesn't work and "$0" gets open input~~
 DONE~~: remove quotes in case quotes are not edge (not"HOME", but $$"HOME")~~
 DONE~~: control {} in expanser~~

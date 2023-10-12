@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/10/12 18:10:35 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/10/12 18:44:28 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,16 @@
 	return (cmd);
 } */
 
-int	count_command(t_list *tmp, int pos)
+int	count_command(t_list *lst, int pos)
 {
 	int	ret;
 
 	ret = 0;
-	while (tmp && tmp->cmd_pos == pos)
+	while (lst && lst->cmd_pos == pos)
 	{
-		if (tmp->type == WORD || tmp->type == PIPE)
+		if (lst->type == WORD || lst->type == PIPE || lst->type == QUOTE)
 			ret++;
-		tmp = tmp->next;
+		lst = lst->next;
 	}
 	return (ret);
 }
@@ -76,7 +76,7 @@ char	**fill_current_cmd(t_list *lst, int pos, t_data *data)
 	i = -1;
 	while (lst && lst->cmd_pos == pos)
 	{
-		if (lst->type == WORD || lst->type == PIPE)
+		if (lst->type == WORD || lst->type == PIPE || lst->type == QUOTE)
 		{
 			tmp = expander(lst->content, data);
 			if (*tmp)

@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 18:39:55 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/10/12 17:27:47 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/10/12 18:32:22 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,12 +104,17 @@ int is_metacharacter(char *str)
  */
 static int	check_quotes_in_string(char *str)
 {	
+	int	qutoes_flag;
+
+	qutoes_flag = is_quote(*str);
+	is_quote(qutoes_flag);
+	qutoes_flag = 0;
 	while (*str)
 	{
-		is_quote(*str);
+		qutoes_flag = is_quote(*str);
 		str++;
 	}
-	if (is_quote(*str))
+	if (qutoes_flag)
 		return (1);
 	return (0);
 }
@@ -133,8 +138,10 @@ static int	end_with_pipe(char *str)
 static char	*dquote(char *input)
 {
 	char	*tmp[2];
+	int		i;
 
 	ft_bzero(tmp, 2 * sizeof(char *));
+	i = 0;
 //	ft_printf("Input in dquote: %s\n", input);
 	while (check_quotes_in_string(input) || end_with_pipe(input))
 	{
@@ -142,7 +149,9 @@ static char	*dquote(char *input)
 		tmp[1] = input;
 		input = ft_strjoin(input, tmp[0]);
 		free(tmp[0]);
-		free(tmp[1]);
+		if (i == 1)
+			free(tmp[1]);
+		i = 1;
 	}
 //	ft_printf("output in dquote: %s\n", input);
 	return (input);
@@ -170,7 +179,7 @@ int	get_node(char *str, t_list **list, int max_pipe)
 //		ft_printf("invalid metacharacter\n");
 		return (-1);
 	}
-	if (i[2] != WORD)
+	if (i[2] != WORD && i[2] != QUOTE)
 	{
 		//DELETE
 //		ft_printf("Hey1\n");
@@ -227,6 +236,8 @@ int	get_node(char *str, t_list **list, int max_pipe)
 int	lexer(char *input, t_list **token_list)
 {
 	int	i[3];
+	//DELETE
+	t_list *tmp;
 
 	*token_list = NULL;
 	ft_bzero(i, 3 * sizeof(int));
@@ -255,6 +266,12 @@ int	lexer(char *input, t_list **token_list)
 		}
 		else
 			i[0]++;
+	}
+	tmp = *token_list;
+	while (tmp)
+	{
+		printf("%sLEXER: Line: %d, content: %s, type: %d, pos: %d%s\n", COLOR_GREEN, __LINE__, tmp->content, tmp->type, tmp->cmd_pos, COLOR_RESET);
+		tmp = tmp->next;
 	}
 	return (i[2]);
 }
