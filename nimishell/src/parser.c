@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-static int	check_quotes(char *str)
+/* static int	check_quotes_status(char *str)
 {
 	int	quotes;
 	int	i;
@@ -47,7 +47,7 @@ static char	*dquote(char *str)
 
 	ft_bzero(tmp, 2 * sizeof(char *));
 	ft_printf("Input in dquote: %s\n", str);
-	while (*str && (check_quotes(str) || !ft_strcmp(str, "\\") \
+	while (*str && (check_quotes_status(str) || !ft_strcmp(str, "\\") \
 			|| str[ft_strlen(str) - 1] == '|'))
 	{
 		tmp[0] = readline(">");
@@ -58,7 +58,7 @@ static char	*dquote(char *str)
 	}
 	ft_printf("output in dquote: %s\n", str);
 	return (str);
-}
+} */
 
 char	*ft_remove_char(char *str, int c)
 {

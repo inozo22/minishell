@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 16:04:56 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/20 17:11:27 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/10/12 17:37:56 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	error_msg(char *cmd, int mode)
 	ft_putstr_fd(SHELL_NAME": ", 2);
 	if (mode == 2)
 	{
-		ft_putstr_fd(": syntax error near unexpected token `", 2);
+		ft_putstr_fd("syntax error near unexpected token `", 2);
 		ft_putstr_fd(cmd, 2);
 		ft_putendl_fd("'", 2);
 		return (258);
@@ -38,12 +38,12 @@ int	error_msg(char *cmd, int mode)
 	ft_putstr_fd(cmd, 2);
 	if (mode == 1)
 	{
-		ft_putendl_fd(": command not found", 2);
+		ft_putendl_fd("command not found", 2);
 		return (127);
 	}
 	if (mode == 3)
 	{
-		ft_putendl_fd(": is a directory", 2);
+		ft_putendl_fd("is a directory", 2);
 		return (126);
 	}
 	return (0);

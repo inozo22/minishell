@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
+/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 19:10:38 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/10/02 16:29:16 by nimai            ###   ########.fr       */
+/*   Updated: 2023/10/12 17:43:40 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,19 +31,19 @@ extern volatile int	g_return_val;
 
 enum e_token
 {
-	WORD = -1,
+	INVALID = -1,
+	WORD = 'a',
 	IS_SPACE = ' ',
 	NEW_LINE = '\n',
-	QOUTE = '\'',
+	QUOTE = '\'',
 	DOUBLE_QUOTE = '\"',
 	ESCAPE = '\\',
 	ENV = '$',
-	PIPE_LINE = '|',
+	PIPE = '|',
 	REDIR_IN = '<',
 	REDIR_OUT = '>',
 	HERE_DOC,
 	APPEND,
-	INVALID,
 };
 
 # define READ_END 0
@@ -125,6 +125,7 @@ int		is_quote(char c);
 //	Lexer_utils
 
 int		check_valid_input(char *input);
+int		check_literal_metacharacter(int c);
 
 //	Parser
 
