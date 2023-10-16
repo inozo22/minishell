@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_msgs.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 16:04:56 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/10/12 17:59:15 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/10/16 15:29:20 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	error_msg(char *cmd, int mode)
 	ft_putstr_fd(cmd, 2);
 	if (mode == 1)
 	{
-		ft_putendl_fd("command not found", 2);
+		ft_putendl_fd(": command not found", 2);
 		return (127);
 	}
 	if (mode == 3)
