@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:32:33 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/10/12 18:20:38 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/10/16 15:06:50 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,14 +104,15 @@ int	minishell(t_data *data)
 	prompt = get_prompt(data);
 	while (1)
 	{
-		// g_return_val = 0;
 		set_signal_handlers(1); //230808nimai: changed from above, to recall it after child process
 		line_read = readline(prompt);
+		if (line_read && *line_read)
+		{
+			add_history(line_read);
+			process_input(line_read, data);
+		}
 		if (!line_read)
 			break ;
-		if (*line_read)
-			add_history(line_read);
-		process_input(line_read, data);
 		ft_printf(COLOR_BLUE"\nReturn val: %d\n"COLOR_RESET, g_return_val);
 		if (data->exit_status)
 			break ;
@@ -120,7 +121,6 @@ int	minishell(t_data *data)
 	rl_clear_history();
 	free(line_read);
 	free(prompt);
-//	built_cd(NULL, NULL, 1);
 	obtain_pwd_home(NULL, 99);
 	printf("\nBye 🗑\n");
 	return (0);
