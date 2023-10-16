@@ -9,6 +9,7 @@ TODO: In expansion, exclude NULLs in the cmd array and check nulls in redir to t
 TODO: With builtins, execute in father when there is just a single command and in child with many commands
 TODO: empty _ env variable whe there are pipes
 TODO: Return value if error with input redirection
+TODO: Fix ctrl + C, which exit if you send when you are in the prompt
 
 
 ---------------------------------
