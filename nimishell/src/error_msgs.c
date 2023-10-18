@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 16:04:56 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/10/16 15:29:20 by nimai            ###   ########.fr       */
+/*   Updated: 2023/10/18 15:33:50 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	error_msg(char *cmd, int mode)
 	}
 	if (mode == 3)
 	{
-		ft_putendl_fd("is a directory", 2);
+		ft_putendl_fd(": is a directory", 2);
 		return (126);
 	}
 	return (0);
