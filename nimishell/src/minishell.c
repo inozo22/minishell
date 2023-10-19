@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:32:33 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/10/16 15:06:50 by nimai            ###   ########.fr       */
+/*   Updated: 2023/10/19 14:51:01 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,12 @@ int	process_input(char *line_read, t_data *data)
 	int		cmd_nb;
 
 	cmd_nb = lexer(line_read, &cmd_list);
+	t_list *test = cmd_list;
+	while (test)
+	{
+		ft_printf("content: %s type: %d pos: %d\n", test->content, test->type, test->cmd_pos);
+		test = test->next;
+	}
 	if (cmd_nb == -1)
 		return (1);
 	tmp = cmd_list;

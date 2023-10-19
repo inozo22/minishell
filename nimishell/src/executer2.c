@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/10/12 18:44:28 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/10/19 16:15:08 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,11 @@ int	count_command(t_list *lst, int pos)
 
 char	**fill_current_cmd(t_list *lst, int pos, t_data *data)
 {
-	char	**cmd;
-	char	*tmp;
-	int		i;
+	char		**cmd;
+	char		*tmp;
+	char		*keep = NULL;
+	int			i;
+	// int			j;
 
 	i = count_command(lst, pos);
 	if (!i)
@@ -84,8 +86,11 @@ char	**fill_current_cmd(t_list *lst, int pos, t_data *data)
 			else
 				free (tmp);
 		}
+		ft_printf("lst->type: %d\n", lst->type);
 		lst = lst->next;
+		keep = ft_strjoin(keep, tmp);
 	}
+	ft_printf("Line: %d tmp: %s keep: %s\n", __LINE__, tmp, keep);
 	return (cmd);
 }
 
