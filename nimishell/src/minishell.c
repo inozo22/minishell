@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:32:33 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/10/19 14:51:01 by nimai            ###   ########.fr       */
+/*   Updated: 2023/10/20 17:19:43 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int	process_input(char *line_read, t_data *data)
 			free_list(cmd);
 		}
 	}
-	executer(cmd_list, cmd_nb, data->path, data->env, data);
+	executer(cmd_list, cmd_nb, data->env, data);
 	ft_lstclear(&cmd_list, free);
 	return (g_return_val);
 }

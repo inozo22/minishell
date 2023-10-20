@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 19:10:38 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/10/20 12:50:57 by nimai            ###   ########.fr       */
+/*   Updated: 2023/10/20 17:19:56 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,6 @@ typedef struct s_tokens
 //FUNCTION PROTOTYPES
 // minishell_init
 
-void	set_path_list(t_data *data);
 char	*get_shlvl(const char *envp);
 pid_t	get_my_pid(void);
 char	*get_prompt(t_data *data);
@@ -149,8 +148,7 @@ int		warning_message(int type, int num);//2309114nimai: added
 
 //	Executer
 
-int		executer(t_list *lst, int cmd_number, \
-					char **path, char **env, t_data *data);
+int		executer(t_list *lst, int cmd_number, char **env, t_data *data);
 //char	**fill_current_cmd(t_list *lst, int pos, char **envp, pid_t pid);
 char	**fill_current_cmd(t_list *lst, int pos, t_data *data);
 
@@ -161,6 +159,7 @@ char	*get_cmd_path(char *cmd, char **path, int *return_val);
 int		execute_script_without_shebang(char **cmd, char **env);
 int		close_files_if_error(int fd[2], char *file_name);
 int		check_exit_status(int e_status);
+char	**set_path_list(t_data *data);
 
 // 	Redir_setup
 

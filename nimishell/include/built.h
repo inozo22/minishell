@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
+/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:12:28 by nimai             #+#    #+#             */
-/*   Updated: 2023/10/11 17:46:38 by nimai            ###   ########.fr       */
+/*   Updated: 2023/10/20 17:09:58 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ typedef struct s_temp	t_temp;
 typedef struct s_data
 {
 	char		**env;
-	char		**path;
 	pid_t		pid;
 	short int	exit_status;
 }				t_data;
