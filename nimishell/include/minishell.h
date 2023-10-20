@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 19:10:38 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/10/12 18:20:25 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/10/20 12:50:57 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,7 +195,7 @@ int		av_amount(char **strs);
 //Expanser
 
 //char	*expander(char *str, char *env[], int pid);
-char	*expander(char *str, t_data *data);
+char	*expander(char *str, t_data *data, int *flag);
 //char	*expand(t_list *list, t_data *data, char *str);
 
 //	expander_utils

@@ -76,7 +76,7 @@ int	heredoc_read(char *eof, t_data *data)
 		line_read = readline(">");
 		if (!line_read || !ft_strcmp(eof, line_read))
 			break ;
-		line_read = expander(line_read, data);
+		line_read = expander(line_read, data, 0);
 		tmp = input;
 		input = ft_strjoin_many(3, input, "\n", line_read);
 		free(tmp);

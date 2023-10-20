@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+         #
+#    By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/30 13:14:38 by bde-mada          #+#    #+#              #
-#    Updated: 2023/10/12 18:08:52 by bde-mada         ###   ########.fr        #
+#    Updated: 2023/10/20 13:34:03 by nimai            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ CFLAGS		= -Wall -Wextra -Werror -Wpedantic
 OS			= $(shell uname)
 
 #Optimization and valgrind debugging flags:
-DEBUG			:= -g3 -O0 -fsanitize=address 
+DEBUG			:= -g3 -O0 #-fsanitize=address 
 #change -O0 with -O1 or -O2 for faster execution but worse info
 
 LDFLAGS		= $(addprefix -L, $(LIBS_DIR))

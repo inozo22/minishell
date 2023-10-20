@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/10/19 16:15:08 by nimai            ###   ########.fr       */
+/*   Updated: 2023/10/20 14:53:39 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,14 +61,39 @@ int	count_command(t_list *lst, int pos)
 	return (ret);
 }
 
+void	obtain_cmd_again(char ***cmd, char *str, int flag)
+{
+	free_list(*cmd);
+	if (flag == 2)
+	{
+		*cmd = (char **)ft_calloc(2, sizeof(char *));
+		(*cmd)[0] = ft_strdup(str);
+		(*cmd)[1] = NULL;
+	}
+	else
+	{
+		*cmd = ft_split(str, 32);
+	}
+	// char **tmp = *cmd;
+	// while (*tmp)
+	// {
+	// 	ft_printf("Line: %d tmp: %s\n", __LINE__, *tmp);
+	// 	tmp++;
+	// }
+}
+
 char	**fill_current_cmd(t_list *lst, int pos, t_data *data)
 {
 	char		**cmd;
 	char		*tmp;
 	char		*keep = NULL;
 	int			i;
+	int			flag;
+	int			type_flag;
 	// int			j;
 
+	flag = 0;
+	type_flag = 0;
 	i = count_command(lst, pos);
 	if (!i)
 		return (NULL);
@@ -80,18 +105,28 @@ char	**fill_current_cmd(t_list *lst, int pos, t_data *data)
 	{
 		if (lst->type == WORD || lst->type == PIPE || lst->type == QUOTE)
 		{
-			tmp = expander(lst->content, data);
+			tmp = expander(lst->content, data, &flag);
 			if (*tmp)
-				cmd[++i] = tmp;
-			else
-				free (tmp);
+				cmd[++i] = ft_strdup(tmp);
+			free (tmp);
 		}
-		ft_printf("lst->type: %d\n", lst->type);
+		if (lst->type == 39 && lst->content[ft_strlen(lst->content) - 1] == 34)
+			type_flag = 2;
+		else if (lst->type == 39 || lst->content[ft_strlen(lst->content) - 1] == 34)
+			type_flag = 0;
+		// if (lst->type == 39 && lst->content[ft_strlen(lst->content) - 1] == 34)
+		// 	type_flag = 2;
+		// else if (lst->type == 39 || lst->content[ft_strlen(lst->content) - 1] == 34)
+		// 	type_flag = 0;
+		else
+			type_flag = 1;
 		lst = lst->next;
-		keep = ft_strjoin(keep, tmp);
+		keep = ft_strjoin(keep, cmd[i]);
 	}
-	ft_printf("Line: %d tmp: %s keep: %s\n", __LINE__, tmp, keep);
-	return (cmd);
+	ft_printf("Line: %d keep: %s flag: %d type_flag: %d\n", __LINE__, keep, flag, type_flag);
+	if (flag && type_flag)
+		obtain_cmd_again(&cmd, keep, type_flag);
+	return (free (keep), cmd);
 }
 
 /**
