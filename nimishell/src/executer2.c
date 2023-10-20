@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/10/20 14:53:39 by nimai            ###   ########.fr       */
+/*   Updated: 2023/10/20 17:16:28 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,15 +71,7 @@ void	obtain_cmd_again(char ***cmd, char *str, int flag)
 		(*cmd)[1] = NULL;
 	}
 	else
-	{
 		*cmd = ft_split(str, 32);
-	}
-	// char **tmp = *cmd;
-	// while (*tmp)
-	// {
-	// 	ft_printf("Line: %d tmp: %s\n", __LINE__, *tmp);
-	// 	tmp++;
-	// }
 }
 
 char	**fill_current_cmd(t_list *lst, int pos, t_data *data)
@@ -90,7 +82,7 @@ char	**fill_current_cmd(t_list *lst, int pos, t_data *data)
 	int			i;
 	int			flag;
 	int			type_flag;
-	// int			j;
+	char *temp = NULL;
 
 	flag = 0;
 	type_flag = 0;
@@ -114,14 +106,13 @@ char	**fill_current_cmd(t_list *lst, int pos, t_data *data)
 			type_flag = 2;
 		else if (lst->type == 39 || lst->content[ft_strlen(lst->content) - 1] == 34)
 			type_flag = 0;
-		// if (lst->type == 39 && lst->content[ft_strlen(lst->content) - 1] == 34)
-		// 	type_flag = 2;
-		// else if (lst->type == 39 || lst->content[ft_strlen(lst->content) - 1] == 34)
-		// 	type_flag = 0;
 		else
 			type_flag = 1;
 		lst = lst->next;
-		keep = ft_strjoin(keep, cmd[i]);
+		temp = keep;
+		if (cmd[i])
+			keep = ft_strjoin(temp, cmd[i]);
+		free (temp);
 	}
 	ft_printf("Line: %d keep: %s flag: %d type_flag: %d\n", __LINE__, keep, flag, type_flag);
 	if (flag && type_flag)
