@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/10/12 18:44:28 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/10/20 16:53:10 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,8 +181,7 @@ int	child_execution(char **cmd, char **env, char **path, t_data *data, int pos, 
 	exit(1);
 }
 
-int	executer(t_list *lst, int cmd_number, \
-				char **path, char **env, t_data *data)
+int	executer(t_list *lst, int cmd_number, char **env, t_data *data)
 {
 	int		tmp_stdio_fd[2];
 	pid_t	pid;
@@ -192,6 +191,7 @@ int	executer(t_list *lst, int cmd_number, \
 	char	**cmd;
 	int		pipe_fd[2];
 	int		max_pid;
+	char	**path;
 
 	e_status = 0;
 	tmp_stdio_fd[0] = dup(STDIN_FILENO);
@@ -209,6 +209,7 @@ int	executer(t_list *lst, int cmd_number, \
 	// IMPORTANTE: check if the last command is exit
 /* 	if (ft_strcmp(cmd[cmd_number - 1][0], "exit"))
 		return (0); */
+	path = set_path_list(data);
 	ft_printf(COLOR_ACCENT"EXECUTER START\n"COLOR_RESET);
 	if (lst)
 		ft_printf("lst_content: %s\n", lst->content);

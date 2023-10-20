@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 18:22:41 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/26 19:26:39 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/10/20 17:02:10 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	*get_prompt(t_data *data)
 	return (prompt);
 }
 
-void	set_path_list(t_data *data)
+/* void	set_path_list(t_data *data)
 {
 	int	i;
 
@@ -54,8 +54,8 @@ void	set_path_list(t_data *data)
 				errors(ENOMEM, data);
 			break ;
 		}
-	}
-}
+	} 
+} */
 
 /**
  * @note add checker to protect not numeric value

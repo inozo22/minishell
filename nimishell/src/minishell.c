@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
+/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:32:33 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/10/16 15:06:50 by nimai            ###   ########.fr       */
+/*   Updated: 2023/10/20 16:53:02 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int	process_input(char *line_read, t_data *data)
 			free_list(cmd);
 		}
 	}
-	executer(cmd_list, cmd_nb, data->path, data->env, data);
+	executer(cmd_list, cmd_nb, data->env, data);
 	ft_lstclear(&cmd_list, free);
 	return (g_return_val);
 }

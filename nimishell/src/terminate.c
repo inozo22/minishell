@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 14:24:59 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/10/12 17:39:14 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/10/20 17:10:34 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,5 @@ void	*free_list(char **list)
 void	free_alloc(t_data *data)
 {
 	free_list(data->env);
-	free_list(data->path);
 	data->env = NULL;
-	data->path = NULL;
 }

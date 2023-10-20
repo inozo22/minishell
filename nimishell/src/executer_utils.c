@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 15:48:44 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/20 17:34:26 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/10/20 17:02:51 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,4 +100,24 @@ int	check_exit_status(int e_status)
 	if (WIFEXITED(e_status))
 		return (WEXITSTATUS(e_status));
 	return (0);
+}
+
+char	**set_path_list(t_data *data)
+{
+	int		i;
+	char	**path;
+
+	i = -1;
+	path = NULL;
+	while (data->env[++i])
+	{
+		if (!ft_strncmp(data->env[i], "PATH=", 5))
+		{
+			path = ft_split(data->env[i] + 5, ':');
+			if (!path)
+				errors(ENOMEM, data);
+			break ;
+		}
+	}
+	return (path);
 }
