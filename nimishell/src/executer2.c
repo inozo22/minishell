@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
+/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/10/20 17:19:38 by nimai            ###   ########.fr       */
+/*   Updated: 2023/11/09 11:35:06 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ char	**fill_current_cmd(t_list *lst, int pos, t_data *data)
 		lst = lst->next;
 		temp = keep;
 		if (cmd[i])
-			keep = ft_strjoin(temp, cmd[i]);
+			keep = ft_strjoin_many(3,temp, " ", cmd[i]);
 		free (temp);
 	}
 	ft_printf("Line: %d keep: %s flag: %d type_flag: %d\n", __LINE__, keep, flag, type_flag);
