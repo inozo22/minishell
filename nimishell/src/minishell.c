@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:32:33 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/11/14 18:21:00 by nimai            ###   ########.fr       */
+/*   Updated: 2023/11/14 18:33:53 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,8 @@ int	minishell(t_data *data)
 	{
 		set_signal_handlers(1); //230808nimai: changed from above, to recall it after child process
 		line_read = readline(prompt);
+		if (line_read == NULL)
+			break ;
 		if (line_read && *line_read)
 		{
 			add_history(line_read);
@@ -133,17 +135,14 @@ int	minishell(t_data *data)
 			}
 			process_input(line_read, data);
 			line_read = my_free(line_read);
-			// line_read = NULL;
 		}
 		ft_printf(COLOR_BLUE"\nReturn val: %d\n"COLOR_RESET, g_return_val);//If remove this line, 25lines
-		if (line_read == NULL || data->exit_status)
+		if (data->exit_status)
 			break ;
 	}
 	rl_clear_history();
 	printf("\nBye 🗑\n");
-	// if (line_read)
-	// 	free(line_read);
-	return (free(line_read), free(prompt), obtain_pwd_home(NULL, 99), 0);
+	return (/* free(line_read), */ free(prompt), obtain_pwd_home(NULL, 99), 0);
 }
 
 // int	minishell(t_data *data)
