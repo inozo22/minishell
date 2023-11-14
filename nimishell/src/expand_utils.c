@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 16:20:01 by nimai             #+#    #+#             */
-/*   Updated: 2023/10/02 16:27:58 by nimai            ###   ########.fr       */
+/*   Updated: 2023/11/14 11:30:42 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,19 +49,22 @@ char	*get_var_value(char *env_var, char *envp[], int len)
  * @note ($$) Expands to the pid of the current shell.
  * @note ($1-9) Expands to the corresponding arguments passed to bash
  * @note 230919nimai: ($\0) It's not expantion, but only this case receive single '$'
+ * @note 231114nimai: ($!) is enough to return only empty line in minishell
+ * @note 231114nimai: If pass an empty string, will duplicate the command, now passing a space
  */
 char	*is_expand(char *env_var, int len, char *env[], pid_t pid)
 {
 	if (!ft_strncmp(env_var, "$?", 2))
 		return (ft_itoa(g_return_val));
-	if (!ft_strncmp(env_var, "$!", 2))//it should return process ID of the job most recently placed into the background, now, return last return value
-		return (ft_itoa(g_return_val));
+	// if (!ft_strncmp(env_var, "$!", 2))//it should return process ID of the job most recently placed into the background, now, return last return value
+	if (!ft_strncmp(env_var, "$!", 2))//As doesn't control "&" in minishell, never happen background process, so always return empty line
+		return (ft_strdup(" "));//If pass an empty string, will duplicate the command, now passing a space
 	if (!ft_strncmp(env_var, "$$", 2))
 		return (ft_itoa(pid));
 	if (!ft_strncmp(env_var, "$-", 2))
 		return (ft_strdup("himBH"));
 	if (!ft_strncmp(env_var, "$@", 2) || !ft_strncmp(env_var, "$*", 2))
-		return (ft_strdup(""));
+		return (ft_strdup(" "));//If pass an empty string, will duplicate the command, now passing a space
 	if (!ft_strncmp(env_var, "$#", 2))
 		return (ft_itoa(0));
 	if (!ft_strncmp(env_var, "$0", 2))
@@ -71,7 +74,7 @@ char	*is_expand(char *env_var, int len, char *env[], pid_t pid)
 	if (!ft_strncmp(env_var, "$\0", 2) || !ft_strncmp(env_var, "$\"", 2))
 		return (ft_strdup("$"));
 	if (ft_isdigit(env_var[1]))
-		return (ft_strdup(""));
+		return (ft_strdup(" "));//If pass an empty string, will duplicate the command, now passing a space
 	if (!(env_var[1]) || (!ft_isalnum(env_var[1]) && env_var[1] != '_') || !ft_strncmp(env_var, "$ ", 2))
 		return (ft_substr(env_var, 0, 2));//should be printed literally instead of null
 	return (get_var_value(env_var + 1, env, len - 1));
