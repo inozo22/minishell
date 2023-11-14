@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:32:33 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/10/20 17:19:43 by nimai            ###   ########.fr       */
+/*   Updated: 2023/11/14 17:21:08 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,17 @@ int	process_input(char *line_read, t_data *data)
 	return (g_return_val);
 }
 
+int	ft_entire_isspace(char *str)
+{
+	int	i;
+
+	i = -1;
+	while (str[++i])
+		if (!ft_isspace(str[i]))
+			return (0);
+	return (1);
+}
+
 int	minishell(t_data *data)
 {
 	char			*line_read;
@@ -115,19 +126,49 @@ int	minishell(t_data *data)
 		if (line_read && *line_read)
 		{
 			add_history(line_read);
+			if (ft_entire_isspace(line_read))
+			{
+				free (line_read);
+				continue ;
+			}
 			process_input(line_read, data);
+			free(line_read);
 		}
-		if (!line_read)
+		ft_printf(COLOR_BLUE"\nReturn val: %d\n"COLOR_RESET, g_return_val);//If remove this line, 25lines
+		if (line_read == NULL || data->exit_status)
 			break ;
-		ft_printf(COLOR_BLUE"\nReturn val: %d\n"COLOR_RESET, g_return_val);
-		if (data->exit_status)
-			break ;
-		free(line_read);
 	}
 	rl_clear_history();
-	free(line_read);
-	free(prompt);
-	obtain_pwd_home(NULL, 99);
 	printf("\nBye 🗑\n");
-	return (0);
+	return (free(line_read), free(prompt), obtain_pwd_home(NULL, 99), 0);
 }
+
+// int	minishell(t_data *data)
+// {
+// 	char			*line_read;
+// 	char			*prompt;
+
+// 	prompt = get_prompt(data);
+// 	while (1)
+// 	{
+// 		set_signal_handlers(1); //230808nimai: changed from above, to recall it after child process
+// 		line_read = readline(prompt);
+// 		if (line_read && *line_read)
+// 		{
+// 			add_history(line_read);
+// 			process_input(line_read, data);
+// 		}
+// 		if (!line_read)
+// 			break ;
+// 		ft_printf(COLOR_BLUE"\nReturn val: %d\n"COLOR_RESET, g_return_val);
+// 		if (data->exit_status)
+// 			break ;
+// 		free(line_read);
+// 	}
+// 	rl_clear_history();
+// 	free(line_read);
+// 	free(prompt);
+// 	obtain_pwd_home(NULL, 99);
+// 	printf("\nBye 🗑\n");
+// 	return (0);
+// }
