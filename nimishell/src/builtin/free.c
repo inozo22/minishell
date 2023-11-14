@@ -6,16 +6,17 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 15:44:25 by nimai             #+#    #+#             */
-/*   Updated: 2023/10/10 11:59:33 by nimai            ###   ########.fr       */
+/*   Updated: 2023/11/14 18:19:44 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	my_free(void *ptr)
+char	*my_free(void *ptr)
 {
 	free (ptr);
 	ptr = NULL;
+	return (NULL);
 }
 
 char	**strs_free(char **strs)
