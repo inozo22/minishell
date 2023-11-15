@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:12:28 by nimai             #+#    #+#             */
-/*   Updated: 2023/10/20 17:09:58 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/11/14 18:20:18 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,6 @@ void		heap_error(int flag);
 void		**ptr_free(void **ptr);
 /* void		*all_tmp_free(t_temp *temp); */
 char		**strs_free(char **strs);
-void		my_free(void *ptr);
+char		*my_free(void *ptr);
 
 #endif
