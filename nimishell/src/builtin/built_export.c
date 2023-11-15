@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:18:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/10/11 17:53:26 by nimai            ###   ########.fr       */
+/*   Updated: 2023/11/15 15:40:24 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,25 +95,25 @@ char	*mod_path(char *input)
  * @author nimai
  * @return ** pointer, then free 
  */
-char	**envp_strs_join(char *input, char **env)
+char	**envp_strs_join(char *input, t_data *data)
 {
 	char	**ret;
 	int		i;
 
-	ret = ft_calloc(av_amount(env) + 2, sizeof(char *));
+	ret = ft_calloc(av_amount(data->env) + 2, sizeof(char *));
 	if (!ret)
 		return (heap_error(1), NULL);
 	i = 0;
-	while (env[i])
+	while (data->env[i])
 	{
-		ret[i] = env[i];
-		env[i] = NULL;
+		ret[i] = data->env[i];
+		data->env[i] = NULL;
 		i++;
 	}
-	free (env);
-	env = NULL;
+	free (data->env);
+	data->env = NULL;
 	input = mod_path(input);
-	if (check_valid(input, "export"))
+	if (check_valid(input, "export", data))//*///
 		ret[i] = input;
 	ret[++i] = NULL;
 	return (ret);
@@ -125,7 +125,7 @@ char	**envp_strs_join(char *input, char **env)
  * @param **input "export", "ABC=abc". *data
  * @return 
  */
-int	built_export(char **input, char ***env)
+int	built_export(char **input, t_data *data/* char ***env */)
 {
 	char		**new_envp;
 	int			i;
@@ -133,24 +133,24 @@ int	built_export(char **input, char ***env)
 	new_envp = NULL;
 	if (av_amount(input) == 1)
 	{
-		if (!output_export(*env))
+		if (!output_export(data->env))
 			return (printf("Error: output_export\n"), 1);
 		return (0);
 	}
 	i = 0;
 	while (++i < av_amount(input))
 	{
-		if (!check_input(input[i], *env))
+		if (!check_input(input[i], data->env))
 		{
-			new_envp = envp_strs_join(input[i], *env);
+			new_envp = envp_strs_join(input[i], data);
 			if (!new_envp)
 				return (printf("ERROR: Line: %d\n", __LINE__), 1);
-			*env = new_envp;
+			data->env = new_envp;
 		}
 		else
-			envp_strs_mod(input[i], env);
+			envp_strs_mod(input[i], &data->env);
 	}
-	return (g_return_val);
+	return (data->return_val);
 }
 
 /**

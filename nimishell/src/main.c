@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 18:22:41 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/26 17:29:09 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/11/15 16:12:16 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,15 +93,18 @@ static int	init_data(t_data *data, char *envp[], char *prog_name)
 	ft_printf("Environment loaded\n");
 	set_path_list(data);
 	data->exit_status = 0;
+	data->return_val = 0;
 	return (0);
 }
 
 int	main(int argc, char *argv[], char *envp[])
 {
 	t_data			data;
+	int				ret;
 	struct termios	termios_save;
 
 	g_return_val = 0;
+	ret = 0;
 	data.pid = get_my_pid();
 	if (!data.pid)
 		return (1);
@@ -120,7 +123,9 @@ int	main(int argc, char *argv[], char *envp[])
 		return (1);
 		//return (errors(12, data));
 	minishell(&data);
+	ret = data.return_val;
 	free_alloc(&data);
 	tcsetattr(0, 0, &termios_save);
-	return (g_return_val);
+	// return (g_return_val);
+	return (ret);
 }

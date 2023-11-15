@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 15:48:44 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/10/20 17:02:51 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/11/15 16:16:40 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 int	check_is_directory(char *cmd)
 {
 	struct stat	t_stat;
-	
+
 	if (!stat(cmd, &t_stat) && S_ISDIR(t_stat.st_mode))
 	{
 		if (cmd[0] == '/' || cmd[ft_strlen(cmd) - 1] == '/')
@@ -91,8 +91,12 @@ int close_files_if_error(int fd[2], char *file_name)
 		return (WEXITSTATUS(e_status));
 	else if (g_return_val)
 		return (g_return_val); */
-int	check_exit_status(int e_status)
+int	check_exit_status(int e_status, t_data *data)
 {
+	// if (data->return_val == 1)
+	// 	return (data->return_val);
+	(void)data;
+	ft_printf("g in check_exit_status: %d\n", g_return_val);
 	if (g_return_val == 1)
 		return (g_return_val);
 	if (WIFSIGNALED(e_status))

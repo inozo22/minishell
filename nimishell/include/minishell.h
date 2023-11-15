@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 19:10:38 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/10/20 17:19:56 by nimai            ###   ########.fr       */
+/*   Updated: 2023/11/15 14:49:56 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,8 @@ int		process_input(char *line_read, t_data *data);
 
 //	Lexer
 
-int		lexer(char *input, t_list **token_list);
+// int		lexer(char *input, t_list **token_list);
+int		lexer(char *input, t_list **token_list, t_data **data);//***//
 int		is_quote(char c);
 
 //	Lexer_utils
@@ -158,7 +159,8 @@ int		check_is_directory(char *cmd);
 char	*get_cmd_path(char *cmd, char **path, int *return_val);
 int		execute_script_without_shebang(char **cmd, char **env);
 int		close_files_if_error(int fd[2], char *file_name);
-int		check_exit_status(int e_status);
+// int		check_exit_status(int e_status);
+int		check_exit_status(int e_status, t_data *data);
 char	**set_path_list(t_data *data);
 
 // 	Redir_setup
@@ -206,7 +208,8 @@ char	*arrange_str(char **tab, char *str, int c);
 
 // expand_utils
 char	*get_var_value(char *env_var, char *envp[], int len);
-char	*is_expand(char *env_var, int len, char *env[], pid_t pid);
+// char	*is_expand(char *env_var, int len, char *env[], pid_t pid);
+char	*is_expand(char *env_var, int len, t_data *data);//***///
 int		compose_expanded(char *expanded, char **str, int start, int end);
 int		is_special_expand(char *str, int ret);
 int		check_valiable_len(char *str, int start, int quotes);

@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:32:33 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/11/14 18:33:53 by nimai            ###   ########.fr       */
+/*   Updated: 2023/11/15 16:22:31 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,25 +40,40 @@ int	check_builtin(char **input, t_data *data)
 		ft_printf("env %d: %s\n", i, data->env[i]); */
 	// update_last_executed_cmd(data, input[0]);
 //	update_last_executed_cmd(data, input);
+	// if (!input[0])
+	// 	return (-1);
+	// if (!ft_strcmp(input[0], "export"))
+	// 	return (built_export(input, &data->env));
+	// if (!ft_strcmp(input[0], "unset"))
+	// 	return (built_unset(input, &data->env));
+	// if (!ft_strcmp(input[0], "exit"))
+	// 	return (built_exit(input, data, 1));
+	// lower_input = ft_strdup(input[0]);
+	// ft_strlower(lower_input);
+	// if (!ft_strcmp(lower_input, "cd"))
+	// 	return (free(lower_input), built_cd(input, &data->env));
+	// if (!ft_strcmp(lower_input, "echo"))
+	// 	return (free(lower_input), built_echo(input));
+	// if (!ft_strcmp(lower_input, "pwd"))
+	// 	return (free(lower_input), built_pwd(data->env));
+	// if (!ft_strcmp(lower_input, "env"))
+	// 	return (free(lower_input), built_env(input, data->env));
 	if (!input[0])
 		return (-1);
 	if (!ft_strcmp(input[0], "export"))
-		return (built_export(input, &data->env));
+		return (built_export(input, data));
 	if (!ft_strcmp(input[0], "unset"))
-		return (built_unset(input, &data->env));
+		return (built_unset(input, data));
 	if (!ft_strcmp(input[0], "exit"))
-	{
-		//printf("input: %s\n", input[0]);
 		return (built_exit(input, data, 1));
-	}
 	lower_input = ft_strdup(input[0]);
 	ft_strlower(lower_input);
 	if (!ft_strcmp(lower_input, "cd"))
-		return (free(lower_input), built_cd(input, &data->env));
+		return (free(lower_input), built_cd(input, data));
 	if (!ft_strcmp(lower_input, "echo"))
 		return (free(lower_input), built_echo(input));
 	if (!ft_strcmp(lower_input, "pwd"))
-		return (free(lower_input), built_pwd(data->env));
+		return (free(lower_input), built_pwd(data));
 	if (!ft_strcmp(lower_input, "env"))
 		return (free(lower_input), built_env(input, data->env));
 	return (free(lower_input), -1);
@@ -70,7 +85,7 @@ int	process_input(char *line_read, t_data *data)
 	t_list	*tmp;
 	int		cmd_nb;
 
-	cmd_nb = lexer(line_read, &cmd_list);
+	cmd_nb = lexer(line_read, &cmd_list, &data);
 	t_list *test = cmd_list;
 	while (test)
 	{
@@ -98,8 +113,10 @@ int	process_input(char *line_read, t_data *data)
 		}
 	}
 	executer(cmd_list, cmd_nb, data->env, data);
+	ft_printf("data->return_val: %d\n", data->return_val);
 	ft_lstclear(&cmd_list, free);
-	return (g_return_val);
+	return (data->return_val);
+	// return (g_return_val);
 }
 
 int	ft_entire_isspace(char *str)
@@ -136,7 +153,10 @@ int	minishell(t_data *data)
 			process_input(line_read, data);
 			line_read = my_free(line_read);
 		}
-		ft_printf(COLOR_BLUE"\nReturn val: %d\n"COLOR_RESET, g_return_val);//If remove this line, 25lines
+		if (g_return_val)
+			data->return_val = g_return_val;
+		ft_printf(COLOR_BLUE"\nReturn val: %d\nGlobal_val: %d\n"COLOR_RESET, data->return_val, g_return_val);//If remove this line, 25lines
+		// ft_printf(COLOR_BLUE"\nReturn val: %d\n"COLOR_RESET, g_return_val);//If remove this line, 25lines
 		if (data->exit_status)
 			break ;
 	}

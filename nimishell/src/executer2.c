@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/11/09 11:35:06 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/11/15 16:19:23 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -272,11 +272,14 @@ int	executer(t_list *lst, int cmd_number, char **env, t_data *data)
 				while (cmd[++j])
 					ft_printf("cmd[%d] = %s\n", j, cmd[j]);
 				ft_printf("\n");
+				data->return_val = 0;
 				g_return_val = 0;
 				int is_builtin = check_builtin(cmd, data);
 				ft_printf("\nCheck builtin return: %d\n", is_builtin);
 				if (is_builtin >= 0)
 				{
+					ft_printf("g_return: %d, data->return: %d\n", g_return_val, data->return_val);
+					data->return_val = is_builtin;
 					// ///////0925nimai add to remove memory leaks from expander
 					// j = -1;
 					// while (cmd[++j])
@@ -339,7 +342,11 @@ int	executer(t_list *lst, int cmd_number, char **env, t_data *data)
 	{
 		wait_ret = waitpid(-1, &e_status, WUNTRACED);
 		if (wait_ret == max_pid)
-			g_return_val = check_exit_status(e_status);
+		{
+			data->return_val = check_exit_status(e_status, data);
+			ft_printf("Line: %d data->return_val: %d\n", __LINE__, data->return_val);
+		}
+			// g_return_val = check_exit_status(e_status);
 		cmd_number--;
 		if (cmd_number < 0)
 			break ;

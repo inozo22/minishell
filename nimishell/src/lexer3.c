@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 18:39:55 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/10/12 18:32:22 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/11/15 13:59:44 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,7 +233,7 @@ int	get_node(char *str, t_list **list, int max_pipe)
  * @param i[2] max pipe
  * @note invalid (, ), ;, \, *
  */
-int	lexer(char *input, t_list **token_list)
+int	lexer(char *input, t_list **token_list, t_data **data)//***//
 {
 	int	i[3];
 	//DELETE
@@ -250,7 +250,8 @@ int	lexer(char *input, t_list **token_list)
 		if (input[i[0]] == PIPE && *token_list == NULL)
 		//CHECK CORRECT MESSAGE
 		{
-			g_return_val = error_msg("|", 2);
+			// g_return_val = error_msg("|", 2);
+			(*data)->return_val = error_msg("|", 2);
 			return (-1);
 		}
 		if (!ft_isspace(input[i[0]]))

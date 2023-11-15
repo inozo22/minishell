@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 13:05:08 by nimai             #+#    #+#             */
-/*   Updated: 2023/10/10 16:32:26 by nimai            ###   ########.fr       */
+/*   Updated: 2023/11/15 15:43:21 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,13 @@ int	built_exit(char **input, t_data *data, int cmd_num)
 	int	amount;
 	int	ret;
 
-	g_return_val = 0;
+	data->return_val = 0;
+	// g_return_val = 0;
 	amount = av_amount(input);
 	if (amount > 1 && !is_numeric(input[1]))
 	{
 		ft_printf("minishell: exit: %s: numeric argument required\n", input[1]);
-		g_return_val = 255;
+		data->return_val = 255;
 	}
 	else if (amount >= 3)
 		return (error_exit_msg());
@@ -87,7 +88,7 @@ int	built_exit(char **input, t_data *data, int cmd_num)
 		ret %= 256;
 		if (ret < 0)
 			ret *= -1;
-		g_return_val = ret;
+		data->return_val = ret;
 	}
 	if (cmd_num == 0)
 		data->exit_status = 1;

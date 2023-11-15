@@ -3,15 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 18:24:57 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/10/12 13:31:30 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/11/15 14:31:11 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/**
+ * @note 231115nimai: disuse?
+ * 
+  */
 int	check_valid_input(char *input)
 {
 	int	i;

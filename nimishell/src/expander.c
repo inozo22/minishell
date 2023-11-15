@@ -12,13 +12,13 @@
 
 #include "minishell.h"
 
-char	*tilde_expantion(char *tilde, char **env)
+char	*tilde_expantion(char *tilde, t_data *data)
 {
 	char	*ret;
 
-	ret = get_env(env, "HOME");
+	ret = get_env(data->env, "HOME");
 	if (!ret)
-		ret = obtain_pwd_home(env, 2);
+		ret = obtain_pwd_home(data, 2);
 	my_free(tilde);
 	return (ret);
 }
@@ -32,7 +32,8 @@ int	expand(char **str, int *pos, int quotes, t_data *data)
 	ft_bzero(i, 2 * sizeof(int));
 	i[0] = *pos;
 	i[0] = check_valiable_len(&(*str)[*pos], i[0], quotes);
-	expanded_var = is_expand(&(*str)[*pos], i[0] - *pos, data->env, data->pid);
+	// expanded_var = is_expand(&(*str)[*pos], i[0] - *pos, data->env, data->pid);
+	expanded_var = is_expand(&(*str)[*pos], i[0] - *pos, data);
 	*pos = compose_expanded(expanded_var, str, *pos, i[0]);
 	if (*str[0] == '\"' && (ft_strncmp(*str, "$\"", 2) || \
 	ft_strncmp(*str, "$ ", 2)))
@@ -83,7 +84,7 @@ char	*expander(char *str, t_data *data, int *flag)
 			}
 		}
 		else
-			tab[c] = tilde_expantion(tab[c], data->env);
+			tab[c] = tilde_expantion(tab[c], data);
 		ret = arrange_str(tab, ret, c);
 	}
 	return (free_list(tab), ret);

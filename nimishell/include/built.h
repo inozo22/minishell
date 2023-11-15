@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:12:28 by nimai             #+#    #+#             */
-/*   Updated: 2023/11/14 18:20:18 by nimai            ###   ########.fr       */
+/*   Updated: 2023/11/15 16:02:12 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ typedef struct s_data
 	char		**env;
 	pid_t		pid;
 	short int	exit_status;
+	int			return_val;
+
 }				t_data;
 
 typedef struct s_export
@@ -44,13 +46,22 @@ typedef struct s_export
  * Main built-in functions
 */
 
+// int			built_exit(char **input, t_data *data, int cmd_num);
+// int			built_pwd(char **env);
+// int			built_echo(char **input);
+// int			built_cd(char **input, char ***env);
+// int			built_export(char **input, char ***env);
+// int			built_env(char **input, char **env);
+// int			built_unset(char **input, char ***env);
 int			built_exit(char **input, t_data *data, int cmd_num);
-int			built_pwd(char **env);
+int			built_pwd(t_data *data);
+// int			built_echo(char **input, t_data *data);
 int			built_echo(char **input);
-int			built_cd(char **input, char ***env);
-int			built_export(char **input, char ***env);
+int			built_cd(char **input, t_data *data);
+int			built_export(char **input, t_data *data);
+// int			built_env(char **input, t_data *data);
 int			built_env(char **input, char **env);
-int			built_unset(char **input, char ***env);
+int			built_unset(char **input, t_data *data);
 
 /**
  * functions from export
@@ -60,7 +71,8 @@ char		**fake_env(void);
 t_export	*fill_list(char **env, t_export *list);
 // void		output_env(t_export *data, int len);
 int			output_export(char **env);
-char		**envp_strs_join(char *input, char **env);
+// char		**envp_strs_join(char *input, char **env);
+char		**envp_strs_join(char *input, t_data *data);
 void		envp_strs_mod(char *input, char ***env);
 int			check_input(char *input, char **env);
 char		*envp_str_mod(char *str, char *input, int i, int flag);
@@ -85,15 +97,19 @@ char		*path_modify(char *cur, char *str);
 int			get_pos_above_path(char *str);
 char		*get_above_path(char *current);
 void		error_cd(char *cmd);
-char		*get_dest_path_wl_sign(char *cur, char *pwd, char *input);
-char		*get_dest_path_env(char **env, char *envtype);
-char		*obtain_pwd_home(char **env, int flag);
+char		*get_dest_path_wl_sign(char *cur, char *pwd, char *input, t_data *data);
+// char		*get_dest_path_wl_sign(char *cur, char *pwd, char *input);
+char		*get_dest_path_env(t_data *data, char *envtype);
+// char		*get_dest_path_env(char **env, char *envtype);
+char		*obtain_pwd_home(t_data *data, int flag);
+// char		*obtain_pwd_home(char **env, int flag);
 
 /**
  * functions from utils
  */
 int			av_amount(char **strs);
-int			check_valid(char *str, char *cmd);
+// int			check_valid(char *str, char *cmd);
+int			check_valid(char *str, char *cmd, t_data *data);
 char		*get_env(char **env, char *type);
 /**
  * functions from utils

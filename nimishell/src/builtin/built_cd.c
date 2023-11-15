@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 18:40:39 by nimai             #+#    #+#             */
-/*   Updated: 2023/10/11 15:37:51 by nimai            ###   ########.fr       */
+/*   Updated: 2023/11/15 15:59:45 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
  */
 void	error_cd(char *cmd)
 {
-	g_return_val = 1;
+	// g_return_val = 1;
 	ft_printf("minishell: cd: %s: No such file or directory\n", cmd);
 }
 
@@ -27,13 +27,14 @@ void	error_cd(char *cmd)
  * @brief obtain destination path
  * @author nimai
  */
-char	*get_dest_path(char *dest)
+char	*get_dest_path(char *dest, t_data *data)
 {
 	char	*ret;
 	char	*cur;
 
 	if (chdir(dest) == -1)
-		return (g_return_val = 1, error_cd(dest), NULL);
+		return (data->return_val = 1, error_cd(dest), NULL);
+		// return (g_return_val = 1, error_cd(dest), NULL);
 	cur = getcwd(NULL, 0);
 	ret = ft_strdup(dest);
 	if (ft_strlen(cur) > ft_strlen(ret) && ft_strncmp("..", ret, 2) != 0)
@@ -93,7 +94,7 @@ void	init_pwd_home(char **pwd, char **home, char **env)
  * 
  * 
  */
-char	*obtain_pwd_home(char **env, int flag)
+char	*obtain_pwd_home(t_data *data, int flag)
 {
 	static char	*pwd = NULL;
 	static char	*home = NULL;
@@ -101,9 +102,10 @@ char	*obtain_pwd_home(char **env, int flag)
 
 	if (flag == 99)
 		return (my_free(pwd), my_free(home), NULL);
-	g_return_val = 0;
+	data->return_val = 0;
+	// g_return_val = 0;
 	if (!pwd || !home)
-		init_pwd_home(&pwd, &home, env);
+		init_pwd_home(&pwd, &home, data->env);
 	if (flag == 1)
 		return (ft_printf("%s\n", pwd), NULL);
 	if (flag == 2)
@@ -113,7 +115,7 @@ char	*obtain_pwd_home(char **env, int flag)
 	if (flag == 4)
 	{
 		tmp = pwd;
-		pwd = get_env(env, "PWD");
+		pwd = get_env(data->env, "PWD");
 		my_free (tmp);
 	}
 	return (NULL);
@@ -122,30 +124,30 @@ char	*obtain_pwd_home(char **env, int flag)
 /**
  * @note if there are more than 1 path, it will ignore after the first.
  */
-int	built_cd(char **input, char ***env)
+int	built_cd(char **input, t_data *data)
 {
 	char		*dest;
 	char		*cur;
 	char		*tmp_pwd;
 
-	obtain_pwd_home(*env, 0);
+	obtain_pwd_home(data, 0);
 	cur = getcwd(NULL, 0);
 	if (ft_strcmp("-", input[1]) == 0)
 	{
-		dest = get_dest_path_env(*env, "OLDPWD");
+		dest = get_dest_path_env(data, "OLDPWD");
 		if (!dest)
 			return (free (cur), 1);
 	}
-	tmp_pwd = obtain_pwd_home(*env, 3);
-	envp_cd_mod(env, tmp_pwd, 2);
+	tmp_pwd = obtain_pwd_home(data, 3);
+	envp_cd_mod(&data->env, tmp_pwd, 2);
 	if (!input[1])
-		dest = get_dest_path_env(*env, "HOME");
+		dest = get_dest_path_env(data, "HOME");
 	else if (ft_strcmp("..", input[1]) && (ft_strcmp("./", \
 	input[1]) == 0 || input[1][0] == '.'))
-		dest = get_dest_path_wl_sign(cur, tmp_pwd, input[1]);
+		dest = get_dest_path_wl_sign(cur, tmp_pwd, input[1], data);
 	else if (ft_strcmp("-", input[1]) != 0)
-		dest = get_dest_path(input[1]);
-	envp_cd_mod(env, dest, 1);
-	obtain_pwd_home(*env, 4);
+		dest = get_dest_path(input[1], data);
+	envp_cd_mod(&data->env, dest, 1);
+	obtain_pwd_home(data, 4);
 	return (free (tmp_pwd), free (dest), free (cur), g_return_val);
 }

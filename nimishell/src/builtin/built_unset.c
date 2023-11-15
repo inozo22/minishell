@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 09:50:35 by nimai             #+#    #+#             */
-/*   Updated: 2023/10/11 13:28:40 by nimai            ###   ########.fr       */
+/*   Updated: 2023/11/15 16:02:31 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	*unset_env(char ***env, char *str)
  *  exist will not receive anything
  * @note unset not unset _???
  */
-int	built_unset(char **input, char ***env)
+int	built_unset(char **input, t_data *data)
 {
 	int		i;
 	int		len;
@@ -63,9 +63,9 @@ int	built_unset(char **input, char ***env)
 	len = av_amount(input);
 	while (i < len)
 	{
-		if (check_valid(input[i], "unset") == 1)
+		if (check_valid(input[i], "unset", data) == 1)
 		{
-			unset_env(env, input[i]);
+			unset_env(&data->env, input[i]);
 		}
 		i++;
 	}

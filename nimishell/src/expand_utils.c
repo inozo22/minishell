@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 16:20:01 by nimai             #+#    #+#             */
-/*   Updated: 2023/11/14 11:30:42 by nimai            ###   ########.fr       */
+/*   Updated: 2023/11/15 14:37:00 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,15 +52,16 @@ char	*get_var_value(char *env_var, char *envp[], int len)
  * @note 231114nimai: ($!) is enough to return only empty line in minishell
  * @note 231114nimai: If pass an empty string, will duplicate the command, now passing a space
  */
-char	*is_expand(char *env_var, int len, char *env[], pid_t pid)
+char	*is_expand(char *env_var, int len, t_data *data)//***///
 {
 	if (!ft_strncmp(env_var, "$?", 2))
-		return (ft_itoa(g_return_val));
+		// return (ft_itoa(g_return_val));
+		return (ft_itoa(data->return_val));
 	// if (!ft_strncmp(env_var, "$!", 2))//it should return process ID of the job most recently placed into the background, now, return last return value
 	if (!ft_strncmp(env_var, "$!", 2))//As doesn't control "&" in minishell, never happen background process, so always return empty line
 		return (ft_strdup(" "));//If pass an empty string, will duplicate the command, now passing a space
 	if (!ft_strncmp(env_var, "$$", 2))
-		return (ft_itoa(pid));
+		return (ft_itoa(data->pid));
 	if (!ft_strncmp(env_var, "$-", 2))
 		return (ft_strdup("himBH"));
 	if (!ft_strncmp(env_var, "$@", 2) || !ft_strncmp(env_var, "$*", 2))
@@ -77,7 +78,7 @@ char	*is_expand(char *env_var, int len, char *env[], pid_t pid)
 		return (ft_strdup(" "));//If pass an empty string, will duplicate the command, now passing a space
 	if (!(env_var[1]) || (!ft_isalnum(env_var[1]) && env_var[1] != '_') || !ft_strncmp(env_var, "$ ", 2))
 		return (ft_substr(env_var, 0, 2));//should be printed literally instead of null
-	return (get_var_value(env_var + 1, env, len - 1));
+	return (get_var_value(env_var + 1, data->env, len - 1));
 }
 
 int	compose_expanded(char *expanded, char **str, int start, int end)
