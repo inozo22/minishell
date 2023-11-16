@@ -91,12 +91,11 @@ int close_files_if_error(int fd[2], char *file_name)
 		return (WEXITSTATUS(e_status));
 	else if (g_return_val)
 		return (g_return_val); */
-int	check_exit_status(int e_status, t_data *data)
+int	check_exit_status(int e_status)
 {
 	// if (data->return_val == 1)
 	// 	return (data->return_val);
-	(void)data;
-	ft_printf("g in check_exit_status: %d\n", g_return_val);
+//	ft_printf("g in check_exit_status: %d\n", g_return_val);
 	if (g_return_val == 1)
 		return (g_return_val);
 	if (WIFSIGNALED(e_status))

@@ -33,7 +33,12 @@ char	*get_dest_path(char *dest, t_data *data)
 	char	*cur;
 
 	if (chdir(dest) == -1)
-		return (data->return_val = 1, error_cd(dest), NULL);
+	{
+		data->return_val = 1;
+		ft_printf("return: %d\n", data->return_val);
+
+		return (/* data->return_val = 1,  */error_cd(dest), NULL);
+	}
 		// return (g_return_val = 1, error_cd(dest), NULL);
 	cur = getcwd(NULL, 0);
 	ret = ft_strdup(dest);
@@ -102,7 +107,7 @@ char	*obtain_pwd_home(t_data *data, int flag)
 
 	if (flag == 99)
 		return (my_free(pwd), my_free(home), NULL);
-	data->return_val = 0;
+	//data->return_val = 0;
 	// g_return_val = 0;
 	if (!pwd || !home)
 		init_pwd_home(&pwd, &home, data->env);
@@ -147,7 +152,8 @@ int	built_cd(char **input, t_data *data)
 		dest = get_dest_path_wl_sign(cur, tmp_pwd, input[1], data);
 	else if (ft_strcmp("-", input[1]) != 0)
 		dest = get_dest_path(input[1], data);
+//	ft_printf("before exit cd return: %d\n", data->return_val);
 	envp_cd_mod(&data->env, dest, 1);
 	obtain_pwd_home(data, 4);
-	return (free (tmp_pwd), free (dest), free (cur), g_return_val);
+	return (free (tmp_pwd), free (dest), free (cur), /*g_return_val*/data->return_val);
 }

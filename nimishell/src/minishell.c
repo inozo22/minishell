@@ -113,7 +113,6 @@ int	process_input(char *line_read, t_data *data)
 		}
 	}
 	executer(cmd_list, cmd_nb, data->env, data);
-	ft_printf("data->return_val: %d\n", data->return_val);
 	ft_lstclear(&cmd_list, free);
 	return (data->return_val);
 	// return (g_return_val);
