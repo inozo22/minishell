@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/11/17 13:59:52 by nimai            ###   ########.fr       */
+/*   Updated: 2023/11/17 15:18:27 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,9 +98,7 @@ char	**fill_current_cmd(t_list *lst, int pos, t_data *data)
 		if (lst->type == WORD || lst->type == PIPE || lst->type == QUOTE)
 		{
 			tmp = expander(lst->content, data, &flag);
-			// if (*tmp)
-				cmd[++i] = ft_strdup(tmp);
-			ft_printf("tmp: %s\n", tmp);
+			cmd[++i] = ft_strdup(tmp);
 			free (tmp);
 		}
 		if (lst->type == 39 && lst->content[ft_strlen(lst->content) - 1] == 34)
@@ -111,7 +109,6 @@ char	**fill_current_cmd(t_list *lst, int pos, t_data *data)
 			type_flag = 1;
 		lst = lst->next;
 		temp = keep;
-		ft_printf("temp: %s cmd[%d]: %s\n", temp, i, cmd[i]);
 		if (i >= 0 && cmd[i])//231117nimai: I added condition with i to protect from segfault
 			keep = ft_strjoin_many(3,temp, " ", cmd[i]);
 		free (temp);
@@ -267,7 +264,10 @@ int	executer(t_list *lst, int cmd_number, char **env, t_data *data)
 				if (!cmd || !(*cmd))
 				{	
 					if (lst->cmd_pos == cmd_number)
+					{
+						free_list(cmd);//It's necessary to free cmd when it's NULL	
 						break ;
+					}
 					else
 						continue ;
 				}
@@ -282,17 +282,7 @@ int	executer(t_list *lst, int cmd_number, char **env, t_data *data)
 				ft_printf("\nCheck builtin return: %d\n", is_builtin);
 				if (is_builtin >= 0)
 				{
-					//ft_printf("g_return: %d, data->return: %d\n", g_return_val, data->return_val);
-					data->return_val = is_builtin;
-					// ///////0925nimai add to remove memory leaks from expander
-					// j = -1;
-					// while (cmd[++j])
-					// {
-					// 	free (cmd[j]);
-					// 	cmd[j] = NULL;
-					// }
-					// ///////0925nimai add to remove memory leaks from expander
-					return (free_list(cmd), is_builtin);
+					return (data->return_val = is_builtin, free_list(cmd), data->return_val);
 				}
 
 				// Create child process
@@ -322,16 +312,6 @@ int	executer(t_list *lst, int cmd_number, char **env, t_data *data)
 			lst = lst->next;
 		pos++;
 		free_list(cmd);
-		// strs_free(cmd);
-		///////0925nimai add to remove memory leaks from expander
-		// int j = -1;
-		// while (cmd[++j])
-		// {
-		// 	free (cmd[j]);
-		// 	cmd[j] = NULL;
-		// }
-		///////0925nimai add to remove memory leaks from expander
-	//	free(cmd);
 	}
 	//for
 	//restore in/out defaults
@@ -346,10 +326,7 @@ int	executer(t_list *lst, int cmd_number, char **env, t_data *data)
 	{
 		wait_ret = waitpid(-1, &e_status, WUNTRACED);
 		if (wait_ret == max_pid)
-		{
 			data->return_val = check_exit_status(e_status);
-			//ft_printf("Line: %d data->return_val: %d\n", __LINE__, data->return_val);
-		}
 			// g_return_val = check_exit_status(e_status);
 		cmd_number--;
 		if (cmd_number < 0)
