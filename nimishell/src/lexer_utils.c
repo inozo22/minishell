@@ -6,14 +6,14 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 18:24:57 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/11/15 14:31:11 by nimai            ###   ########.fr       */
+/*   Updated: 2023/11/17 11:10:03 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /**
- * @note 231115nimai: disuse?
+ * @note 231115nimai: disuse? If not, we should change the return val
  * 
   */
 int	check_valid_input(char *input)

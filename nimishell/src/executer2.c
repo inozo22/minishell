@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/11/15 16:19:23 by nimai            ###   ########.fr       */
+/*   Updated: 2023/11/17 12:58:04 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ char	**fill_current_cmd(t_list *lst, int pos, t_data *data)
 			type_flag = 1;
 		lst = lst->next;
 		temp = keep;
-		if (cmd[i])
+		if (i >= 0 && cmd[i])//231117nimai: I added condition with i to protect from segfault
 			keep = ft_strjoin_many(3,temp, " ", cmd[i]);
 		free (temp);
 	}
@@ -260,6 +260,8 @@ int	executer(t_list *lst, int cmd_number, char **env, t_data *data)
 				ft_printf("HEY\n");
 				set_signal_handlers(0);
 				cmd = fill_current_cmd(lst, pos, data);
+				//231117nimai: added update_last_executed_cmd here instead of in check_builtin to add sth like NULL too
+				update_last_executed_cmd(data, cmd);
 				if (!cmd || !(*cmd))
 				{	
 					if (lst->cmd_pos == cmd_number)

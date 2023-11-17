@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 16:20:01 by nimai             #+#    #+#             */
-/*   Updated: 2023/11/15 14:37:00 by nimai            ###   ########.fr       */
+/*   Updated: 2023/11/17 11:07:14 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,9 @@ char	*get_var_value(char *env_var, char *envp[], int len)
  * @note 231114nimai: ($!) is enough to return only empty line in minishell
  * @note 231114nimai: If pass an empty string, will duplicate the command, now passing a space
  */
-char	*is_expand(char *env_var, int len, t_data *data)//***///
+char	*is_expand(char *env_var, int len, t_data *data)
 {
 	if (!ft_strncmp(env_var, "$?", 2))
-		// return (ft_itoa(g_return_val));
 		return (ft_itoa(data->return_val));
 	// if (!ft_strncmp(env_var, "$!", 2))//it should return process ID of the job most recently placed into the background, now, return last return value
 	if (!ft_strncmp(env_var, "$!", 2))//As doesn't control "&" in minishell, never happen background process, so always return empty line

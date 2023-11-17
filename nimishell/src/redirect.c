@@ -62,6 +62,9 @@ int	heredoc_to_stdin(char *input)
 	return (heredoc_to_stdin(input));
 } */
 
+/**
+ * @note 231117nimai: I think it's accetable leave g_return_val here although with new correction. 
+  */
 int	heredoc_read(char *eof, t_data *data)
 {
 	char	*line_read;

@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 12:49:14 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/11/15 15:56:45 by nimai            ###   ########.fr       */
+/*   Updated: 2023/11/17 13:00:35 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,15 +64,8 @@ int	update_last_executed_cmd(t_data *data, char **input)
 	char	*cmd;
 
 	cmd = NULL;
-	if (!(*input))
-	{
-		tmp_input = (char **)ft_calloc(2 + 1, sizeof(char *));
-		tmp_input[0] = ft_strdup("export");
-		tmp_input[1] = ft_strdup("_=");
-		built_export(tmp_input, data);
-		// built_export(tmp_input, &data->env);
-		return (free_list(tmp_input), free (cmd), 0);
-	}
+	if (!input || !(*input))
+		cmd = ft_strdup(" ");
 	else if (ft_strchr(input[av_amount(input) - 1], '='))
 	{
 		len = ft_strlen(input[av_amount(input) - 1]) - \
@@ -95,6 +88,48 @@ int	update_last_executed_cmd(t_data *data, char **input)
 	// built_export(tmp_input, &data->env);
 	return (free_list(tmp_input), free (cmd), 0);
 }
+
+
+//231117 original
+
+// int	update_last_executed_cmd(t_data *data, char **input)
+// {
+// 	char	**tmp_input;
+// 	int		len;
+// 	char	*cmd;
+
+// 	cmd = NULL;
+// 	if (!(*input))
+// 	{
+// 		tmp_input = (char **)ft_calloc(2 + 1, sizeof(char *));
+// 		tmp_input[0] = ft_strdup("export");
+// 		tmp_input[1] = ft_strdup("_=");
+// 		built_export(tmp_input, data);
+// 		// built_export(tmp_input, &data->env);
+// 		return (free_list(tmp_input), free (cmd), 0);
+// 	}
+// 	else if (ft_strchr(input[av_amount(input) - 1], '='))
+// 	{
+// 		len = ft_strlen(input[av_amount(input) - 1]) - \
+// 		ft_strlen(ft_strchr(input[av_amount(input) - 1], '='));
+// 		cmd = ft_calloc(len + 1, 1);
+// 		if (!cmd)
+// 			return (errors(ENOMEM, data));
+// 		ft_strlcpy(cmd, input[av_amount(input) - 1], len + 1);
+// 	}
+// 	else
+// 		cmd = ft_strdup(input[av_amount(input) - 1]);
+// 	tmp_input = (char **)ft_calloc(2 + 1, sizeof(char *));
+// 	if (!tmp_input)
+// 		return (free (cmd), errors(ENOMEM, data));
+// 	tmp_input[0] = ft_strdup("export");
+// 	tmp_input[1] = ft_strjoin("_=", cmd);
+// 	ft_printf("tmp_input[0]: %s\n", tmp_input[0]);
+// 	ft_printf("tmp_input[1]: %s\n", tmp_input[1]);
+// 	built_export(tmp_input, data);
+// 	// built_export(tmp_input, &data->env);
+// 	return (free_list(tmp_input), free (cmd), 0);
+// }
 // int	update_last_executed_cmd(t_data *data, char *cmd)
 // {
 // 	char	**tmp_input;

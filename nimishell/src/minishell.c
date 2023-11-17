@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:32:33 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/11/15 16:22:31 by nimai            ###   ########.fr       */
+/*   Updated: 2023/11/17 12:57:12 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,25 +39,7 @@ int	check_builtin(char **input, t_data *data)
 	while (data->env[++i])
 		ft_printf("env %d: %s\n", i, data->env[i]); */
 	// update_last_executed_cmd(data, input[0]);
-//	update_last_executed_cmd(data, input);
-	// if (!input[0])
-	// 	return (-1);
-	// if (!ft_strcmp(input[0], "export"))
-	// 	return (built_export(input, &data->env));
-	// if (!ft_strcmp(input[0], "unset"))
-	// 	return (built_unset(input, &data->env));
-	// if (!ft_strcmp(input[0], "exit"))
-	// 	return (built_exit(input, data, 1));
-	// lower_input = ft_strdup(input[0]);
-	// ft_strlower(lower_input);
-	// if (!ft_strcmp(lower_input, "cd"))
-	// 	return (free(lower_input), built_cd(input, &data->env));
-	// if (!ft_strcmp(lower_input, "echo"))
-	// 	return (free(lower_input), built_echo(input));
-	// if (!ft_strcmp(lower_input, "pwd"))
-	// 	return (free(lower_input), built_pwd(data->env));
-	// if (!ft_strcmp(lower_input, "env"))
-	// 	return (free(lower_input), built_env(input, data->env));
+	// update_last_executed_cmd(data, input);
 	if (!input[0])
 		return (-1);
 	if (!ft_strcmp(input[0], "export"))
@@ -118,6 +100,10 @@ int	process_input(char *line_read, t_data *data)
 	// return (g_return_val);
 }
 
+/**
+ * @note 231117nimai: this function is to check if the command line is totally white.
+ * @return if the entire line is white, free the string(line_read) and return 1.
+  */
 int	ft_entire_isspace(char *str)
 {
 	int	i;
@@ -126,6 +112,7 @@ int	ft_entire_isspace(char *str)
 	while (str[++i])
 		if (!ft_isspace(str[i]))
 			return (0);
+	free (str);
 	return (1);
 }
 
@@ -145,23 +132,18 @@ int	minishell(t_data *data)
 		{
 			add_history(line_read);
 			if (ft_entire_isspace(line_read))
-			{
-				free (line_read);
 				continue ;
-			}
 			process_input(line_read, data);
-			line_read = my_free(line_read);
 		}
+		line_read = my_free(line_read);
 		if (g_return_val)
 			data->return_val = g_return_val;
 		ft_printf(COLOR_BLUE"\nReturn val: %d\nGlobal_val: %d\n"COLOR_RESET, data->return_val, g_return_val);//If remove this line, 25lines
-		// ft_printf(COLOR_BLUE"\nReturn val: %d\n"COLOR_RESET, g_return_val);//If remove this line, 25lines
 		if (data->exit_status)
 			break ;
 	}
-	rl_clear_history();
 	printf("\nBye 🗑\n");
-	return (/* free(line_read), */ free(prompt), obtain_pwd_home(NULL, 99), 0);
+	return (rl_clear_history(), free(prompt), obtain_pwd_home(NULL, 99), 0);
 }
 
 // int	minishell(t_data *data)
