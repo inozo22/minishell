@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 18:40:39 by nimai             #+#    #+#             */
-/*   Updated: 2023/11/15 15:59:45 by nimai            ###   ########.fr       */
+/*   Updated: 2023/11/17 09:41:10 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
  */
 void	error_cd(char *cmd)
 {
-	// g_return_val = 1;
 	ft_printf("minishell: cd: %s: No such file or directory\n", cmd);
 }
 
@@ -33,19 +32,11 @@ char	*get_dest_path(char *dest, t_data *data)
 	char	*cur;
 
 	if (chdir(dest) == -1)
-	{
-		data->return_val = 1;
-		ft_printf("return: %d\n", data->return_val);
-
-		return (/* data->return_val = 1,  */error_cd(dest), NULL);
-	}
-		// return (g_return_val = 1, error_cd(dest), NULL);
+		return (data->return_val = 1, error_cd(dest), NULL);
 	cur = getcwd(NULL, 0);
 	ret = ft_strdup(dest);
 	if (ft_strlen(cur) > ft_strlen(ret) && ft_strncmp("..", ret, 2) != 0)
-	{
 		return (path_modify(cur, ret));
-	}
 	else if (ft_strlen(cur) <= ft_strlen(ret))
 	{
 		if (ret[ft_strlen(ret) - 1] == '/')
@@ -107,8 +98,6 @@ char	*obtain_pwd_home(t_data *data, int flag)
 
 	if (flag == 99)
 		return (my_free(pwd), my_free(home), NULL);
-	//data->return_val = 0;
-	// g_return_val = 0;
 	if (!pwd || !home)
 		init_pwd_home(&pwd, &home, data->env);
 	if (flag == 1)
@@ -152,8 +141,7 @@ int	built_cd(char **input, t_data *data)
 		dest = get_dest_path_wl_sign(cur, tmp_pwd, input[1], data);
 	else if (ft_strcmp("-", input[1]) != 0)
 		dest = get_dest_path(input[1], data);
-//	ft_printf("before exit cd return: %d\n", data->return_val);
 	envp_cd_mod(&data->env, dest, 1);
 	obtain_pwd_home(data, 4);
-	return (free (tmp_pwd), free (dest), free (cur), /*g_return_val*/data->return_val);
+	return (free (tmp_pwd), free (dest), free (cur), data->return_val);
 }

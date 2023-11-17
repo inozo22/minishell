@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 09:43:46 by nimai             #+#    #+#             */
-/*   Updated: 2023/11/15 15:51:24 by nimai            ###   ########.fr       */
+/*   Updated: 2023/11/17 09:38:50 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ char	*get_dest_path_wl_sign(char *cur, char *pwd, char *input, t_data *data)
 		if (chdir(cur) == -1)
 		{
 			data->return_val = 1;
-			// g_return_val = 1;
 			return (error_built("cd", \
 					"failure to move to current directory\n"), NULL);
 		}
@@ -64,13 +63,11 @@ char	*get_dest_path_env(t_data *data, char *envtype)
 	if (!ret)
 	{
 		data->return_val = 1;
-		// g_return_val = 1;
 		return (error_notset("cd", envtype), NULL);
 	}
 	if (chdir(ret) == -1)
 	{
 		data->return_val = 1;
-		// g_return_val = 1;
 		return (error_cd(ret), NULL);
 	}
 	if (!ft_strcmp("OLDPWD", envtype))

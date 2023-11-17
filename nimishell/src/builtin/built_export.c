@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:18:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/11/15 15:40:24 by nimai            ###   ########.fr       */
+/*   Updated: 2023/11/17 09:54:55 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ char	**envp_strs_join(char *input, t_data *data)
 	free (data->env);
 	data->env = NULL;
 	input = mod_path(input);
-	if (check_valid(input, "export", data))//*///
+	if (check_valid(input, "export", data))
 		ret[i] = input;
 	ret[++i] = NULL;
 	return (ret);
@@ -125,7 +125,7 @@ char	**envp_strs_join(char *input, t_data *data)
  * @param **input "export", "ABC=abc". *data
  * @return 
  */
-int	built_export(char **input, t_data *data/* char ***env */)
+int	built_export(char **input, t_data *data)
 {
 	char		**new_envp;
 	int			i;

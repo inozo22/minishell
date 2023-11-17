@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 11:52:54 by nimai             #+#    #+#             */
-/*   Updated: 2023/11/15 15:41:57 by nimai            ###   ########.fr       */
+/*   Updated: 2023/11/17 10:44:42 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ int	av_amount(char **strs)
  */
 void	set_return(int val, t_data *data)
 {
-	// g_return_val = val;
 	data->return_val = val;
 }
 
@@ -48,26 +47,28 @@ void	set_return(int val, t_data *data)
  */
 int	check_valid(char *str, char *cmd, t_data *data)
 {
-	int	i;
+	int		i;
+	char	tmp[3];
 
 	i = 0;
 	if (!ft_strcmp(cmd, "unset") && !ft_strcmp(str, "_"))
 		return (0);
-	if (str[i] == '-')
-		return (set_return(2, data), error_id_built(cmd, str, "invalid option"), 0);
-	if (!(ft_isalpha(str[i]) || str[i] == '_'))
-		return (set_return(1, data), \
-		error_id_built(cmd, str, "not a valid identifier"), 0);
-	i++;
-	while (str[i] != '=' && str[i])
+	if (str[i] == '-' && str[i + 1])
 	{
-		if (!ft_isalnum(str[i]) && str[i] != '_' && (str[i] != '=' && \
-		ft_strncmp(cmd, "export", 6) == 0))
-			return (set_return(1, data), \
-			error_id_built(cmd, str, "not a valid identifier"), 0);
-		i++;
+		ft_strlcpy(tmp, str, 3);
+		return (data->return_val = 2, error_av_built(cmd, tmp, \
+		"invalid option"), 0);
 	}
-	// g_return_val = 0;
+	if (!(ft_isalpha(str[i]) || str[i] == '_'))
+		return (data->return_val = 1, \
+		error_id_built(cmd, str, "not a valid identifier"), 0);
+	while (str[++i] != '=' && str[i])
+	{
+		if ((!ft_isalnum(str[i]) && str[i] != '_') || \
+		(str[i + 1] && str[i + 1] == '=' && !ft_strcmp(cmd, "unset")))
+			return (data->return_val = 1, \
+			error_id_built(cmd, str, "not a valid identifier"), 0);
+	}
 	data->return_val = 0;
 	return (1);
 }

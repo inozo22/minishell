@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:11:36 by nimai             #+#    #+#             */
-/*   Updated: 2023/11/15 15:54:16 by nimai            ###   ########.fr       */
+/*   Updated: 2023/11/17 09:55:37 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,3 @@ int	built_pwd(t_data *data)
 	obtain_pwd_home(data, 1);
 	return (0);
 }
-
-/**
- * 230621nimai: do I need this control? at the moment ignore all after CMD.
- * bash-3.2$ pwd !·$%&/()=?
- * bash: !·$%: event not found
- * 
- * 
- * 
- */

@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 09:50:35 by nimai             #+#    #+#             */
-/*   Updated: 2023/11/15 16:02:31 by nimai            ###   ########.fr       */
+/*   Updated: 2023/11/17 10:16:53 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,5 @@ int	built_unset(char **input, t_data *data)
 		}
 		i++;
 	}
-	return (0);
+	return (data->return_val);
 }
