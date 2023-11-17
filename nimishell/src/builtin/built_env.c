@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 09:50:16 by nimai             #+#    #+#             */
-/*   Updated: 2023/10/11 13:37:37 by nimai            ###   ########.fr       */
+/*   Updated: 2023/11/17 11:00:28 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
  */
 void	error_input(char *input, char *msg)
 {
-	ft_printf("minishell: %s: %s\n", input, msg);
+	ft_printf(SHELL_NAME": %s: %s\n", input, msg);
 }
 
 /**

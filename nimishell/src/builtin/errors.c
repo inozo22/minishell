@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 17:20:27 by nimai             #+#    #+#             */
-/*   Updated: 2023/10/02 14:34:51 by nimai            ###   ########.fr       */
+/*   Updated: 2023/11/17 11:01:31 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	heap_error(int flag)
  */
 void	error_id_built(char *cmd, char *av, char *comment)
 {
-	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(SHELL_NAME": ", 2);
 	ft_putstr_fd(cmd, 2);
 	ft_putstr_fd(": `", 2);
 	ft_putstr_fd(av, 2);
@@ -49,7 +49,7 @@ void	error_id_built(char *cmd, char *av, char *comment)
  */
 void	error_av_built(char *cmd, char *av, char *comment)
 {
-	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(SHELL_NAME": ", 2);
 	ft_putstr_fd(cmd, 2);
 	ft_putstr_fd(": ", 2);
 	ft_putstr_fd(av, 2);
@@ -65,7 +65,7 @@ void	error_av_built(char *cmd, char *av, char *comment)
  */
 void	error_built(char *cmd, char *comment)
 {
-	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(SHELL_NAME": ", 2);
 	ft_putstr_fd(cmd, 2);
 	ft_putstr_fd(": ", 2);
 	if (errno == 13)
@@ -83,7 +83,7 @@ void	error_built(char *cmd, char *comment)
  */
 int	error_notset(char *cmd, char *input)
 {
-	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(SHELL_NAME": ", 2);
 	ft_putstr_fd(cmd, 2);
 	ft_putstr_fd(": ", 2);
 	if (errno == 13)

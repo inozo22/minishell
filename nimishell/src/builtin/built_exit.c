@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 13:05:08 by nimai             #+#    #+#             */
-/*   Updated: 2023/11/17 09:52:20 by nimai            ###   ########.fr       */
+/*   Updated: 2023/11/17 11:00:45 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	is_numeric(char *num)
  */
 static int	error_exit_msg(void)
 {
-	ft_putendl_fd("minishell: exit: too many arguments", 2);
+	ft_putendl_fd(SHELL_NAME": exit: too many arguments", 2);
 	return (1);
 }
 
@@ -74,7 +74,7 @@ int	built_exit(char **input, t_data *data, int cmd_num)
 	amount = av_amount(input);
 	if (amount > 1 && !is_numeric(input[1]))
 	{
-		ft_printf("minishell: exit: %s: numeric argument required\n", input[1]);
+		ft_printf(SHELL_NAME": exit: %s: numeric argument required\n", input[1]);
 		data->return_val = 255;
 	}
 	else if (amount > 2)

@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 18:40:39 by nimai             #+#    #+#             */
-/*   Updated: 2023/11/17 09:41:10 by nimai            ###   ########.fr       */
+/*   Updated: 2023/11/17 11:00:13 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
  */
 void	error_cd(char *cmd)
 {
-	ft_printf("minishell: cd: %s: No such file or directory\n", cmd);
+	ft_printf(SHELL_NAME": cd: %s: No such file or directory\n", cmd);
 }
 
 /**
