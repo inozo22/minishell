@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 16:20:01 by nimai             #+#    #+#             */
-/*   Updated: 2023/11/17 11:07:14 by nimai            ###   ########.fr       */
+/*   Updated: 2023/11/17 14:04:52 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,13 @@ char	*is_expand(char *env_var, int len, t_data *data)
 		return (ft_itoa(data->return_val));
 	// if (!ft_strncmp(env_var, "$!", 2))//it should return process ID of the job most recently placed into the background, now, return last return value
 	if (!ft_strncmp(env_var, "$!", 2))//As doesn't control "&" in minishell, never happen background process, so always return empty line
-		return (ft_strdup(" "));//If pass an empty string, will duplicate the command, now passing a space
+		return (ft_strdup(""));
 	if (!ft_strncmp(env_var, "$$", 2))
 		return (ft_itoa(data->pid));
 	if (!ft_strncmp(env_var, "$-", 2))
 		return (ft_strdup("himBH"));
 	if (!ft_strncmp(env_var, "$@", 2) || !ft_strncmp(env_var, "$*", 2))
-		return (ft_strdup(" "));//If pass an empty string, will duplicate the command, now passing a space
+		return (ft_strdup(""));
 	if (!ft_strncmp(env_var, "$#", 2))
 		return (ft_itoa(0));
 	if (!ft_strncmp(env_var, "$0", 2))
@@ -74,7 +74,7 @@ char	*is_expand(char *env_var, int len, t_data *data)
 	if (!ft_strncmp(env_var, "$\0", 2) || !ft_strncmp(env_var, "$\"", 2))
 		return (ft_strdup("$"));
 	if (ft_isdigit(env_var[1]))
-		return (ft_strdup(" "));//If pass an empty string, will duplicate the command, now passing a space
+		return (ft_strdup(""));
 	if (!(env_var[1]) || (!ft_isalnum(env_var[1]) && env_var[1] != '_') || !ft_strncmp(env_var, "$ ", 2))
 		return (ft_substr(env_var, 0, 2));//should be printed literally instead of null
 	return (get_var_value(env_var + 1, data->env, len - 1));

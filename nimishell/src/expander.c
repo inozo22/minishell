@@ -32,7 +32,6 @@ int	expand(char **str, int *pos, int quotes, t_data *data)
 	ft_bzero(i, 2 * sizeof(int));
 	i[0] = *pos;
 	i[0] = check_valiable_len(&(*str)[*pos], i[0], quotes);
-	// expanded_var = is_expand(&(*str)[*pos], i[0] - *pos, data->env, data->pid);
 	expanded_var = is_expand(&(*str)[*pos], i[0] - *pos, data);
 	*pos = compose_expanded(expanded_var, str, *pos, i[0]);
 	if (*str[0] == '\"' && (ft_strncmp(*str, "$\"", 2) || \
