@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/11/17 15:18:27 by nimai            ###   ########.fr       */
+/*   Updated: 2023/11/20 10:08:17 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -277,7 +277,7 @@ int	executer(t_list *lst, int cmd_number, char **env, t_data *data)
 					ft_printf("cmd[%d] = %s\n", j, cmd[j]);
 				ft_printf("\n");
 				data->return_val = 0;
-				g_return_val = 0;
+				// g_return_val = 0;
 				int is_builtin = check_builtin(cmd, data);
 				ft_printf("\nCheck builtin return: %d\n", is_builtin);
 				if (is_builtin >= 0)

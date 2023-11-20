@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:11:50 by nimai             #+#    #+#             */
-/*   Updated: 2023/11/17 11:32:56 by nimai            ###   ########.fr       */
+/*   Updated: 2023/11/20 10:13:35 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,14 @@ void	sigquit_ignore(void)
  * @note 230915nimai: put sigaction for sigquit in parent process instead of 
  * 		sigquit_ignore to make ctrl+\ change g_return_val and "ignore" the sign
  * @note 230915nimai: The above is a misunderstanding. Revert to original.
+ * @note 231120nimai: put g_return_val initialization.
  */
 void	set_signal_handlers(pid_t pid)
 {
 	struct sigaction	sa;
 
 	ft_bzero(&sa, sizeof(struct sigaction));
+	g_return_val = 0;
 	if (pid)
 	{
 		write(1, "I'm pappy\n", 10);

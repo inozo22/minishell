@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:32:33 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/11/17 12:57:12 by nimai            ###   ########.fr       */
+/*   Updated: 2023/11/20 10:00:26 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ int	process_input(char *line_read, t_data *data)
 			if (tmp->type == WORD && !ft_strcmp(tmp->content, "exit")  \
 				 && built_exit(cmd, data, 0) == 0)
 			{
+				ft_printf("so, Im here\n");
 				ft_lstclear(&cmd_list, free);
 				free_list(cmd);
 				return (0);
