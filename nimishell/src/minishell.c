@@ -61,10 +61,58 @@ int	check_builtin(char **input, t_data *data)
 	return (free(lower_input), -1);
 }
 
+int check_exit(t_list *cmd_list, t_data *data)
+{
+	char	**cmd;
+
+	while (cmd_list)
+	{
+		//SET THE EXIT INPUT FROM NULL TO DOUBLE ARRAY
+		if (cmd_list->type == WORD && !ft_strcmp(cmd_list->content, "exit"))
+		{
+			cmd = fill_current_cmd(cmd_list, 0, data);
+			if (!cmd)
+				return (-1);
+			if (built_exit(cmd, data, 0) != 0)
+				return (-1);
+			ft_printf("so, Im here\n");
+			ft_lstclear(&cmd_list, free);
+			free_list(cmd);
+			return (0);
+		}
+		cmd_list = cmd_list->next;
+	}
+	return (1);
+}
+
+int check_single_builtin(t_list *cmd_list, t_data *data)
+{
+	char	**cmd;
+	int		return_val;
+	
+	cmd = fill_current_cmd(cmd_list, 0, data);
+	if (!cmd)
+		return (-1);
+	if (!ft_strcmp(cmd[0], "exit"))
+	{
+		if (built_exit(cmd, data, 0) != 0)
+			return (-1);
+		free_list(cmd);
+		return (0);
+	}
+	return_val = check_builtin(cmd, data);
+	free_list(cmd);
+	if (return_val >= 0)
+	{
+		data->return_val = return_val;
+		return (0);
+	}
+	return (1);
+}
+
 int	process_input(char *line_read, t_data *data)
 {
 	t_list	*cmd_list;
-	t_list	*tmp;
 	int		cmd_nb;
 
 	cmd_nb = lexer(line_read, &cmd_list, &data);
@@ -76,25 +124,8 @@ int	process_input(char *line_read, t_data *data)
 	}
 	if (cmd_nb == -1)
 		return (1);
-	tmp = cmd_list;
-	if (cmd_nb == 0)
-	{
-		while (tmp)
-		{
-			//SET THE EXIT INPUT FROM NULL TO DOUBLE ARRAY
-			char **cmd = fill_current_cmd(cmd_list, 0, data);
-			if (tmp->type == WORD && !ft_strcmp(tmp->content, "exit")  \
-				 && built_exit(cmd, data, 0) == 0)
-			{
-				ft_printf("so, Im here\n");
-				ft_lstclear(&cmd_list, free);
-				free_list(cmd);
-				return (0);
-			}
-			tmp = tmp->next;
-			free_list(cmd);
-		}
-	}
+	if (cmd_nb == 0 && check_single_builtin(cmd_list, data) == 0)
+		return (ft_lstclear(&cmd_list, free), 0);
 	executer(cmd_list, cmd_nb, data->env, data);
 	ft_lstclear(&cmd_list, free);
 	return (data->return_val);
@@ -143,7 +174,7 @@ int	minishell(t_data *data)
 		if (data->exit_status)
 			break ;
 	}
-	printf("\nBye 🗑\n");
+	ft_printf("\nBye 🗑\n");
 	return (rl_clear_history(), free(prompt), obtain_pwd_home(NULL, 99), 0);
 }
 

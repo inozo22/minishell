@@ -211,7 +211,7 @@ int	child_execution(char **cmd, char **env, char **path, t_data *data, int pos, 
 	exit(1);
 }
 
-int	executer(t_list *lst, int cmd_number, char **env, t_data *data)
+/* int	executer(t_list *lst, int cmd_number, char **env, t_data *data)
 {
 	int		tmp_stdio_fd[2];
 	pid_t	pid;
@@ -229,16 +229,16 @@ int	executer(t_list *lst, int cmd_number, char **env, t_data *data)
 	pos = 0;
 	max_pid = 0;
 	//set the initial input
-/* 	if (infile)
-		fdin = open(infile, O_RDONLY);
-	else
-	{
+// 	if (infile)
+//		fdin = open(infile, O_RDONLY);
+//	else
+//	{
 		// Use default input
-		fdin = dup(tmp_stdio_fd[0]);
-	} */
+//		fdin = dup(tmp_stdio_fd[0]);
+//	}
 	// IMPORTANTE: check if the last command is exit
-/* 	if (ft_strcmp(cmd[cmd_number - 1][0], "exit"))
-		return (0); */
+// 	if (ft_strcmp(cmd[cmd_number - 1][0], "exit"))
+//		return (0); 
 	path = set_path_list(data);
 	ft_printf(COLOR_ACCENT"EXECUTER START\n"COLOR_RESET);
 	if (lst)
@@ -331,6 +331,84 @@ int	executer(t_list *lst, int cmd_number, char **env, t_data *data)
 		cmd_number--;
 		if (cmd_number < 0)
 			break ;
+	}
+	return (0);
+} */
+
+ int child(char **cmd, t_data *data)
+{
+	int is_builtin;
+
+	is_builtin = check_builtin(cmd, data);
+	if (is_builtin >= 0)		
+		return(free_list(cmd), is_builtin);
+//	child_execution(cmd, env, path, data, pos, cmd_number, process_fd, pipe_fd, tmp_stdio_fd);
+	return (0);
+}
+/*
+int father()
+{
+	int i;
+	
+	i = 0;
+} */
+
+int fork_setup(char **cmd, char **env, t_data *data)
+{
+	int pid;
+	int status;
+	
+	data->return_val = 0;
+	pid = fork();
+	if (pid == -1)
+		return (-1);
+	if (pid == 0)
+	{
+		//child
+		exit(child(cmd, data));
+	}
+	else
+	{
+		//father
+		ft_printf("PPRINTING ENV: %s\n", *env);
+		waitpid(pid, &status, WUNTRACED);
+		free_list(cmd);
+	}
+	return (0);
+}
+
+/**
+ * @param fd[0] tmp_stdio_fd
+ * @param fd[1] process_fd
+ * @param fd[2] pipe_fd
+  */
+int executer(t_list *cmd_list, int cmd_number, char **env, t_data *data)
+{
+	char	**cmd;
+	int		pos;
+	int		fd[3][2];
+
+	//DELETE
+	ft_printf("cmd_number: %d\n", cmd_number);
+	pos = -1;
+	while (++pos < cmd_number + 1)
+	{
+		if (get_iofiles_fd(fd[1], cmd_list, pos) \
+			&& get_heredoc_input(cmd_list, pos, data))
+			return (-1);
+		ft_printf("FDs set\n");
+		cmd = fill_current_cmd(cmd_list, pos, data);
+		if (!cmd || !(*cmd))
+		{	
+			//Error setup
+			return (-1);
+		}
+		//DELETE
+		int j = -1;
+		while (cmd[++j])
+			ft_printf("cmd[%d] = %s\n", j, cmd[j]);
+		if (fork_setup(cmd, env, data) == -1)
+			return (-1);
 	}
 	return (0);
 }

@@ -110,7 +110,7 @@ int	update_last_executed_cmd(t_data *data, char **input)
 // 	}
 // 	else if (ft_strchr(input[av_amount(input) - 1], '='))
 // 	{
-// 		len = ft_strlen(input[av_amount(input) - 1]) - \
+// 		len = ft_strlen(input[av_amount(input) - 1]) -
 // 		ft_strlen(ft_strchr(input[av_amount(input) - 1], '='));
 // 		cmd = ft_calloc(len + 1, 1);
 // 		if (!cmd)
