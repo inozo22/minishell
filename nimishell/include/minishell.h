@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 19:10:38 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/11/24 19:02:58 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/11/24 20:09:13 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ char	*get_prompt(t_data *data);
 //	minishell
 
 int		minishell(t_data *data);
-int		check_builtin(char **input, t_data *data, int cmd_num);
+int		check_builtin(char **input, t_data *data);
 int		process_input(char *line_read, t_data *data);
 
 //	Lexer
@@ -152,7 +152,7 @@ int		warning_message(int type, int num);//2309114nimai: added
 
 //	Executer
 
-int		executer(t_list *lst, int cmd_number, char **env, t_data *data);
+int		executer(t_list *lst, t_data *data);
 //char	**fill_current_cmd(t_list *lst, int pos, char **envp, pid_t pid);
 char	**fill_current_cmd(t_list *lst, int pos, t_data *data);
 
@@ -168,7 +168,7 @@ char	**set_path_list(t_data *data);
 
 // 	Redir_setup
 
-void	redir_setup(int pos, int cmd_number, int *process_fd, int *pipe_fd, int *tmp_stdio_fd);
+int		redir_setup(int pos, int cmd_number, int *fd);
 
 //	Split
 

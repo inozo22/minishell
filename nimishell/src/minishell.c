@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:32:33 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/11/24 18:58:16 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/11/24 19:40:45 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 /* 	int	j = -1;
 	while (input[++j])
 		ft_printf("Input %d: %s\n", j, input[j]); */
-int	check_builtin(char **input, t_data *data, int cmd_nb)
+int	check_builtin(char **input, t_data *data)
 {
 	char	*lower_input;
 
@@ -43,7 +43,7 @@ int	check_builtin(char **input, t_data *data, int cmd_nb)
 	if (!ft_strcmp(input[0], "unset"))
 		return (built_unset(input, data));
 	if (!ft_strcmp(input[0], "exit"))
-		return (built_exit(input, data, cmd_nb));
+		return (built_exit(input, data, data->cmd_nb));
 	lower_input = ft_strdup(input[0]);
 	ft_strlower(lower_input);
 	if (!ft_strcmp(lower_input, "cd"))
@@ -57,7 +57,7 @@ int	check_builtin(char **input, t_data *data, int cmd_nb)
 	return (free(lower_input), -1);
 }
 
-int	check_single_builtin(t_list *cmd_list, t_data *data, int cmd_nb)
+int	check_single_builtin(t_list *cmd_list, t_data *data)
 {
 	char	**cmd;
 	int		return_val;
@@ -65,7 +65,7 @@ int	check_single_builtin(t_list *cmd_list, t_data *data, int cmd_nb)
 	cmd = fill_current_cmd(cmd_list, 0, data);
 	if (!cmd)
 		return (-1);
-	return_val = check_builtin(cmd, data, cmd_nb);
+	return_val = check_builtin(cmd, data);
 	free_list(cmd);
 	if (return_val >= 0)
 	{
@@ -78,9 +78,8 @@ int	check_single_builtin(t_list *cmd_list, t_data *data, int cmd_nb)
 int	process_input(char *line_read, t_data *data)
 {
 	t_list	*cmd_list;
-	int		cmd_nb;
 
-	cmd_nb = lexer(line_read, &cmd_list, &data);
+	data->cmd_nb = lexer(line_read, &cmd_list, &data);
 	//DELETE
 	t_list *test = cmd_list;
 	while (test)
@@ -88,11 +87,11 @@ int	process_input(char *line_read, t_data *data)
 		ft_printf("content: %s type: %d pos: %d\n", test->content, test->type, test->cmd_pos);
 		test = test->next;
 	}
-	if (cmd_nb == -1)
+	if (data->cmd_nb == -1)
 		return (1);
-	if (cmd_nb == 0 && check_single_builtin(cmd_list, data, cmd_nb) == 0)
+	if (data->cmd_nb == 0 && check_single_builtin(cmd_list, data) == 0)
 		return (ft_lstclear(&cmd_list, free), 0);
-	executer(cmd_list, cmd_nb, data->env, data);
+	executer(cmd_list, data);
 	ft_lstclear(&cmd_list, free);
 	return (0);
 }

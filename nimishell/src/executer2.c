@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/11/24 18:11:22 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/11/24 19:57:49 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,7 +183,7 @@ int	get_heredoc_input(t_list *lst, int pos, t_data *data)
 	return (0);
 }
 
-int	child_execution(char **cmd, char **env, char **path, t_data *data, int pos, int cmd_number, int *process_fd, int *pipe_fd, int *tmp_stdio_fd)
+int	child_execution(char **cmd, char **path, t_data *data, int pos, int *fd)
 {
 	char	*cmd_path;
 	int		return_val;
@@ -199,10 +199,10 @@ int	child_execution(char **cmd, char **env, char **path, t_data *data, int pos, 
 		free_alloc(data);
 		exit(return_val);
 	}
-	redir_setup(pos, cmd_number, process_fd, pipe_fd, tmp_stdio_fd);
+	redir_setup(pos, data->cmd_nb, fd);
 	ft_printf("cmd_path: %s\n", cmd_path);
-	if (execve(cmd_path, cmd, env) == -1 && errno == ENOEXEC)
-		execute_script_without_shebang(cmd, env);
+	if (execve(cmd_path, cmd, data->env) == -1 && errno == ENOEXEC)
+		execute_script_without_shebang(cmd, data->env);
 	//as doesn't return when execute the command well, there is no protection
 	ft_printf(SHELL_NAME": %s: %s", cmd[0], strerror(errno));
 	//free all the data if execve fails
@@ -337,15 +337,17 @@ int	child_execution(char **cmd, char **env, char **path, t_data *data, int pos, 
 	return (0);
 } */
 
- int child(char **cmd, t_data *data, int **fd)
+ int child(char **cmd, t_data *data, int *fd, int pos)
 {
-	int is_builtin;
+	int		is_builtin;
+	char	**path;
 
-	is_builtin = check_builtin(cmd, data, 1);
+	is_builtin = check_builtin(cmd, data);
 	if (is_builtin >= 0)		
 		return(free_list(cmd), is_builtin);
-	ft_printf("fd: %d %d %d\n", fd[0][0], fd[1][1], fd[2][0]);
-//	child_execution(cmd, env, path, data, pos, cmd_number, fd[1], fd[2], fd[0]);
+	ft_printf("fd: %d %d %d\n", fd[0], fd[2], fd[4]);
+	path = set_path_list(data);
+	child_execution(cmd, path, data, pos, fd);
 	return (0);
 }
 /*
@@ -356,7 +358,7 @@ int father()
 	i = 0;
 } */
 
-int fork_setup(char **cmd, char **env, t_data *data, int **fd)
+static int fork_setup(char **cmd, t_data *data, int *fd, int pos)
 {
 	int pid;
 	int status;
@@ -368,12 +370,11 @@ int fork_setup(char **cmd, char **env, t_data *data, int **fd)
 	if (pid == 0)
 	{
 		//child
-		exit(child(cmd, data, fd));
+		exit(child(cmd, data, fd, pos));
 	}
 	else
 	{
 		//father
-		ft_printf("PPRINTING ENV: %s\n", *env);
 		waitpid(pid, &status, WUNTRACED);
 		free_list(cmd);
 	}
@@ -382,25 +383,22 @@ int fork_setup(char **cmd, char **env, t_data *data, int **fd)
 
 /**
  * @param fd[0] tmp_stdio_fd
- * @param fd[1] process_fd
- * @param fd[2] pipe_fd
+ * @param fd[2] process_fd
+ * @param fd[4] pipe_fd
   */
-int executer(t_list *cmd_list, int cmd_number, char **env, t_data *data)
+int executer(t_list *cmd_list, t_data *data)
 {
 	char	**cmd;
+	int		*fd;
 	int		pos;
-	int		**fd;
 
 	//DELETE
-	ft_printf("cmd_number: %d\n", cmd_number);
-	fd = (int **)ft_calloc(3, sizeof(int *));
-	fd[0] = (int *)ft_calloc(2, sizeof(int));
-	fd[1] = (int *)ft_calloc(2, sizeof(int));
-	fd[2] = (int *)ft_calloc(2, sizeof(int));
-	pos = -1;
+	ft_printf("cmd_number: %d\n", data->cmd_nb);
+	fd = (int *)ft_calloc(6, sizeof(int));
 	while (cmd_list)
 	{
-		if (get_iofiles_fd(fd[1], cmd_list, pos) \
+		pos = cmd_list->cmd_pos;
+		if (get_iofiles_fd(fd + 2, cmd_list, pos) \
 			&& get_heredoc_input(cmd_list, pos, data))
 			return (-1);
 		ft_printf("FDs set\n");
@@ -414,7 +412,7 @@ int executer(t_list *cmd_list, int cmd_number, char **env, t_data *data)
 		int j = -1;
 		while (cmd[++j])
 			ft_printf("cmd[%d] = %s\n", j, cmd[j]);
-		if (fork_setup(cmd, env, data, fd) == -1)
+		if (fork_setup(cmd, data, fd, pos) == -1)
 			return (-1);
 		while (cmd_list && cmd_list->cmd_pos == pos)
 			cmd_list = cmd_list->next;

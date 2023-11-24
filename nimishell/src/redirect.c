@@ -89,7 +89,7 @@ int	heredoc_read(char *eof, t_data *data)
 	return (heredoc_to_stdin(input));
 }
 
-void	redir_setup(int pos, int cmd_number, int *process_fd, int *pipe_fd, int *tmp_stdio_fd)
+/* void	redir_setup(int pos, int cmd_number, int *process_fd, int *pipe_fd, int *tmp_stdio_fd)
 {
 	if (pos == 0)
 	{
@@ -119,4 +119,4 @@ void	redir_setup(int pos, int cmd_number, int *process_fd, int *pipe_fd, int *tm
 		else
 			dup2(pipe_fd[WRITE_END], STDOUT_FILENO);
 	}
-}
+} */

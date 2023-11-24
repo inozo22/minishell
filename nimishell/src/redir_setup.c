@@ -6,13 +6,13 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 17:57:29 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/11/24 18:46:01 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/11/24 20:10:22 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	redir_setup(int pos, int *fd, int cmd_number, int *process_fd, int *pipe_fd, int *tmp_stdio_fd)
+/* int	redir_setup(int pos, int *fd, int cmd_number, int *process_fd, int *pipe_fd, int *tmp_stdio_fd)
 {
 	if (pos == 0)
 	{
@@ -42,6 +42,78 @@ int	redir_setup(int pos, int *fd, int cmd_number, int *process_fd, int *pipe_fd,
 		if (process_fd[WRITE_END] != STDOUT_FILENO)
 			dup2(process_fd[WRITE_END], STDOUT_FILENO);
 	}
+} */
+
+int	redir_pos_0(int *process_fd, int *pipe_fd, int cmd_number)
+{
+	if (process_fd[READ_END] != STDIN_FILENO)
+	{
+		if (dup2(process_fd[READ_END], STDIN_FILENO) == -1)
+			return (-1);
+	}
+	if (process_fd[WRITE_END] == STDOUT_FILENO && cmd_number > 0)
+	{
+		if (dup2(pipe_fd[WRITE_END], STDOUT_FILENO) == -1)
+			return (-1);
+	}
+	else if (process_fd[WRITE_END] != STDOUT_FILENO)
+	{
+		if (dup2(process_fd[WRITE_END], STDOUT_FILENO))
+			return (-1);
+	}
+	return (0);
+}
+
+int	redir_last(int *tmp_stdio_fd, int *process_fd, int *pipe_fd)
+{
+	if (close(pipe_fd[WRITE_END]) == -1)
+		return (-1);
+	if (process_fd[READ_END] != STDIN_FILENO)
+	{
+		if (dup2(process_fd[READ_END], STDIN_FILENO) == -1)
+			return (-1);
+	}
+	if (process_fd[WRITE_END] == STDOUT_FILENO)
+	{	
+		if (dup2(tmp_stdio_fd[WRITE_END], STDOUT_FILENO) == -1)
+			return (-1);
+	}
+	else if (dup2(process_fd[WRITE_END], STDOUT_FILENO) == -1)
+		return (-1);
+	return (0);
+}
+
+int redir_intermediate(int *process_fd, int *pipe_fd)
+{
+	if (process_fd[READ_END] == STDIN_FILENO)
+	{
+		if (dup2(pipe_fd[READ_END], STDIN_FILENO) == -1)
+			return (-1);
+	}
+	else if (dup2(process_fd[READ_END], STDIN_FILENO) == -1)
+		return (-1);
+	if (process_fd[WRITE_END] != STDOUT_FILENO)
+	{
+		if (dup2(process_fd[WRITE_END], STDOUT_FILENO) == -1)
+			return (-1);
+	}
+	return (0);
+}
+
+/**
+ * @param fd[0] tmp_stdio_fd
+ * @param fd[2] process_fd
+ * @param fd[4] pipe_fd
+  */
+int	redir_setup(int pos, int cmd_number, int *fd)
+{
+	if (pos == 0 && redir_pos_0(fd + 2, fd + 4, cmd_number) == -1)
+		return (-1);
+	if (pos > 0 && pos == cmd_number &&	redir_last(fd, fd + 2, fd + 4) == -1)
+		return (-1);
+	else if (redir_intermediate(fd + 2, fd + 4) == -1)
+		return (-1);
+	return (0);
 }
 
 /* 	if (pos == 0)
