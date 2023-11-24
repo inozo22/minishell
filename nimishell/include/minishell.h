@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 19:10:38 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/11/24 17:56:42 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/11/24 19:02:58 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,9 @@ int		is_quote(char c);
 
 int		check_valid_input(char *input);
 int		check_literal_metacharacter(int c);
+int		is_quote(char c);
+int		is_metacharacter(char *str);
+int		check_quotes_in_string(char *str);
 
 //	Parser
 

@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:32:33 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/11/24 18:16:30 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/11/24 18:58:16 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 int	check_builtin(char **input, t_data *data, int cmd_nb)
 {
 	char	*lower_input;
+
 	if (!input[0])
 		return (-1);
 	if (!ft_strcmp(input[0], "export"))
@@ -56,11 +57,11 @@ int	check_builtin(char **input, t_data *data, int cmd_nb)
 	return (free(lower_input), -1);
 }
 
-int check_single_builtin(t_list *cmd_list, t_data *data, int cmd_nb)
+int	check_single_builtin(t_list *cmd_list, t_data *data, int cmd_nb)
 {
 	char	**cmd;
 	int		return_val;
-	
+
 	cmd = fill_current_cmd(cmd_list, 0, data);
 	if (!cmd)
 		return (-1);
@@ -80,6 +81,7 @@ int	process_input(char *line_read, t_data *data)
 	int		cmd_nb;
 
 	cmd_nb = lexer(line_read, &cmd_list, &data);
+	//DELETE
 	t_list *test = cmd_list;
 	while (test)
 	{
@@ -93,11 +95,11 @@ int	process_input(char *line_read, t_data *data)
 	executer(cmd_list, cmd_nb, data->env, data);
 	ft_lstclear(&cmd_list, free);
 	return (0);
-	// return (g_return_val);
 }
 
 /**
- * @note 231117nimai: this function is to check if the command line is totally white.
+ * @note 231117nimai: this function is to check if the
+ * 						command line is totally white.
  * @return if the entire line is white, free the string(line_read) and return 1.
   */
 int	ft_entire_isspace(char *str)
@@ -120,7 +122,7 @@ int	minishell(t_data *data)
 	prompt = get_prompt(data);
 	while (1)
 	{
-		set_signal_handlers(1); //230808nimai: changed from above, to recall it after child process
+		set_signal_handlers(1);
 		line_read = readline(prompt);
 		if (line_read == NULL)
 			break ;
@@ -151,7 +153,7 @@ int	minishell(t_data *data)
 // 	prompt = get_prompt(data);
 // 	while (1)
 // 	{
-// 		set_signal_handlers(1); //230808nimai: changed from above, to recall it after child process
+// 		set_signal_handlers(1);
 // 		line_read = readline(prompt);
 // 		if (line_read && *line_read)
 // 		{

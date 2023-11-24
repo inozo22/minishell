@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_msgs.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
+/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 16:04:56 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/10/18 15:33:50 by nimai            ###   ########.fr       */
+/*   Updated: 2023/11/24 18:40:20 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ int	errors(int error_id, t_data *data)
 	perror(SHELL_NAME);
 	if (error_id == ENOMEM)
 		ft_printf("Cannot allocate memory\n");
+	if (error_id == ENOTTY)
+		ft_printf("Error setting terminal attributes\n");
 	free_alloc(data);
 	return (error_id);
 }

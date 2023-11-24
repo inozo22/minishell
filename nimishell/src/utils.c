@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
+/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 12:49:14 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/11/17 13:00:35 by nimai            ###   ########.fr       */
+/*   Updated: 2023/11/24 18:44:03 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,6 @@ void	*del(void **ptr)
 	return (ptr);
 }
 
-/*	int j = 0;
- 	while (*ptr && *ptr[j])
-	{
-		ft_printf("lis: %d content: %s\n", j, *(ptr[j]));
-		j++;
-	} */
 void	*del_array(void ***ptr)
 {
 	int	i;
@@ -82,13 +76,9 @@ int	update_last_executed_cmd(t_data *data, char **input)
 		return (free (cmd), errors(ENOMEM, data));
 	tmp_input[0] = ft_strdup("export");
 	tmp_input[1] = ft_strjoin("_=", cmd);
-	ft_printf("tmp_input[0]: %s\n", tmp_input[0]);
-	ft_printf("tmp_input[1]: %s\n", tmp_input[1]);
 	built_export(tmp_input, data);
-	// built_export(tmp_input, &data->env);
 	return (free_list(tmp_input), free (cmd), 0);
 }
-
 
 //231117 original
 

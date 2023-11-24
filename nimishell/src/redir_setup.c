@@ -6,12 +6,12 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 17:57:29 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/09/20 18:49:07 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/11/24 18:46:01 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
- 
+
 int	redir_setup(int pos, int *fd, int cmd_number, int *process_fd, int *pipe_fd, int *tmp_stdio_fd)
 {
 	if (pos == 0)
@@ -25,7 +25,7 @@ int	redir_setup(int pos, int *fd, int cmd_number, int *process_fd, int *pipe_fd,
 	}
 	if (pos > 0 && pos == cmd_number)
 	{
-		close(pipe_fd[WRITE_END])
+		close(pipe_fd[WRITE_END]);
 		if (process_fd[READ_END] != STDIN_FILENO)
 			dup2(process_fd[READ_END], STDIN_FILENO);
 		if (process_fd[WRITE_END] == STDOUT_FILENO)

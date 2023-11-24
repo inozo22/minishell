@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 18:22:41 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/10/20 17:02:10 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/11/24 18:54:06 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*get_prompt(t_data *data)
 {
 	char	*user;
 	char	*prompt;
-	int	i;
+	int		i;
 
 	i = -1;
 	while (data->env[++i])

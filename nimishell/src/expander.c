@@ -37,7 +37,7 @@ int	expand(char **str, int *pos, int quotes, t_data *data)
 	if (*str[0] == '\"' && (ft_strncmp(*str, "$\"", 2) || \
 	ft_strncmp(*str, "$ ", 2)))
 		*pos += 1;
-	if (*pos == -9)//230919nimai: changed error number to use -1 as length
+	if (*pos == -9)
 		return (1);
 	if (!(*str))
 		return (1);

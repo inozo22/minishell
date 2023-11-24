@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
+/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 16:20:01 by nimai             #+#    #+#             */
-/*   Updated: 2023/11/17 14:04:52 by nimai            ###   ########.fr       */
+/*   Updated: 2023/11/24 19:22:50 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,16 +48,17 @@ char	*get_var_value(char *env_var, char *envp[], int len)
  * @note ($0) Expands to the name of the shell or shell script.
  * @note ($$) Expands to the pid of the current shell.
  * @note ($1-9) Expands to the corresponding arguments passed to bash
- * @note 230919nimai: ($\0) It's not expantion, but only this case receive single '$'
+ * @note 230919nimai: ($\0) It's not expantion, but only this case receive
+ * 						 single '$'
  * @note 231114nimai: ($!) is enough to return only empty line in minishell
- * @note 231114nimai: If pass an empty string, will duplicate the command, now passing a space
+ * @note 231114nimai: If pass an empty string, will duplicate the command,
+ * 						 now passing a space
  */
 char	*is_expand(char *env_var, int len, t_data *data)
 {
 	if (!ft_strncmp(env_var, "$?", 2))
 		return (ft_itoa(data->return_val));
-	// if (!ft_strncmp(env_var, "$!", 2))//it should return process ID of the job most recently placed into the background, now, return last return value
-	if (!ft_strncmp(env_var, "$!", 2))//As doesn't control "&" in minishell, never happen background process, so always return empty line
+	if (!ft_strncmp(env_var, "$!", 2))
 		return (ft_strdup(""));
 	if (!ft_strncmp(env_var, "$$", 2))
 		return (ft_itoa(data->pid));
@@ -75,8 +76,8 @@ char	*is_expand(char *env_var, int len, t_data *data)
 		return (ft_strdup("$"));
 	if (ft_isdigit(env_var[1]))
 		return (ft_strdup(""));
-	if (!(env_var[1]) || (!ft_isalnum(env_var[1]) && env_var[1] != '_') || !ft_strncmp(env_var, "$ ", 2))
-		return (ft_substr(env_var, 0, 2));//should be printed literally instead of null
+	if (!(env_var[1]) || (!ft_isalnum(env_var[1]) && env_var[1] != '_'))
+		return (ft_substr(env_var, 0, 2));
 	return (get_var_value(env_var + 1, data->env, len - 1));
 }
 

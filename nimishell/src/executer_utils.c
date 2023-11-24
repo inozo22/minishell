@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
+/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 15:48:44 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/11/15 16:16:40 by nimai            ###   ########.fr       */
+/*   Updated: 2023/11/24 19:10:26 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char	*get_cmd_path(char *cmd, char **path, int *return_val)
 int	execute_script_without_shebang(char **cmd, char **env)
 {
 	char	*new_argv[2];
-	
+
 	new_argv[0] = cmd[0];
 	new_argv[1] = NULL;
 	free_list(cmd);
@@ -73,7 +73,7 @@ int	execute_script_without_shebang(char **cmd, char **env)
 	return (0);
 }
 
-int close_files_if_error(int fd[2], char *file_name)
+int	close_files_if_error(int fd[2], char *file_name)
 {
 	error_file(file_name);
 	if (fd[0] != -1 && fd[0] != STDIN_FILENO)
@@ -93,9 +93,6 @@ int close_files_if_error(int fd[2], char *file_name)
 		return (g_return_val); */
 int	check_exit_status(int e_status)
 {
-	// if (data->return_val == 1)
-	// 	return (data->return_val);
-//	ft_printf("g in check_exit_status: %d\n", g_return_val);
 	if (g_return_val == 1)
 		return (g_return_val);
 	if (WIFSIGNALED(e_status))

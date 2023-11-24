@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
+/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 18:22:41 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/11/15 16:12:16 by nimai            ###   ########.fr       */
+/*   Updated: 2023/11/24 18:55:59 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,15 +116,11 @@ int	main(int argc, char *argv[], char *envp[])
 		else
 			exit (error_file(argv[1]));
 	}
-	// these remove ^C in the prompt
-	// CORREGIR MENSAJE DE ERROR
 	if (set_terminal_attributes(&termios_save) == 1)
-		return (1);
-		//return (errors(12, data));
+		return (errors(ENOTTY, &data));
 	minishell(&data);
 	ret = data.return_val;
 	free_alloc(&data);
 	tcsetattr(0, 0, &termios_save);
-	// return (g_return_val);
 	return (ret);
 }

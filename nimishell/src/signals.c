@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
+/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:11:50 by nimai             #+#    #+#             */
-/*   Updated: 2023/11/20 10:13:35 by nimai            ###   ########.fr       */
+/*   Updated: 2023/11/24 18:45:37 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /**
  * @note I think I will remove the strs
  */
-void	action_child(int sig, siginfo_t *info, void *context)//looks working this, but don't let me print these lines...
+void	action_child(int sig, siginfo_t *info, void *context)
 {
 	(void)context;
 	(void)info;
