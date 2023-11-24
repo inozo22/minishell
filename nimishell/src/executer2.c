@@ -126,6 +126,8 @@ int	get_iofiles_fd(int *fd, t_list *lst, int pos)
 {
 	fd[0] = STDIN_FILENO;
 	fd[1] = STDOUT_FILENO;
+	while (lst && lst->cmd_pos < pos)
+		lst = lst->next;
 	while (lst && lst->cmd_pos == pos)
 	{
 		if (lst->type == REDIR_IN)
@@ -335,14 +337,14 @@ int	child_execution(char **cmd, char **env, char **path, t_data *data, int pos, 
 	return (0);
 } */
 
- int child(char **cmd, t_data *data)
+ int child(char **cmd, t_data *data, int **fd)
 {
 	int is_builtin;
 
 	is_builtin = check_builtin(cmd, data);
 	if (is_builtin >= 0)		
 		return(free_list(cmd), is_builtin);
-//	child_execution(cmd, env, path, data, pos, cmd_number, process_fd, pipe_fd, tmp_stdio_fd);
+	child_execution(cmd, env, path, data, pos, cmd_number, fd[1], fd[2], fd[0]);
 	return (0);
 }
 /*
@@ -353,7 +355,7 @@ int father()
 	i = 0;
 } */
 
-int fork_setup(char **cmd, char **env, t_data *data)
+int fork_setup(char **cmd, char **env, t_data *data, int **fd)
 {
 	int pid;
 	int status;
@@ -365,7 +367,7 @@ int fork_setup(char **cmd, char **env, t_data *data)
 	if (pid == 0)
 	{
 		//child
-		exit(child(cmd, data));
+		exit(child(cmd, data, fd));
 	}
 	else
 	{
@@ -407,7 +409,7 @@ int executer(t_list *cmd_list, int cmd_number, char **env, t_data *data)
 		int j = -1;
 		while (cmd[++j])
 			ft_printf("cmd[%d] = %s\n", j, cmd[j]);
-		if (fork_setup(cmd, env, data) == -1)
+		if (fork_setup(cmd, env, data, fd) == -1)
 			return (-1);
 	}
 	return (0);
