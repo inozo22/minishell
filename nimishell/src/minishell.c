@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
+/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:32:33 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/11/20 10:00:26 by nimai            ###   ########.fr       */
+/*   Updated: 2023/11/24 18:16:30 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,9 @@
 /* 	int	j = -1;
 	while (input[++j])
 		ft_printf("Input %d: %s\n", j, input[j]); */
-int	check_builtin(char **input, t_data *data)
+int	check_builtin(char **input, t_data *data, int cmd_nb)
 {
 	char	*lower_input;
-/* 	int i = -1;
-	while (data->env[++i])
-		ft_printf("env %d: %s\n", i, data->env[i]); */
-	// update_last_executed_cmd(data, input[0]);
-	// update_last_executed_cmd(data, input);
 	if (!input[0])
 		return (-1);
 	if (!ft_strcmp(input[0], "export"))
@@ -47,7 +42,7 @@ int	check_builtin(char **input, t_data *data)
 	if (!ft_strcmp(input[0], "unset"))
 		return (built_unset(input, data));
 	if (!ft_strcmp(input[0], "exit"))
-		return (built_exit(input, data, 1));
+		return (built_exit(input, data, cmd_nb));
 	lower_input = ft_strdup(input[0]);
 	ft_strlower(lower_input);
 	if (!ft_strcmp(lower_input, "cd"))
@@ -61,31 +56,7 @@ int	check_builtin(char **input, t_data *data)
 	return (free(lower_input), -1);
 }
 
-int check_exit(t_list *cmd_list, t_data *data)
-{
-	char	**cmd;
-
-	while (cmd_list)
-	{
-		//SET THE EXIT INPUT FROM NULL TO DOUBLE ARRAY
-		if (cmd_list->type == WORD && !ft_strcmp(cmd_list->content, "exit"))
-		{
-			cmd = fill_current_cmd(cmd_list, 0, data);
-			if (!cmd)
-				return (-1);
-			if (built_exit(cmd, data, 0) != 0)
-				return (-1);
-			ft_printf("so, Im here\n");
-			ft_lstclear(&cmd_list, free);
-			free_list(cmd);
-			return (0);
-		}
-		cmd_list = cmd_list->next;
-	}
-	return (1);
-}
-
-int check_single_builtin(t_list *cmd_list, t_data *data)
+int check_single_builtin(t_list *cmd_list, t_data *data, int cmd_nb)
 {
 	char	**cmd;
 	int		return_val;
@@ -93,14 +64,7 @@ int check_single_builtin(t_list *cmd_list, t_data *data)
 	cmd = fill_current_cmd(cmd_list, 0, data);
 	if (!cmd)
 		return (-1);
-	if (!ft_strcmp(cmd[0], "exit"))
-	{
-		if (built_exit(cmd, data, 0) != 0)
-			return (-1);
-		free_list(cmd);
-		return (0);
-	}
-	return_val = check_builtin(cmd, data);
+	return_val = check_builtin(cmd, data, cmd_nb);
 	free_list(cmd);
 	if (return_val >= 0)
 	{
@@ -124,11 +88,11 @@ int	process_input(char *line_read, t_data *data)
 	}
 	if (cmd_nb == -1)
 		return (1);
-	if (cmd_nb == 0 && check_single_builtin(cmd_list, data) == 0)
+	if (cmd_nb == 0 && check_single_builtin(cmd_list, data, cmd_nb) == 0)
 		return (ft_lstclear(&cmd_list, free), 0);
 	executer(cmd_list, cmd_nb, data->env, data);
 	ft_lstclear(&cmd_list, free);
-	return (data->return_val);
+	return (0);
 	// return (g_return_val);
 }
 
@@ -170,6 +134,7 @@ int	minishell(t_data *data)
 		line_read = my_free(line_read);
 		if (g_return_val)
 			data->return_val = g_return_val;
+		//DELETE
 		ft_printf(COLOR_BLUE"\nReturn val: %d\nGlobal_val: %d\n"COLOR_RESET, data->return_val, g_return_val);//If remove this line, 25lines
 		if (data->exit_status)
 			break ;

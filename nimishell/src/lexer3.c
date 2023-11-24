@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
+/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 18:39:55 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/11/15 13:59:44 by nimai            ###   ########.fr       */
+/*   Updated: 2023/11/24 18:27:30 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,7 +233,7 @@ int	get_node(char *str, t_list **list, int max_pipe)
  * @param i[2] max pipe
  * @note invalid (, ), ;, \, *
  */
-int	lexer(char *input, t_list **token_list, t_data **data)//***//
+int	lexer(char *input, t_list **token_list, t_data **data)
 {
 	int	i[3];
 	//DELETE
@@ -241,19 +241,17 @@ int	lexer(char *input, t_list **token_list, t_data **data)//***//
 
 	*token_list = NULL;
 	ft_bzero(i, 3 * sizeof(int));
+	if (input[i[0]] == PIPE && *token_list == NULL)
+	//CHECK CORRECT MESSAGE
+	{
+		(*data)->return_val = error_msg("|", 2);
+		return (-1);
+	}
 	input = dquote(input);
-	
 	while (input[i[0]])
 	{
 		//DELETE		
 //		ft_printf("Current status: %s\n", input + i[0]);
-		if (input[i[0]] == PIPE && *token_list == NULL)
-		//CHECK CORRECT MESSAGE
-		{
-			// g_return_val = error_msg("|", 2);
-			(*data)->return_val = error_msg("|", 2);
-			return (-1);
-		}
 		if (!ft_isspace(input[i[0]]))
 		{
 			if (input[i[0]] == PIPE)

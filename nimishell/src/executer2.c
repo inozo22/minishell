@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
+/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/11/20 10:08:17 by nimai            ###   ########.fr       */
+/*   Updated: 2023/11/24 18:11:22 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -341,10 +341,11 @@ int	child_execution(char **cmd, char **env, char **path, t_data *data, int pos, 
 {
 	int is_builtin;
 
-	is_builtin = check_builtin(cmd, data);
+	is_builtin = check_builtin(cmd, data, 1);
 	if (is_builtin >= 0)		
 		return(free_list(cmd), is_builtin);
-	child_execution(cmd, env, path, data, pos, cmd_number, fd[1], fd[2], fd[0]);
+	ft_printf("fd: %d %d %d\n", fd[0][0], fd[1][1], fd[2][0]);
+//	child_execution(cmd, env, path, data, pos, cmd_number, fd[1], fd[2], fd[0]);
 	return (0);
 }
 /*
@@ -388,12 +389,16 @@ int executer(t_list *cmd_list, int cmd_number, char **env, t_data *data)
 {
 	char	**cmd;
 	int		pos;
-	int		fd[3][2];
+	int		**fd;
 
 	//DELETE
 	ft_printf("cmd_number: %d\n", cmd_number);
+	fd = (int **)ft_calloc(3, sizeof(int *));
+	fd[0] = (int *)ft_calloc(2, sizeof(int));
+	fd[1] = (int *)ft_calloc(2, sizeof(int));
+	fd[2] = (int *)ft_calloc(2, sizeof(int));
 	pos = -1;
-	while (++pos < cmd_number + 1)
+	while (cmd_list)
 	{
 		if (get_iofiles_fd(fd[1], cmd_list, pos) \
 			&& get_heredoc_input(cmd_list, pos, data))
@@ -411,6 +416,8 @@ int executer(t_list *cmd_list, int cmd_number, char **env, t_data *data)
 			ft_printf("cmd[%d] = %s\n", j, cmd[j]);
 		if (fork_setup(cmd, env, data, fd) == -1)
 			return (-1);
+		while (cmd_list && cmd_list->cmd_pos == pos)
+			cmd_list = cmd_list->next;
 	}
 	return (0);
 }
