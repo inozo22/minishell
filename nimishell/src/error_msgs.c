@@ -14,7 +14,7 @@
 
 int	error_file(char *in_file)
 {
-	ft_putstr_fd(SHELL_NAME": ", 2);
+	ft_putstr_fd(SH_NAME": ", 2);
 	ft_putstr_fd(in_file, 2);
 	if (errno == EACCES)
 	{
@@ -27,7 +27,7 @@ int	error_file(char *in_file)
 
 int	error_msg(char *cmd, int mode)
 {
-	ft_putstr_fd(SHELL_NAME": ", 2);
+	ft_putstr_fd(SH_NAME": ", 2);
 	if (mode == 2)
 	{
 		ft_putstr_fd("syntax error near unexpected token `", 2);
@@ -59,7 +59,7 @@ int	command_not_found_handler(char *name, char *cmd)
 
 int	errors(int error_id, t_data *data)
 {
-	perror(SHELL_NAME);
+	perror(SH_NAME);
 	if (error_id == ENOMEM)
 		ft_printf("Cannot allocate memory\n");
 	if (error_id == ENOTTY)
@@ -76,7 +76,7 @@ int	warning_message(int type, int num)
 {
 	if (type == 1)
 	{
-		ft_putstr_fd(SHELL_NAME": warning: shell level (", 1);
+		ft_putstr_fd(SH_NAME": warning: shell level (", 1);
 		ft_printf("%d", num);
 		ft_putendl_fd(") too high, resetting to 1", 1);
 	}

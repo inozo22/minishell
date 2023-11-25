@@ -85,7 +85,6 @@ void		*export_clear(t_export **list, void (*del)(void *));
  * functions from export
  */
 void		swap_list(t_list **list, t_list *head);
-int			check_variable_len(t_list *list);
 
 /**
  * functions from cd

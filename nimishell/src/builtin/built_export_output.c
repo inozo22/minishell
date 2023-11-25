@@ -30,7 +30,7 @@ void	print_value(char *str)
 		}
 	}
 	else
-		ft_printf(str);
+		ft_printf("%s", str);
 }
 
 /**
@@ -53,14 +53,14 @@ void	output_env(t_export *list)
 			list = list->next;
 			continue ;
 		}
-		ft_printf("declare -x ");
+		write(1, "declare -x ", 11);
 		if (ft_strchr(list->content, '='))
 		{
 			len = ft_strchr(list->content, '=') - list->content;
 			write(1, list->content, len);
-			ft_printf("=\"");
+			write(1, "=\"", 2);
 			print_value(list->content + len + 1);
-			ft_printf("\"\n");
+			write(1, "\"\n", 2);
 		}
 		else
 			ft_printf("%s\n", list->content);

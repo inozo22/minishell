@@ -69,7 +69,7 @@ char	*is_expand(char *env_var, int len, t_data *data)
 	if (!ft_strncmp(env_var, "$#", 2))
 		return (ft_itoa(0));
 	if (!ft_strncmp(env_var, "$0", 2))
-		return (ft_strdup(SHELL_NAME));
+		return (ft_strdup(SH_NAME));
 	if (!ft_strncmp(env_var, "$IFS", 4))
 		return (ft_strdup("\t\n"));
 	if (!ft_strncmp(env_var, "$\0", 2) || !ft_strncmp(env_var, "$\"", 2))
@@ -130,7 +130,7 @@ int	is_special_expand(char *str, int ret)
 /**
  * @note ret  always start with '$', so skip it and the start from 1
  */
-int	check_valiable_len(char *str, int start, int quotes)
+int	check_variable_len(char *str, int start, int quotes)
 {
 	int	ret;
 

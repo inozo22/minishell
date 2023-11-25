@@ -68,6 +68,7 @@ void	set_signal_handlers(pid_t pid)
 	g_return_val = 0;
 	if (pid)
 	{
+		//DELETE
 		write(1, "I'm pappy\n", 10);
 		sigquit_ignore();
 		sa.sa_handler = &action;
@@ -76,6 +77,7 @@ void	set_signal_handlers(pid_t pid)
 	}
 	else
 	{
+		//DELETE
 		write(1, "I'm kid\n", 8);
 		sa.sa_sigaction = &action_child;
 		sa.sa_flags = SA_SIGINFO | SA_RESTART;

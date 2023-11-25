@@ -90,6 +90,7 @@ static int	init_data(t_data *data, char *envp[], char *prog_name)
 		return (1);
 	else if (*envp && fill_env(data, envp))
 		return (1);
+	//DELETE
 	ft_printf("Environment loaded\n");
 	data->exit_status = 0;
 	data->return_val = 0;

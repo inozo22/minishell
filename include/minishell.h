@@ -46,8 +46,8 @@
 # define READ_END 0
 # define WRITE_END 1
 
-//# define SHELL_NAME "minihell🤪"
-# define SHELL_NAME "minishell"
+//# define SH_NAME "minihell🤪"
+# define SH_NAME "minishell"
 
 typedef struct s_tokens
 {

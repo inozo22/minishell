@@ -20,7 +20,7 @@
  */
 void	error_input(char *input, char *msg)
 {
-	ft_printf(SHELL_NAME": %s: %s\n", input, msg);
+	ft_printf(SH_NAME": %s: %s\n", input, msg);
 }
 
 /**

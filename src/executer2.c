@@ -159,7 +159,7 @@ int	child_execution(char **cmd, char **env, char **path, t_data *data, int pos, 
 	if (execve(cmd_path, cmd, env) == -1 && errno == ENOEXEC)
 		execute_script_without_shebang(cmd, env);
 	//as doesn't return when execute the command well, there is no protection
-	ft_printf(SHELL_NAME": %s: %s", cmd[0], strerror(errno));
+	ft_printf(SH_NAME": %s: %s", cmd[0], strerror(errno));
 	//free all the data if execve fails
 	//230809nimai: comment free to avoid double freeing.
 //		free(cmd_path);

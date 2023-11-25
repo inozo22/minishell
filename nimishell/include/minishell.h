@@ -49,7 +49,7 @@ enum e_token
 # define READ_END 0
 # define WRITE_END 1
 
-# define SHELL_NAME "nimishell"
+# define SH_NAME "nimishell"
 # define DEFAULT_PATH "PATH=/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin"
 
 typedef struct s_tokens
@@ -215,7 +215,7 @@ char	*get_var_value(char *env_var, char *envp[], int len);
 char	*is_expand(char *env_var, int len, t_data *data);//***///
 int		compose_expanded(char *expanded, char **str, int start, int end);
 int		is_special_expand(char *str, int ret);
-int		check_valiable_len(char *str, int start, int quotes);
+int		check_variable_len(char *str, int start, int quotes);
 
 //Redirect
 

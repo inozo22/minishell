@@ -65,7 +65,7 @@ char	*is_expand(char *env_var, int len, char *env[], pid_t pid)
 	if (!ft_strncmp(env_var, "$#", 2))
 		return (ft_itoa(0));
 	if (!ft_strncmp(env_var, "$0", 2))
-		return (ft_strdup(SHELL_NAME));
+		return (ft_strdup(SH_NAME));
 	if (!ft_strncmp(env_var, "$IFS", 4))
 		return (ft_strdup("\t\n"));
 	if (!ft_strncmp(env_var, "$\0", 2) || !ft_strncmp(env_var, "$\"", 2))

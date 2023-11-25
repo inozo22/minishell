@@ -32,7 +32,7 @@ char	*get_prompt(t_data *data)
 		user = ft_strdup("unknown");
 	if (!user)
 		errors(ENOMEM, data);
-	prompt = ft_strjoin_many(7, COLOR_YELLOW, SHELL_NAME, COLOR_BLUE, \
+	prompt = ft_strjoin_many(7, COLOR_YELLOW, SH_NAME, COLOR_BLUE, \
 							"@", user, COLOR_RESET, "$ ");
 	if (!prompt)
 		errors(ENOMEM, data);

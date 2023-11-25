@@ -281,7 +281,7 @@ int	child_execution(char **cmd, char **env, char **path, t_data *data)
 	cmd_path = get_cmd_path(cmd[0], path);
 	if (!cmd_path)
 	{
-		return_val = error_msg(SHELL_NAME, cmd[0], 1);
+		return_val = error_msg(SH_NAME, cmd[0], 1);
 		free_list(cmd);
 		free_alloc(data);
 		exit(return_val);

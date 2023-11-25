@@ -44,7 +44,7 @@
 	}
 } */
 
-int	redir_pos_0(int *process_fd, int *pipe_fd, int cmd_number)
+static int	redir_pos_0(int *process_fd, int *pipe_fd, int cmd_number)
 {
 	ft_printf("redirecting first command\n");
 	if (process_fd[READ_END] != STDIN_FILENO)
@@ -65,7 +65,7 @@ int	redir_pos_0(int *process_fd, int *pipe_fd, int cmd_number)
 	return (0);
 }
 
-int	redir_last(int *tmp_stdio_fd, int *process_fd, int *pipe_fd)
+static int	redir_last(int *tmp_stdio_fd, int *process_fd, int *pipe_fd)
 {
 	ft_printf("redirecting last command\n");
 	if (close(pipe_fd[WRITE_END]) == -1)
@@ -85,9 +85,9 @@ int	redir_last(int *tmp_stdio_fd, int *process_fd, int *pipe_fd)
 	return (0);
 }
 
-int redir_intermediate(int *process_fd, int *pipe_fd)
+static int redir_middle(int *process_fd, int *pipe_fd)
 {
-	ft_printf("redirecting intermediate command\n");
+	ft_printf("redirecting middle command\n");
 	if (process_fd[READ_END] == STDIN_FILENO)
 	{
 		if (dup2(pipe_fd[READ_END], STDIN_FILENO) == -1)
@@ -120,7 +120,7 @@ int	redir_setup(int pos, int cmd_nb, int *fd)
 		if (redir_last(fd, fd + 2, fd + 4) == -1)
 			return (-1);
 	}
-	else if (redir_intermediate(fd + 2, fd + 4) == -1)
+	else if (redir_middle(fd + 2, fd + 4) == -1)
 		return (-1);
 	return (0);
 }

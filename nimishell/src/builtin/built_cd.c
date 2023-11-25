@@ -19,7 +19,7 @@
  */
 void	error_cd(char *cmd)
 {
-	ft_printf(SHELL_NAME": cd: %s: No such file or directory\n", cmd);
+	ft_printf(SH_NAME": cd: %s: No such file or directory\n", cmd);
 }
 
 /**

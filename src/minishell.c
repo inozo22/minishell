@@ -34,14 +34,14 @@ char	*get_prompt(t_data *data)
 	int		color_len;
 
 	user = get_user(data->env);
-	prompt_len = ft_strlen(SHELL_NAME) + ft_strlen(user);
+	prompt_len = ft_strlen(SH_NAME) + ft_strlen(user);
 	color_len = ft_strlen(COLOR_ACCENT) + ft_strlen(COLOR_RESET) \
 						+ ft_strlen(COLOR_BLUE) + ft_strlen(COLOR_RESET);
 	prompt = (char *)ft_calloc(prompt_len + color_len + 5, sizeof(char));
 	if (!prompt)
 		return (NULL);
 	ft_strcpy(prompt, COLOR_ACCENT);
-	ft_strcat(prompt, SHELL_NAME);
+	ft_strcat(prompt, SH_NAME);
 	ft_strcat(prompt, COLOR_RESET);
 	ft_strcat(prompt, COLOR_BLUE);
 	ft_strcat(prompt, "@");

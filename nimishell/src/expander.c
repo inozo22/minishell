@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-char	*tilde_expantion(char *tilde, t_data *data)
+char	*tilde_expansion(char *tilde, t_data *data)
 {
 	char	*ret;
 
@@ -31,7 +31,7 @@ int	expand(char **str, int *pos, int quotes, t_data *data)
 	expanded_var = NULL;
 	ft_bzero(i, 2 * sizeof(int));
 	i[0] = *pos;
-	i[0] = check_valiable_len(&(*str)[*pos], i[0], quotes);
+	i[0] = check_variable_len(&(*str)[*pos], i[0], quotes);
 	expanded_var = is_expand(&(*str)[*pos], i[0] - *pos, data);
 	*pos = compose_expanded(expanded_var, str, *pos, i[0]);
 	if (*str[0] == '\"' && (ft_strncmp(*str, "$\"", 2) || \
@@ -44,7 +44,7 @@ int	expand(char **str, int *pos, int quotes, t_data *data)
 	return (0);
 }
 
-int	obtain_expantion(char **str, t_data *data, int *flag)
+int	obtain_expansion(char **str, t_data *data, int *flag)
 {
 	int	i;
 	int	quotes;
@@ -76,14 +76,14 @@ char	*expander(char *str, t_data *data, int *flag)
 	{
 		if (ft_strcmp(tab[c], "~"))
 		{
-			if (!obtain_expantion(&tab[c], data, flag))
+			if (!obtain_expansion(&tab[c], data, flag))
 			{
 				free_list(tab);
 				return (free (ret), NULL);
 			}
 		}
 		else
-			tab[c] = tilde_expantion(tab[c], data);
+			tab[c] = tilde_expansion(tab[c], data);
 		ret = arrange_str(tab, ret, c);
 	}
 	return (free_list(tab), ret);

@@ -82,12 +82,13 @@ int	process_input(char *line_read, t_data *data)
 	data->cmd_nb = lexer(line_read, &cmd_list, &data);
 	//DELETE
 	t_list *test = cmd_list;
+	ft_printf(COLOR_CYAN"Printing list"COLOR_RESET"\n");
 	while (test)
 	{
-		ft_printf(COLOR_CYAN"Printing list"COLOR_RESET"\n");
-		ft_printf("content: %s type: %d pos: %d\n\n", test->content, test->type, test->cmd_pos);
+		ft_printf("content: %s type: %d pos: %d\n", test->content, test->type, test->cmd_pos);
 		test = test->next;
 	}
+	ft_printf("\n");
 	if (data->cmd_nb == -1)
 		return (1);
 	if (data->cmd_nb == 0 && check_single_builtin(cmd_list, data) == 0)
