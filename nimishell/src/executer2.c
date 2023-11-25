@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/11/25 16:56:59 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/11/25 17:03:33 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,51 +74,168 @@ void	obtain_cmd_again(char ***cmd, char *str, int flag)
 		*cmd = ft_split(str, 32);
 }
 
+static int	check_type_flag(t_list *lst)
+{
+	int	ret;
+
+	ret = 0;
+	if (lst->type == 39 && lst->content[ft_strlen(lst->content) - 1] == 34)
+		ret = 2;
+	else if (lst->type == 39 || lst->content[ft_strlen(lst->content) - 1] == 34)
+		ret = 0;
+	else
+		ret = 1;
+	return (ret);
+}
+
+
+void	dummy_cmd(char **dummy, char ***cmd, int *i, t_list *lst)
+{
+	char		*tmp;
+
+	tmp = *dummy;
+	i[2] = check_type_flag(lst);
+	if (i[0] >= 0 && cmd[0][i[0]])
+		*dummy = ft_strjoin_many(3,tmp, " ", cmd[0][i[0]]);
+	free (tmp);	
+}
+
+
+/**
+ * i[0]: i
+ * i[1]: flag
+ * i[2]: type_flag
+  */
 char	**fill_current_cmd(t_list *lst, int pos, t_data *data)
 {
 	char		**cmd;
-	char		*tmp;
-	char		*keep = NULL;
-	int			i;
-	int			flag;
-	int			type_flag;
-	char *temp = NULL;
+	char		*dummy;
+	int			i[3];
 
-	flag = 0;
-	type_flag = 0;
-	i = count_command(lst, pos);
-	if (!i)
+	dummy = NULL;
+	ft_bzero(i, 3 * sizeof(int));
+	i[0] = count_command(lst, pos);
+	if (!i[0])
 		return (NULL);
-	cmd = (char **)ft_calloc(i + 1, sizeof(char *));
+	cmd = (char **)ft_calloc(i[0] + 1, sizeof(char *));
 	if (!cmd)
 		return (NULL);
-	i = -1;
+	i[0] = -1;
 	while (lst && lst->cmd_pos == pos)
 	{
 		if (lst->type == WORD || lst->type == PIPE || lst->type == QUOTE)
-		{
-			tmp = expander(lst->content, data, &flag);
-			cmd[++i] = ft_strdup(tmp);
-			free (tmp);
-		}
-		if (lst->type == 39 && lst->content[ft_strlen(lst->content) - 1] == 34)
-			type_flag = 2;
-		else if (lst->type == 39 || lst->content[ft_strlen(lst->content) - 1] == 34)
-			type_flag = 0;
-		else
-			type_flag = 1;
+			cmd[++i[0]] = expander(lst->content, data, &i[1]);
+		dummy_cmd(&dummy, &cmd, i, lst);
 		lst = lst->next;
-		temp = keep;
-		if (i >= 0 && cmd[i])//231117nimai: I added condition with i to protect from segfault
-			keep = ft_strjoin_many(3,temp, " ", cmd[i]);
-		free (temp);
 	}
 	ft_printf(COLOR_CYAN"Printing cmd"COLOR_RESET"\n");
-	ft_printf("Keep: %s flag: %d type_flag: %d\n\n", keep, flag, type_flag);
-	if (flag && type_flag)
-		obtain_cmd_again(&cmd, keep, type_flag);
-	return (free (keep), cmd);
+	ft_printf("Dummy: %s flag: %d type_flag: %d\n\n", dummy, i[1], i[2]);
+	if (i[1] && i[2])
+		obtain_cmd_again(&cmd, dummy, i[2]);
+	return (free (dummy), cmd);
 }
+
+//original
+// char	**fill_current_cmd(t_list *lst, int pos, t_data *data)
+// {
+// 	char		**cmd;
+// 	char		*tmp;
+// 	char		*keep = NULL;
+// 	int			i;
+// 	int			flag;
+// 	int			type_flag;
+// 	char *temp = NULL;
+
+// 	flag = 0;
+// 	type_flag = 0;
+// 	i = count_command(lst, pos);
+// 	if (!i)
+// 		return (NULL);
+// 	cmd = (char **)ft_calloc(i + 1, sizeof(char *));
+// 	if (!cmd)
+// 		return (NULL);
+// 	i = -1;
+// 	while (lst && lst->cmd_pos == pos)
+// 	{
+// 		if (lst->type == WORD || lst->type == PIPE || lst->type == QUOTE)
+// 		{
+// 			tmp = expander(lst->content, data, &flag);
+// 			cmd[++i] = ft_strdup(tmp);
+// 			free (tmp);
+// 		}
+// 		if (lst->type == 39 && lst->content[ft_strlen(lst->content) - 1] == 34)
+// 			type_flag = 2;
+// 		else if (lst->type == 39 || lst->content[ft_strlen(lst->content) - 1] == 34)
+// 			type_flag = 0;
+// 		else
+// 			type_flag = 1;
+// 		lst = lst->next;
+// 		temp = keep;
+// 		if (i >= 0 && cmd[i])//231117nimai: I added condition with i to protect from segfault
+// 			keep = ft_strjoin_many(3,temp, " ", cmd[i]);
+// 		free (temp);
+// 	}
+// 	ft_printf(COLOR_CYAN"Printing cmd"COLOR_RESET"\n");
+// 	ft_printf("Keep: %s flag: %d type_flag: %d\n\n", keep, flag, type_flag);
+// 	if (flag && type_flag)
+// 		obtain_cmd_again(&cmd, keep, type_flag);
+// 	return (free (keep), cmd);
+// }
+
+//from dev_expander_nozomi
+// char	**fill_current_cmd(t_list *lst, int pos, t_data *data)
+// {
+// 	char		**cmd;
+// 	char		*tmp;
+// 	char		*keep = NULL;
+// 	int			i;
+// 	int			flag;
+// 	int			old_flag;
+// 	int			type_flag;
+// 	char *temp = NULL;
+
+// 	flag = 0;
+// 	old_flag = 10;
+// 	type_flag = 0;
+// 	i = count_command(lst, pos);
+// 	if (!i)
+// 		return (NULL);
+// 	cmd = (char **)ft_calloc(i + 1, sizeof(char *));
+// 	if (!cmd)
+// 		return (NULL);
+// 	i = -1;
+// 	while (lst && lst->cmd_pos == pos)
+// 	{
+// 		if (lst->type == WORD || lst->type == PIPE || lst->type == QUOTE)
+// 		{
+// 			tmp = expander(lst->content, data, &flag);
+// 			cmd[++i] = ft_strdup(tmp);
+// 			free (tmp);
+// 		}
+// 		if (lst->type == 39 && lst->content[ft_strlen(lst->content) - 1] == 34)
+// 			type_flag = 2;
+// 		else if (lst->type == 39 || lst->content[ft_strlen(lst->content) - 1] == 34)
+// 			type_flag = 0;
+// 		else
+// 			type_flag = 1;
+// 		temp = keep;
+// 		if (i >= 0 && cmd[i] && ((flag == 2 && old_flag ==2) || (flag == 1 && old_flag == 2)))
+// 			keep = ft_strjoin_many(2,temp, cmd[i]);
+// 		else if (i >= 0 && cmd[i])
+// 			keep = ft_strjoin_many(3,temp, " ", cmd[i]);
+// 		ft_printf(COLOR_CYAN"type_flag: %d flag: %d keep: %s%s\n", type_flag, flag, keep, COLOR_RESET);
+// 		lst = lst->next;
+// 		old_flag = flag;
+// 		free (temp);
+// 	}
+// 	ft_printf("Line: %d keep: %s flag: %d type_flag: %d\n", __LINE__, keep, flag, type_flag);
+// 	if (flag && type_flag)
+// 	{
+// 		ft_printf("type_flag: %d flag: %d keep: %s\n", type_flag, flag, keep);
+// 		obtain_cmd_again(&cmd, keep, type_flag/* , flag */);
+// 	}
+// 	return (free (keep), cmd);
+// }
 
 /**
  * @author bde-mada
