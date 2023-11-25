@@ -113,7 +113,8 @@ char	**fill_current_cmd(t_list *lst, int pos, t_data *data)
 			keep = ft_strjoin_many(3,temp, " ", cmd[i]);
 		free (temp);
 	}
-	ft_printf("Line: %d keep: %s flag: %d type_flag: %d\n", __LINE__, keep, flag, type_flag);
+	ft_printf(COLOR_CYAN"Printing cmd"COLOR_RESET"\n");
+	ft_printf("Keep: %s flag: %d type_flag: %d\n\n", keep, flag, type_flag);
 	if (flag && type_flag)
 		obtain_cmd_again(&cmd, keep, type_flag);
 	return (free (keep), cmd);
@@ -345,25 +346,36 @@ int	child_execution(char **cmd, char **path, t_data *data, int pos, int *fd)
 	is_builtin = check_builtin(cmd, data);
 	if (is_builtin >= 0)		
 		return(free_list(cmd), is_builtin);
-	ft_printf("fd: %d %d %d\n", fd[0], fd[2], fd[4]);
+//	ft_printf("fd: %d %d %d\n", fd[0], fd[2], fd[4]);
 	path = set_path_list(data);
 	child_execution(cmd, path, data, pos, fd);
 	return (0);
 }
-/*
-int father()
+
+int father(int pid, char **cmd, int *process_fd, int *pipe_fd)
 {
-	int i;
+	int	status;
+	int	wait_ret;
 	
-	i = 0;
-} */
+	wait_ret = waitpid(pid, &status, WUNTRACED);
+	free_list(cmd);
+	close(pipe_fd[WRITE_END]);
+	dup2(pipe_fd[READ_END], STDIN_FILENO);
+	close(pipe_fd[READ_END]);
+	if (process_fd[READ_END] != STDIN_FILENO)
+		close(process_fd[READ_END]);
+	if (process_fd[WRITE_END] != STDOUT_FILENO)
+		close(process_fd[WRITE_END]);
+	return (wait_ret);
+}
 
 static int fork_setup(char **cmd, t_data *data, int *fd, int pos)
 {
 	int pid;
-	int status;
+	int max_pid;
 	
 	data->return_val = 0;
+	max_pid = 0;
 	pid = fork();
 	if (pid == -1)
 		return (-1);
@@ -375,9 +387,16 @@ static int fork_setup(char **cmd, t_data *data, int *fd, int pos)
 	else
 	{
 		//father
-		waitpid(pid, &status, WUNTRACED);
-		free_list(cmd);
+		father(pid, cmd, fd + 2, fd + 4);
+		if (pid > max_pid)
+			max_pid = pid;
+		if (pos == data->cmd_nb)
+		{	
+			dup2(fd[0], STDIN_FILENO);
+			dup2(fd[1], STDOUT_FILENO);
+		}
 	}
+	ft_printf("max_pid: %d\n", max_pid);
 	return (0);
 }
 
@@ -393,7 +412,8 @@ int executer(t_list *cmd_list, t_data *data)
 	int		pos;
 
 	//DELETE
-	ft_printf("cmd_number: %d\n", data->cmd_nb);
+	ft_printf(COLOR_CYAN"EXECUTER START\n"COLOR_RESET);
+	ft_printf("cmd_number: %d\n\n", data->cmd_nb);
 	fd = (int *)ft_calloc(6, sizeof(int));
 	while (cmd_list)
 	{
@@ -412,10 +432,12 @@ int executer(t_list *cmd_list, t_data *data)
 		int j = -1;
 		while (cmd[++j])
 			ft_printf("cmd[%d] = %s\n", j, cmd[j]);
+
 		if (fork_setup(cmd, data, fd, pos) == -1)
 			return (-1);
 		while (cmd_list && cmd_list->cmd_pos == pos)
 			cmd_list = cmd_list->next;
 	}
+	free(fd);
 	return (0);
 }

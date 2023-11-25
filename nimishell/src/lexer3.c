@@ -169,5 +169,5 @@ int	lexer(char *input, t_list **token_list, t_data **data)
 	return (0);
 } */
 
-// cc -Wall -Wextra -g3 -fsanitize=address lexer3.c lexer_utils.c error_msgs.c \
+// cc -Wall -Wextra -g3 -fsanitize=address lexer3.c lexer_utils.c error_msgs.c
 //	terminate.c -L../lib/libft -lft -I../include -I../lib/libft  && ./a.out

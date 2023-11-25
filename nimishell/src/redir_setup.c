@@ -46,6 +46,7 @@
 
 int	redir_pos_0(int *process_fd, int *pipe_fd, int cmd_number)
 {
+	ft_printf("redirecting first command\n");
 	if (process_fd[READ_END] != STDIN_FILENO)
 	{
 		if (dup2(process_fd[READ_END], STDIN_FILENO) == -1)
@@ -66,6 +67,7 @@ int	redir_pos_0(int *process_fd, int *pipe_fd, int cmd_number)
 
 int	redir_last(int *tmp_stdio_fd, int *process_fd, int *pipe_fd)
 {
+	ft_printf("redirecting last command\n");
 	if (close(pipe_fd[WRITE_END]) == -1)
 		return (-1);
 	if (process_fd[READ_END] != STDIN_FILENO)
@@ -85,6 +87,7 @@ int	redir_last(int *tmp_stdio_fd, int *process_fd, int *pipe_fd)
 
 int redir_intermediate(int *process_fd, int *pipe_fd)
 {
+	ft_printf("redirecting intermediate command\n");
 	if (process_fd[READ_END] == STDIN_FILENO)
 	{
 		if (dup2(pipe_fd[READ_END], STDIN_FILENO) == -1)
@@ -105,12 +108,18 @@ int redir_intermediate(int *process_fd, int *pipe_fd)
  * @param fd[2] process_fd
  * @param fd[4] pipe_fd
   */
-int	redir_setup(int pos, int cmd_number, int *fd)
+int	redir_setup(int pos, int cmd_nb, int *fd)
 {
-	if (pos == 0 && redir_pos_0(fd + 2, fd + 4, cmd_number) == -1)
-		return (-1);
-	if (pos > 0 && pos == cmd_number &&	redir_last(fd, fd + 2, fd + 4) == -1)
-		return (-1);
+	if (pos == 0)
+	{
+		if (redir_pos_0(fd + 2, fd + 4, cmd_nb) == -1)
+			return (-1);
+	}
+	else if (pos > 0 && pos == cmd_nb)
+	{
+		if (redir_last(fd, fd + 2, fd + 4) == -1)
+			return (-1);
+	}
 	else if (redir_intermediate(fd + 2, fd + 4) == -1)
 		return (-1);
 	return (0);
