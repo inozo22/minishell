@@ -59,7 +59,6 @@ char	*get_cmd_path(char *cmd, char **path, int *return_val)
 		*return_val = 1;
 	return (cmd_path[1]);
 }
-//	ft_printf("cmd_path: %s\n\n", cmd_path[1]);
 
 int	execute_script_without_shebang(char **cmd, char **env)
 {

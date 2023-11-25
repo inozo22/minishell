@@ -387,7 +387,7 @@ static int fork_setup(char **cmd, t_data *data, int *fd, int pos)
 	else
 	{
 		//father
-		father(pid, cmd, fd + 2, fd + 4);
+		data->return_val = check_exit_status(father(pid, cmd, fd + 2, fd + 4));
 		if (pid > max_pid)
 			max_pid = pid;
 		if (pos == data->cmd_nb)
@@ -396,7 +396,6 @@ static int fork_setup(char **cmd, t_data *data, int *fd, int pos)
 			dup2(fd[1], STDOUT_FILENO);
 		}
 	}
-	ft_printf("max_pid: %d\n", max_pid);
 	return (0);
 }
 
