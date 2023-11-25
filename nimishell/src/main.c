@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 18:22:41 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/11/24 18:55:59 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/11/25 17:36:08 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,11 @@ static int	init_data(t_data *data, char *envp[], char *prog_name)
 	ft_printf("Environment loaded\n");
 	data->exit_status = 0;
 	data->return_val = 0;
+	data->tmp_stdio_fd[0] = dup(STDIN_FILENO);
+	data->tmp_stdio_fd[1] = dup(STDOUT_FILENO);
+	ft_bzero(data->process_fd, 2 * sizeof(int));
+	if (data->tmp_stdio_fd[0] == -1 || data->tmp_stdio_fd[1] == -1)
+		return (strerror(errno), 1);
 	return (0);
 }
 

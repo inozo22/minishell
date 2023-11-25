@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 19:10:38 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/11/24 20:09:13 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/11/25 17:48:10 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,7 +168,7 @@ char	**set_path_list(t_data *data);
 
 // 	Redir_setup
 
-int		redir_setup(int pos, int cmd_number, int *fd);
+int		redir_setup(int pos, int cmd_number, t_data *data);
 
 //	Split
 
