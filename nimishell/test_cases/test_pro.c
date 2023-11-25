@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test.c                                             :+:      :+:    :+:   */
+/*   test_pro.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 10:02:30 by nimai             #+#    #+#             */
-/*   Updated: 2023/10/10 10:59:20 by nimai            ###   ########.fr       */
+/*   Updated: 2023/11/25 17:42:27 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,18 +211,21 @@ int	input_mult_test(t_data *data, char *test)
 
 int	test_expand(t_data *data)
 {
-	(void)data;
-//	char	*input = "$HOME $? \'$HOME\' $?\'$HOME\'$?";
+	// (void)data;
+	// char	*input = "$HOME $? \'$HOME\' $?\'$HOME\'$?";
 //	char	*input = "\"$$\"555\"$HOME\"'$USER'$PWD"; expexted: "222555/Users/nimai$USER/Users/nimai/42/42cursus/minishell/nimishell"
-//	char	*input2 = "$$ $$$USER";
-	// char	*ret;
+	// char	*input2 = "$$ $$$USER";
+	char	*ret;
+	int		i[3];
+
+	i[2] = 0;
 	// char	*input = "\"$HOME\"'$USER'";
 
 	// char *input1 = "$HOME$USER$PWD$$";
 	// printf("%stest1	EXPANSER: Line: %d, ret: %s%s\n", COLOR_GREEN, __LINE__, input1, COLOR_RESET);
-	// ret = expander(input1, data->env, 111);
+	// ret = expander(input1, data, &i[2]);
 	// printf("%stest1	ret		: %s%s\n", COLOR_BLUE, ret, COLOR_RESET);
-	// printf("%stest1	expected	: %s%s\n\n", COLOR_GREEN, "/Users/nimainimai/Users/nimai/42/42cursus/minishell/nimishell111", COLOR_RESET);
+	// // printf("%stest1	expected	: %s%s\n\n", COLOR_GREEN, "/Users/nimainimai/Users/nimai/42/42cursus/minishell/nimishell111", COLOR_RESET);
 
 
 
@@ -237,7 +240,7 @@ int	test_expand(t_data *data)
 	// char *input1 = "\"$ $ $ $ $ $\"";
 	// // char *input1 = "\"$\"";
 	// printf("%stest1	EXPANSER: Line: %d, ret: %s%s\n", COLOR_GREEN, __LINE__, input1, COLOR_RESET);
-	// ret = expander(input1, data->env, 111);
+	// ret = expander(input1, data, &i[2]);
 	// printf("%stest1	ret		: %s%s\n", COLOR_BLUE, ret, COLOR_RESET);
 	// printf("%stest1	expected	: %s%s\n\n", COLOR_GREEN, "$ $ $ $ $ $", COLOR_RESET);
 
@@ -258,12 +261,12 @@ int	test_expand(t_data *data)
 
 	// free (ret);
 
-	// char *input4 = "123\"$USER\"456\"$HOME\"\"$USER\"\"aaa\"";
-	// printf("%stest3	EXPANSER: Line: %d, ret: %s%s\n", COLOR_GREEN, __LINE__, input4, COLOR_RESET);
+	char *input4 = "123\"$USER\"456\"$HOME\"\"$USER\"\"aaa\"";
+	printf("%stest3	EXPANSER: Line: %d, ret: %s%s\n", COLOR_GREEN, __LINE__, input4, COLOR_RESET);
 
-	// ret = expander(input4, data->env, 666);
-	// printf("%stest3	ret		: %s%s\n", COLOR_BLUE, ret, COLOR_RESET);
-	// printf("%stest3	expected	: %s%s\n\n", COLOR_GREEN, "123nimai456/Users/nimainimaiaaa", COLOR_RESET);
+	ret = expander(input4, data, &i[2]);
+	printf("%stest3	ret		: %s%s\n", COLOR_BLUE, ret, COLOR_RESET);
+	printf("%stest3	expected	: %s%s\n\n", COLOR_GREEN, "123nimai456/Users/nimainimaiaaa", COLOR_RESET);
 
 	// char *input5 = "\"$PWD\"$.USER'$HOME'";
 	// printf("%stest4	EXPANSER: Line: %d, ret: %s%s\n", COLOR_GREEN, __LINE__, input5, COLOR_RESET);
@@ -277,7 +280,7 @@ int	test_expand(t_data *data)
 	// ret = expander(input6, data->env, 666);
 	// printf("%stest5	ret		: %s%s\n", COLOR_BLUE, ret, COLOR_RESET);
 	// printf("%stest5	expected	: %s%s\n\n", COLOR_GREEN, "555nimaiaaa'\"666", COLOR_RESET);
-	// free (ret);
+	free (ret);
 	return(0);
 }
 
@@ -388,7 +391,7 @@ int	main(int argc, char *argv[], char *envp[])
 
 // 	//if you want to put any test function, here
 
-// 	// test_expand(data);
+	test_expand(&data);
 // //	test_childcreation(data);
 // //test_checkquotes();
 // //	input_mult_test(data, "u_echo.test");
@@ -396,7 +399,7 @@ int	main(int argc, char *argv[], char *envp[])
 // //	built_cd_oldpwd_test(data);
 // //	built_unset_test(data);
 // //	built_cd_oldpwd_unset_test(data);
- 	built_export_test(&data);
+ 	// built_export_test(&data);
 
 // 	////////////////////////////////////////
 
