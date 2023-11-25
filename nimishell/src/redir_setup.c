@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 17:57:29 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/11/25 17:00:05 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/11/25 17:47:52 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,19 +111,19 @@ static int redir_middle(int *process_fd, int *pipe_fd)
  * @param fd[2] process_fd
  * @param fd[4] pipe_fd
   */
-int	redir_setup(int pos, int cmd_nb, int *fd)
+int	redir_setup(int pos, int cmd_nb, t_data *data)
 {
 	if (pos == 0)
 	{
-		if (redir_pos_0(fd + 2, fd + 4, cmd_nb) == -1)
+		if (redir_pos_0(data->process_fd, data->pipe_fd, cmd_nb) == -1)
 			return (-1);
 	}
 	else if (pos > 0 && pos == cmd_nb)
 	{
-		if (redir_last(fd, fd + 2, fd + 4) == -1)
+		if (redir_last(data->tmp_stdio_fd, data->process_fd, data->pipe_fd) == -1)
 			return (-1);
 	}
-	else if (redir_middle(fd + 2, fd + 4) == -1)
+	else if (redir_middle(data->process_fd, data->pipe_fd) == -1)
 		return (-1);
 	return (0);
 }

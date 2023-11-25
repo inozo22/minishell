@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:12:28 by nimai             #+#    #+#             */
-/*   Updated: 2023/11/24 19:36:43 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/11/25 17:43:51 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,9 @@ typedef struct s_data
 	short int	exit_status;
 	int			return_val;
 	int			cmd_nb;
-
+	int			tmp_stdio_fd[2];
+	int			process_fd[2];
+	int			pipe_fd[2];
 }				t_data;
 
 typedef struct s_export
