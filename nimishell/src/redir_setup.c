@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 17:57:29 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/11/24 20:10:22 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/11/25 17:00:05 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,16 +49,19 @@ static int	redir_pos_0(int *process_fd, int *pipe_fd, int cmd_number)
 	ft_printf("redirecting first command\n");
 	if (process_fd[READ_END] != STDIN_FILENO)
 	{
+		ft_printf("Process %d input is file %d\n", 0, process_fd[0]);
 		if (dup2(process_fd[READ_END], STDIN_FILENO) == -1)
 			return (-1);
 	}
 	if (process_fd[WRITE_END] == STDOUT_FILENO && cmd_number > 0)
 	{
+		ft_printf("Process %d sending output to pipe\n", 0);
 		if (dup2(pipe_fd[WRITE_END], STDOUT_FILENO) == -1)
 			return (-1);
 	}
 	else if (process_fd[WRITE_END] != STDOUT_FILENO)
 	{
+		ft_printf("Process %d sending output to file %d\n", 0, process_fd[1]);
 		if (dup2(process_fd[WRITE_END], STDOUT_FILENO))
 			return (-1);
 	}

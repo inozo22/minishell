@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/11/24 19:57:49 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/11/25 16:56:59 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -373,7 +373,8 @@ static int fork_setup(char **cmd, t_data *data, int *fd, int pos)
 {
 	int pid;
 	int max_pid;
-	
+	if (pipe(fd + 4) == -1)
+		return (-1);
 	data->return_val = 0;
 	max_pid = 0;
 	pid = fork();
@@ -399,6 +400,20 @@ static int fork_setup(char **cmd, t_data *data, int *fd, int pos)
 	return (0);
 }
 
+/* int	*init_fd_setup(void)
+{
+	int	*fd;
+	
+	fd = (int *)ft_calloc(6, sizeof(int));
+	if (!fd)
+		return (NULL);
+	fd[0] = dup(STDIN_FILENO);
+	fd[1] = dup(STDOUT_FILENO);
+	if (fd[0] == -1 || fd[1] == -1)
+		return (close_files_if_error(fd, NULL), NULL);
+	return (fd);
+} */
+
 /**
  * @param fd[0] tmp_stdio_fd
  * @param fd[2] process_fd
@@ -413,6 +428,7 @@ int executer(t_list *cmd_list, t_data *data)
 	//DELETE
 	ft_printf(COLOR_CYAN"EXECUTER START\n"COLOR_RESET);
 	ft_printf("cmd_number: %d\n\n", data->cmd_nb);
+//	fd = init_fd_setup();
 	fd = (int *)ft_calloc(6, sizeof(int));
 	while (cmd_list)
 	{
@@ -420,7 +436,12 @@ int executer(t_list *cmd_list, t_data *data)
 		if (get_iofiles_fd(fd + 2, cmd_list, pos) \
 			&& get_heredoc_input(cmd_list, pos, data))
 			return (-1);
+		//DELETE
 		ft_printf("FDs set\n");
+		int i = -1;
+		while (++i <= 5)
+			ft_printf("fd[%d]: %d\n", i, fd[i]);
+		ft_printf("\n");
 		cmd = fill_current_cmd(cmd_list, pos, data);
 		if (!cmd || !(*cmd))
 		{	
