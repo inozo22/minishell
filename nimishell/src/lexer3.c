@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 18:39:55 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/11/24 19:08:13 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/11/25 18:53:51 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static char	*dquote(char *input)
 		tmp[1] = input;
 		input = ft_strjoin(input, tmp[0]);
 		free(tmp[0]);
-		if (i == 1)
+		// if (i == 1)
 			free(tmp[1]);
 		i = 1;
 	}
@@ -105,28 +105,30 @@ int	get_node(char *str, t_list **list, int max_pipe)
  */
 int	lexer(char *input, t_list **token_list, t_data **data)
 {
-	int	i[3];
+	int		i[3];
+	char	*input_tmp = ft_strdup(input);//231125nimai added to remove memory leaks
 	//DELETE
 	t_list *tmp;
 
 	*token_list = NULL;
+	input_tmp = ft_strdup(input);//231125nimai added to remove memory leaks
 	ft_bzero(i, 3 * sizeof(int));
-	if (input[i[0]] == PIPE && *token_list == NULL)
+	if (input_tmp[i[0]] == PIPE && *token_list == NULL)
 	//CHECK CORRECT MESSAGE
 	{
 		(*data)->return_val = error_msg("|", 2);
 		return (-1);
 	}
-	input = dquote(input);
-	while (input[i[0]])
+	input_tmp = dquote(input_tmp);
+	while (input_tmp[i[0]])
 	{
 		//DELETE		
 //		ft_printf("Current status: %s\n", input + i[0]);
-		if (!ft_isspace(input[i[0]]))
+		if (!ft_isspace(input_tmp[i[0]]))
 		{
-			if (input[i[0]] == PIPE)
+			if (input_tmp[i[0]] == PIPE)
 				i[2]++;
-			i[1] = get_node(input + i[0], token_list, i[2]);
+			i[1] = get_node(input_tmp + i[0], token_list, i[2]);
 			//DELETE
 //			ft_printf("i[1]: %d\n", i[1]);
 			if (i[1] == -1)
@@ -143,7 +145,7 @@ int	lexer(char *input, t_list **token_list, t_data **data)
 		printf("%sLEXER: Line: %d, content: %s, type: %d, pos: %d%s\n", COLOR_GREEN, __LINE__, tmp->content, tmp->type, tmp->cmd_pos, COLOR_RESET);
 		tmp = tmp->next;
 	}
-	return (i[2]);
+	return (free (input_tmp)/* 231125nimai added to remove memory leaks */, i[2]);
 }
 
 /* int	main(int argc, char **argv)
