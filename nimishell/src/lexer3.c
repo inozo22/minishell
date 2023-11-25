@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 18:39:55 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/11/24 19:08:13 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/11/25 19:02:42 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,10 @@ int	get_node(char *str, t_list **list, int max_pipe)
 	while (ft_isspace(str[i[0]]))
 		i[0]++;
 	i[1] = i[0];
-	while (str[i[1]] && (is_metacharacter(str + i[1]) == WORD
-			|| is_quote(str[i[1]])))
+/* 	while (str[i[1]] && (is_metacharacter(str + i[1]) == WORD
+			|| is_quote(str[i[1]]))) */
+	while (str[i[1]] && (is_quote(str[i[1]]) \
+			|| (is_metacharacter(str + i[1]) == WORD || is_metacharacter(str + i[1]) == QUOTE)))
 		i[1]++;
 	if (str[i[1]] == QUOTE || str[i[1]] == DOUBLE_QUOTE)
 		i[1]++;
