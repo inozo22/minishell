@@ -130,7 +130,8 @@ char	**fill_current_cmd(t_list *lst, int pos, t_data *data)
 	}
 	ft_printf(COLOR_CYAN"Printing cmd"COLOR_RESET"\n");
 	ft_printf("Dummy: %s flag: %d type_flag: %d\n\n", dummy, i[1], i[2]);
-	if (i[1] && i[2])
+//	if (i[1] && i[2])
+//CHECK! How to work the flag!
 		obtain_cmd_again(&cmd, dummy, i[2]);
 	return (free (dummy), cmd);
 }
