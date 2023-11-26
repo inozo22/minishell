@@ -33,19 +33,15 @@ static int	end_with_pipe(char *str)
 static char	*dquote(char *input)
 {
 	char	*tmp[2];
-	int		i;
 
 	ft_bzero(tmp, 2 * sizeof(char *));
-	i = 0;
 	while (check_quotes_in_string(input) || end_with_pipe(input))
 	{
 		tmp[0] = readline(">");
 		tmp[1] = input;
 		input = ft_strjoin(input, tmp[0]);
 		free(tmp[0]);
-		// if (i == 1)
-			free(tmp[1]);
-		i = 1;
+		free(tmp[1]);
 	}
 	return (input);
 }
