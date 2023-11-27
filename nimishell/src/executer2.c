@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/11/25 18:31:12 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/11/27 10:23:28 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void	dummy_cmd(char **dummy, char ***cmd, int *i, t_list *lst)
 
 	tmp = *dummy;
 	i[2] = check_type_flag(lst);
-	if (i[0] >= 0 && cmd[0][i[0]])
+	if (i[0] >= 0 && cmd[0][i[0]])//always put a space after expander
 		*dummy = ft_strjoin_many(3,tmp, " ", cmd[0][i[0]]);
 	free (tmp);	
 }
@@ -129,8 +129,8 @@ char	**fill_current_cmd(t_list *lst, int pos, t_data *data)
 		lst = lst->next;
 	}
 	ft_printf(COLOR_CYAN"Printing cmd"COLOR_RESET"\n");
-	ft_printf("Dummy: %s flag: %d type_flag: %d\n\n", dummy, i[1], i[2]);
-//	if (i[1] && i[2])
+	ft_printf(COLOR_YELLOW"Dummy: %s flag: %d type_flag: %d%s\n\n", dummy, i[1], i[2], COLOR_RESET);
+	if (i[1] && i[2])
 //CHECK! How to work the flag!
 		obtain_cmd_again(&cmd, dummy, i[2]);
 	return (free (dummy), cmd);
