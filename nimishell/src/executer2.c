@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/11/27 11:16:13 by nimai            ###   ########.fr       */
+/*   Updated: 2023/11/27 12:37:13 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,18 @@ int	count_command(t_list *lst, int pos)
 void	obtain_cmd_again(char ***cmd, char *str, int *i)
 {
 	ft_printf("obtain cmd again!\n");
-	if (i[1] && i[2] && i[3] != 1)
+	if (i[1] == 1 && i[2] != 2 && i[3] == 0)
+	{
+		free (*cmd);
+		*cmd = ft_split(str, 32);
+		// free (*cmd);
+		// *cmd = (char **)ft_calloc(2, sizeof(char *));
+		// (*cmd)[0] = ft_strdup(str);
+		// (*cmd)[1] = NULL;
+	}
+	if ((i[1] && i[2] && i[3] != 1))
 		return ;
-	if (i[2] != 2 || (i[2] ==2 && i[3] != 2))
+	else if (i[2] != 2 || (i[2] ==2 && i[3] != 2))
 		return ;
 	else
 	{

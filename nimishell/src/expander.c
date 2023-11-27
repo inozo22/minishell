@@ -56,8 +56,18 @@ int	obtain_expansion(char **str, t_data *data, int *flag)
 		if ((*str)[i] == '$' && quotes != '\'')
 		{
 			if (expand(str, &i, quotes, data))
+			{
+				*flag = 2;
+				ft_printf("NULL! expand. flag: %d\n", *flag);
 				return (0);
+			}
 			*flag = 1;
+			ft_printf("success! expand. flag: %d\n", *flag);
+		}
+		else
+		{
+			*flag = 0;
+			ft_printf("success! expand. flag: %d\n", *flag);
 		}
 	}
 	return (1);
