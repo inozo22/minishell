@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 18:39:55 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/11/25 19:09:11 by nimai            ###   ########.fr       */
+/*   Updated: 2023/11/27 15:10:51 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int	get_node(char *str, t_list **list, int max_pipe)
 int	lexer(char *input, t_list **token_list, t_data **data)
 {
 	int		i[3];
-	char	*input_tmp = ft_strdup(input);//231125nimai added to remove memory leaks
+	char	*input_tmp;//231125nimai added to remove memory leaks
 	//DELETE
 	t_list *tmp;
 
