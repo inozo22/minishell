@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/11/27 10:23:28 by nimai            ###   ########.fr       */
+/*   Updated: 2023/11/27 11:16:13 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,17 +61,31 @@ int	count_command(t_list *lst, int pos)
 	return (ret);
 }
 
-void	obtain_cmd_again(char ***cmd, char *str, int flag)
+void	obtain_cmd_again(char ***cmd, char *str, int *i)
 {
-	free_list(*cmd);
-	if (flag == 2)
+	ft_printf("obtain cmd again!\n");
+	if (i[1] && i[2] && i[3] != 1)
+		return ;
+	if (i[2] != 2 || (i[2] ==2 && i[3] != 2))
+		return ;
+	else
 	{
+		free (*cmd);
 		*cmd = (char **)ft_calloc(2, sizeof(char *));
 		(*cmd)[0] = ft_strdup(str);
 		(*cmd)[1] = NULL;
 	}
-	else
-		*cmd = ft_split(str, 32);
+	// else
+	// 	*cmd = ft_split(str, 32);
+	// free_list(*cmd);
+	// if (flag == 2)
+	// {
+	// 	*cmd = (char **)ft_calloc(2, sizeof(char *));
+	// 	(*cmd)[0] = ft_strdup(str);
+	// 	(*cmd)[1] = NULL;
+	// }
+	// else
+	// 	*cmd = ft_split(str, 32);
 }
 
 static int	check_type_flag(t_list *lst)
@@ -94,6 +108,7 @@ void	dummy_cmd(char **dummy, char ***cmd, int *i, t_list *lst)
 	char		*tmp;
 
 	tmp = *dummy;
+	i[3] = i[2];//obtain old type_flag
 	i[2] = check_type_flag(lst);
 	if (i[0] >= 0 && cmd[0][i[0]])//always put a space after expander
 		*dummy = ft_strjoin_many(3,tmp, " ", cmd[0][i[0]]);
@@ -105,15 +120,16 @@ void	dummy_cmd(char **dummy, char ***cmd, int *i, t_list *lst)
  * i[0]: i
  * i[1]: flag
  * i[2]: type_flag
+ * i[3]: old type_flag
   */
 char	**fill_current_cmd(t_list *lst, int pos, t_data *data)
 {
 	char		**cmd;
 	char		*dummy;
-	int			i[3];
+	int			i[4];
 
 	dummy = NULL;
-	ft_bzero(i, 3 * sizeof(int));
+	ft_bzero(i, 4 * sizeof(int));
 	i[0] = count_command(lst, pos);
 	if (!i[0])
 		return (NULL);
@@ -126,13 +142,18 @@ char	**fill_current_cmd(t_list *lst, int pos, t_data *data)
 		if (lst->type == WORD || lst->type == PIPE || lst->type == QUOTE)
 			cmd[++i[0]] = expander(lst->content, data, &i[1]);
 		dummy_cmd(&dummy, &cmd, i, lst);
+		ft_printf(COLOR_YELLOW"cmd[%d]: %s flag: %d type_flag: %d old: %d%s\n\n", i[0], cmd[i[0]], i[1], i[2], i[3], COLOR_RESET);
+		// if (i[1] && i[2] && i[3] != 1)
+		//CHECK! How to work the flag!
+		obtain_cmd_again(&cmd, dummy, i);
 		lst = lst->next;
 	}
 	ft_printf(COLOR_CYAN"Printing cmd"COLOR_RESET"\n");
-	ft_printf(COLOR_YELLOW"Dummy: %s flag: %d type_flag: %d%s\n\n", dummy, i[1], i[2], COLOR_RESET);
-	if (i[1] && i[2])
-//CHECK! How to work the flag!
-		obtain_cmd_again(&cmd, dummy, i[2]);
+	char **tmp = cmd;
+	for (int i = 0; tmp[i]; i++)
+	{
+		ft_printf("cmd[%d]: %s\n", i, tmp[i]);
+	}
 	return (free (dummy), cmd);
 }
 
