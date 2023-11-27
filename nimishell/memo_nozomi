@@ -1,1 +1,2 @@
-1. Command a pipe ("|"), never close the prompt until put sth except pipe
+1. return value
+2. The function to modify variable "_" is disactivated.

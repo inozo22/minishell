@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/11/27 12:37:13 by nimai            ###   ########.fr       */
+/*   Updated: 2023/11/27 14:42:55 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,17 +61,17 @@ int	count_command(t_list *lst, int pos)
 	return (ret);
 }
 
+/**
+ * @param i[1]: flag
+ * @param i[2]: type_flag
+ * @param i[3]: old type_flag
+  */
 void	obtain_cmd_again(char ***cmd, char *str, int *i)
 {
-	ft_printf("obtain cmd again!\n");
 	if (i[1] == 1 && i[2] != 2 && i[3] == 0)
 	{
 		free (*cmd);
 		*cmd = ft_split(str, 32);
-		// free (*cmd);
-		// *cmd = (char **)ft_calloc(2, sizeof(char *));
-		// (*cmd)[0] = ft_strdup(str);
-		// (*cmd)[1] = NULL;
 	}
 	if ((i[1] && i[2] && i[3] != 1))
 		return ;
@@ -84,17 +84,6 @@ void	obtain_cmd_again(char ***cmd, char *str, int *i)
 		(*cmd)[0] = ft_strdup(str);
 		(*cmd)[1] = NULL;
 	}
-	// else
-	// 	*cmd = ft_split(str, 32);
-	// free_list(*cmd);
-	// if (flag == 2)
-	// {
-	// 	*cmd = (char **)ft_calloc(2, sizeof(char *));
-	// 	(*cmd)[0] = ft_strdup(str);
-	// 	(*cmd)[1] = NULL;
-	// }
-	// else
-	// 	*cmd = ft_split(str, 32);
 }
 
 static int	check_type_flag(t_list *lst)
@@ -117,9 +106,9 @@ void	dummy_cmd(char **dummy, char ***cmd, int *i, t_list *lst)
 	char		*tmp;
 
 	tmp = *dummy;
-	i[3] = i[2];//obtain old type_flag
+	i[3] = i[2];
 	i[2] = check_type_flag(lst);
-	if (i[0] >= 0 && cmd[0][i[0]])//always put a space after expander
+	if (i[0] >= 0 && cmd[0][i[0]])
 		*dummy = ft_strjoin_many(3,tmp, " ", cmd[0][i[0]]);
 	free (tmp);	
 }
@@ -151,122 +140,18 @@ char	**fill_current_cmd(t_list *lst, int pos, t_data *data)
 		if (lst->type == WORD || lst->type == PIPE || lst->type == QUOTE)
 			cmd[++i[0]] = expander(lst->content, data, &i[1]);
 		dummy_cmd(&dummy, &cmd, i, lst);
-		ft_printf(COLOR_YELLOW"cmd[%d]: %s flag: %d type_flag: %d old: %d%s\n\n", i[0], cmd[i[0]], i[1], i[2], i[3], COLOR_RESET);
-		// if (i[1] && i[2] && i[3] != 1)
-		//CHECK! How to work the flag!
 		obtain_cmd_again(&cmd, dummy, i);
 		lst = lst->next;
 	}
 	ft_printf(COLOR_CYAN"Printing cmd"COLOR_RESET"\n");
-	char **tmp = cmd;
-	for (int i = 0; tmp[i]; i++)
-	{
-		ft_printf("cmd[%d]: %s\n", i, tmp[i]);
-	}
+	// ft_printf(COLOR_YELLOW"cmd[%d]: %s flag: %d type_flag: %d old: %d%s\n\n", i[0], cmd[i[0]], i[1], i[2], i[3], COLOR_RESET);
+	// char **tmp = cmd;
+	// for (int i = 0; tmp[i]; i++)
+	// {
+	// 	ft_printf("cmd[%d]: %s\n", i, tmp[i]);
+	// }
 	return (free (dummy), cmd);
 }
-
-//original
-// char	**fill_current_cmd(t_list *lst, int pos, t_data *data)
-// {
-// 	char		**cmd;
-// 	char		*tmp;
-// 	char		*keep = NULL;
-// 	int			i;
-// 	int			flag;
-// 	int			type_flag;
-// 	char *temp = NULL;
-
-// 	flag = 0;
-// 	type_flag = 0;
-// 	i = count_command(lst, pos);
-// 	if (!i)
-// 		return (NULL);
-// 	cmd = (char **)ft_calloc(i + 1, sizeof(char *));
-// 	if (!cmd)
-// 		return (NULL);
-// 	i = -1;
-// 	while (lst && lst->cmd_pos == pos)
-// 	{
-// 		if (lst->type == WORD || lst->type == PIPE || lst->type == QUOTE)
-// 		{
-// 			tmp = expander(lst->content, data, &flag);
-// 			cmd[++i] = ft_strdup(tmp);
-// 			free (tmp);
-// 		}
-// 		if (lst->type == 39 && lst->content[ft_strlen(lst->content) - 1] == 34)
-// 			type_flag = 2;
-// 		else if (lst->type == 39 || lst->content[ft_strlen(lst->content) - 1] == 34)
-// 			type_flag = 0;
-// 		else
-// 			type_flag = 1;
-// 		lst = lst->next;
-// 		temp = keep;
-// 		if (i >= 0 && cmd[i])//231117nimai: I added condition with i to protect from segfault
-// 			keep = ft_strjoin_many(3,temp, " ", cmd[i]);
-// 		free (temp);
-// 	}
-// 	ft_printf(COLOR_CYAN"Printing cmd"COLOR_RESET"\n");
-// 	ft_printf("Keep: %s flag: %d type_flag: %d\n\n", keep, flag, type_flag);
-// 	if (flag && type_flag)
-// 		obtain_cmd_again(&cmd, keep, type_flag);
-// 	return (free (keep), cmd);
-// }
-
-//from dev_expander_nozomi
-// char	**fill_current_cmd(t_list *lst, int pos, t_data *data)
-// {
-// 	char		**cmd;
-// 	char		*tmp;
-// 	char		*keep = NULL;
-// 	int			i;
-// 	int			flag;
-// 	int			old_flag;
-// 	int			type_flag;
-// 	char *temp = NULL;
-
-// 	flag = 0;
-// 	old_flag = 10;
-// 	type_flag = 0;
-// 	i = count_command(lst, pos);
-// 	if (!i)
-// 		return (NULL);
-// 	cmd = (char **)ft_calloc(i + 1, sizeof(char *));
-// 	if (!cmd)
-// 		return (NULL);
-// 	i = -1;
-// 	while (lst && lst->cmd_pos == pos)
-// 	{
-// 		if (lst->type == WORD || lst->type == PIPE || lst->type == QUOTE)
-// 		{
-// 			tmp = expander(lst->content, data, &flag);
-// 			cmd[++i] = ft_strdup(tmp);
-// 			free (tmp);
-// 		}
-// 		if (lst->type == 39 && lst->content[ft_strlen(lst->content) - 1] == 34)
-// 			type_flag = 2;
-// 		else if (lst->type == 39 || lst->content[ft_strlen(lst->content) - 1] == 34)
-// 			type_flag = 0;
-// 		else
-// 			type_flag = 1;
-// 		temp = keep;
-// 		if (i >= 0 && cmd[i] && ((flag == 2 && old_flag ==2) || (flag == 1 && old_flag == 2)))
-// 			keep = ft_strjoin_many(2,temp, cmd[i]);
-// 		else if (i >= 0 && cmd[i])
-// 			keep = ft_strjoin_many(3,temp, " ", cmd[i]);
-// 		ft_printf(COLOR_CYAN"type_flag: %d flag: %d keep: %s%s\n", type_flag, flag, keep, COLOR_RESET);
-// 		lst = lst->next;
-// 		old_flag = flag;
-// 		free (temp);
-// 	}
-// 	ft_printf("Line: %d keep: %s flag: %d type_flag: %d\n", __LINE__, keep, flag, type_flag);
-// 	if (flag && type_flag)
-// 	{
-// 		ft_printf("type_flag: %d flag: %d keep: %s\n", type_flag, flag, keep);
-// 		obtain_cmd_again(&cmd, keep, type_flag/* , flag */);
-// 	}
-// 	return (free (keep), cmd);
-// }
 
 /**
  * @author bde-mada
@@ -358,8 +243,6 @@ int	child_execution(char **cmd, char **path, t_data *data, int pos)
 	//as doesn't return when execute the command well, there is no protection
 	ft_printf(SH_NAME": %s: %s", cmd[0], strerror(errno));
 	//free all the data if execve fails
-	//230809nimai: comment free to avoid double freeing.
-//		free(cmd_path);
 	free_list(cmd);
 	free_alloc(data);		
 	exit(1);
@@ -578,6 +461,8 @@ int executer(t_list *cmd_list, t_data *data)
 		ft_printf("process_fd[1] = %d\n", data->process_fd[1]);
 		ft_printf("\n");
 		cmd = fill_current_cmd(cmd_list, pos, data);
+		//231127nimai: to add variable "_"
+		// update_last_executed_cmd(data, cmd);
 		if (!cmd || !(*cmd))
 		{	
 			//Error setup

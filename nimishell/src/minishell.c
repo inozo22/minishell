@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:32:33 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/11/24 19:40:45 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/11/27 14:41:01 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ int	check_builtin(char **input, t_data *data)
 
 	if (!input[0])
 		return (-1);
+	//231127nimai: to add variable "_"
+	// update_last_executed_cmd(data, input);
 	if (!ft_strcmp(input[0], "export"))
 		return (built_export(input, data));
 	if (!ft_strcmp(input[0], "unset"))
