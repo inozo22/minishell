@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/11/27 15:42:14 by nimai            ###   ########.fr       */
+/*   Updated: 2023/11/27 16:49:12 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,21 +68,59 @@ int	count_command(t_list *lst, int pos)
   */
 void	obtain_cmd_again(char ***cmd, char *str, int *i)
 {
+	char	**tmp;
+	char	**new;
+	int		j;
+
+	tmp = NULL;
+	j = -1;
 	if (i[1] == 1 && i[2] != 2 && i[3] == 0)
 	{
 		free (*cmd);
 		*cmd = ft_split(str, 32);
 	}
-	if ((i[1] && i[2] && i[3] != 1))
+	else if ((i[1] && i[2] && i[3] != 1))
+	{
+		ft_printf("Line: %d kokoyade\n", __LINE__);	
 		return ;
-	else if (i[2] != 2 || (i[2] ==2 && i[3] != 2))
+	}
+	else if((!i[1] && !i[2] && i[3] == 1))
+	{
+		ft_printf("check: i[1]: %d i[2]: %d i[3]: %d\n", i[1], i[2], i[3]);
+		tmp = *cmd;
+		new = (char **)ft_calloc(i[0] + 2, sizeof(char *));
+		new[i[0]] = ft_strdup(str);
+		new[i[0] + 1] = NULL;
+		while (++j > i[0])
+		{
+			new[j] = ft_strdup(*cmd[j]);
+		}
+		free (tmp);
+	}
+	else if ((i[2] != 2 || (i[2] ==2 && i[3] != 2)))
+	{
+		ft_printf("check: i[1]: %d i[2]: %d i[3]: %d\n", i[1], i[2], i[3]);
+		// if (!i[1] && !i[2])
+		// {
+		// 	ft_printf("Line: %d kokoyade\n", __LINE__);		
+		// }
+		ft_printf("Line: %d kokoyade\n", __LINE__);
+		if (*cmd)
+			free (*cmd);
+		*cmd = ft_split(str, 32);
 		return ;
+	}
 	else
 	{
-		free (*cmd);
-		*cmd = (char **)ft_calloc(2, sizeof(char *));
-		(*cmd)[0] = ft_strdup(str);
-		(*cmd)[1] = NULL;
+		tmp = *cmd;
+		new = (char **)ft_calloc(i[0] + 2, sizeof(char *));
+		new[i[0]] = ft_strdup(str);
+		new[i[0] + 1] = NULL;
+		while (++j > i[0])
+		{
+			new[j] = ft_strdup(*cmd[j]);
+		}
+		free (tmp);
 	}
 }
 
@@ -101,16 +139,17 @@ static int	check_type_flag(t_list *lst)
 }
 
 
-void	dummy_cmd(char **dummy, char ***cmd, int *i, t_list *lst)
+void	dummy_cmd(char **dummy, char *expanded, int *i, t_list *lst)
 {
 	char		*tmp;
 
 	tmp = *dummy;
 	i[3] = i[2];
 	i[2] = check_type_flag(lst);
-	if (i[0] >= 0 && cmd[0][i[0]])
+	if (i[0] >= 0 && expanded)
 	{
-		*dummy = ft_strjoin_many(3,tmp, " ", cmd[0][i[0]]);
+		*dummy = ft_strjoin_many(3,tmp, " ", expanded);
+		ft_printf("dummy: %s expanded: %s\n", *dummy, expanded);
 		free (tmp);	
 	}
 }
@@ -125,6 +164,7 @@ void	dummy_cmd(char **dummy, char ***cmd, int *i, t_list *lst)
 char	**fill_current_cmd(t_list *lst, int pos, t_data *data)
 {
 	char		**cmd;
+	char		*expanded;
 	char		*dummy;
 	int			i[4];
 
@@ -133,15 +173,18 @@ char	**fill_current_cmd(t_list *lst, int pos, t_data *data)
 	i[0] = count_command(lst, pos);
 	if (!i[0])
 		return (NULL);
-	cmd = (char **)ft_calloc(i[0] + 1, sizeof(char *));
-	if (!cmd)
-		return (NULL);
-	i[0] = -1;
+	// cmd = (char **)ft_calloc(i[0] + 1, sizeof(char *));
+	// if (!cmd)
+	// 	return (NULL);
+	cmd = NULL;
+	i[0] = 0;
 	while (lst && lst->cmd_pos == pos)
 	{
 		if (lst->type == WORD || lst->type == PIPE || lst->type == QUOTE)
-			cmd[++i[0]] = expander(lst->content, data, &i[1]);
-		dummy_cmd(&dummy, &cmd, i, lst);
+			// cmd[++i[0]] = expander(lst->content, data, &i[1]);
+			expanded = expander(lst->content, data, &i[1]);
+		ft_printf("expanded: %s\n", expanded);
+		dummy_cmd(&dummy, expanded, i, lst);
 		obtain_cmd_again(&cmd, dummy, i);
 		lst = lst->next;
 	}
