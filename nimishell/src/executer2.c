@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/11/27 14:42:55 by nimai            ###   ########.fr       */
+/*   Updated: 2023/11/27 15:42:14 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,8 +109,10 @@ void	dummy_cmd(char **dummy, char ***cmd, int *i, t_list *lst)
 	i[3] = i[2];
 	i[2] = check_type_flag(lst);
 	if (i[0] >= 0 && cmd[0][i[0]])
+	{
 		*dummy = ft_strjoin_many(3,tmp, " ", cmd[0][i[0]]);
-	free (tmp);	
+		free (tmp);	
+	}
 }
 
 
