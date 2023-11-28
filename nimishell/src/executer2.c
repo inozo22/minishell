@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/11/28 14:41:32 by nimai            ###   ########.fr       */
+/*   Updated: 2023/11/28 14:47:33 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,13 +132,13 @@ void	obtain_cmd(char ***cmd, char *str, int *i)
 		free_list(*cmd);
 		*cmd = new;
 	}
+	i[0] = av_amount(*cmd);
 	//delete
 	char **tmp = *cmd;
 	for(int n = 0; tmp[n]; n++)
 	{
 		ft_printf("tmp[%d]: %s\n", n, tmp[n]);
 	}
-	i[0] = av_amount(*cmd);
 }
 
 static int	check_type_flag(t_list *lst)
