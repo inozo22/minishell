@@ -60,11 +60,14 @@ int	obtain_expansion(char **str, t_data *data, int *flag)
 				*flag = 99;
 				return (0);
 			}
-			if (!*flag)
+			if (quotes)
+				*flag = 5;
+			else if (!*flag)
 				*flag = 1;
 		}
 		else
-			*flag = 2;
+			if (*flag != 5)
+				*flag = 2;
 	}
 	return (1);
 }

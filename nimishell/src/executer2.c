@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/11/28 11:35:40 by nimai            ###   ########.fr       */
+/*   Updated: 2023/11/28 12:46:36 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	count_command(t_list *lst, int pos)
 
 void	init_cmd(char ***cmd, char *str, int *i)
 {
-	if ((i[1] == 1 && i[2] != 2 && i[3] == 0))
+	if ((i[1] == 1 && i[2] != 2 && i[3] == 0) || (i[1] == 2 && !i[2] && !i[3]))
 	{
 		*cmd = ft_split(str, 32);
 	}
