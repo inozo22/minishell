@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/11/28 16:15:31 by nimai            ###   ########.fr       */
+/*   Updated: 2023/11/28 16:18:10 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,13 +69,11 @@ void	init_cmd(char ***cmd, char *str, int *i)
 	}
 	else
 	{
-		ft_printf("hello.\n");
-		*cmd = (char **)ft_calloc(1, sizeof(char *));
+		*cmd = (char **)ft_calloc(2, sizeof(char *));
 		(*cmd)[0] = ft_strdup(str);
-		// (*cmd)[1] = NULL;
+		(*cmd)[1] = NULL;
 	}
 	i[0] = av_amount(*cmd);
-	ft_printf("i[0]: %d\n", i[0]);
 }
 
 char	**split_join(char ***cmd, char *str, int *i)
@@ -119,25 +117,18 @@ void	obtain_cmd(char ***cmd, char *str, int *i)
 		init_cmd(cmd, str, i);
 	else if (*cmd && **cmd)
 	{
-		ft_printf("where I am: %d\n", __LINE__);
 		if ((i[1] == 5 && !i[2] && !i[3]) || (i[1] == 1 && i[2] != 2 && !i[3]) \
 		|| (i[1] == 2 && !i[2] && !i[3]))
-		{
-			ft_printf("where I am: %d\n", __LINE__);
 			new = split_join(cmd, str, i);
-		}
 		else
 		{
-			ft_printf("where I am: %d str: %s\n", __LINE__, str);
 			new = (char **)ft_calloc(i[0] + 2, sizeof(char *));
 			if (!new)
 				return ;
 			new[i[0] + 1] = NULL;
 			new[i[0]] = ft_strdup(str);
 			while (++j < i[0])
-			{
 				new[j] = ft_strdup((*cmd)[j]);
-			}
 		}
 		free_list(*cmd);
 		*cmd = new;
@@ -149,63 +140,6 @@ void	obtain_cmd(char ***cmd, char *str, int *i)
 	{
 		ft_printf("tmp[%d]: %s\n", n, tmp[n]);
 	}
-
-
-	
-	// char	**tmp;
-	// char	**new;
-	// int		j;
-
-	// tmp = NULL;
-	// j = -1;
-	// if (i[1] == 1 && i[2] != 2 && i[3] == 0)
-	// {
-	// 	free (*cmd);
-	// 	*cmd = ft_split(str, 32);
-	// }
-	// else if ((i[1] && i[2] && i[3] != 1))
-	// {
-	// 	ft_printf("Line: %d kokoyade\n", __LINE__);	
-	// 	return ;
-	// }
-	// else if((!i[1] && !i[2] && i[3] == 1))
-	// {
-	// 	ft_printf("check: i[1]: %d i[2]: %d i[3]: %d\n", i[1], i[2], i[3]);
-	// 	tmp = *cmd;
-	// 	new = (char **)ft_calloc(i[0] + 2, sizeof(char *));
-	// 	new[i[0]] = ft_strdup(str);
-	// 	new[i[0] + 1] = NULL;
-	// 	while (++j > i[0])
-	// 	{
-	// 		new[j] = ft_strdup(*cmd[j]);
-	// 	}
-	// 	free (tmp);
-	// }
-	// else if ((i[2] != 2 || (i[2] ==2 && i[3] != 2)))
-	// {
-	// 	ft_printf("check: i[1]: %d i[2]: %d i[3]: %d\n", i[1], i[2], i[3]);
-	// 	// if (!i[1] && !i[2])
-	// 	// {
-	// 	// 	ft_printf("Line: %d kokoyade\n", __LINE__);		
-	// 	// }
-	// 	ft_printf("Line: %d kokoyade\n", __LINE__);
-	// 	if (*cmd)
-	// 		free (*cmd);
-	// 	*cmd = ft_split(str, 32);
-	// 	return ;
-	// }
-	// else
-	// {
-	// 	tmp = *cmd;
-	// 	new = (char **)ft_calloc(i[0] + 2, sizeof(char *));
-	// 	new[i[0]] = ft_strdup(str);
-	// 	new[i[0] + 1] = NULL;
-	// 	while (++j > i[0])
-	// 	{
-	// 		new[j] = ft_strdup(*cmd[j]);
-	// 	}
-	// 	free (tmp);
-	// }
 }
 
 static int	check_type_flag(t_list *lst)
@@ -269,7 +203,6 @@ char	**fill_current_cmd(t_list *lst, int pos, t_data *data)
 		}
 		i[3] = i[2];
 		i[2] = check_type_flag(lst);
-		ft_printf("expanded: %s i[0]: %d i[2]: %d\n", expanded, i[0], i[2]);
 		obtain_cmd(&cmd, expanded, i);
 		free (expanded);
 		lst = lst->next;
