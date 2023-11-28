@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/11/27 16:49:12 by nimai            ###   ########.fr       */
+/*   Updated: 2023/11/28 11:26:28 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,67 +61,157 @@ int	count_command(t_list *lst, int pos)
 	return (ret);
 }
 
+void	init_cmd(char ***cmd, char *str, int *i)
+{
+	if ((i[1] == 1 && i[2] != 2 && i[3] == 0))
+	{
+		*cmd = ft_split(str, 32);
+	}
+	// if ((i[1] && i[2] && i[3] != 1))
+	// 	return ;
+	// else if (i[2] != 2 || (i[2] ==2 && i[3] != 2))
+	// 	return ;
+	else
+	{
+		*cmd = (char **)ft_calloc(2, sizeof(char *));
+		(*cmd)[0] = ft_strdup(str);
+		(*cmd)[1] = NULL;
+	}
+}
+
+void	add_cmd(char ***cmd, char *str, int *i)
+{
+	char	**new;
+	char	**tmp;
+	int		j;
+	int		k;
+
+	new = NULL;
+	tmp = NULL;
+	j = -1;
+	k = -1;
+	// if (i[2] != 2 || (i[2] ==2 && i[3] != 2))//adding separately
+	// {
+	// 	tmp = ft_split(str, 32);
+	// 	i[0] += av_amount(tmp);
+	// 	new = (char **)ft_calloc(i[0] + 1, sizeof(char *));
+	// 	if (!new)
+	// 		return ;
+	// 	while (*cmd[++j])
+	// 	{
+	// 		new[j] = ft_strdup(*cmd[j]);
+	// 	}
+	// 	while (j < i[0])
+	// 	{
+	// 		new[j++] = ft_strdup(tmp[++k]);
+	// 	}
+	// }
+	// else//add as a string
+	{
+		new = (char **)ft_calloc(i[0] + 2, sizeof(char *));
+		if (!new)
+			return ;
+		new[i[0] + 1] = NULL;
+		new[i[0]] = ft_strdup(str);
+		while (++j < i[0])
+			new[j] = ft_strdup((*cmd)[j]);
+		free_list(*cmd);
+		*cmd = new;
+	}
+}
+
 /**
  * @param i[1]: flag
  * @param i[2]: type_flag
  * @param i[3]: old type_flag
   */
-void	obtain_cmd_again(char ***cmd, char *str, int *i)
+void	obtain_cmd(char ***cmd, char *str, int *i)
 {
-	char	**tmp;
 	char	**new;
 	int		j;
 
-	tmp = NULL;
+	new = NULL;
 	j = -1;
-	if (i[1] == 1 && i[2] != 2 && i[3] == 0)
+	if (!*cmd)
 	{
-		free (*cmd);
-		*cmd = ft_split(str, 32);
+		init_cmd(cmd, str, i);
 	}
-	else if ((i[1] && i[2] && i[3] != 1))
+	else if (*cmd && **cmd)//if add a string directly
 	{
-		ft_printf("Line: %d kokoyade\n", __LINE__);	
-		return ;
+		add_cmd(cmd, str, i);
+		// new = (char **)ft_calloc(i[0] + 2, sizeof(char *));
+		// if (!new)
+		// 	return ;
+		// new[i[0] + 1] = NULL;
+		// while (++j < i[0])
+		// 	new[j] = ft_strdup(*cmd[j]);
+		// new[i[0]] = ft_strdup(str);
+		// free_list(*cmd);
+		// *cmd = new;
 	}
-	else if((!i[1] && !i[2] && i[3] == 1))
+	char **tmp = *cmd;
+	for(int n = 0; tmp[n]; n++)
 	{
-		ft_printf("check: i[1]: %d i[2]: %d i[3]: %d\n", i[1], i[2], i[3]);
-		tmp = *cmd;
-		new = (char **)ft_calloc(i[0] + 2, sizeof(char *));
-		new[i[0]] = ft_strdup(str);
-		new[i[0] + 1] = NULL;
-		while (++j > i[0])
-		{
-			new[j] = ft_strdup(*cmd[j]);
-		}
-		free (tmp);
+		ft_printf("tmp[%d]: %s\n", n, tmp[n]);
 	}
-	else if ((i[2] != 2 || (i[2] ==2 && i[3] != 2)))
-	{
-		ft_printf("check: i[1]: %d i[2]: %d i[3]: %d\n", i[1], i[2], i[3]);
-		// if (!i[1] && !i[2])
-		// {
-		// 	ft_printf("Line: %d kokoyade\n", __LINE__);		
-		// }
-		ft_printf("Line: %d kokoyade\n", __LINE__);
-		if (*cmd)
-			free (*cmd);
-		*cmd = ft_split(str, 32);
-		return ;
-	}
-	else
-	{
-		tmp = *cmd;
-		new = (char **)ft_calloc(i[0] + 2, sizeof(char *));
-		new[i[0]] = ft_strdup(str);
-		new[i[0] + 1] = NULL;
-		while (++j > i[0])
-		{
-			new[j] = ft_strdup(*cmd[j]);
-		}
-		free (tmp);
-	}
+	i[0] = av_amount(*cmd);
+
+
+	
+	// char	**tmp;
+	// char	**new;
+	// int		j;
+
+	// tmp = NULL;
+	// j = -1;
+	// if (i[1] == 1 && i[2] != 2 && i[3] == 0)
+	// {
+	// 	free (*cmd);
+	// 	*cmd = ft_split(str, 32);
+	// }
+	// else if ((i[1] && i[2] && i[3] != 1))
+	// {
+	// 	ft_printf("Line: %d kokoyade\n", __LINE__);	
+	// 	return ;
+	// }
+	// else if((!i[1] && !i[2] && i[3] == 1))
+	// {
+	// 	ft_printf("check: i[1]: %d i[2]: %d i[3]: %d\n", i[1], i[2], i[3]);
+	// 	tmp = *cmd;
+	// 	new = (char **)ft_calloc(i[0] + 2, sizeof(char *));
+	// 	new[i[0]] = ft_strdup(str);
+	// 	new[i[0] + 1] = NULL;
+	// 	while (++j > i[0])
+	// 	{
+	// 		new[j] = ft_strdup(*cmd[j]);
+	// 	}
+	// 	free (tmp);
+	// }
+	// else if ((i[2] != 2 || (i[2] ==2 && i[3] != 2)))
+	// {
+	// 	ft_printf("check: i[1]: %d i[2]: %d i[3]: %d\n", i[1], i[2], i[3]);
+	// 	// if (!i[1] && !i[2])
+	// 	// {
+	// 	// 	ft_printf("Line: %d kokoyade\n", __LINE__);		
+	// 	// }
+	// 	ft_printf("Line: %d kokoyade\n", __LINE__);
+	// 	if (*cmd)
+	// 		free (*cmd);
+	// 	*cmd = ft_split(str, 32);
+	// 	return ;
+	// }
+	// else
+	// {
+	// 	tmp = *cmd;
+	// 	new = (char **)ft_calloc(i[0] + 2, sizeof(char *));
+	// 	new[i[0]] = ft_strdup(str);
+	// 	new[i[0] + 1] = NULL;
+	// 	while (++j > i[0])
+	// 	{
+	// 		new[j] = ft_strdup(*cmd[j]);
+	// 	}
+	// 	free (tmp);
+	// }
 }
 
 static int	check_type_flag(t_list *lst)
@@ -165,10 +255,10 @@ char	**fill_current_cmd(t_list *lst, int pos, t_data *data)
 {
 	char		**cmd;
 	char		*expanded;
-	char		*dummy;
+	// char		*dummy;
 	int			i[4];
 
-	dummy = NULL;
+	// dummy = NULL;
 	ft_bzero(i, 4 * sizeof(int));
 	i[0] = count_command(lst, pos);
 	if (!i[0])
@@ -183,9 +273,11 @@ char	**fill_current_cmd(t_list *lst, int pos, t_data *data)
 		if (lst->type == WORD || lst->type == PIPE || lst->type == QUOTE)
 			// cmd[++i[0]] = expander(lst->content, data, &i[1]);
 			expanded = expander(lst->content, data, &i[1]);
-		ft_printf("expanded: %s\n", expanded);
-		dummy_cmd(&dummy, expanded, i, lst);
-		obtain_cmd_again(&cmd, dummy, i);
+		i[2] = check_type_flag(lst);
+		ft_printf("expanded: %s i[0]: %d i[2]: %d\n", expanded, i[0], i[2]);
+		// dummy_cmd(&dummy, expanded, i, lst);
+		// obtain_cmd_again(&cmd, dummy, i);
+		obtain_cmd(&cmd, expanded, i);
 		lst = lst->next;
 	}
 	ft_printf(COLOR_CYAN"Printing cmd"COLOR_RESET"\n");
@@ -195,7 +287,7 @@ char	**fill_current_cmd(t_list *lst, int pos, t_data *data)
 	// {
 	// 	ft_printf("cmd[%d]: %s\n", i, tmp[i]);
 	// }
-	return (free (dummy), cmd);
+	return (/* free (dummy), */ cmd);
 }
 
 /**
