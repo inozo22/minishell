@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/11/28 11:34:44 by nimai            ###   ########.fr       */
+/*   Updated: 2023/11/28 11:35:40 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,16 +139,8 @@ void	obtain_cmd(char ***cmd, char *str, int *i)
 	else if (*cmd && **cmd)//if add a string directly
 	{
 		add_cmd(cmd, str, i);
-		// new = (char **)ft_calloc(i[0] + 2, sizeof(char *));
-		// if (!new)
-		// 	return ;
-		// new[i[0] + 1] = NULL;
-		// while (++j < i[0])
-		// 	new[j] = ft_strdup(*cmd[j]);
-		// new[i[0]] = ft_strdup(str);
-		// free_list(*cmd);
-		// *cmd = new;
 	}
+	//delete
 	char **tmp = *cmd;
 	for(int n = 0; tmp[n]; n++)
 	{

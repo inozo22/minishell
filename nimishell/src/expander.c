@@ -57,13 +57,14 @@ int	obtain_expansion(char **str, t_data *data, int *flag)
 		{
 			if (expand(str, &i, quotes, data))
 			{
-				*flag = 2;
+				*flag = 99;
 				return (0);
 			}
-			*flag = 1;
+			if (!*flag)
+				*flag = 1;
 		}
 		else
-			*flag = 0;
+			*flag = 2;
 	}
 	return (1);
 }
