@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/11/28 12:46:36 by nimai            ###   ########.fr       */
+/*   Updated: 2023/11/28 14:37:25 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	count_command(t_list *lst, int pos)
 
 void	init_cmd(char ***cmd, char *str, int *i)
 {
-	if ((i[1] == 1 && i[2] != 2 && i[3] == 0) || (i[1] == 2 && !i[2] && !i[3]))
+	if ((i[1] == 5 && i[2] == 0 && i[3] == 0) || (i[1] == 1 && i[2] != 2 && i[3] == 0) || (i[1] == 2 && !i[2] && !i[3]))
 	{
 		*cmd = ft_split(str, 32);
 	}
@@ -79,7 +79,7 @@ void	init_cmd(char ***cmd, char *str, int *i)
 	}
 }
 
-void	add_cmd(char ***cmd, char *str, int *i)
+char	**split_join(char ***cmd, char *str, int *i)
 {
 	char	**new;
 	char	**tmp;
@@ -90,34 +90,18 @@ void	add_cmd(char ***cmd, char *str, int *i)
 	tmp = NULL;
 	j = -1;
 	k = -1;
-	// if (i[2] != 2 || (i[2] ==2 && i[3] != 2))//adding separately
-	// {
-	// 	tmp = ft_split(str, 32);
-	// 	i[0] += av_amount(tmp);
-	// 	new = (char **)ft_calloc(i[0] + 1, sizeof(char *));
-	// 	if (!new)
-	// 		return ;
-	// 	while (*cmd[++j])
-	// 	{
-	// 		new[j] = ft_strdup(*cmd[j]);
-	// 	}
-	// 	while (j < i[0])
-	// 	{
-	// 		new[j++] = ft_strdup(tmp[++k]);
-	// 	}
-	// }
-	// else//add as a string
-	{
-		new = (char **)ft_calloc(i[0] + 2, sizeof(char *));
-		if (!new)
-			return ;
-		new[i[0] + 1] = NULL;
-		new[i[0]] = ft_strdup(str);
-		while (++j < i[0])
-			new[j] = ft_strdup((*cmd)[j]);
-		free_list(*cmd);
-		*cmd = new;
-	}
+
+	tmp = ft_split(str, 32);
+	i[0] += av_amount(tmp);
+	new = (char **)ft_calloc(i[0] + 1, sizeof(char *));
+	if (!new)
+		return (NULL);
+	new[i[0]] = NULL;
+	while (*cmd[++j])
+		new[j] = ft_strdup(*cmd[j]);
+	while (j < i[0])
+		new[j++] = ft_strdup(tmp[++k]);
+	return (new);
 }
 
 /**
@@ -133,12 +117,24 @@ void	obtain_cmd(char ***cmd, char *str, int *i)
 	new = NULL;
 	j = -1;
 	if (!*cmd)
-	{
 		init_cmd(cmd, str, i);
-	}
 	else if (*cmd && **cmd)//if add a string directly
 	{
-		add_cmd(cmd, str, i);
+		if ((i[1] == 5 && !i[2] && !i[3]) || (i[1] == 1 && i[2] != 2 && !i[3]) \
+		|| (i[1] == 2 && !i[2] && !i[3]))
+			new = split_join(cmd, str, i);
+		else
+		{
+			new = (char **)ft_calloc(i[0] + 2, sizeof(char *));
+			if (!new)
+				return ;
+			new[i[0] + 1] = NULL;
+			new[i[0]] = ft_strdup(str);
+			while (++j < i[0])
+				new[j] = ft_strdup((*cmd)[j]);
+		}
+		free_list(*cmd);
+		*cmd = new;
 	}
 	//delete
 	char **tmp = *cmd;
@@ -213,6 +209,8 @@ static int	check_type_flag(t_list *lst)
 	ret = 0;
 	if (lst->type == 39 && lst->content[ft_strlen(lst->content) - 1] == 34)
 		ret = 2;
+	else if (lst->content[ft_strlen(lst->content) - 1] == 34)
+		ret = 3;
 	else if (lst->type == 39 || lst->content[ft_strlen(lst->content) - 1] == 34)
 		ret = 0;
 	else
@@ -261,6 +259,7 @@ char	**fill_current_cmd(t_list *lst, int pos, t_data *data)
 	{
 		if (lst->type == WORD || lst->type == PIPE || lst->type == QUOTE)
 			expanded = expander(lst->content, data, &i[1]);
+		i[3] = i[2];
 		i[2] = check_type_flag(lst);
 		ft_printf("expanded: %s i[0]: %d i[2]: %d\n", expanded, i[0], i[2]);
 		// dummy_cmd(&dummy, expanded, i, lst);
