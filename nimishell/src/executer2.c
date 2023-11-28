@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/11/28 11:26:28 by nimai            ###   ########.fr       */
+/*   Updated: 2023/11/28 11:34:44 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -263,21 +263,18 @@ char	**fill_current_cmd(t_list *lst, int pos, t_data *data)
 	i[0] = count_command(lst, pos);
 	if (!i[0])
 		return (NULL);
-	// cmd = (char **)ft_calloc(i[0] + 1, sizeof(char *));
-	// if (!cmd)
-	// 	return (NULL);
 	cmd = NULL;
 	i[0] = 0;
 	while (lst && lst->cmd_pos == pos)
 	{
 		if (lst->type == WORD || lst->type == PIPE || lst->type == QUOTE)
-			// cmd[++i[0]] = expander(lst->content, data, &i[1]);
 			expanded = expander(lst->content, data, &i[1]);
 		i[2] = check_type_flag(lst);
 		ft_printf("expanded: %s i[0]: %d i[2]: %d\n", expanded, i[0], i[2]);
 		// dummy_cmd(&dummy, expanded, i, lst);
 		// obtain_cmd_again(&cmd, dummy, i);
 		obtain_cmd(&cmd, expanded, i);
+		free (expanded);
 		lst = lst->next;
 	}
 	ft_printf(COLOR_CYAN"Printing cmd"COLOR_RESET"\n");
