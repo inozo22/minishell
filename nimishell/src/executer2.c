@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/11/28 14:37:25 by nimai            ###   ########.fr       */
+/*   Updated: 2023/11/28 14:41:32 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,6 @@ void	init_cmd(char ***cmd, char *str, int *i)
 	{
 		*cmd = ft_split(str, 32);
 	}
-	// if ((i[1] && i[2] && i[3] != 1))
-	// 	return ;
-	// else if (i[2] != 2 || (i[2] ==2 && i[3] != 2))
-	// 	return ;
 	else
 	{
 		*cmd = (char **)ft_calloc(2, sizeof(char *));
@@ -118,7 +114,7 @@ void	obtain_cmd(char ***cmd, char *str, int *i)
 	j = -1;
 	if (!*cmd)
 		init_cmd(cmd, str, i);
-	else if (*cmd && **cmd)//if add a string directly
+	else if (*cmd && **cmd)
 	{
 		if ((i[1] == 5 && !i[2] && !i[3]) || (i[1] == 1 && i[2] != 2 && !i[3]) \
 		|| (i[1] == 2 && !i[2] && !i[3]))
@@ -143,63 +139,6 @@ void	obtain_cmd(char ***cmd, char *str, int *i)
 		ft_printf("tmp[%d]: %s\n", n, tmp[n]);
 	}
 	i[0] = av_amount(*cmd);
-
-
-	
-	// char	**tmp;
-	// char	**new;
-	// int		j;
-
-	// tmp = NULL;
-	// j = -1;
-	// if (i[1] == 1 && i[2] != 2 && i[3] == 0)
-	// {
-	// 	free (*cmd);
-	// 	*cmd = ft_split(str, 32);
-	// }
-	// else if ((i[1] && i[2] && i[3] != 1))
-	// {
-	// 	ft_printf("Line: %d kokoyade\n", __LINE__);	
-	// 	return ;
-	// }
-	// else if((!i[1] && !i[2] && i[3] == 1))
-	// {
-	// 	ft_printf("check: i[1]: %d i[2]: %d i[3]: %d\n", i[1], i[2], i[3]);
-	// 	tmp = *cmd;
-	// 	new = (char **)ft_calloc(i[0] + 2, sizeof(char *));
-	// 	new[i[0]] = ft_strdup(str);
-	// 	new[i[0] + 1] = NULL;
-	// 	while (++j > i[0])
-	// 	{
-	// 		new[j] = ft_strdup(*cmd[j]);
-	// 	}
-	// 	free (tmp);
-	// }
-	// else if ((i[2] != 2 || (i[2] ==2 && i[3] != 2)))
-	// {
-	// 	ft_printf("check: i[1]: %d i[2]: %d i[3]: %d\n", i[1], i[2], i[3]);
-	// 	// if (!i[1] && !i[2])
-	// 	// {
-	// 	// 	ft_printf("Line: %d kokoyade\n", __LINE__);		
-	// 	// }
-	// 	ft_printf("Line: %d kokoyade\n", __LINE__);
-	// 	if (*cmd)
-	// 		free (*cmd);
-	// 	*cmd = ft_split(str, 32);
-	// 	return ;
-	// }
-	// else
-	// {
-	// 	tmp = *cmd;
-	// 	new = (char **)ft_calloc(i[0] + 2, sizeof(char *));
-	// 	new[i[0]] = ft_strdup(str);
-	// 	new[i[0] + 1] = NULL;
-	// 	while (++j > i[0])
-	// 	{
-	// 		new[j] = ft_strdup(*cmd[j]);
-	// 	}
-	// 	free (tmp);
-	// }
 }
 
 static int	check_type_flag(t_list *lst)
@@ -245,10 +184,8 @@ char	**fill_current_cmd(t_list *lst, int pos, t_data *data)
 {
 	char		**cmd;
 	char		*expanded;
-	// char		*dummy;
 	int			i[4];
 
-	// dummy = NULL;
 	ft_bzero(i, 4 * sizeof(int));
 	i[0] = count_command(lst, pos);
 	if (!i[0])
@@ -262,8 +199,6 @@ char	**fill_current_cmd(t_list *lst, int pos, t_data *data)
 		i[3] = i[2];
 		i[2] = check_type_flag(lst);
 		ft_printf("expanded: %s i[0]: %d i[2]: %d\n", expanded, i[0], i[2]);
-		// dummy_cmd(&dummy, expanded, i, lst);
-		// obtain_cmd_again(&cmd, dummy, i);
 		obtain_cmd(&cmd, expanded, i);
 		free (expanded);
 		lst = lst->next;
@@ -275,7 +210,7 @@ char	**fill_current_cmd(t_list *lst, int pos, t_data *data)
 	// {
 	// 	ft_printf("cmd[%d]: %s\n", i, tmp[i]);
 	// }
-	return (/* free (dummy), */ cmd);
+	return ( cmd);
 }
 
 /**
