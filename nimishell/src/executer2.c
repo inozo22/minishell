@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/11/28 16:18:10 by nimai            ###   ########.fr       */
+/*   Updated: 2023/11/29 11:18:34 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	count_command(t_list *lst, int pos)
 
 void	init_cmd(char ***cmd, char *str, int *i)
 {
-	if ((i[1] == 5 && i[2] == 0 && i[3] == 0) || (i[1] == 1 && i[2] != 2 && i[3] == 0) || (i[1] == 2 && !i[2] && !i[3]))
+	if (i[1] == 5)
 	{
 		*cmd = ft_split(str, 32);
 	}
@@ -74,31 +74,6 @@ void	init_cmd(char ***cmd, char *str, int *i)
 		(*cmd)[1] = NULL;
 	}
 	i[0] = av_amount(*cmd);
-}
-
-char	**split_join(char ***cmd, char *str, int *i)
-{
-	char	**new;
-	char	**tmp;
-	int		j;
-	int		k;
-
-	new = NULL;
-	tmp = NULL;
-	j = -1;
-	k = -1;
-
-	tmp = ft_split(str, 32);
-	i[0] += av_amount(tmp);
-	new = (char **)ft_calloc(i[0] + 1, sizeof(char *));
-	if (!new)
-		return (NULL);
-	new[i[0]] = NULL;
-	while (*cmd[++j])
-		new[j] = ft_strdup(*cmd[j]);
-	while (j < i[0])
-		new[j++] = ft_strdup(tmp[++k]);
-	return (new);
 }
 
 /**
@@ -117,19 +92,13 @@ void	obtain_cmd(char ***cmd, char *str, int *i)
 		init_cmd(cmd, str, i);
 	else if (*cmd && **cmd)
 	{
-		if ((i[1] == 5 && !i[2] && !i[3]) || (i[1] == 1 && i[2] != 2 && !i[3]) \
-		|| (i[1] == 2 && !i[2] && !i[3]))
-			new = split_join(cmd, str, i);
-		else
-		{
-			new = (char **)ft_calloc(i[0] + 2, sizeof(char *));
-			if (!new)
-				return ;
-			new[i[0] + 1] = NULL;
-			new[i[0]] = ft_strdup(str);
-			while (++j < i[0])
-				new[j] = ft_strdup((*cmd)[j]);
-		}
+		new = (char **)ft_calloc(i[0] + 2, sizeof(char *));
+		if (!new)
+			return ;
+		new[i[0] + 1] = NULL;
+		new[i[0]] = ft_strdup(str);
+		while (++j < i[0])
+			new[j] = ft_strdup((*cmd)[j]);
 		free_list(*cmd);
 		*cmd = new;
 	}
@@ -142,51 +111,20 @@ void	obtain_cmd(char ***cmd, char *str, int *i)
 	}
 }
 
-static int	check_type_flag(t_list *lst)
-{
-	int	ret;
-
-	ret = 0;
-	if (lst->type == 39 && lst->content[ft_strlen(lst->content) - 1] == 34)
-		ret = 2;
-	else if (lst->content[ft_strlen(lst->content) - 1] == 34)
-		ret = 3;
-	else if (lst->type == 39 || lst->content[ft_strlen(lst->content) - 1] == 34)
-		ret = 0;
-	else
-		ret = 1;
-	return (ret);
-}
-
-
-void	dummy_cmd(char **dummy, char *expanded, int *i, t_list *lst)
-{
-	char		*tmp;
-
-	tmp = *dummy;
-	i[3] = i[2];
-	i[2] = check_type_flag(lst);
-	if (i[0] >= 0 && expanded)
-	{
-		*dummy = ft_strjoin_many(3,tmp, " ", expanded);
-		ft_printf("dummy: %s expanded: %s\n", *dummy, expanded);
-		free (tmp);	
-	}
-}
-
 /**
  * i[0]: i
  * i[1]: flag
- * i[2]: type_flag
- * i[3]: old type_flag
+ * i[2]: type_flag//not use
+ * i[3]: old type_flag//not use
+ * i[2]: variable count
   */
 char	**fill_current_cmd(t_list *lst, int pos, t_data *data)
 {
 	char		**cmd;
 	char		*expanded;
-	int			i[4];
+	int			i[3];
 
-	ft_bzero(i, 4 * sizeof(int));
+	ft_bzero(i, 3 * sizeof(int));
 	i[0] = count_command(lst, pos);
 	if (!i[0])
 		return (NULL);
@@ -195,14 +133,12 @@ char	**fill_current_cmd(t_list *lst, int pos, t_data *data)
 	while (lst && lst->cmd_pos == pos)
 	{
 		if (lst->type == WORD || lst->type == PIPE || lst->type == QUOTE)
-			expanded = expander(lst->content, data, &i[1]);
+			expanded = expander(lst->content, data, i);
 		else
 		{
 			lst = lst->next;
 			continue ;
 		}
-		i[3] = i[2];
-		i[2] = check_type_flag(lst);
 		obtain_cmd(&cmd, expanded, i);
 		free (expanded);
 		lst = lst->next;
@@ -214,7 +150,7 @@ char	**fill_current_cmd(t_list *lst, int pos, t_data *data)
 	// {
 	// 	ft_printf("cmd[%d]: %s\n", i, tmp[i]);
 	// }
-	return ( cmd);
+	return (cmd);
 }
 
 /**
