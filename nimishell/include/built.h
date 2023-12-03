@@ -30,6 +30,7 @@ typedef struct s_data
 {
 	char		**env;
 	pid_t		pid;
+	pid_t		max_pid;
 	short int	exit_status;
 	int			return_val;
 	int			cmd_nb;

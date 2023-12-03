@@ -95,6 +95,7 @@ int	process_input(char *line_read, t_data *data)
 		return (1);
 	if (data->cmd_nb == 0 && check_single_builtin(cmd_list, data) == 0)
 		return (ft_lstclear(&cmd_list, free), 0);
+	data->max_pid = 0;
 	executer(cmd_list, data);
 	ft_lstclear(&cmd_list, free);
 	return (0);
@@ -137,8 +138,8 @@ int	minishell(t_data *data)
 			process_input(line_read, data);
 		}
 		line_read = my_free(line_read);
-		if (g_return_val)
-			data->return_val = g_return_val;
+/* 		if (g_return_val)
+			data->return_val = g_return_val; */
 		//DELETE
 		ft_printf(COLOR_BLUE"\nReturn val: %d\nGlobal_val: %d\n"COLOR_RESET, data->return_val, g_return_val);//If remove this line, 25lines
 		if (data->exit_status)
@@ -147,33 +148,3 @@ int	minishell(t_data *data)
 	ft_printf("\nBye 🗑\n");
 	return (rl_clear_history(), free(prompt), obtain_pwd_home(NULL, 99), 0);
 }
-
-// int	minishell(t_data *data)
-// {
-// 	char			*line_read;
-// 	char			*prompt;
-
-// 	prompt = get_prompt(data);
-// 	while (1)
-// 	{
-// 		set_signal_handlers(1);
-// 		line_read = readline(prompt);
-// 		if (line_read && *line_read)
-// 		{
-// 			add_history(line_read);
-// 			process_input(line_read, data);
-// 		}
-// 		if (!line_read)
-// 			break ;
-// 		ft_printf(COLOR_BLUE"\nReturn val: %d\n"COLOR_RESET, g_return_val);
-// 		if (data->exit_status)
-// 			break ;
-// 		free(line_read);
-// 	}
-// 	rl_clear_history();
-// 	free(line_read);
-// 	free(prompt);
-// 	obtain_pwd_home(NULL, 99);
-// 	printf("\nBye 🗑\n");
-// 	return (0);
-// }

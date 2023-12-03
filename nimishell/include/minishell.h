@@ -162,7 +162,7 @@ int		check_is_directory(char *cmd);
 char	*get_cmd_path(char *cmd, char **path, int *return_val);
 int		execute_script_without_shebang(char **cmd, char **env);
 int		close_files_if_error(int fd[2], char *file_name);
-int		check_exit_status(int e_status);
+void		get_exit_status(t_data *data);
 //int		check_exit_status(int e_status, t_data *data);
 char	**set_path_list(t_data *data);
 

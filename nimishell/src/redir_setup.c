@@ -65,6 +65,7 @@ static int	redir_pos_0(int *process_fd, int *pipe_fd, int cmd_number)
 		if (dup2(process_fd[WRITE_END], STDOUT_FILENO))
 			return (-1);
 	}
+	ft_printf("end redir 0\n", 0);
 	return (0);
 }
 
@@ -78,6 +79,8 @@ static int	redir_last(int *tmp_stdio_fd, int *process_fd, int *pipe_fd)
 		if (dup2(process_fd[READ_END], STDIN_FILENO) == -1)
 			return (-1);
 	}
+	else if (dup2(pipe_fd[READ_END], STDIN_FILENO) == -1)
+		return (-1);
 	if (process_fd[WRITE_END] == STDOUT_FILENO)
 	{	
 		if (dup2(tmp_stdio_fd[WRITE_END], STDOUT_FILENO) == -1)
@@ -103,6 +106,8 @@ static int redir_middle(int *process_fd, int *pipe_fd)
 		if (dup2(process_fd[WRITE_END], STDOUT_FILENO) == -1)
 			return (-1);
 	}
+	else if (dup2(pipe_fd[WRITE_END], STDOUT_FILENO) == -1)
+		return (-1);
 	return (0);
 }
 
@@ -113,6 +118,8 @@ static int redir_middle(int *process_fd, int *pipe_fd)
   */
 int	redir_setup(int pos, int cmd_nb, t_data *data)
 {
+	//DELETE
+	ft_printf("redir_setup, pos: %d, cmd_nb: %d\n", pos, cmd_nb);
 	if (pos == 0)
 	{
 		if (redir_pos_0(data->process_fd, data->pipe_fd, cmd_nb) == -1)

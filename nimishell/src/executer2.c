@@ -389,12 +389,8 @@ int	child_execution(char **cmd, char **path, t_data *data, int pos)
 	return (0);
 }
 
-int father(int pid, char **cmd, t_data *data)
+void father(char **cmd, t_data *data, int pos)
 {
-	int	status;
-	int	wait_ret;
-	
-	wait_ret = waitpid(pid, &status, WUNTRACED);
 	free_list(cmd);
 	close(data->pipe_fd[WRITE_END]);
 	dup2(data->pipe_fd[READ_END], STDIN_FILENO);
@@ -403,21 +399,22 @@ int father(int pid, char **cmd, t_data *data)
 		close(data->process_fd[READ_END]);
 	if (data->process_fd[WRITE_END] != STDOUT_FILENO)
 		close(data->process_fd[WRITE_END]);
-	return (wait_ret);
+	if (pos == data->cmd_nb)
+	{	
+		dup2(data->tmp_stdio_fd[0], STDIN_FILENO);
+		dup2(data->tmp_stdio_fd[1], STDOUT_FILENO);
+	}
 }
 
 static int fork_setup(char **cmd, t_data *data, int pos)
 {
-	int pid;
-	int max_pid;
 	if (pipe(data->pipe_fd) == -1)
 		return (-1);
 	data->return_val = 0;
-	max_pid = 0;
-	pid = fork();
-	if (pid == -1)
+	data->max_pid = fork();
+	if (data->max_pid == -1)
 		return (-1);
-	if (pid == 0)
+	if (data->max_pid == 0)
 	{
 		//child
 		exit(child(cmd, data, pos));
@@ -425,9 +422,7 @@ static int fork_setup(char **cmd, t_data *data, int pos)
 	else
 	{
 		//father
-		data->return_val = check_exit_status(father(pid, cmd, data));
-		if (pid > max_pid)
-			max_pid = pid;
+		father(cmd, data, pos);
 		if (pos == data->cmd_nb)
 		{	
 			dup2(data->tmp_stdio_fd[0], STDIN_FILENO);
@@ -450,6 +445,8 @@ int executer(t_list *cmd_list, t_data *data)
 	//DELETE
 	ft_printf(COLOR_CYAN"EXECUTER START\n"COLOR_RESET);
 	ft_printf("cmd_number: %d\n\n", data->cmd_nb);
+	data->tmp_stdio_fd[0] = dup(STDIN_FILENO);
+	data->tmp_stdio_fd[1] = dup(STDOUT_FILENO);
 	while (cmd_list)
 	{
 		pos = cmd_list->cmd_pos;
@@ -457,9 +454,7 @@ int executer(t_list *cmd_list, t_data *data)
 			&& get_heredoc_input(cmd_list, pos, data))
 			return (-1);
 		//DELETE
-		ft_printf("\nFDs set\n");
-		ft_printf("tmp_stdio[0] = %d\n", data->tmp_stdio_fd[0]);
-		ft_printf("tmp_stdio[1] = %d\n", data->tmp_stdio_fd[1]);
+		ft_printf("\nFDs set in pos: %d\n", pos);
 		ft_printf("process_fd[0] = %d\n", data->process_fd[0]);
 		ft_printf("process_fd[1] = %d\n", data->process_fd[1]);
 		ft_printf("\n");
@@ -479,6 +474,9 @@ int executer(t_list *cmd_list, t_data *data)
 			return (-1);
 		while (cmd_list && cmd_list->cmd_pos == pos)
 			cmd_list = cmd_list->next;
+		//DELETE
+		usleep(1000);
 	}
+	get_exit_status(data);
 	return (0);
 }
