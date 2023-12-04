@@ -71,6 +71,8 @@ int	check_single_builtin(t_list *cmd_list, t_data *data)
 	free_list(cmd);
 	if (return_val >= 0)
 	{
+		//DELETE
+		ft_printf("Built-in return val: %d\n", return_val);
 		data->return_val = return_val;
 		return (0);
 	}
@@ -87,7 +89,7 @@ int	process_input(char *line_read, t_data *data)
 	ft_printf(COLOR_CYAN"Printing list"COLOR_RESET"\n");
 	while (test)
 	{
-		ft_printf("content: %s type: %d pos: %d\n", test->content, test->type, test->cmd_pos);
+		ft_printf("Content: %s type: %d pos: %d\n", test->content, test->type, test->cmd_pos);
 		test = test->next;
 	}
 	ft_printf("\n");

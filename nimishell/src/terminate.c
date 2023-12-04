@@ -12,6 +12,12 @@
 
 #include "minishell.h"
 
+void	free_null(char **str)
+{
+	free(*str);
+	*str = NULL;
+}
+
 void	*free_list(char **list)
 {
 	int	i;

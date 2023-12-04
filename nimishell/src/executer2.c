@@ -64,9 +64,7 @@ int	count_command(t_list *lst, int pos)
 void	init_cmd(char ***cmd, char *str, int *i)
 {
 	if (i[1] == 5)
-	{
-		*cmd = ft_split(str, 32);
-	}
+		*cmd = ft_split(str, ' ');
 	else
 	{
 		*cmd = (char **)ft_calloc(2, sizeof(char *));
@@ -86,6 +84,8 @@ void	obtain_cmd(char ***cmd, char *str, int *i)
 	char	**new;
 	int		j;
 
+	if (!str || !*str)
+		return ;
 	new = NULL;
 	j = -1;
 	if (!*cmd)
@@ -103,12 +103,6 @@ void	obtain_cmd(char ***cmd, char *str, int *i)
 		*cmd = new;
 	}
 	i[0] = av_amount(*cmd);
-	//delete
-	char **tmp = *cmd;
-	for(int n = 0; tmp[n]; n++)
-	{
-		ft_printf("tmp[%d]: %s\n", n, tmp[n]);
-	}
 }
 
 /**
@@ -143,27 +137,24 @@ char	**fill_current_cmd(t_list *lst, int pos, t_data *data)
 		free (expanded);
 		lst = lst->next;
 	}
-	ft_printf(COLOR_CYAN"Printing cmd"COLOR_RESET"\n");
-	// ft_printf(COLOR_YELLOW"cmd[%d]: %s flag: %d type_flag: %d old: %d%s\n\n", i[0], cmd[i[0]], i[1], i[2], i[3], COLOR_RESET);
-	// char **tmp = cmd;
-	// for (int i = 0; tmp[i]; i++)
-	// {
-	// 	ft_printf("cmd[%d]: %s\n", i, tmp[i]);
-	// }
+	//DELETE
+	if (cmd)
+	{
+		ft_printf(COLOR_CYAN"Printing cmd"COLOR_RESET"\n");
+		int j = -1;
+		while (cmd[++j])
+			ft_printf("cmd[%d] = %s\n", j, cmd[j]);
+	}
 	return (cmd);
 }
 
 /**
  * @author bde-mada
  */
-int	get_iofiles_fd(t_data *data, t_list *lst, int pos)
+int	get_iofiles_fd(int *fd, t_list *lst, int pos)
 {
-	int	fd[2];
-	
 	fd[0] = STDIN_FILENO;
 	fd[1] = STDOUT_FILENO;
-/* 	while (lst && lst->cmd_pos < pos)
-		lst = lst->next; */
 	while (lst && lst->cmd_pos == pos)
 	{
 		if (lst->type == REDIR_IN)
@@ -183,7 +174,6 @@ int	get_iofiles_fd(t_data *data, t_list *lst, int pos)
 			return (close_files_if_error(fd, lst->content));
 		lst = lst->next;
 	}
-	ft_memcpy(data->process_fd, fd, 2 * sizeof(int));
 	return (0);
 }
 //	ft_printf("Output in get_iofiles in pos %d: fd[0]: %d, fd[1]: %d\n", pos, fd[0], fd[1]);
@@ -240,15 +230,15 @@ int	child_execution(char **cmd, char **path, t_data *data, int pos)
 		exit(return_val);
 	}
 	redir_setup(pos, data->cmd_nb, data);
-	ft_printf("cmd_path: %s\n", cmd_path);
+	ft_printf("cmd_path: %s\n\n", cmd_path);
 	if (execve(cmd_path, cmd, data->env) == -1 && errno == ENOEXEC)
-		execute_script_without_shebang(cmd, data->env);
+//		execute_script_without_shebang(cmd, data->env);
 	//as doesn't return when execute the command well, there is no protection
 	ft_printf(SH_NAME": %s: %s", cmd[0], strerror(errno));
 	//free all the data if execve fails
 	free_list(cmd);
 	free_alloc(data);		
-	exit(1);
+	exit(EXIT_FAILURE);
 }
 
 /* int	executer(t_list *lst, int cmd_number, char **env, t_data *data)
@@ -386,7 +376,7 @@ int	child_execution(char **cmd, char **path, t_data *data, int pos)
 //	ft_printf("fd: %d %d %d\n", fd[0], fd[2], fd[4]);
 	path = set_path_list(data);
 	child_execution(cmd, path, data, pos);
-	return (0);
+	exit(EXIT_FAILURE);
 }
 
 void father(char **cmd, t_data *data, int pos)
@@ -394,7 +384,6 @@ void father(char **cmd, t_data *data, int pos)
 	free_list(cmd);
 	close(data->pipe_fd[WRITE_END]);
 	dup2(data->pipe_fd[READ_END], STDIN_FILENO);
-	close(data->pipe_fd[READ_END]);
 	if (data->process_fd[READ_END] != STDIN_FILENO)
 		close(data->process_fd[READ_END]);
 	if (data->process_fd[WRITE_END] != STDOUT_FILENO)
@@ -404,6 +393,8 @@ void father(char **cmd, t_data *data, int pos)
 		dup2(data->tmp_stdio_fd[0], STDIN_FILENO);
 		dup2(data->tmp_stdio_fd[1], STDOUT_FILENO);
 	}
+/* 	close (data->tmp_stdio_fd[0]);
+	close (data->tmp_stdio_fd[1]); */
 }
 
 static int fork_setup(char **cmd, t_data *data, int pos)
@@ -417,7 +408,7 @@ static int fork_setup(char **cmd, t_data *data, int pos)
 	if (data->max_pid == 0)
 	{
 		//child
-		exit(child(cmd, data, pos));
+		child(cmd, data, pos);
 	}
 	else
 	{
@@ -450,9 +441,10 @@ int executer(t_list *cmd_list, t_data *data)
 	while (cmd_list)
 	{
 		pos = cmd_list->cmd_pos;
-		if (get_iofiles_fd(data, cmd_list, pos) \
+		if (get_iofiles_fd(data->process_fd, cmd_list, pos) \
 			&& get_heredoc_input(cmd_list, pos, data))
 			return (-1);
+		set_signal_handlers(0);
 		//DELETE
 		ft_printf("\nFDs set in pos: %d\n", pos);
 		ft_printf("process_fd[0] = %d\n", data->process_fd[0]);
@@ -466,16 +458,12 @@ int executer(t_list *cmd_list, t_data *data)
 			//Error setup
 			return (-1);
 		}
-		//DELETE
-		int j = -1;
-		while (cmd[++j])
-			ft_printf("cmd[%d] = %s\n", j, cmd[j]);
 		if (fork_setup(cmd, data, pos) == -1)
 			return (-1);
 		while (cmd_list && cmd_list->cmd_pos == pos)
 			cmd_list = cmd_list->next;
 		//DELETE
-		usleep(1000);
+		usleep(10000);
 	}
 	get_exit_status(data);
 	return (0);

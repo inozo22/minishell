@@ -88,7 +88,6 @@ int	get_node(char *str, t_list **list, int max_pipe)
 	}
 	token = ft_substr(str, i[0], i[1] - i[0]);
 	new_node = ft_lstnew(token, i[2], max_pipe);
-//	ft_printf("token: %s, type: %d, pos: %d\n", new_node->content, new_node->type, new_node->cmd_pos);
 	if (!new_node)
 		return (-1);
 	return (ft_lstadd_back(list, new_node), i[1]);
@@ -104,12 +103,12 @@ int	get_node(char *str, t_list **list, int max_pipe)
 int	lexer(char *input, t_list **token_list, t_data **data)
 {
 	int		i[3];
-	char	*input_tmp;//231125nimai added to remove memory leaks
+	char	*input_tmp;
 	//DELETE
-	t_list *tmp;
+//	t_list *tmp;
 
 	*token_list = NULL;
-	input_tmp = ft_strdup(input);//231125nimai added to remove memory leaks
+	input_tmp = ft_strdup(input);
 	ft_bzero(i, 3 * sizeof(int));
 	if (input_tmp[i[0]] == PIPE && *token_list == NULL)
 	//CHECK CORRECT MESSAGE
@@ -120,8 +119,6 @@ int	lexer(char *input, t_list **token_list, t_data **data)
 	input_tmp = dquote(input_tmp);
 	while (input_tmp[i[0]])
 	{
-		//DELETE		
-//		ft_printf("Current status: %s\n", input + i[0]);
 		if (!ft_isspace(input_tmp[i[0]]))
 		{
 			if (input_tmp[i[0]] == PIPE)
@@ -137,12 +134,12 @@ int	lexer(char *input, t_list **token_list, t_data **data)
 			i[0]++;
 	}
 	//DELETE
-	tmp = *token_list;
+/* 	tmp = *token_list;
 	while (tmp)
 	{
-		printf("%sLEXER: Line: %d, content: %s, type: %d, pos: %d%s\n", COLOR_GREEN, __LINE__, tmp->content, tmp->type, tmp->cmd_pos, COLOR_RESET);
+		printf("%sLEXER: content: %s, type: %d, pos: %d%s\n", COLOR_GREEN, tmp->content, tmp->type, tmp->cmd_pos, COLOR_RESET);
 		tmp = tmp->next;
-	}
+	} */
 	return (free (input_tmp)/* 231125nimai added to remove memory leaks */, i[2]);
 }
 

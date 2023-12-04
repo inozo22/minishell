@@ -139,12 +139,13 @@ t_list	*parser(char *str);
 
 //	Terminate
 
-int		errors(int error_id, t_data *data);
+void	free_null(char **str);
 void	free_alloc(t_data *data);
 void	*free_list(char **list);
 
 //	Error messages
 
+int		errors(int error_id, t_data *data);
 int		error_file(char *in_file);
 int		error_msg(char *cmd, int mode);
 int		command_not_found_handler(char *name, char *cmd);

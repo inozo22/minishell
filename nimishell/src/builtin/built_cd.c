@@ -36,16 +36,16 @@ char	*get_dest_path(char *dest, t_data *data)
 	cur = getcwd(NULL, 0);
 	ret = ft_strdup(dest);
 	if (ft_strlen(cur) > ft_strlen(ret) && ft_strncmp("..", ret, 2) != 0)
-		return (path_modify(cur, ret));
+		return (data->return_val = 0, path_modify(cur, ret));
 	else if (ft_strlen(cur) <= ft_strlen(ret))
 	{
 		if (ret[ft_strlen(ret) - 1] == '/')
-			return (path_modify(cur, ret));
-		return (free (cur), ret);
+			return (data->return_val = 0, path_modify(cur, ret));
+		return (data->return_val = 0, free (cur), ret);
 	}
 	else if (!ft_strcmp("//", ret))
-		return (free (cur), ret);
-	return (free (ret), cur);
+		return (data->return_val = 0, free (cur), ret);
+	return (data->return_val = 0, free (ret), cur);
 }
 
 /**
