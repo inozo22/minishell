@@ -29,9 +29,6 @@
  * @note Input1 is empty now
  * @note cd, echo, pwd and env are not case sensitive
  */
-/* 	int	j = -1;
-	while (input[++j])
-		ft_printf("Input %d: %s\n", j, input[j]); */
 int	check_builtin(char **input, t_data *data)
 {
 	char	*lower_input;
@@ -71,28 +68,26 @@ int	check_single_builtin(t_list *cmd_list, t_data *data)
 	free_list(cmd);
 	if (return_val >= 0)
 	{
-		//DELETE
-		ft_printf("Built-in return val: %d\n", return_val);
 		data->return_val = return_val;
 		return (0);
 	}
 	return (1);
 }
 
-int	process_input(char *line_read, t_data *data)
-{
-	t_list	*cmd_list;
-
-	data->cmd_nb = lexer(line_read, &cmd_list, &data);
-	//DELETE
-	t_list *test = cmd_list;
+/* 	t_list *test = cmd_list;
 	ft_printf(COLOR_CYAN"Printing list"COLOR_RESET"\n");
 	while (test)
 	{
 		ft_printf("Content: %s type: %d pos: %d\n", test->content, test->type, test->cmd_pos);
 		test = test->next;
-	}
-	ft_printf("\n");
+	} 
+	ft_printf("\n");*/
+
+int	process_input(char *line_read, t_data *data)
+{
+	t_list	*cmd_list;
+
+	data->cmd_nb = lexer(line_read, &cmd_list, &data);
 	if (data->cmd_nb == -1)
 		return (1);
 	if (data->cmd_nb == 0 && check_single_builtin(cmd_list, data) == 0)
@@ -122,8 +117,8 @@ int	ft_entire_isspace(char *str)
 
 int	minishell(t_data *data)
 {
-	char			*line_read;
-	char			*prompt;
+	char	*line_read;
+	char	*prompt;
 
 	prompt = get_prompt(data);
 	while (1)
@@ -140,10 +135,8 @@ int	minishell(t_data *data)
 			process_input(line_read, data);
 		}
 		line_read = my_free(line_read);
-/* 		if (g_return_val)
-			data->return_val = g_return_val; */
 		//DELETE
-		ft_printf(COLOR_BLUE"\nReturn val: %d\nGlobal_val: %d\n"COLOR_RESET, data->return_val, g_return_val);//If remove this line, 25lines
+		ft_printf(COLOR_BLUE"\nReturn val: %d\n", data->return_val);
 		if (data->exit_status)
 			break ;
 	}

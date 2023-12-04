@@ -15,38 +15,6 @@
 #include <sys/wait.h>
 #include <sys/types.h>//it's not necessary in POSIX.1
 
-/**
- * @author bde-mada
- */
-/* char	**fill_current_cmd(t_list *lst, int pos, char **envp, pid_t pid)
-{
-	char	**cmd;
-	t_list	*tmp;
-	int		i;
-
-	i = 0;
-	tmp = lst;
-	while (tmp && tmp->cmd_pos == pos)
-	{
-		if (tmp->type == WORD || tmp->type == PIPE)
-			++i;
-		tmp = tmp->next;
-	}
-	if (!i)
-		return (NULL);
-	cmd = (char **)ft_calloc(i + 1, sizeof(char *));
-	if (!cmd)
-		return (NULL);
-	i = -1;
-	while (lst && lst->cmd_pos == pos)
-	{
-		if (lst->type == WORD || lst->type == PIPE)
-			cmd[++i] = expander(lst->content, envp, pid);
-		lst = lst->next;
-	}
-	return (cmd);
-} */
-
 int	count_command(t_list *lst, int pos)
 {
 	int	ret;
@@ -178,29 +146,17 @@ int	get_iofiles_fd(int *fd, t_list *lst, int pos)
 }
 //	ft_printf("Output in get_iofiles in pos %d: fd[0]: %d, fd[1]: %d\n", pos, fd[0], fd[1]);
 
-/* int	get_heredoc_input(t_list *lst, int pos, char **envp, pid_t pid)
-{
-	char	*tmp_eof;
-
-	tmp_eof = NULL;
-	while (lst && lst->cmd_pos == pos)
-	{
-		if (lst->type == HERE_DOC)
-			tmp_eof = lst->content;
-		lst = lst->next;
-	}
-	if (tmp_eof && heredoc_read(tmp_eof, envp, pid))
-		return (1);
-	return (0);
-} */
-
 int	get_heredoc_input(t_list *lst, int pos, t_data *data)
 {
 	char	*tmp_eof;
 
 	tmp_eof = NULL;
+	//DELETE
+	ft_printf("get_heredoc_input\n");
 	while (lst && lst->cmd_pos == pos)
 	{
+		//DELETE
+		ft_printf("lst->type: %d, lst->content: %s\n", lst->type, lst->content);
 		if (lst->type == HERE_DOC)
 		{
 			tmp_eof = lst->content;
@@ -241,131 +197,7 @@ int	child_execution(char **cmd, char **path, t_data *data, int pos)
 	exit(EXIT_FAILURE);
 }
 
-/* int	executer(t_list *lst, int cmd_number, char **env, t_data *data)
-{
-	int		tmp_stdio_fd[2];
-	pid_t	pid;
-	int		process_fd[2];
-	int		e_status;
-	int		pos;
-	char	**cmd;
-	int		pipe_fd[2];
-	int		max_pid;
-	char	**path;
-
-	e_status = 0;
-	tmp_stdio_fd[0] = dup(STDIN_FILENO);
-	tmp_stdio_fd[1] = dup(STDOUT_FILENO);
-	pos = 0;
-	max_pid = 0;
-	//set the initial input
-// 	if (infile)
-//		fdin = open(infile, O_RDONLY);
-//	else
-//	{
-		// Use default input
-//		fdin = dup(tmp_stdio_fd[0]);
-//	}
-	// IMPORTANTE: check if the last command is exit
-// 	if (ft_strcmp(cmd[cmd_number - 1][0], "exit"))
-//		return (0); 
-	path = set_path_list(data);
-	ft_printf(COLOR_ACCENT"EXECUTER START\n"COLOR_RESET);
-	if (lst)
-		ft_printf("lst_content: %s\n", lst->content);
-	while (lst)
-	{
-		cmd = NULL;
-		ft_printf("Current cmd pos: %d, cmd_number: %d\n", lst->cmd_pos, cmd_number);
-		if (lst->cmd_pos == pos)
-		{
-			if (get_iofiles_fd(process_fd, lst, pos) == 0 \
-				&& get_heredoc_input(lst, pos, data) == 0)
-			{
-				ft_printf("FDs set\n");
-				if (pipe(pipe_fd) == -1)
-					return (-1);
-				//set singnal handlers for child process
-				ft_printf("HEY\n");
-				set_signal_handlers(0);
-				cmd = fill_current_cmd(lst, pos, data);
-				//231117nimai: added update_last_executed_cmd here instead of in check_builtin to add sth like NULL too
-				update_last_executed_cmd(data, cmd);
-				if (!cmd || !(*cmd))
-				{	
-					if (lst->cmd_pos == cmd_number)
-					{
-						free_list(cmd);//It's necessary to free cmd when it's NULL	
-						break ;
-					}
-					else
-						continue ;
-				}
-
-				int	j = -1;
-				while (cmd[++j])
-					ft_printf("cmd[%d] = %s\n", j, cmd[j]);
-				ft_printf("\n");
-				data->return_val = 0;
-				// g_return_val = 0;
-				int is_builtin = check_builtin(cmd, data);
-				ft_printf("\nCheck builtin return: %d\n", is_builtin);
-				if (is_builtin >= 0)
-				{
-					return (data->return_val = is_builtin, free_list(cmd), data->return_val);
-				}
-
-				// Create child process
-				pid = fork();
-				if (pid == -1)
-					return (-1);
-				if (pid == 0)
-					child_execution(cmd, env, path, data, pos, cmd_number, process_fd, pipe_fd, tmp_stdio_fd);
-				close(pipe_fd[WRITE_END]);
-				dup2(pipe_fd[READ_END], STDIN_FILENO);
-//				close(pipe_fd[READ_END]);
-				
-				if (pid > max_pid)
-					max_pid = pid;
-				if (process_fd[READ_END] != STDIN_FILENO)
-					close(process_fd[READ_END]);
-				if (process_fd[WRITE_END] != STDOUT_FILENO)
-					close(process_fd[WRITE_END]);
-				if (pos == cmd_number)
-				{	
-					dup2(tmp_stdio_fd[0], STDIN_FILENO);
-					dup2(tmp_stdio_fd[1], STDOUT_FILENO);
-				}
-			}
-		}
-		while (lst && lst->cmd_pos == pos)
-			lst = lst->next;
-		pos++;
-		free_list(cmd);
-	}
-	//for
-	//restore in/out defaults
-	dup2(tmp_stdio_fd[0], STDIN_FILENO);
-	dup2(tmp_stdio_fd[1], STDOUT_FILENO);
-	close(tmp_stdio_fd[0]);
-	close(tmp_stdio_fd[1]);
-	close(pipe_fd[READ_END]);
-	close(pipe_fd[WRITE_END]);
-	int wait_ret;
-	while (1)
-	{
-		wait_ret = waitpid(-1, &e_status, WUNTRACED);
-		if (wait_ret == max_pid)
-			data->return_val = check_exit_status(e_status);
-			// g_return_val = check_exit_status(e_status);
-		cmd_number--;
-		if (cmd_number < 0)
-			break ;
-	}
-	return (0);
-} */
-
- int child(char **cmd, t_data *data, int pos)
+int child(char **cmd, t_data *data, int pos)
 {
 	int		is_builtin;
 	char	**path;
@@ -393,8 +225,6 @@ void father(char **cmd, t_data *data, int pos)
 		dup2(data->tmp_stdio_fd[0], STDIN_FILENO);
 		dup2(data->tmp_stdio_fd[1], STDOUT_FILENO);
 	}
-/* 	close (data->tmp_stdio_fd[0]);
-	close (data->tmp_stdio_fd[1]); */
 }
 
 static int fork_setup(char **cmd, t_data *data, int pos)
@@ -423,11 +253,6 @@ static int fork_setup(char **cmd, t_data *data, int pos)
 	return (0);
 }
 
-/**
- * @param fd[0] tmp_stdio_fd
- * @param fd[2] process_fd
- * @param fd[4] pipe_fd
-  */
 int executer(t_list *cmd_list, t_data *data)
 {
 	char	**cmd;
@@ -442,7 +267,7 @@ int executer(t_list *cmd_list, t_data *data)
 	{
 		pos = cmd_list->cmd_pos;
 		if (get_iofiles_fd(data->process_fd, cmd_list, pos) \
-			&& get_heredoc_input(cmd_list, pos, data))
+			|| get_heredoc_input(cmd_list, pos, data))
 			return (-1);
 		set_signal_handlers(0);
 		//DELETE
@@ -462,8 +287,6 @@ int executer(t_list *cmd_list, t_data *data)
 			return (-1);
 		while (cmd_list && cmd_list->cmd_pos == pos)
 			cmd_list = cmd_list->next;
-		//DELETE
-		usleep(10000);
 	}
 	get_exit_status(data);
 	return (0);

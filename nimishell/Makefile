@@ -47,7 +47,7 @@ INC_DIR		= include/
 LIBS		:= ft
 INCLUDE		:= minishell.h
 SRC_FILES	:=  main.c minishell_init.c minishell.c terminate.c error_msgs.c \
-				utils.c redirect.c expander.c lexer3.c redir_setup.c \
+				utils.c heredoc.c expander.c lexer3.c redir_setup.c \
 				lexer_utils.c expander_utils.c expand_utils.c \
 				executer2.c executer_utils.c builtin/built_cd_path.c \
 				builtin/built_cd.c builtin/built_cd_utils.c \
