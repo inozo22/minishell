@@ -6,11 +6,12 @@ TODO: Check leaks in non interactive mode and interactive exit
 TODO: ~~Include a break in executer when cd is used in multiple pipes. It should work just when it is alone, but show error messages in the path if invalid~~
 TODO: In expansion, exclude NULLs in the cmd array and check nulls in redir to throw "ambiguous redirect" error
 TODO: empty _ env variable whe there are pipes
-TODO: Return value if error with input redirection
-TODO: Check leaks in dqwotes lexer
+
+TODO: Check leaks in dquotes lexer
 
 ---------------------------------
 
+DONE: Return value if error with input redirection
 DONE: With builtins, execute in father when there is just a single command and in child with many commands
 DONE: Fix path entering in executer. Must use the path inside data->path, not path set in initial split in minishell_init
 DONE: Fix ctrl + C, which exit if you send when you are in the prompt

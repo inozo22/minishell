@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   executer2.c                                        :+:      :+:    :+:   */
+/*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/12/06 16:53:00 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/12/06 17:01:30 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,10 @@ int	executer(t_list *cmd_list, t_data *data)
 		pos = cmd_list->cmd_pos;
 		if (get_iofiles_fd(data->process_fd, cmd_list, pos) \
 			|| get_heredoc_input(cmd_list, pos, data))
+		{
+			data->return_val = 1;
 			return (-1);
+		}
 		set_signal_handlers(0);
 		cmd = fill_current_cmd(cmd_list, pos, data);
 		update_last_executed_cmd(data, cmd);
