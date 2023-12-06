@@ -3,14 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+         #
+#    By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/30 13:14:38 by bde-mada          #+#    #+#              #
-<<<<<<< HEAD
-#    Updated: 2023/11/25 18:14:42 by nimai            ###   ########.fr        #
-=======
-#    Updated: 2023/11/25 18:57:39 by bde-mada         ###   ########.fr        #
->>>>>>> origin/norminette_cleanup
+#    Updated: 2023/11/25 19:11:43 by bde-mada         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 

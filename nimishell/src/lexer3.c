@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
+/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 18:39:55 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/11/25 19:09:11 by nimai            ###   ########.fr       */
+/*   Updated: 2023/11/25 19:12:59 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,7 @@ static char	*dquote(char *input)
 		tmp[1] = input;
 		input = ft_strjoin(input, tmp[0]);
 		free(tmp[0]);
-		// if (i == 1)
-			free(tmp[1]);
+		free(tmp[1]);
 		i = 1;
 	}
 	return (input);
