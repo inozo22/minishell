@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/12/06 16:51:12 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/12/06 16:53:00 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,9 +113,6 @@ int	executer(t_list *cmd_list, t_data *data)
 	char	**cmd;
 	int		pos;
 
-	//DELETE
-	ft_printf(COLOR_CYAN"EXECUTER START\n"COLOR_RESET);
-	ft_printf("cmd_number: %d\n\n", data->cmd_nb);
 	data->tmp_stdio_fd[0] = dup(STDIN_FILENO);
 	data->tmp_stdio_fd[1] = dup(STDOUT_FILENO);
 	while (cmd_list)

@@ -109,7 +109,7 @@ int	heredoc_to_stdin(char *input)
  * @param strings[2] = tmp input
  * @param strings[3] = NULL
   */
-char *heredoc_read(char *eof, t_data *data)
+char	*heredoc_read(char *eof, t_data *data)
 {
 	char	**strings;
 	char	*input;
