@@ -37,14 +37,14 @@ int	error_msg(char *cmd, int mode)
 	}
 	ft_putstr_fd(cmd, 2);
 	if (mode == 1)
-	{
-		ft_putendl_fd(": command not found", 2);
-		return (127);
-	}
+		return (ft_putendl_fd(": command not found", 2), 127);
 	if (mode == 3)
+		return (ft_putendl_fd(": is a directory", 2), 126);
+	if (mode == 4)
 	{
-		ft_putendl_fd(": is a directory", 2);
-		return (126);
+		ft_putendl_fd(": filename argument required", 2);
+		ft_putendl_fd(".: usage: . filename [arguments]", 2);
+		return (2);
 	}
 	return (0);
 }

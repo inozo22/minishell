@@ -17,6 +17,7 @@
 # include <string.h>
 # include <stdlib.h>
 # include "ft_printf/src/ft_printf.h"
+# include "get_next_line_bonus.h"
 
 typedef struct s_list
 {

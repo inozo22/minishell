@@ -45,6 +45,7 @@ char	*get_dest_path_wl_sign(char *cur, char *pwd, char *input, t_data *data)
 		ret = ft_strjoin(pwd, tmp);
 		ft_printf("%s\n", MSG_CD_CANT_ACCESS);
 	}
+	data->return_val = 0;
 	return (free (tmp), ret);
 }
 
@@ -72,5 +73,6 @@ char	*get_dest_path_env(t_data *data, char *envtype)
 	}
 	if (!ft_strcmp("OLDPWD", envtype))
 		ft_printf("%s\n", ret);
+	data->return_val = 0;
 	return (ret);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:32:33 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/11/24 19:40:45 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/12/06 12:11:42 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,14 @@
  * @note Input1 is empty now
  * @note cd, echo, pwd and env are not case sensitive
  */
-/* 	int	j = -1;
-	while (input[++j])
-		ft_printf("Input %d: %s\n", j, input[j]); */
 int	check_builtin(char **input, t_data *data)
 {
 	char	*lower_input;
 
 	if (!input[0])
 		return (-1);
+	//231127nimai: to add variable "_"
+	// update_last_executed_cmd(data, input);
 	if (!ft_strcmp(input[0], "export"))
 		return (built_export(input, data));
 	if (!ft_strcmp(input[0], "unset"))
@@ -49,11 +48,11 @@ int	check_builtin(char **input, t_data *data)
 	if (!ft_strcmp(lower_input, "cd"))
 		return (free(lower_input), built_cd(input, data));
 	if (!ft_strcmp(lower_input, "echo"))
-		return (free(lower_input), built_echo(input));
+		return (free(lower_input), built_echo(input, data));
 	if (!ft_strcmp(lower_input, "pwd"))
 		return (free(lower_input), built_pwd(data));
 	if (!ft_strcmp(lower_input, "env"))
-		return (free(lower_input), built_env(input, data->env));
+		return (free(lower_input), built_env(input, data));
 	return (free(lower_input), -1);
 }
 
@@ -75,24 +74,25 @@ int	check_single_builtin(t_list *cmd_list, t_data *data)
 	return (1);
 }
 
+/* 	t_list *test = cmd_list;
+	ft_printf(COLOR_CYAN"Printing list"COLOR_RESET"\n");
+	while (test)
+	{
+		ft_printf("Content: %s type: %d pos: %d\n", test->content, test->type, test->cmd_pos);
+		test = test->next;
+	} 
+	ft_printf("\n");*/
+
 int	process_input(char *line_read, t_data *data)
 {
 	t_list	*cmd_list;
 
 	data->cmd_nb = lexer(line_read, &cmd_list, &data);
-	//DELETE
-	t_list *test = cmd_list;
-	ft_printf(COLOR_CYAN"Printing list"COLOR_RESET"\n");
-	while (test)
-	{
-		ft_printf("content: %s type: %d pos: %d\n", test->content, test->type, test->cmd_pos);
-		test = test->next;
-	}
-	ft_printf("\n");
 	if (data->cmd_nb == -1)
 		return (1);
 	if (data->cmd_nb == 0 && check_single_builtin(cmd_list, data) == 0)
 		return (ft_lstclear(&cmd_list, free), 0);
+	data->max_pid = 0;
 	executer(cmd_list, data);
 	ft_lstclear(&cmd_list, free);
 	return (0);
@@ -117,8 +117,8 @@ int	ft_entire_isspace(char *str)
 
 int	minishell(t_data *data)
 {
-	char			*line_read;
-	char			*prompt;
+	char	*line_read;
+	char	*prompt;
 
 	prompt = get_prompt(data);
 	while (1)
@@ -135,43 +135,11 @@ int	minishell(t_data *data)
 			process_input(line_read, data);
 		}
 		line_read = my_free(line_read);
-		if (g_return_val)
-			data->return_val = g_return_val;
 		//DELETE
-		ft_printf(COLOR_BLUE"\nReturn val: %d\nGlobal_val: %d\n"COLOR_RESET, data->return_val, g_return_val);//If remove this line, 25lines
+		ft_printf(COLOR_BLUE"\nReturn val: %d\n", data->return_val);
 		if (data->exit_status)
 			break ;
 	}
 	ft_printf("\nBye 🗑\n");
 	return (rl_clear_history(), free(prompt), obtain_pwd_home(NULL, 99), 0);
 }
-
-// int	minishell(t_data *data)
-// {
-// 	char			*line_read;
-// 	char			*prompt;
-
-// 	prompt = get_prompt(data);
-// 	while (1)
-// 	{
-// 		set_signal_handlers(1);
-// 		line_read = readline(prompt);
-// 		if (line_read && *line_read)
-// 		{
-// 			add_history(line_read);
-// 			process_input(line_read, data);
-// 		}
-// 		if (!line_read)
-// 			break ;
-// 		ft_printf(COLOR_BLUE"\nReturn val: %d\n"COLOR_RESET, g_return_val);
-// 		if (data->exit_status)
-// 			break ;
-// 		free(line_read);
-// 	}
-// 	rl_clear_history();
-// 	free(line_read);
-// 	free(prompt);
-// 	obtain_pwd_home(NULL, 99);
-// 	printf("\nBye 🗑\n");
-// 	return (0);
-// }

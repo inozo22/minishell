@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 18:40:39 by nimai             #+#    #+#             */
-/*   Updated: 2023/11/17 11:00:13 by nimai            ###   ########.fr       */
+/*   Updated: 2023/12/06 12:17:33 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,16 @@ char	*get_dest_path(char *dest, t_data *data)
 	cur = getcwd(NULL, 0);
 	ret = ft_strdup(dest);
 	if (ft_strlen(cur) > ft_strlen(ret) && ft_strncmp("..", ret, 2) != 0)
-		return (path_modify(cur, ret));
+		return (data->return_val = 0, path_modify(cur, ret));
 	else if (ft_strlen(cur) <= ft_strlen(ret))
 	{
 		if (ret[ft_strlen(ret) - 1] == '/')
-			return (path_modify(cur, ret));
-		return (free (cur), ret);
+			return (data->return_val = 0, path_modify(cur, ret));
+		return (data->return_val = 0, free (cur), ret);
 	}
 	else if (!ft_strcmp("//", ret))
-		return (free (cur), ret);
-	return (free (ret), cur);
+		return (data->return_val = 0, free (cur), ret);
+	return (data->return_val = 0, free (ret), cur);
 }
 
 /**
@@ -125,6 +125,7 @@ int	built_cd(char **input, t_data *data)
 	char		*tmp_pwd;
 
 	obtain_pwd_home(data, 0);
+	data->return_val = 0;
 	cur = getcwd(NULL, 0);
 	if (ft_strcmp("-", input[1]) == 0)
 	{

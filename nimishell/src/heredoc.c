@@ -35,6 +35,7 @@ int	heredoc_to_stdin(char *input)
 	close(fd[WRITE_END]);
 	dup2(fd[READ_END], STDIN_FILENO);
 	close(fd[READ_END]);
+	free(input);
 	return (0);
 }
 
@@ -67,25 +68,30 @@ int	heredoc_to_stdin(char *input)
   */
 int	heredoc_read(char *eof, t_data *data)
 {
-	char	*line_read;
+	char	**line_read;
 	char	*input;
 	char	*tmp;
+	int		i[3];
 
 	input = NULL;
-	line_read = NULL;
 	g_return_val = -1;
 	while (g_return_val < 0)
 	{
-		line_read = readline(">");
-		if (!line_read || !ft_strcmp(eof, line_read))
+		line_read = ft_calloc(3, sizeof(char *));
+		write(1, "> ", 2);
+		line_read[0] = get_next_line(STDIN_FILENO, 0);
+		if (line_read[0])
+			line_read[0][ft_strlen(line_read[0]) - 1] = '\0';
+		if (!line_read[0] || !ft_strcmp(eof, line_read[0]))
 			break ;
-		line_read = expander(line_read, data, 0);
+		line_read[1] = expander(line_read[0], data, i);
 		tmp = input;
-		input = ft_strjoin_many(3, input, "\n", line_read);
+		input = ft_strjoin_many(3, input, "\n", line_read[1]);
 		free(tmp);
-		del((void **)&line_read);
+		free_list(line_read);
 	}
-	del((void **)&line_read);
+	free_list(line_read);
+	get_next_line(STDIN_FILENO, 1);
 	return (heredoc_to_stdin(input));
 }
 

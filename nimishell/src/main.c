@@ -94,22 +94,16 @@ static int	init_data(t_data *data, char *envp[], char *prog_name)
 	ft_printf("Environment loaded\n");
 	data->exit_status = 0;
 	data->return_val = 0;
-	data->tmp_stdio_fd[0] = dup(STDIN_FILENO);
-	data->tmp_stdio_fd[1] = dup(STDOUT_FILENO);
 	ft_bzero(data->process_fd, 2 * sizeof(int));
-	if (data->tmp_stdio_fd[0] == -1 || data->tmp_stdio_fd[1] == -1)
-		return (strerror(errno), 1);
 	return (0);
 }
 
 int	main(int argc, char *argv[], char *envp[])
 {
 	t_data			data;
-	int				ret;
 	struct termios	termios_save;
 
 	g_return_val = 0;
-	ret = 0;
 	data.pid = get_my_pid();
 	if (!data.pid)
 		return (1);
@@ -125,8 +119,7 @@ int	main(int argc, char *argv[], char *envp[])
 	if (set_terminal_attributes(&termios_save) == 1)
 		return (errors(ENOTTY, &data));
 	minishell(&data);
-	ret = data.return_val;
 	free_alloc(&data);
 	tcsetattr(0, 0, &termios_save);
-	return (ret);
+	return (data.return_val);
 }

@@ -3,14 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   terminate.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 14:24:59 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/10/20 17:10:34 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/11/28 16:06:19 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	free_null(char **str)
+{
+	free(*str);
+	*str = NULL;
+}
 
 void	*free_list(char **list)
 {

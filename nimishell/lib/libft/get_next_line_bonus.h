@@ -22,7 +22,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 
-char	*get_next_line(int fd);
+char	*get_next_line(int fd, int mode);
 size_t	ft_strlen_gnl(const char *str);
 char	*ft_strchr_gnl(const char *s, int c);
 size_t	ft_strlcpy_gnl(char *dst, const char *src, size_t dstsize);

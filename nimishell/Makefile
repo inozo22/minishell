@@ -6,7 +6,7 @@
 #    By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/30 13:14:38 by bde-mada          #+#    #+#              #
-#    Updated: 2023/11/25 19:11:43 by bde-mada         ###   ########.fr        #
+#    Updated: 2023/12/06 13:22:05 by bde-mada         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ CFLAGS		= -Wall -Wextra -Werror -Wpedantic
 OS			= $(shell uname)
 
 #Optimization and valgrind debugging flags:
-DEBUG			:= -g3 -O0 #-fsanitize=address 
+DEBUG			:= -g3 -O0 -fsanitize=address 
 #change -O0 with -O1 or -O2 for faster execution but worse info
 
 LDFLAGS		= $(addprefix -L, $(LIBS_DIR))
@@ -47,7 +47,7 @@ INC_DIR		= include/
 LIBS		:= ft
 INCLUDE		:= minishell.h
 SRC_FILES	:=  main.c minishell_init.c minishell.c terminate.c error_msgs.c \
-				utils.c redirect.c expander.c lexer3.c redir_setup.c \
+				utils.c heredoc.c expander.c lexer3.c redir_setup.c \
 				lexer_utils.c expander_utils.c expand_utils.c \
 				executer2.c executer_utils.c builtin/built_cd_path.c \
 				builtin/built_cd.c builtin/built_cd_utils.c \

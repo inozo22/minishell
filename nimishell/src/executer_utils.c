@@ -91,15 +91,26 @@ int	close_files_if_error(int fd[2], char *file_name)
 		return (WEXITSTATUS(e_status));
 	else if (g_return_val)
 		return (g_return_val); */
-int	check_exit_status(int e_status)
+void	get_exit_status(t_data *data)
 {
-	if (g_return_val == 1)
-		return (g_return_val);
-	if (WIFSIGNALED(e_status))
-		return (128 + WTERMSIG(e_status));
-	if (WIFEXITED(e_status))
-		return (WEXITSTATUS(e_status));
-	return (0);
+	int wait_ret;
+	int e_status;
+	
+	while (1)
+	{
+		wait_ret = waitpid(-1, &e_status, WUNTRACED);
+		if (wait_ret == data->max_pid)
+		{
+			if (g_return_val == 1)
+				data->return_val = g_return_val;
+			if (WIFSIGNALED(e_status))
+				data->return_val = 128 + WTERMSIG(e_status);
+			if (WIFEXITED(e_status))
+				data->return_val = WEXITSTATUS(e_status);
+		}
+		if (data->cmd_nb-- < 0)
+			break ;
+	}
 }
 
 char	**set_path_list(t_data *data)

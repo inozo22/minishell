@@ -44,26 +44,34 @@ int	expand(char **str, int *pos, int quotes, t_data *data)
 	return (0);
 }
 
-int	obtain_expansion(char **str, t_data *data, int *flag)
+int	obtain_expansion(char **str, t_data *data, int *i)
 {
-	int	i;
+	int	n;
 	int	quotes;
 
-	i = -1;
-	while ((*str)[++i])
+	n = -1;
+	quotes = 0;
+	while ((*str)[++n])
 	{
-		quotes = is_quote((*str)[i]);
-		if ((*str)[i] == '$' && quotes != '\'')
+		quotes = is_quote((*str)[n]);
+		if ((*str)[n] == '$' && quotes != '\'')
 		{
-			if (expand(str, &i, quotes, data))
-				return (0);
-			*flag = 1;
+			++i[2];
+			if (expand(str, &n, quotes, data))
+				return (i[1] = 99, 0);
+			if (i[2] == 1)
+				i[1] = 5;
+			if (i[2] == 2 && quotes)
+				i[1] = 1;
 		}
+		else
+			if (!i[1])
+				i[1] = 2;
 	}
 	return (1);
 }
 
-char	*expander(char *str, t_data *data, int *flag)
+char	*expander(char *str, t_data *data, int *i)
 {
 	int		c;
 	char	**tab;
@@ -76,7 +84,7 @@ char	*expander(char *str, t_data *data, int *flag)
 	{
 		if (ft_strcmp(tab[c], "~"))
 		{
-			if (!obtain_expansion(&tab[c], data, flag))
+			if (!obtain_expansion(&tab[c], data, i))
 			{
 				free_list(tab);
 				return (free (ret), NULL);

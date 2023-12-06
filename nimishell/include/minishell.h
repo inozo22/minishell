@@ -139,12 +139,13 @@ t_list	*parser(char *str);
 
 //	Terminate
 
-int		errors(int error_id, t_data *data);
+void	free_null(char **str);
 void	free_alloc(t_data *data);
 void	*free_list(char **list);
 
 //	Error messages
 
+int		errors(int error_id, t_data *data);
 int		error_file(char *in_file);
 int		error_msg(char *cmd, int mode);
 int		command_not_found_handler(char *name, char *cmd);
@@ -162,7 +163,7 @@ int		check_is_directory(char *cmd);
 char	*get_cmd_path(char *cmd, char **path, int *return_val);
 int		execute_script_without_shebang(char **cmd, char **env);
 int		close_files_if_error(int fd[2], char *file_name);
-int		check_exit_status(int e_status);
+void		get_exit_status(t_data *data);
 //int		check_exit_status(int e_status, t_data *data);
 char	**set_path_list(t_data *data);
 

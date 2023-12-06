@@ -76,11 +76,16 @@ char	*parse_old(int fd, char *next)
 	return (next);
 }
 
-char	*get_next_line(int fd)
+char	*get_next_line(int fd, int mode)
 {
 	static char	*next[4096];
 	char		*line;
 
+	if (mode)
+	{
+		free(next[fd]);
+		return (NULL);
+	}
 	if (fd < 0 || fd > 1024)
 		return (0);
 	if (BUFFER_SIZE <= 0)
