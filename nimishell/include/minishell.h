@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 19:10:38 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/12/06 17:39:04 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/12/06 18:38:41 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,16 @@ extern volatile int	g_return_val;
 enum e_token
 {
 	INVALID = -1,
-	WORD = 'a',
-	IS_SPACE = ' ',
 	NEW_LINE = '\n',
-	QUOTE = '\'',
+	IS_SPACE = ' ',
 	DOUBLE_QUOTE = '\"',
-	ESCAPE = '\\',
-	ENV = '$',
-	PIPE = '|',
+	ENV_VAR = '$',
+	QUOTE = '\'',
 	REDIR_IN = '<',
 	REDIR_OUT = '>',
+	ESCAPE = '\\',
+	WORD = 'a',
+	PIPE = '|',
 	HERE_DOC,
 	APPEND,
 };
@@ -168,6 +168,7 @@ int		get_iofiles_fd(int *fd, t_list *lst, int pos, t_data *data);
 void	get_exit_status(t_data *data);
 int		check_is_directory(char *cmd);
 char	*get_cmd_path(char *cmd, char **path, int *return_val);
+int		set_fds(t_data *data);
 
 // fill_cmd
 

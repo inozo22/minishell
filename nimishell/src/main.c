@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 18:22:41 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/11/25 17:36:08 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/12/06 18:27:31 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ static int	define_basic_env(t_data *data, char *prog_name)
 	data->env[4] = ft_strjoin_many(4, "_=", ptr, "/", tmp_prog_name);
 	free(tmp_prog_name);
 	free(ptr);
-	ft_printf("No environment available, baseline created\n");
 	return (0);
 }
 
@@ -90,8 +89,6 @@ static int	init_data(t_data *data, char *envp[], char *prog_name)
 		return (1);
 	else if (*envp && fill_env(data, envp))
 		return (1);
-	//DELETE
-	ft_printf("Environment loaded\n");
 	data->exit_status = 0;
 	data->return_val = 0;
 	ft_bzero(data->process_fd, 2 * sizeof(int));

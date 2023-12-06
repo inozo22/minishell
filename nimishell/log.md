@@ -1,16 +1,18 @@
 - printf("%sI'm here%s\n", COLOR_YELLOW, COLOR_RESET);
 	
 ---------------------------------
-TODO: put protect for open function in redir
+TODO: ~~put protect for open function in redir~~
 TODO: Check leaks in non interactive mode and interactive exit
 TODO: ~~Include a break in executer when cd is used in multiple pipes. It should work just when it is alone, but show error messages in the path if invalid~~
-TODO: In expansion, exclude NULLs in the cmd array and check nulls in redir to throw "ambiguous redirect" error
 TODO: empty _ env variable whe there are pipes
 
 TODO: Check leaks in dquotes lexer
+TODO: SEGFAULT when non existing env variable is used in dquotes
+TODO: Fix different behavior of quotes execution when no existing single env variable beween quotes or not (No quotes, does nothing, but with quotes, it shows error message)
 
 ---------------------------------
 
+TODO: In expansion, exclude NULLs in the cmd array and check nulls in redir to throw "ambiguous redirect" error
 DONE: Return value if error with input redirection
 DONE: With builtins, execute in father when there is just a single command and in child with many commands
 DONE: Fix path entering in executer. Must use the path inside data->path, not path set in initial split in minishell_init

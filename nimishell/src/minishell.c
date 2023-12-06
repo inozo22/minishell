@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:32:33 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/12/06 17:45:01 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/12/06 18:28:01 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,12 @@ int	check_single_builtin(t_list *cmd_list, t_data *data)
 	return (1);
 }
 
-
 int	process_input(char *line_read, t_data *data)
 {
 	t_list	*cmd_list;
 
 	data->cmd_nb = lexer(line_read, &cmd_list, &data);
+	//DELETE
 	t_list *test = cmd_list;
 	ft_printf(COLOR_CYAN"Printing list"COLOR_RESET"\n");
 	while (test)
