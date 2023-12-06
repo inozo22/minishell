@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <fcntl.h>
 #include <sys/wait.h>
 
 /* int	heredoc_to_stdin(char *input)
@@ -137,4 +136,25 @@ char *heredoc_read(char *eof, t_data *data)
 	free_list(strings);
 	get_next_line(STDIN_FILENO, 1);
 	return (input);
+}
+
+int	get_heredoc_input(t_list *lst, int pos, t_data *data)
+{
+	char	*input;
+
+	input = NULL;
+	while (lst && lst->cmd_pos == pos)
+	{
+		if (lst->type == HERE_DOC)
+		{
+			free(input);
+			input = heredoc_read(lst->content, data);
+			if (!input)
+				return (1);
+		}
+		lst = lst->next;
+	}
+	if (input && heredoc_to_stdin(input))
+		return (1);
+	return (0);
 }

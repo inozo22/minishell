@@ -6,45 +6,13 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/12/06 16:27:36 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/12/06 16:51:12 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <fcntl.h>
 #include <sys/wait.h>
 #include <sys/types.h>//it's not necessary in POSIX.1
-
-/**
- * @author bde-mada
- */
-int	get_iofiles_fd(int *fd, t_list *lst, int pos)
-{
-	fd[0] = STDIN_FILENO;
-	fd[1] = STDOUT_FILENO;
-	while (lst && lst->cmd_pos == pos)
-	{
-		if (lst->type == REDIR_IN)
-		{
-			if (fd[0] != STDIN_FILENO)
-				close(fd[0]);
-			fd[0] = open(lst->content, O_RDONLY);
-		}
-		if ((lst->type == REDIR_OUT || lst->type == APPEND) \
-				&& fd[1] != STDOUT_FILENO)
-			close(fd[1]);
-		if (lst->type == REDIR_OUT)
-			fd[1] = open(lst->content, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		if (lst->type == APPEND)
-			fd[1] = open(lst->content, O_WRONLY | O_CREAT | O_APPEND, 0644);
-		if (fd[0] == -1 || fd[1] == -1)
-			return (close_files_if_error(fd, lst->content));
-		lst = lst->next;
-	}
-	return (0);
-}
-/* 	ft_printf("Output in get_iofiles in pos %d: fd[0]: %d, \
-				fd[1]: %d\n", pos, fd[0], fd[1]); */
 
 /* int	get_heredoc_input(t_list *lst, int pos, t_data *data)
 {
@@ -65,36 +33,13 @@ int	get_iofiles_fd(int *fd, t_list *lst, int pos)
 	return (0);
 } */
 
-int	get_heredoc_input(t_list *lst, int pos, t_data *data)
-{
-	char	*input;
-
-	input = NULL;
-	while (lst && lst->cmd_pos == pos)
-	{
-		if (lst->type == HERE_DOC)
-		{
-			free(input);
-			input = heredoc_read(lst->content, data);
-			if (!input)
-				return (1);
-		}
-		lst = lst->next;
-	}
-	if (heredoc_to_stdin(input))
-		return (1);
-	return (0);
-}
-
 int	child_execution(char **cmd, char **path, t_data *data, int pos)
 {
 	char	*cmd_path;
 	int		return_val;
-	
-	//child
+
 	return_val = 0;
 	cmd_path = get_cmd_path(cmd[0], path, &return_val);
-	ft_printf("Return val from get_cmd_path: %d\n", return_val);
 	if (!cmd_path)
 	{
 		return_val = error_msg(cmd[0], return_val);
@@ -103,29 +48,28 @@ int	child_execution(char **cmd, char **path, t_data *data, int pos)
 		exit(return_val);
 	}
 	redir_setup(pos, data->cmd_nb, data);
-	ft_printf("cmd_path: %s\n\n", cmd_path);
 	if (execve(cmd_path, cmd, data->env) == -1 && errno == ENOEXEC)
 		execute_script_without_shebang(cmd, data->env);
 	ft_printf(SH_NAME": %s: %s", cmd[0], strerror(errno));
 	free_list(cmd);
-	free_alloc(data);		
+	free_alloc(data);
 	exit(EXIT_FAILURE);
 }
 
-int child(char **cmd, t_data *data, int pos)
+int	child(char **cmd, t_data *data, int pos)
 {
 	int		is_builtin;
 	char	**path;
 
 	is_builtin = check_builtin(cmd, data);
-	if (is_builtin >= 0)		
-		return(free_list(cmd), is_builtin);
+	if (is_builtin >= 0)
+		return (free_list(cmd), is_builtin);
 	path = set_path_list(data);
 	child_execution(cmd, path, data, pos);
 	exit(EXIT_FAILURE);
 }
 
-void father(char **cmd, t_data *data, int pos)
+void	father(char **cmd, t_data *data, int pos)
 {
 	free_list(cmd);
 	close(data->pipe_fd[WRITE_END]);
@@ -135,14 +79,14 @@ void father(char **cmd, t_data *data, int pos)
 	if (data->process_fd[WRITE_END] != STDOUT_FILENO)
 		close(data->process_fd[WRITE_END]);
 	if (pos == data->cmd_nb)
-	{	
+	{
 		dup2(data->tmp_stdio_fd[0], STDIN_FILENO);
 		dup2(data->tmp_stdio_fd[1], STDOUT_FILENO);
 		close(data->pipe_fd[READ_END]);
 	}
 }
 
-static int fork_setup(char **cmd, t_data *data, int pos)
+static int	fork_setup(char **cmd, t_data *data, int pos)
 {
 	if (pipe(data->pipe_fd) == -1)
 		return (-1);
@@ -156,7 +100,7 @@ static int fork_setup(char **cmd, t_data *data, int pos)
 	{
 		father(cmd, data, pos);
 		if (pos == data->cmd_nb)
-		{	
+		{
 			dup2(data->tmp_stdio_fd[0], STDIN_FILENO);
 			dup2(data->tmp_stdio_fd[1], STDOUT_FILENO);
 		}
@@ -164,7 +108,7 @@ static int fork_setup(char **cmd, t_data *data, int pos)
 	return (0);
 }
 
-int executer(t_list *cmd_list, t_data *data)
+int	executer(t_list *cmd_list, t_data *data)
 {
 	char	**cmd;
 	int		pos;
@@ -184,10 +128,7 @@ int executer(t_list *cmd_list, t_data *data)
 		cmd = fill_current_cmd(cmd_list, pos, data);
 		update_last_executed_cmd(data, cmd);
 		if (!cmd || !(*cmd))
-		{	
-			//Error setup
 			return (-1);
-		}
 		if (fork_setup(cmd, data, pos) == -1)
 			return (-1);
 		while (cmd_list && cmd_list->cmd_pos == pos)

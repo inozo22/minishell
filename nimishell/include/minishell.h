@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 19:10:38 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/12/06 16:27:20 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/12/06 16:41:45 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,17 +159,16 @@ char	**fill_current_cmd(t_list *lst, int pos, t_data *data);
 
 //	Executer_utils
 
-int		check_is_directory(char *cmd);
-char	*get_cmd_path(char *cmd, char **path, int *return_val);
 int		execute_script_without_shebang(char **cmd, char **env);
 int		close_files_if_error(int fd[2], char *file_name);
-void		get_exit_status(t_data *data);
-//int		check_exit_status(int e_status, t_data *data);
+void	get_exit_status(t_data *data);
 char	**set_path_list(t_data *data);
+int		get_iofiles_fd(int *fd, t_list *lst, int pos);
 
 // Executer_utils2
 
-
+int		check_is_directory(char *cmd);
+char	*get_cmd_path(char *cmd, char **path, int *return_val);
 
 // fill_cmd
 
@@ -229,7 +228,6 @@ int		check_variable_len(char *str, int start, int quotes);
 // heredoc
 
 //int		heredoc_read(char *eof, char **envp, pid_t pid);
-char	*heredoc_read(char *eof, t_data *data);
-int		heredoc_to_stdin(char *input);
+int	get_heredoc_input(t_list *lst, int pos, t_data *data);
 
 #endif
