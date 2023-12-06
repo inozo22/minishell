@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/12/06 17:01:30 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/12/06 17:51:03 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ int	child(char **cmd, t_data *data, int pos)
 	int		is_builtin;
 	char	**path;
 
+	if (!cmd || !(**cmd))
+		exit(error_msg("", 1));
 	is_builtin = check_builtin(cmd, data);
 	if (is_builtin >= 0)
 		return (free_list(cmd), is_builtin);
@@ -118,7 +120,7 @@ int	executer(t_list *cmd_list, t_data *data)
 	while (cmd_list)
 	{
 		pos = cmd_list->cmd_pos;
-		if (get_iofiles_fd(data->process_fd, cmd_list, pos) \
+		if (get_iofiles_fd(data->process_fd, cmd_list, pos, data) \
 			|| get_heredoc_input(cmd_list, pos, data))
 		{
 			data->return_val = 1;
@@ -127,7 +129,7 @@ int	executer(t_list *cmd_list, t_data *data)
 		set_signal_handlers(0);
 		cmd = fill_current_cmd(cmd_list, pos, data);
 		update_last_executed_cmd(data, cmd);
-		if (!cmd || !(*cmd))
+		if ((!cmd || !(*cmd)) && data->cmd_nb > 0)
 			return (-1);
 		if (fork_setup(cmd, data, pos) == -1)
 			return (-1);

@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 16:04:56 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/11/24 18:40:20 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/12/06 17:36:38 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ int	error_msg(char *cmd, int mode)
 		ft_putendl_fd(".: usage: . filename [arguments]", 2);
 		return (2);
 	}
+	if (mode == 5)
+		return (ft_putendl_fd(": ambiguous redirect", 2), 1);
 	return (0);
 }
 

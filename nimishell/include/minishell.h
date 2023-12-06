@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 19:10:38 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/12/06 16:41:45 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/12/06 17:39:04 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,19 +154,18 @@ int		warning_message(int type, int num);//2309114nimai: added
 //	Executer
 
 int		executer(t_list *lst, t_data *data);
-//char	**fill_current_cmd(t_list *lst, int pos, char **envp, pid_t pid);
 char	**fill_current_cmd(t_list *lst, int pos, t_data *data);
 
 //	Executer_utils
 
 int		execute_script_without_shebang(char **cmd, char **env);
 int		close_files_if_error(int fd[2], char *file_name);
-void	get_exit_status(t_data *data);
 char	**set_path_list(t_data *data);
-int		get_iofiles_fd(int *fd, t_list *lst, int pos);
+int		get_iofiles_fd(int *fd, t_list *lst, int pos, t_data *data);
 
 // Executer_utils2
 
+void	get_exit_status(t_data *data);
 int		check_is_directory(char *cmd);
 char	*get_cmd_path(char *cmd, char **path, int *return_val);
 
@@ -219,7 +218,6 @@ char	*arrange_str(char **tab, char *str, int c);
 
 // expand_utils
 char	*get_var_value(char *env_var, char *envp[], int len);
-// char	*is_expand(char *env_var, int len, char *env[], pid_t pid);
 char	*is_expand(char *env_var, int len, t_data *data);//***///
 int		compose_expanded(char *expanded, char **str, int start, int end);
 int		is_special_expand(char *str, int ret);

@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 15:48:44 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/12/06 17:07:49 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/12/06 17:47:11 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,32 +55,46 @@ char	**set_path_list(t_data *data)
 	return (path);
 }
 
-
+static char	*expand_file(char *file, int type, t_data *data)
+{
+	int		i[3];
+	char	*string;
+	
+	string = file;
+	ft_bzero(i, 3 * sizeof(int));
+	if (type == REDIR_IN || type == REDIR_OUT)
+		string = expander(file, data, i);
+	return (string);
+}
 
 /**
  * @author bde-mada
  */
-int	get_iofiles_fd(int *fd, t_list *lst, int pos)
+int	get_iofiles_fd(int *fd, t_list *lst, int pos, t_data *data)
 {
+	char	*file_name;
+	
 	fd[0] = STDIN_FILENO;
 	fd[1] = STDOUT_FILENO;
 	while (lst && lst->cmd_pos == pos)
 	{
+		file_name = expand_file(lst->content, lst->type, data);
+		if (!file_name || !*file_name)
+			return (error_msg(lst->content, 5));
 		if (lst->type == REDIR_IN)
 		{
 			if (fd[0] != STDIN_FILENO)
 				close(fd[0]);
-			fd[0] = open(lst->content, O_RDONLY);
+			fd[0] = open(file_name, O_RDONLY);
 		}
-		if ((lst->type == REDIR_OUT || lst->type == APPEND) \
-				&& fd[1] != STDOUT_FILENO)
+		if ((lst->type == REDIR_OUT || lst->type == APPEND) && fd[1] != 1)
 			close(fd[1]);
 		if (lst->type == REDIR_OUT)
-			fd[1] = open(lst->content, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+			fd[1] = open(file_name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		if (lst->type == APPEND)
-			fd[1] = open(lst->content, O_WRONLY | O_CREAT | O_APPEND, 0644);
+			fd[1] = open(file_name, O_WRONLY | O_CREAT | O_APPEND, 0644);
 		if (fd[0] == -1 || fd[1] == -1)
-			return (close_files_if_error(fd, lst->content));
+			return (close_files_if_error(fd, file_name));
 		lst = lst->next;
 	}
 	return (0);
