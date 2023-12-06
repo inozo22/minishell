@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 14:08:43 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/04/17 15:45:13 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/12/06 13:40:12 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ char	*get_next_line(int fd, int mode)
 	if (mode)
 	{
 		free(next[fd]);
+		next[fd] = NULL;
 		return (NULL);
 	}
 	if (fd < 0 || fd > 1024)

@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 15:48:44 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/11/24 19:10:26 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/12/06 13:36:12 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,11 +98,14 @@ void	get_exit_status(t_data *data)
 	
 	while (1)
 	{
+		if (g_return_val == 1)
+		{
+			data->return_val = g_return_val;
+			break ;
+		}
 		wait_ret = waitpid(-1, &e_status, WUNTRACED);
 		if (wait_ret == data->max_pid)
 		{
-			if (g_return_val == 1)
-				data->return_val = g_return_val;
 			if (WIFSIGNALED(e_status))
 				data->return_val = 128 + WTERMSIG(e_status);
 			if (WIFEXITED(e_status))

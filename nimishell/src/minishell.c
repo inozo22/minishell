@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
+/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:32:33 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/12/06 12:11:42 by nimai            ###   ########.fr       */
+/*   Updated: 2023/12/06 13:34:57 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,7 @@ int	minishell(t_data *data)
 				continue ;
 			process_input(line_read, data);
 		}
+		get_exit_status(data);
 		line_read = my_free(line_read);
 		//DELETE
 		ft_printf(COLOR_BLUE"\nReturn val: %d\n", data->return_val);

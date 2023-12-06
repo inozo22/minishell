@@ -6,7 +6,7 @@
 #    By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/06 19:14:40 by bde-mada          #+#    #+#              #
-#    Updated: 2023/09/05 15:23:00 by bde-mada         ###   ########.fr        #
+#    Updated: 2023/12/06 13:42:14 by bde-mada         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ SRCBONUS = ft_lstadd_back_bonus.c ft_lstadd_front_bonus.c ft_lstclear_bonus.c \
 NAME = libft.a
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror -g3
 DEBUG= -g3 -fsanitize=address
 
 PRINTF_DIR	= ft_printf/

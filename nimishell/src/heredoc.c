@@ -64,33 +64,38 @@ int	heredoc_to_stdin(char *input)
 } */
 
 /**
- * @note 231117nimai: I think it's accetable leave g_return_val here although with new correction. 
+ * @note 231117nimai: I think it's accetable leave g_return_val 
+ * 		here although with new correction.
+ * @param strings[0] = gnl input
+ * @param strings[1] = expanded
+ * @param strings[2] = tmp input
+ * @param strings[3] = NULL
   */
 int	heredoc_read(char *eof, t_data *data)
 {
-	char	**line_read;
+	char	**strings;
 	char	*input;
-	char	*tmp;
 	int		i[3];
 
+	ft_bzero(i, 3 * sizeof(int));
 	input = NULL;
-	g_return_val = -1;
-	while (g_return_val < 0)
+	while (1)
 	{
-		line_read = ft_calloc(3, sizeof(char *));
+		strings = ft_calloc(4, sizeof(char *));
+		if (g_return_val == 1)
+			return(free_list(strings), 1);
 		write(1, "> ", 2);
-		line_read[0] = get_next_line(STDIN_FILENO, 0);
-		if (line_read[0])
-			line_read[0][ft_strlen(line_read[0]) - 1] = '\0';
-		if (!line_read[0] || !ft_strcmp(eof, line_read[0]))
+		strings[0] = get_next_line(STDIN_FILENO, 0);
+		if (strings[0])
+			strings[0][ft_strlen(strings[0]) - 1] = '\0';
+		if (!strings[0] || !ft_strcmp(eof, strings[0]))
 			break ;
-		line_read[1] = expander(line_read[0], data, i);
-		tmp = input;
-		input = ft_strjoin_many(3, input, "\n", line_read[1]);
-		free(tmp);
-		free_list(line_read);
+		strings[1] = expander(strings[0], data, i);
+		strings[2] = strings[3];
+		input = ft_strjoin_many(3, input, "\n", strings[1]);
+		free_list(strings);
 	}
-	free_list(line_read);
+	free_list(strings);
 	get_next_line(STDIN_FILENO, 1);
 	return (heredoc_to_stdin(input));
 }
