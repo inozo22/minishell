@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:32:33 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/11/29 11:08:57 by nimai            ###   ########.fr       */
+/*   Updated: 2023/12/06 12:11:42 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,11 @@ int	check_builtin(char **input, t_data *data)
 	if (!ft_strcmp(lower_input, "cd"))
 		return (free(lower_input), built_cd(input, data));
 	if (!ft_strcmp(lower_input, "echo"))
-		return (free(lower_input), built_echo(input));
+		return (free(lower_input), built_echo(input, data));
 	if (!ft_strcmp(lower_input, "pwd"))
 		return (free(lower_input), built_pwd(data));
 	if (!ft_strcmp(lower_input, "env"))
-		return (free(lower_input), built_env(input, data->env));
+		return (free(lower_input), built_env(input, data));
 	return (free(lower_input), -1);
 }
 

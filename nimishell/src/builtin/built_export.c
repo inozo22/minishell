@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:18:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/11/17 09:54:55 by nimai            ###   ########.fr       */
+/*   Updated: 2023/12/06 12:12:32 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,7 @@ int	built_export(char **input, t_data *data)
 	int			i;
 
 	new_envp = NULL;
+	data->return_val = 0;
 	if (av_amount(input) == 1)
 	{
 		if (!output_export(data->env))

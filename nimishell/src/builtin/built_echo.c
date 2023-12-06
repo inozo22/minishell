@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:54:13 by nimai             #+#    #+#             */
-/*   Updated: 2023/10/02 14:36:12 by nimai            ###   ########.fr       */
+/*   Updated: 2023/12/06 12:13:40 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	is_flag(char *str)
  * @param flag[0] the first flag check, for '\n'
  * @param flag[1] from second flag, to check if it should be printed
  */
-int	built_echo(char **input)
+int	built_echo(char **input, t_data *data)
 {
 	int	i;
 	int	flag[2];
@@ -70,7 +70,7 @@ int	built_echo(char **input)
 	}
 	if (flag[0] != 1)
 		ft_printf("\n");
-	return (0);
+	return (data->return_val = 0, 0);
 }
 
 /**

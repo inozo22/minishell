@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 18:40:39 by nimai             #+#    #+#             */
-/*   Updated: 2023/11/17 11:00:13 by nimai            ###   ########.fr       */
+/*   Updated: 2023/12/06 12:17:33 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ int	built_cd(char **input, t_data *data)
 	char		*tmp_pwd;
 
 	obtain_pwd_home(data, 0);
+	data->return_val = 0;
 	cur = getcwd(NULL, 0);
 	if (ft_strcmp("-", input[1]) == 0)
 	{
