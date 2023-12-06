@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 15:48:44 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/12/06 17:00:01 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/12/06 17:07:49 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,39 +35,6 @@ int	close_files_if_error(int fd[2], char *file_name)
 	return (1);
 }
 
-/**
- * @note 230811nimai: add g_return_val, check if there is another way to
- * reset g_return_val
- */
-/* 	if ((g_return_val == 130 || g_return_val == 131) && WIFEXITED(e_status))
-		return (WEXITSTATUS(e_status));
-	else if (g_return_val)
-		return (g_return_val); */
-void	get_exit_status(t_data *data)
-{
-	int	wait_ret;
-	int	e_status;
-
-	while (1)
-	{
-		if (g_return_val == 1)
-		{
-			data->return_val = g_return_val;
-			break ;
-		}
-		wait_ret = waitpid(-1, &e_status, WUNTRACED);
-		if (wait_ret == data->max_pid)
-		{
-			if (WIFSIGNALED(e_status))
-				data->return_val = 128 + WTERMSIG(e_status);
-			if (WIFEXITED(e_status))
-				data->return_val = WEXITSTATUS(e_status);
-		}
-		if (data->cmd_nb-- < 0)
-			break ;
-	}
-}
-
 char	**set_path_list(t_data *data)
 {
 	int		i;
@@ -87,6 +54,8 @@ char	**set_path_list(t_data *data)
 	}
 	return (path);
 }
+
+
 
 /**
  * @author bde-mada

@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:32:33 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/12/06 15:44:28 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/12/06 17:18:05 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,8 @@ int	check_single_builtin(t_list *cmd_list, t_data *data)
 	free_list(cmd);
 	if (return_val >= 0)
 	{
-		data->return_val = return_val;
+		if (data->return_val == 0)
+			data->return_val = return_val;
 		return (0);
 	}
 	return (1);

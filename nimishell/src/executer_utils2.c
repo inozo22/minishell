@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 16:03:23 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/12/06 16:12:15 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/12/06 17:07:27 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,3 +60,36 @@ char	*get_cmd_path(char *cmd, char **path, int *return_val)
 	return (cmd_path[1]);
 }
 //	ft_printf("cmd_path: %s\n\n", cmd_path[1]);
+
+/**
+ * @note 230811nimai: add g_return_val, check if there is another way to
+ * reset g_return_val
+ */
+/* 	if ((g_return_val == 130 || g_return_val == 131) && WIFEXITED(e_status))
+		return (WEXITSTATUS(e_status));
+	else if (g_return_val)
+		return (g_return_val); */
+void	get_exit_status(t_data *data)
+{
+	int	wait_ret;
+	int	e_status;
+
+	while (1)
+	{
+		if (g_return_val == 1)
+		{
+			data->return_val = g_return_val;
+			break ;
+		}
+		wait_ret = waitpid(-1, &e_status, WUNTRACED);
+		if (wait_ret == data->max_pid)
+		{
+			if (WIFSIGNALED(e_status))
+				data->return_val = 128 + WTERMSIG(e_status);
+			if (WIFEXITED(e_status))
+				data->return_val = WEXITSTATUS(e_status);
+		}
+		if (data->cmd_nb-- < 0)
+			break ;
+	}
+}
