@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 18:39:55 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/12/06 13:22:36 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/12/06 15:55:54 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,6 @@ int	get_node(char *str, t_list **list, int max_pipe)
 	while (ft_isspace(str[i[0]]))
 		i[0]++;
 	i[1] = i[0];
-/* 	while (str[i[1]] && (is_metacharacter(str + i[1]) == WORD
-			|| is_quote(str[i[1]]))) */
 	while (str[i[1]] && (is_quote(str[i[1]]) \
 			|| (is_metacharacter(str + i[1]) == WORD || is_metacharacter(str + i[1]) == QUOTE)))
 		i[1]++;
@@ -83,7 +81,7 @@ int	get_node(char *str, t_list **list, int max_pipe)
 		//DELETE and set error message
 		if (i[2] == PIPE && str[i[1]] != PIPE)
 			return (1);
-//		ft_printf("contiguous metacharacters\n");
+		ft_printf("contiguous metacharacters\n");
 		return (-1);
 	}
 	token = ft_substr(str, i[0], i[1] - i[0]);
@@ -104,14 +102,11 @@ int	lexer(char *input, t_list **token_list, t_data **data)
 {
 	int		i[3];
 	char	*input_tmp;
-	//DELETE
-//	t_list *tmp;
 
 	*token_list = NULL;
 	input_tmp = ft_strdup(input);
 	ft_bzero(i, 3 * sizeof(int));
-	if (input_tmp[i[0]] == PIPE && *token_list == NULL)
-	//CHECK CORRECT MESSAGE
+	if (input_tmp[i[0]] == PIPE)
 	{
 		(*data)->return_val = error_msg("|", 2);
 		return (-1);
@@ -124,8 +119,6 @@ int	lexer(char *input, t_list **token_list, t_data **data)
 			if (input_tmp[i[0]] == PIPE)
 				i[2]++;
 			i[1] = get_node(input_tmp + i[0], token_list, i[2]);
-			//DELETE
-//			ft_printf("i[1]: %d\n", i[1]);
 			if (i[1] == -1)
 				return (-1);
 			i[0] += i[1];
@@ -133,15 +126,15 @@ int	lexer(char *input, t_list **token_list, t_data **data)
 		else
 			i[0]++;
 	}
+	return (free (input_tmp), i[2]);
+}
 	//DELETE
-/* 	tmp = *token_list;
+/* 	t_list *tmp = *token_list;
 	while (tmp)
 	{
 		printf("%sLEXER: content: %s, type: %d, pos: %d%s\n", COLOR_GREEN, tmp->content, tmp->type, tmp->cmd_pos, COLOR_RESET);
 		tmp = tmp->next;
 	} */
-	return (free (input_tmp)/* 231125nimai added to remove memory leaks */, i[2]);
-}
 
 /* int	main(int argc, char **argv)
 {

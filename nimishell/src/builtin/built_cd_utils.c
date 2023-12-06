@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_cd_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
+/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 09:43:46 by nimai             #+#    #+#             */
-/*   Updated: 2023/11/17 09:38:50 by nimai            ###   ########.fr       */
+/*   Updated: 2023/12/06 15:39:21 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,7 @@ char	*get_dest_path_wl_sign(char *cur, char *pwd, char *input, t_data *data)
 		if (chdir(cur) == -1)
 		{
 			data->return_val = 1;
-			return (error_built("cd", \
-					"failure to move to current directory\n"), NULL);
+			return (error_built("cd", MSG_CD_FAIL), NULL);
 		}
 		ret = ft_strdup(cur);
 	}

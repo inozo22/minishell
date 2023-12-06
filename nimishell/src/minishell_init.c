@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 18:22:41 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/11/24 18:54:06 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/12/06 15:43:48 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,23 +39,6 @@ char	*get_prompt(t_data *data)
 	free(user);
 	return (prompt);
 }
-
-/* void	set_path_list(t_data *data)
-{
-	int	i;
-
-	i = -1;
-	while (data->env[++i])
-	{
-		if (!ft_strncmp(data->env[i], "PATH=", 5))
-		{
-			data->path = ft_split(data->env[i] + 5, ':');
-			if (!data->path)
-				errors(ENOMEM, data);
-			break ;
-		}
-	} 
-} */
 
 /**
  * @note add checker to protect not numeric value

@@ -7,7 +7,7 @@ TODO: ~~Include a break in executer when cd is used in multiple pipes. It should
 TODO: In expansion, exclude NULLs in the cmd array and check nulls in redir to throw "ambiguous redirect" error
 TODO: empty _ env variable whe there are pipes
 TODO: Return value if error with input redirection
-TODO: Check heredoc expander call i array manually introduced, what for?
+TODO: Check leaks in dqwotes lexer
 
 ---------------------------------
 

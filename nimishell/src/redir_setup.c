@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 17:57:29 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/11/25 17:47:52 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/12/06 15:43:25 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static int	redir_last(int *tmp_stdio_fd, int *process_fd, int *pipe_fd)
 			return (-1);
 	}
 	if (process_fd[WRITE_END] == STDOUT_FILENO)
-	{	
+	{
 		if (dup2(tmp_stdio_fd[WRITE_END], STDOUT_FILENO) == -1)
 			return (-1);
 	}
@@ -51,7 +51,7 @@ static int	redir_last(int *tmp_stdio_fd, int *process_fd, int *pipe_fd)
 	return (0);
 }
 
-static int redir_middle(int *process_fd, int *pipe_fd)
+static int	redir_middle(int *process_fd, int *pipe_fd)
 {
 	if (process_fd[READ_END] != STDIN_FILENO)
 	{

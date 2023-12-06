@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
+/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:12:28 by nimai             #+#    #+#             */
-/*   Updated: 2023/12/06 12:18:06 by nimai            ###   ########.fr       */
+/*   Updated: 2023/12/06 15:39:06 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # define FLAGENV 0
 # define MSG_CD_CANT_ACCESS "cd: error retrieving current directory: \
 getcwd: cannot access parent directories: No such file or directory"
+# define MSG_CD_FAIL "failure to move to current directory\n"
 
 //# include <termios.h>
 

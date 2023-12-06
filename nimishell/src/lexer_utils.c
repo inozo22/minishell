@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 18:24:57 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/11/24 19:02:47 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/12/06 15:46:20 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	is_quote(char c)
 	static char	quotes = 0;
 
 	if (c == '\'' || c == '\"')
-	{	
+	{
 		if (quotes == 0)
 			quotes = c;
 		else if (quotes == c)
@@ -103,7 +103,7 @@ int	is_metacharacter(char *str)
  * @return 0 if there are no open quotes
  */
 int	check_quotes_in_string(char *str)
-{	
+{
 	int	qutoes_flag;
 
 	qutoes_flag = is_quote(*str);

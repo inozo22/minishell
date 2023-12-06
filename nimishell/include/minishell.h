@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 19:10:38 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/11/25 17:48:10 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/12/06 16:27:20 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,6 +167,14 @@ void		get_exit_status(t_data *data);
 //int		check_exit_status(int e_status, t_data *data);
 char	**set_path_list(t_data *data);
 
+// Executer_utils2
+
+
+
+// fill_cmd
+
+char	**fill_current_cmd(t_list *lst, int pos, t_data *data);
+
 // 	Redir_setup
 
 int		redir_setup(int pos, int cmd_number, t_data *data);
@@ -218,9 +226,10 @@ int		compose_expanded(char *expanded, char **str, int start, int end);
 int		is_special_expand(char *str, int ret);
 int		check_variable_len(char *str, int start, int quotes);
 
-//Redirect
+// heredoc
 
 //int		heredoc_read(char *eof, char **envp, pid_t pid);
-int		heredoc_read(char *eof, t_data *data);
+char	*heredoc_read(char *eof, t_data *data);
+int		heredoc_to_stdin(char *input);
 
 #endif
