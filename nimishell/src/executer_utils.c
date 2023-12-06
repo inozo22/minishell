@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 15:48:44 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/12/06 17:47:11 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/12/06 18:21:34 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static char	*expand_file(char *file, int type, t_data *data)
 {
 	int		i[3];
 	char	*string;
-	
+
 	string = file;
 	ft_bzero(i, 3 * sizeof(int));
 	if (type == REDIR_IN || type == REDIR_OUT)
@@ -73,9 +73,7 @@ static char	*expand_file(char *file, int type, t_data *data)
 int	get_iofiles_fd(int *fd, t_list *lst, int pos, t_data *data)
 {
 	char	*file_name;
-	
-	fd[0] = STDIN_FILENO;
-	fd[1] = STDOUT_FILENO;
+
 	while (lst && lst->cmd_pos == pos)
 	{
 		file_name = expand_file(lst->content, lst->type, data);

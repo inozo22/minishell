@@ -6,32 +6,13 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/12/06 17:51:03 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/12/06 19:05:46 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <sys/wait.h>
 #include <sys/types.h>//it's not necessary in POSIX.1
-
-/* int	get_heredoc_input(t_list *lst, int pos, t_data *data)
-{
-	char	*tmp_eof;
-
-	tmp_eof = NULL;
-	while (lst && lst->cmd_pos == pos)
-	{
-		if (lst->type == HERE_DOC)
-		{
-			tmp_eof = lst->content;
-			ft_printf("tmp_eof: %s\n", tmp_eof);
-		}
-		lst = lst->next;
-	}
-	if (tmp_eof && heredoc_read(tmp_eof, data))
-		return (1);
-	return (0);
-} */
 
 int	child_execution(char **cmd, char **path, t_data *data, int pos)
 {
@@ -56,12 +37,14 @@ int	child_execution(char **cmd, char **path, t_data *data, int pos)
 	exit(EXIT_FAILURE);
 }
 
-int	child(char **cmd, t_data *data, int pos)
+static int	child(char **cmd, t_data *data, int pos)
 {
 	int		is_builtin;
 	char	**path;
 
-	if (!cmd || !(**cmd))
+	if (!cmd[0])
+		exit(EXIT_SUCCESS);
+	if (!cmd[0][0])
 		exit(error_msg("", 1));
 	is_builtin = check_builtin(cmd, data);
 	if (is_builtin >= 0)
@@ -71,7 +54,7 @@ int	child(char **cmd, t_data *data, int pos)
 	exit(EXIT_FAILURE);
 }
 
-void	father(char **cmd, t_data *data, int pos)
+static void	father(char **cmd, t_data *data)
 {
 	free_list(cmd);
 	close(data->pipe_fd[WRITE_END]);
@@ -80,12 +63,6 @@ void	father(char **cmd, t_data *data, int pos)
 		close(data->process_fd[READ_END]);
 	if (data->process_fd[WRITE_END] != STDOUT_FILENO)
 		close(data->process_fd[WRITE_END]);
-	if (pos == data->cmd_nb)
-	{
-		dup2(data->tmp_stdio_fd[0], STDIN_FILENO);
-		dup2(data->tmp_stdio_fd[1], STDOUT_FILENO);
-		close(data->pipe_fd[READ_END]);
-	}
 }
 
 static int	fork_setup(char **cmd, t_data *data, int pos)
@@ -100,11 +77,12 @@ static int	fork_setup(char **cmd, t_data *data, int pos)
 		child(cmd, data, pos);
 	else
 	{
-		father(cmd, data, pos);
+		father(cmd, data);
 		if (pos == data->cmd_nb)
 		{
 			dup2(data->tmp_stdio_fd[0], STDIN_FILENO);
 			dup2(data->tmp_stdio_fd[1], STDOUT_FILENO);
+			close(data->pipe_fd[READ_END]);
 		}
 	}
 	return (0);
@@ -115,8 +93,35 @@ int	executer(t_list *cmd_list, t_data *data)
 	char	**cmd;
 	int		pos;
 
-	data->tmp_stdio_fd[0] = dup(STDIN_FILENO);
-	data->tmp_stdio_fd[1] = dup(STDOUT_FILENO);
+	if (set_fds(data) == 1)
+		return (-1);
+	while (cmd_list)
+	{
+		pos = cmd_list->cmd_pos;
+		if (get_iofiles_fd(data->process_fd, cmd_list, pos, data) \
+			|| get_heredoc_input(cmd_list, pos, data))
+		{
+			data->return_val = 1;
+			return (-1);
+		}
+		set_signal_handlers(0);
+		cmd = fill_current_cmd(cmd_list, pos, data);
+		update_last_executed_cmd(data, cmd);
+		if (fork_setup(cmd, data, pos) == -1)
+			return (-1);
+		while (cmd_list && cmd_list->cmd_pos == pos)
+			cmd_list = cmd_list->next;
+	}
+	return (0);
+}
+
+/* int	executer(t_list *cmd_list, t_data *data)
+{
+	char	**cmd;
+	int		pos;
+
+	if (set_fds(data) == 1)
+		return (-1);
 	while (cmd_list)
 	{
 		pos = cmd_list->cmd_pos;
@@ -137,4 +142,4 @@ int	executer(t_list *cmd_list, t_data *data)
 			cmd_list = cmd_list->next;
 	}
 	return (0);
-}
+} */

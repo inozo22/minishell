@@ -6,12 +6,26 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 16:03:23 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/12/06 17:07:27 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/12/06 18:25:31 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <sys/stat.h>
+
+int	set_fds(t_data *data)
+{
+	data->tmp_stdio_fd[0] = dup(STDIN_FILENO);
+	data->tmp_stdio_fd[1] = dup(STDOUT_FILENO);
+	if (data->tmp_stdio_fd[0] == -1 || data->tmp_stdio_fd[1] == -1)
+	{
+		perror(SH_NAME);
+		return (1);
+	}
+	data->process_fd[0] = STDIN_FILENO;
+	data->process_fd[1] = STDOUT_FILENO;
+	return (0);
+}
 
 int	check_is_directory(char *cmd)
 {
