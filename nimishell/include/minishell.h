@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 19:10:38 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/12/06 18:38:41 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/12/07 15:18:28 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ int		process_input(char *line_read, t_data *data);
 //	Lexer
 
 // int		lexer(char *input, t_list **token_list);
-int		lexer(char *input, t_list **token_list, t_data **data);//***//
+int		lexer(char *input, t_list **token_list, t_data *data);//***//
 int		is_quote(char c);
 
 //	Lexer_utils
@@ -227,6 +227,6 @@ int		check_variable_len(char *str, int start, int quotes);
 // heredoc
 
 //int		heredoc_read(char *eof, char **envp, pid_t pid);
-int	get_heredoc_input(t_list *lst, int pos, t_data *data);
+int		get_heredoc_input(t_list *lst, int pos, t_data *data);
 
 #endif
