@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 18:39:55 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/12/07 14:27:52 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/12/07 14:30:08 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,10 +121,7 @@ int	lexer(char *input, t_list **token_list, t_data *data)
 	input_tmp = ft_strdup(input);
 	ft_bzero(i, 3 * sizeof(int));
 	if (input_tmp[i[0]] == PIPE)
-	{
-		data->return_val = error_msg("|", 2);
-		return (-1);
-	}
+		return (data->return_val = error_msg("|", 2), -1);
 	input_tmp = dquote(input_tmp);
 	while (input_tmp[i[0]])
 	{
