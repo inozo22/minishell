@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:32:33 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/12/07 13:28:33 by nimai            ###   ########.fr       */
+/*   Updated: 2023/12/07 15:29:21 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,8 @@ int	process_input(char *line_read, t_data *data)
 	t_list	*cmd_list;
 	int		ret;
 
-	data->cmd_nb = lexer(line_read, &cmd_list, &data);
+	cmd_list = NULL;
+	data->cmd_nb = lexer(line_read, &cmd_list, data);
 	//DELETE
 	t_list *test = cmd_list;
 	ft_printf(COLOR_CYAN"Printing list"COLOR_RESET"\n");
