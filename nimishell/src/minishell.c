@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:32:33 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/12/07 11:10:23 by nimai            ###   ########.fr       */
+/*   Updated: 2023/12/07 13:28:33 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,9 @@ int	check_single_builtin(t_list *cmd_list, t_data *data)
 	cmd = NULL;
 	cmd = fill_current_cmd(cmd_list, 0, data);
 	if (!cmd || !*cmd)
-		return (-1);
+		return (data->return_val = 0, -1);
 	if (!**cmd)
-		return (127);
+		return (error_msg("", 1), data->return_val = 127, 127);
 	return_val = check_builtin(cmd, data);
 	free_list(cmd);
 	if (return_val >= 0)
@@ -80,6 +80,7 @@ int	check_single_builtin(t_list *cmd_list, t_data *data)
 int	process_input(char *line_read, t_data *data)
 {
 	t_list	*cmd_list;
+	int		ret;
 
 	data->cmd_nb = lexer(line_read, &cmd_list, &data);
 	//DELETE
@@ -94,13 +95,8 @@ int	process_input(char *line_read, t_data *data)
 	ft_printf("\n");
 	if (data->cmd_nb == -1)
 		return (1);
-	int ret = check_single_builtin(cmd_list, data);
-	ft_printf("ret: %d\n", ret);
-	if (data->cmd_nb == 0 && ret == 0)
-		return (ft_lstclear(&cmd_list, free), 0);
-	if (ret == 127)
-		return (ft_lstclear(&cmd_list, free), error_msg("", 1), 127);
-	if (ret == -1)
+	ret = check_single_builtin(cmd_list, data);
+	if ((data->cmd_nb == 0 && ret == 0) || ret == 127 || ret == -1)
 		return (ft_lstclear(&cmd_list, free), 0);
 	data->max_pid = 0;
 	executer(cmd_list, data);

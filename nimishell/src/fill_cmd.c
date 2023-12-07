@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 16:08:15 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/12/07 11:02:03 by nimai            ###   ########.fr       */
+/*   Updated: 2023/12/07 13:51:53 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,18 @@ void	obtain_cmd(char ***cmd, char *str, int *i)
 	i[0] = av_amount(*cmd);
 }
 
+char	**empty_cmd(void)
+{
+	char	**ret;
+
+	ret = (char **)ft_calloc(2, sizeof(char *));
+	if (!ret)
+		return (NULL);
+	ret[0] = ft_strdup("");
+	ret[1] = ft_strdup("\0");
+	return (ret);
+}
+
 /**
  * i[0]: i
  * i[1]: flag
@@ -95,21 +107,10 @@ char	**fill_current_cmd(t_list *lst, int pos, t_data *data)
 		{
 			expanded = expander(lst->content, data, i);
 			if (!*expanded && lst->type == QUOTE && i[0] == 0)
-			{
-				ft_printf("am i\n");
-				cmd = (char **)ft_calloc(2, sizeof(char *));
-				cmd[0] = ft_strdup("");
-				cmd[1] = ft_strdup("\0");
-				return (free(expanded), cmd);
-			}
+				return (free(expanded), empty_cmd());
+			obtain_cmd(&cmd, expanded, i);
+			free (expanded);
 		}
-		else
-		{
-			lst = lst->next;
-			continue ;
-		}
-		obtain_cmd(&cmd, expanded, i);
-		free (expanded);
 		lst = lst->next;
 	}
 	return (cmd);

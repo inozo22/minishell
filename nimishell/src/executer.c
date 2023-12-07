@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/12/06 19:05:46 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/12/07 13:23:31 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static int	child(char **cmd, t_data *data, int pos)
 	int		is_builtin;
 	char	**path;
 
-	if (!cmd[0])
+	if (!cmd || !cmd[0])
 		exit(EXIT_SUCCESS);
 	if (!cmd[0][0])
 		exit(error_msg("", 1));
