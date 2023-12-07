@@ -33,6 +33,12 @@ int	expand(char **str, int *pos, int quotes, t_data *data)
 	i[0] = *pos;
 	i[0] = check_variable_len(&(*str)[*pos], i[0], quotes);
 	expanded_var = is_expand(&(*str)[*pos], i[0] - *pos, data);
+	ft_printf("expanded_var: %s\n", expanded_var);
+	if (quotes && !expanded_var)
+	{
+		*pos = -1;
+		return (1);
+	}
 	*pos = compose_expanded(expanded_var, str, *pos, i[0]);
 	if (*str[0] == '\"' && (ft_strncmp(*str, "$\"", 2) || \
 	ft_strncmp(*str, "$ ", 2)))
@@ -44,6 +50,11 @@ int	expand(char **str, int *pos, int quotes, t_data *data)
 	return (0);
 }
 
+/**
+ * @param i[0] pos index
+ * @param i[1] flag
+ * @param i[2] variable count
+ */
 int	obtain_expansion(char **str, t_data *data, int *i)
 {
 	int	n;
@@ -64,11 +75,8 @@ int	obtain_expansion(char **str, t_data *data, int *i)
 				i[1] = 1;
 		}
 		else
-		{
-//			n++;
 			if (!i[1])
 				i[1] = 2;
-		}
 	}
 	if (quotes)
 		is_quote((*str)[n - 1]);

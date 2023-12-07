@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:32:33 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/12/07 16:46:08 by nimai            ###   ########.fr       */
+/*   Updated: 2023/12/07 18:13:35 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,14 +77,7 @@ int	check_single_builtin(t_list *cmd_list, t_data *data)
 	return (1);
 }
 
-int	process_input(char *line_read, t_data *data)
-{
-	t_list	*cmd_list;
-	int		ret;
-
-	cmd_list = NULL;
-	data->cmd_nb = lexer(line_read, &cmd_list, data);
-	//DELETE
+/* 	//DELETE
 	t_list *test = cmd_list;
 	ft_printf(COLOR_CYAN"Printing list"COLOR_RESET"\n");
 	while (test)
@@ -92,7 +85,17 @@ int	process_input(char *line_read, t_data *data)
 		ft_printf("Content: %s type: %d pos: %d\n", test->content, \
 					test->type, test->cmd_pos);
 		test = test->next;
-	}
+	} */
+
+/** 
+ */
+int	process_input(char *line_read, t_data *data)
+{
+	t_list	*cmd_list;
+	int		ret;
+
+	cmd_list = NULL;
+	data->cmd_nb = lexer(line_read, &cmd_list, data);
 	ft_printf("\n");
 	if (data->cmd_nb == -1)
 		return (1);
@@ -143,11 +146,9 @@ int	minishell(t_data *data)
 		}
 		get_exit_status(data);
 		line_read = my_free(line_read);
-		//DELETE
-		ft_printf(COLOR_BLUE"\nReturn val: %d\n"COLOR_RESET, data->return_val);
 		if (data->exit_status)
 			break ;
 	}
-	ft_printf("\nBye 🗑\n");
+	ft_printf("\nBye! (T-T)/\n");
 	return (rl_clear_history(), free(prompt), obtain_pwd_home(NULL, 99), 0);
 }

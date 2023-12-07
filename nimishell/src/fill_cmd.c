@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 16:08:15 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/12/07 16:46:03 by nimai            ###   ########.fr       */
+/*   Updated: 2023/12/07 18:08:54 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@ int	count_command(t_list *lst, int pos)
 			ret++;
 		lst = lst->next;
 	}
-	//DELETE
-	ft_printf("ret = %d\n", ret);
 	return (ret);
 }
 
@@ -91,8 +89,6 @@ char	**empty_cmd(void)
  * @return Should return empty string if $NONEXISTENT_VAR in quotes is found
  * i[0]: i
  * i[1]: flag
- * i[2]: type_flag//not use
- * i[3]: old type_flag//not use
  * i[2]: variable count
   */
 char	**fill_current_cmd(t_list *lst, int pos, t_data *data)
@@ -112,14 +108,17 @@ char	**fill_current_cmd(t_list *lst, int pos, t_data *data)
 		if (lst->type == WORD || lst->type == PIPE || lst->type == QUOTE)
 		{
 			expanded = expander(lst->content, data, i);
-			if (!*expanded && lst->type == QUOTE)
+			if ((!expanded || !*expanded) && lst->type == QUOTE)
 				return (free(expanded), empty_cmd());
 			obtain_cmd(&cmd, expanded, i);
 			free (expanded);
 		}
 		lst = lst->next;
 	}
-	//DELETE
+	return (cmd);
+}
+
+/* 	//DELETE
 	if (cmd)
 	{
 		ft_printf(COLOR_CYAN"Printing CMD"COLOR_RESET"\n");
@@ -127,6 +126,4 @@ char	**fill_current_cmd(t_list *lst, int pos, t_data *data)
 		while (cmd[++j])
 			ft_printf("Pos: %d, cmd[%d] = %s\n", pos, j, cmd[j]);
 		ft_printf("\n");
-	}
-	return (cmd);
-}
+	} */
