@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:18:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/12/06 12:12:32 by nimai            ###   ########.fr       */
+/*   Updated: 2023/12/07 15:20:13 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,13 +125,14 @@ char	**envp_strs_join(char *input, t_data *data)
  * @param **input "export", "ABC=abc". *data
  * @return 
  */
-int	built_export(char **input, t_data *data)
+int	built_export(char **input, t_data *data, int flag)
 {
 	char		**new_envp;
 	int			i;
 
 	new_envp = NULL;
-	data->return_val = 0;
+	if (!flag)
+		data->return_val = 0;
 	if (av_amount(input) == 1)
 	{
 		if (!output_export(data->env))

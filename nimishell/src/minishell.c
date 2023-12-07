@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:32:33 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/12/07 13:28:33 by nimai            ###   ########.fr       */
+/*   Updated: 2023/12/07 15:23:44 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	check_builtin(char **input, t_data *data)
 		return (-1);
 	update_last_executed_cmd(data, input);
 	if (!ft_strcmp(input[0], "export"))
-		return (built_export(input, data));
+		return (built_export(input, data, 0));
 	if (!ft_strcmp(input[0], "unset"))
 		return (built_unset(input, data));
 	if (!ft_strcmp(input[0], "exit"))
