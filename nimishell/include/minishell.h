@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 19:10:38 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/12/07 14:09:02 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/12/07 16:44:34 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,6 +227,6 @@ int		check_variable_len(char *str, int start, int quotes);
 // heredoc
 
 //int		heredoc_read(char *eof, char **envp, pid_t pid);
-int	get_heredoc_input(t_list *lst, int pos, t_data *data);
+int		get_heredoc_input(t_list *lst, int pos, t_data *data);
 
 #endif
