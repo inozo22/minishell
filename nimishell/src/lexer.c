@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer3.c                                           :+:      :+:    :+:   */
+/*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 18:39:55 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/12/06 15:55:54 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/12/07 14:27:52 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,41 +47,56 @@ static char	*dquote(char *input)
 }
 
 /**
- * @return -1 if there is an error
- * @param i[0] start index
- * @param i[1] end index
- * @param i[2] type
- * @param i[3] quotes flag
+ * Get start and end of the node and check contiguous metacharacters 
  */
-int	get_node(char *str, t_list **list, int max_pipe)
+static int	get_node_values(char *str, int *i)
 {
-	int		i[4];
-	char	*token;
-	t_list	*new_node;
-
 	ft_bzero(i, 4 * sizeof(int));
 	i[2] = is_metacharacter(str);
 	if (i[2] == INVALID)
 		return (-1);
 	if (i[2] != WORD && i[2] != QUOTE)
 		i[0]++;
-	if (i[2] == HERE_DOC || i[2] == APPEND \
-		|| (i[2] == REDIR_OUT && *(str + 1) == PIPE))
+	if (i[2] == HERE_DOC || i[2] == APPEND)
 		i[0]++;
 	while (ft_isspace(str[i[0]]))
 		i[0]++;
 	i[1] = i[0];
 	while (str[i[1]] && (is_quote(str[i[1]]) \
-			|| (is_metacharacter(str + i[1]) == WORD || is_metacharacter(str + i[1]) == QUOTE)))
+			|| (is_metacharacter(str + i[1]) == WORD \
+			|| is_metacharacter(str + i[1]) == QUOTE)))
 		i[1]++;
 	if (str[i[1]] == QUOTE || str[i[1]] == DOUBLE_QUOTE)
 		i[1]++;
+	return (i[1]);
+}
+
+/**
+ * @return -1 if there is an error
+ * @return 1 if there is a metacharacter after pipe
+ * @param i[0] start index
+ * @param i[1] end index
+ * @param i[2] type
+ * @param i[3] quotes flag
+ */
+static int	get_node(char *str, t_list **list, t_data *data, int max_pipe)
+{
+	int		i[4];
+	char	*token;
+	t_list	*new_node;
+
+	get_node_values(str, i);
 	if (i[1] == i[0])
 	{
-		//DELETE and set error message
 		if (i[2] == PIPE && str[i[1]] != PIPE)
 			return (1);
-		ft_printf("contiguous metacharacters\n");
+		if ((str[i[1]] == REDIR_IN || str[i[1]] == REDIR_OUT) \
+			&& str[i[1]] == str[i[1] + 1])
+			token = ft_substr(str, i[0], 2);
+		else
+			token = ft_substr(str, i[0], 1);
+		data->return_val = error_msg(token, 2);
+		free(token);
 		return (-1);
 	}
 	token = ft_substr(str, i[0], i[1] - i[0]);
@@ -98,17 +113,16 @@ int	get_node(char *str, t_list **list, int max_pipe)
  * @param i[2] max pipe
  * @note invalid (, ), ;, \, *
  */
-int	lexer(char *input, t_list **token_list, t_data **data)
+int	lexer(char *input, t_list **token_list, t_data *data)
 {
 	int		i[3];
 	char	*input_tmp;
 
-	*token_list = NULL;
 	input_tmp = ft_strdup(input);
 	ft_bzero(i, 3 * sizeof(int));
 	if (input_tmp[i[0]] == PIPE)
 	{
-		(*data)->return_val = error_msg("|", 2);
+		data->return_val = error_msg("|", 2);
 		return (-1);
 	}
 	input_tmp = dquote(input_tmp);
@@ -118,7 +132,7 @@ int	lexer(char *input, t_list **token_list, t_data **data)
 		{
 			if (input_tmp[i[0]] == PIPE)
 				i[2]++;
-			i[1] = get_node(input_tmp + i[0], token_list, i[2]);
+			i[1] = get_node(input_tmp + i[0], token_list, data, i[2]);
 			if (i[1] == -1)
 				return (-1);
 			i[0] += i[1];
@@ -132,7 +146,8 @@ int	lexer(char *input, t_list **token_list, t_data **data)
 /* 	t_list *tmp = *token_list;
 	while (tmp)
 	{
-		printf("%sLEXER: content: %s, type: %d, pos: %d%s\n", COLOR_GREEN, tmp->content, tmp->type, tmp->cmd_pos, COLOR_RESET);
+		printf("%sLEXER: content: %s, type: %d, pos: %d%s\n", COLOR_GREEN, \
+				tmp->content, tmp->type, tmp->cmd_pos, COLOR_RESET);
 		tmp = tmp->next;
 	} */
 
