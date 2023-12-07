@@ -49,9 +49,9 @@ int	obtain_expansion(char **str, t_data *data, int *i)
 	int	n;
 	int	quotes;
 
-	n = -1;
+	n = 0;
 	quotes = 0;
-	while ((*str)[++n])
+	while ((*str) && (*str)[n])
 	{
 		quotes = is_quote((*str)[n]);
 		if ((*str)[n] == '$' && quotes != '\'')
@@ -65,8 +65,11 @@ int	obtain_expansion(char **str, t_data *data, int *i)
 				i[1] = 1;
 		}
 		else
+		{
+			n++;
 			if (!i[1])
 				i[1] = 2;
+		}
 	}
 	return (1);
 }

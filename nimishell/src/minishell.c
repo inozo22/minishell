@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:32:33 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/12/06 18:28:01 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/12/07 16:12:29 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,8 @@ int	process_input(char *line_read, t_data *data)
 {
 	t_list	*cmd_list;
 
-	data->cmd_nb = lexer(line_read, &cmd_list, &data);
+	cmd_list = NULL;
+	data->cmd_nb = lexer(line_read, &cmd_list, data);
 	//DELETE
 	t_list *test = cmd_list;
 	ft_printf(COLOR_CYAN"Printing list"COLOR_RESET"\n");
@@ -138,7 +139,7 @@ int	minishell(t_data *data)
 		get_exit_status(data);
 		line_read = my_free(line_read);
 		//DELETE
-		ft_printf(COLOR_BLUE"\nReturn val: %d\n", data->return_val);
+		ft_printf(COLOR_BLUE"\nReturn val: %d\n"COLOR_RESET, data->return_val);
 		if (data->exit_status)
 			break ;
 	}

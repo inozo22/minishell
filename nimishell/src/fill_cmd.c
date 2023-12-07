@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 16:08:15 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/12/06 16:08:32 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/12/06 19:20:58 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,13 @@ int	count_command(t_list *lst, int pos)
 	ret = 0;
 	while (lst && lst->cmd_pos == pos)
 	{
-		if (lst->type == WORD || lst->type == PIPE || lst->type == QUOTE)
+		if (lst->type == WORD || lst->type == PIPE || \
+			lst->type == QUOTE || lst->type == ENV_VAR)
 			ret++;
 		lst = lst->next;
 	}
+	//DELETE
+	ft_printf("ret = %d\n", ret);
 	return (ret);
 }
 
@@ -71,6 +74,9 @@ void	obtain_cmd(char ***cmd, char *str, int *i)
 }
 
 /**
+ * @authors @nimai, @bde-mada
+ * @return Should return NULL pointer in cmd[0] if $NONEXISTENT_VAR is found.
+ * @return Should return empty string if $NONEXISTENT_VAR in quotes is found
  * i[0]: i
  * i[1]: flag
  * i[2]: type_flag//not use
@@ -79,9 +85,9 @@ void	obtain_cmd(char ***cmd, char *str, int *i)
   */
 char	**fill_current_cmd(t_list *lst, int pos, t_data *data)
 {
-	char		**cmd;
-	char		*expanded;
-	int			i[3];
+	char	**cmd;
+	char	*expanded;
+	int		i[3];
 
 	ft_bzero(i, 3 * sizeof(int));
 	i[0] = count_command(lst, pos);
@@ -92,7 +98,10 @@ char	**fill_current_cmd(t_list *lst, int pos, t_data *data)
 	while (lst && lst->cmd_pos == pos)
 	{
 		if (lst->type == WORD || lst->type == PIPE || lst->type == QUOTE)
+		{
 			expanded = expander(lst->content, data, i);
+			ft_printf("expanded = \"%s\"\n", expanded, NULL);
+		}
 		else
 		{
 			lst = lst->next;
@@ -102,13 +111,14 @@ char	**fill_current_cmd(t_list *lst, int pos, t_data *data)
 		free (expanded);
 		lst = lst->next;
 	}
-	return (cmd);
-}
-/* 	//DELETE
+	//DELETE
 	if (cmd)
 	{
-		ft_printf(COLOR_CYAN"Printing cmd"COLOR_RESET"\n");
+		ft_printf(COLOR_CYAN"Printing CMD"COLOR_RESET"\n");
 		int j = -1;
 		while (cmd[++j])
-			ft_printf("cmd[%d] = %s\n", j, cmd[j]);
-	} */
+			ft_printf("Pos: %d, cmd[%d] = %s\n", pos, j, cmd[j]);
+		ft_printf("\n");
+	}
+	return (cmd);
+}

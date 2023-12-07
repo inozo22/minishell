@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 19:10:38 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/12/06 18:38:41 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/12/07 14:09:02 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ int		process_input(char *line_read, t_data *data);
 //	Lexer
 
 // int		lexer(char *input, t_list **token_list);
-int		lexer(char *input, t_list **token_list, t_data **data);//***//
+int		lexer(char *input, t_list **token_list, t_data *data);//***//
 int		is_quote(char c);
 
 //	Lexer_utils
