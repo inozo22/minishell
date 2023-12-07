@@ -88,6 +88,7 @@ void	get_exit_status(t_data *data)
 	int	wait_ret;
 	int	e_status;
 
+	wait_ret = -1;
 	while (1)
 	{
 		if (g_return_val == 1)

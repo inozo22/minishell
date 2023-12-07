@@ -33,7 +33,6 @@ int	expand(char **str, int *pos, int quotes, t_data *data)
 	i[0] = *pos;
 	i[0] = check_variable_len(&(*str)[*pos], i[0], quotes);
 	expanded_var = is_expand(&(*str)[*pos], i[0] - *pos, data);
-	ft_printf("expanded_var: %s\n", expanded_var);
 	if (quotes && !expanded_var)
 	{
 		*pos = -1;
@@ -94,7 +93,6 @@ char	*expander(char *str, t_data *data, int *i)
 	c = -1;
 	while (tab[++c])
 	{
-		ft_printf("tab[%d]: %s\n", c, tab[c]);
 		if (ft_strcmp(tab[c], "~"))
 		{
 			if (!obtain_expansion(&tab[c], data, i))

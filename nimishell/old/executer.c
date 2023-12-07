@@ -35,8 +35,6 @@ char	*get_cmd_path(char *cmd, char **path)
 		free(cmd_path);
 		cmd_path = NULL;
 	}
-	//DELETE
-	ft_printf("cmd_path: %s\n\n", cmd_path);
 	return (cmd_path);
 }
 

@@ -50,7 +50,10 @@ static int	child(char **cmd, t_data *data, int pos, t_list *head)
 		exit(error_msg("", 1));
 	is_builtin = check_builtin(cmd, data);
 	if (is_builtin >= 0)
-		return (free_list(cmd), is_builtin);
+	{
+		free_list(cmd);
+		exit(is_builtin);
+	}
 	child_execution(cmd, data, pos, head);
 	exit(EXIT_FAILURE);
 }

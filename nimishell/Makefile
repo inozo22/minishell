@@ -33,7 +33,7 @@ CFLAGS		= -Wall -Wextra -Werror -Wpedantic
 OS			= $(shell uname)
 
 #Optimization and valgrind debugging flags:
-DEBUG			:= -g3 -O0 -fsanitize=address 
+DEBUG			:= -g3 -O0 #-fsanitize=address 
 #change -O0 with -O1 or -O2 for faster execution but worse info
 
 LDFLAGS		= $(addprefix -L, $(LIBS_DIR))

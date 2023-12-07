@@ -85,9 +85,10 @@ int	check_single_builtin(t_list *cmd_list, t_data *data)
 		ft_printf("Content: %s type: %d pos: %d\n", test->content, \
 					test->type, test->cmd_pos);
 		test = test->next;
-	} */
+	} 
+	ft_printf("\n");*/
 
-/** 
+/**
  */
 int	process_input(char *line_read, t_data *data)
 {
@@ -95,14 +96,13 @@ int	process_input(char *line_read, t_data *data)
 	int		ret;
 
 	cmd_list = NULL;
+	data->max_pid = 0;
 	data->cmd_nb = lexer(line_read, &cmd_list, data);
-	ft_printf("\n");
 	if (data->cmd_nb == -1)
 		return (1);
 	ret = check_single_builtin(cmd_list, data);
 	if ((data->cmd_nb == 0 && ret == 0) || ret == 127 || ret == -1)
 		return (ft_lstclear(&cmd_list, free), 0);
-	data->max_pid = 0;
 	executer(cmd_list, data);
 	ft_lstclear(&cmd_list, free);
 	return (0);

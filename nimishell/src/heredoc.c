@@ -80,7 +80,11 @@ int	heredoc_to_stdin(char *input)
 {
 	pid_t	pid;
 	int		fd[2];
+	char	*tmp;
 
+	tmp = input;
+	input = ft_strjoin(input, "\n");
+	free(tmp);
 	if (!input || pipe(fd) == -1)
 		return (1);
 	pid = fork();
@@ -90,6 +94,7 @@ int	heredoc_to_stdin(char *input)
 	{
 		close(fd[READ_END]);
 		write(fd[WRITE_END], input, ft_strlen(input));
+		free(input);
 		close(fd[WRITE_END]);
 		exit(0);
 	}
@@ -101,13 +106,23 @@ int	heredoc_to_stdin(char *input)
 	return (0);
 }
 
+void	free_strings(char **list)
+{
+	free(list[0]);
+	free(list[1]);
+	free(list[2]);
+	list[0] = NULL;
+	list[1] = NULL;
+	list[2] = NULL;
+	free(list);
+}
+
 /**
  * @note 231117nimai: I think it's accetable leave g_return_val 
  * 		here although with new correction.
  * @param strings[0] = gnl input
  * @param strings[1] = expanded
  * @param strings[2] = tmp input
- * @param strings[3] = NULL
   */
 char	*heredoc_read(char *eof, t_data *data)
 {
@@ -119,9 +134,9 @@ char	*heredoc_read(char *eof, t_data *data)
 	input = NULL;
 	while (1)
 	{
-		strings = ft_calloc(4, sizeof(char *));
+		strings = ft_calloc(3, sizeof(char *));
 		if (g_return_val == 1)
-			return (free_list(strings), NULL);
+			return (free_strings(strings), NULL);
 		write(1, "> ", 2);
 		strings[0] = get_next_line(STDIN_FILENO, 0);
 		if (strings[0])
@@ -131,9 +146,9 @@ char	*heredoc_read(char *eof, t_data *data)
 		strings[1] = expander(strings[0], data, i);
 		strings[2] = input;
 		input = ft_strjoin_many(3, input, "\n", strings[1]);
-		free_list(strings);
+		free_strings(strings);
 	}
-	free_list(strings);
+	free_strings(strings);
 	get_next_line(STDIN_FILENO, 1);
 	return (input);
 }
