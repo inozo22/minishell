@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 15:48:45 by nimai             #+#    #+#             */
-/*   Updated: 2023/12/06 16:02:26 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/12/07 13:58:30 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,9 +109,8 @@ char	**split_quotes(char *str)
 		i[2] = is_quote(str[i[0]]);
 		if (i[2])
 			i[3]++;
-		while (str[i[3]] && ((i[2] && str[i[3]] != i[2]) || \
-		(!i[2] && str[i[3] + 1] && str[i[3] + 1] != '\'' && \
-		str[i[3] + 1] != '\"')))
+		while (str[i[3]] && ((i[2] && str[i[3]] != i[2]) || (!i[2] && str[i[3] \
+		+ 1] && str[i[3] + 1] != '\'' && str[i[3] + 1] != '\"')))
 			i[3]++;
 		ret[i[1]] = ft_substr(str, i[0], i[3] - i[0] + 1);
 		is_quote(str[i[3]]);
@@ -120,3 +119,34 @@ char	**split_quotes(char *str)
 	}
 	return (ret);
 }
+
+// char	**split_quotes(char *str)
+// {
+// 	char	**ret;
+// 	int		len;
+// 	int		i[4];
+
+// 	len = amount_quotes(str);
+// 	ret = (char **)ft_calloc(len + 1, sizeof(char *));
+// 	if (!ret)
+// 		return (NULL);
+// 	ft_bzero(i, 4 * sizeof(int));
+// 	while (i[3] < (int)ft_strlen(str))
+// 	{
+// 		i[0] = i[3];
+// 		i[2] = is_quote(str[i[0]]);
+// 		if (i[2])
+// 			i[3]++;
+// 		while (str[i[3]] && ((i[2] && str[i[3]] != i[2]) || (!i[2] && str[i[3] \
+// 		+ 1] && str[i[3] + 1] != '\'' && str[i[3] + 1] != '\"')))
+// 			i[3]++;
+// 		// if ((i[3] - i[0] + 1) >= 0 && ((i[3] - i[0] + 1)) > 0)
+// 			ret[i[1]] = ft_substr(str, i[0], i[3] - i[0] + 1);
+// 		// else
+// 		// 	ret[i[1]] = ft_strdup("");
+// 		is_quote(str[i[3]]);
+// 		i[3]++;
+// 		i[1]++;
+// 	}
+// 	return (ret);
+// }

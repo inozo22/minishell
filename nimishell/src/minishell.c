@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:32:33 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/12/07 16:12:29 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/12/07 16:46:08 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,11 @@ int	check_builtin(char **input, t_data *data)
 {
 	char	*lower_input;
 
-	if (!input[0])
+	if (!input || !input[0])
 		return (-1);
 	update_last_executed_cmd(data, input);
 	if (!ft_strcmp(input[0], "export"))
-		return (built_export(input, data));
+		return (built_export(input, data, 0));
 	if (!ft_strcmp(input[0], "unset"))
 		return (built_unset(input, data));
 	if (!ft_strcmp(input[0], "exit"))
@@ -60,9 +60,12 @@ int	check_single_builtin(t_list *cmd_list, t_data *data)
 	char	**cmd;
 	int		return_val;
 
+	cmd = NULL;
 	cmd = fill_current_cmd(cmd_list, 0, data);
-	if (!cmd)
-		return (-1);
+	if (!cmd || !*cmd)
+		return (data->return_val = 0, -1);
+	if (!**cmd)
+		return (error_msg("", 1), data->return_val = 127, 127);
 	return_val = check_builtin(cmd, data);
 	free_list(cmd);
 	if (return_val >= 0)
@@ -77,6 +80,7 @@ int	check_single_builtin(t_list *cmd_list, t_data *data)
 int	process_input(char *line_read, t_data *data)
 {
 	t_list	*cmd_list;
+	int		ret;
 
 	cmd_list = NULL;
 	data->cmd_nb = lexer(line_read, &cmd_list, data);
@@ -88,11 +92,12 @@ int	process_input(char *line_read, t_data *data)
 		ft_printf("Content: %s type: %d pos: %d\n", test->content, \
 					test->type, test->cmd_pos);
 		test = test->next;
-	} 
+	}
 	ft_printf("\n");
 	if (data->cmd_nb == -1)
 		return (1);
-	if (data->cmd_nb == 0 && check_single_builtin(cmd_list, data) == 0)
+	ret = check_single_builtin(cmd_list, data);
+	if ((data->cmd_nb == 0 && ret == 0) || ret == 127 || ret == -1)
 		return (ft_lstclear(&cmd_list, free), 0);
 	data->max_pid = 0;
 	executer(cmd_list, data);

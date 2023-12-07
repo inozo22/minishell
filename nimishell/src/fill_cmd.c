@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 16:08:15 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/12/06 19:20:58 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/12/07 16:46:03 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,18 @@ void	obtain_cmd(char ***cmd, char *str, int *i)
 	i[0] = av_amount(*cmd);
 }
 
+char	**empty_cmd(void)
+{
+	char	**ret;
+
+	ret = (char **)ft_calloc(2, sizeof(char *));
+	if (!ret)
+		return (NULL);
+	ret[0] = ft_strdup("");
+	ret[1] = ft_strdup("\0");
+	return (ret);
+}
+
 /**
  * @authors @nimai, @bde-mada
  * @return Should return NULL pointer in cmd[0] if $NONEXISTENT_VAR is found.
@@ -100,15 +112,11 @@ char	**fill_current_cmd(t_list *lst, int pos, t_data *data)
 		if (lst->type == WORD || lst->type == PIPE || lst->type == QUOTE)
 		{
 			expanded = expander(lst->content, data, i);
-			ft_printf("expanded = \"%s\"\n", expanded, NULL);
+			if (!*expanded && lst->type == QUOTE)
+				return (free(expanded), empty_cmd());
+			obtain_cmd(&cmd, expanded, i);
+			free (expanded);
 		}
-		else
-		{
-			lst = lst->next;
-			continue ;
-		}
-		obtain_cmd(&cmd, expanded, i);
-		free (expanded);
 		lst = lst->next;
 	}
 	//DELETE

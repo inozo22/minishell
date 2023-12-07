@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:12:28 by nimai             #+#    #+#             */
-/*   Updated: 2023/12/06 15:39:06 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/12/07 15:21:15 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int			built_pwd(t_data *data);
 // int			built_echo(char **input, t_data *data);
 int			built_echo(char **input, t_data *data);
 int			built_cd(char **input, t_data *data);
-int			built_export(char **input, t_data *data);
+int			built_export(char **input, t_data *data, int flag);
 // int			built_env(char **input, t_data *data);
 int			built_env(char **input, t_data *data);
 int			built_unset(char **input, t_data *data);
