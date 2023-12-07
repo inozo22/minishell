@@ -44,7 +44,7 @@ static int	child(char **cmd, t_data *data, int pos, t_list *head)
 {
 	int		is_builtin;
 
-	if (!cmd[0])
+	if (!cmd || !cmd[0])
 		exit(EXIT_SUCCESS);
 	if (!cmd[0][0])
 		exit(error_msg("", 1));
