@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 16:08:15 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/12/07 13:51:53 by nimai            ###   ########.fr       */
+/*   Updated: 2023/12/07 16:06:33 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ char	**fill_current_cmd(t_list *lst, int pos, t_data *data)
 		if (lst->type == WORD || lst->type == PIPE || lst->type == QUOTE)
 		{
 			expanded = expander(lst->content, data, i);
-			if (!*expanded && lst->type == QUOTE && i[0] == 0)
+			if (!*expanded && lst->type == QUOTE)
 				return (free(expanded), empty_cmd());
 			obtain_cmd(&cmd, expanded, i);
 			free (expanded);

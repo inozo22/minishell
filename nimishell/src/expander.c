@@ -49,8 +49,8 @@ int	obtain_expansion(char **str, t_data *data, int *i)
 	int	n;
 	int	quotes;
 
-	n = 0;
-	while (n >= 0 && *str && (*str)[n])
+	n = -1;
+	while (*str && (*str)[++n])
 	{
 		quotes = is_quote((*str)[n]);
 		if ((*str)[n] == '$' && quotes != '\'')
@@ -62,10 +62,9 @@ int	obtain_expansion(char **str, t_data *data, int *i)
 				i[1] = 5;
 			if (i[2] == 2 && quotes)
 				i[1] = 1;
-			n -= 1;
 		}
 		else
-			if (n++ && !i[1])
+			if (!i[1])
 				i[1] = 2;
 	}
 	if (quotes)
@@ -84,6 +83,7 @@ char	*expander(char *str, t_data *data, int *i)
 	c = -1;
 	while (tab[++c])
 	{
+		ft_printf("tab[%d]: %s\n", c, tab[c]);
 		if (ft_strcmp(tab[c], "~"))
 		{
 			if (!obtain_expansion(&tab[c], data, i))
@@ -98,3 +98,35 @@ char	*expander(char *str, t_data *data, int *i)
 	}
 	return (free_list(tab), ret);
 }
+
+// int	obtain_expansion(char **str, t_data *data, int *i)
+// {
+// 	int	n;
+// 	int	quotes;
+
+// 	n = 0;
+// 	while (n >= 0 && *str && (*str)[n])
+// 	{
+// 		quotes = is_quote((*str)[n]);
+// 		ft_printf("(*str)[%d]: %s\n", n, &(*str)[n]);
+// 		if ((*str)[n] == '$' && quotes != '\'')
+// 		{
+// 			++i[2];
+// 			if (expand(str, &n, quotes, data))
+// 				return (i[1] = 99, 0);
+// 			if (i[2] == 1)
+// 				i[1] = 5;
+// 			if (i[2] == 2 && quotes)
+// 				i[1] = 1;
+// 			ft_printf("(*str)[%d]: %s\n", n, &(*str)[n]);
+// 			// n -= 1;
+// 		}
+// 		else
+// 			if (n++ && !i[1])
+// 				i[1] = 2;
+// 		ft_printf("n: %d\n", n);
+// 	}
+// 	if (quotes)
+// 		is_quote((*str)[n - 1]);
+// 	return (1);
+// }
