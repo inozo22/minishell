@@ -129,7 +129,7 @@ char	*heredoc_read(char *eof, t_data *data)
 		if (!strings[0] || !ft_strcmp(eof, strings[0]))
 			break ;
 		strings[1] = expander(strings[0], data, i);
-		strings[2] = strings[3];
+		strings[2] = input;
 		input = ft_strjoin_many(3, input, "\n", strings[1]);
 		free_list(strings);
 	}
