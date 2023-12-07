@@ -65,7 +65,7 @@ int	obtain_expansion(char **str, t_data *data, int *i)
 		}
 		else
 		{
-			n++;
+//			n++;
 			if (!i[1])
 				i[1] = 2;
 		}
