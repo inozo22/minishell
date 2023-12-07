@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 12:49:14 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/11/27 14:44:18 by nimai            ###   ########.fr       */
+/*   Updated: 2023/12/07 10:49:55 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	update_last_executed_cmd(t_data *data, char **input)
 	char	*cmd;
 
 	cmd = NULL;
-	if (!input || !(*input))
+	if (!input || !(*input) || !(**input))
 		cmd = ft_strdup(" ");
 	else if (ft_strchr(input[av_amount(input) - 1], '='))
 	{

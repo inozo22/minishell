@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 16:08:15 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/12/06 16:08:32 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/12/07 11:02:03 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,17 @@ char	**fill_current_cmd(t_list *lst, int pos, t_data *data)
 	while (lst && lst->cmd_pos == pos)
 	{
 		if (lst->type == WORD || lst->type == PIPE || lst->type == QUOTE)
+		{
 			expanded = expander(lst->content, data, i);
+			if (!*expanded && lst->type == QUOTE && i[0] == 0)
+			{
+				ft_printf("am i\n");
+				cmd = (char **)ft_calloc(2, sizeof(char *));
+				cmd[0] = ft_strdup("");
+				cmd[1] = ft_strdup("\0");
+				return (free(expanded), cmd);
+			}
+		}
 		else
 		{
 			lst = lst->next;

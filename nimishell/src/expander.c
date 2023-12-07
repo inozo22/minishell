@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expanser2.c                                        :+:      :+:    :+:   */
+/*   expanser.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -49,11 +49,12 @@ int	obtain_expansion(char **str, t_data *data, int *i)
 	int	n;
 	int	quotes;
 
-	n = -1;
+	n = 0;
 	quotes = 0;
-	while ((*str)[++n])
+	while (n >= 0 && *str && (*str)[n])
 	{
 		quotes = is_quote((*str)[n]);
+		// ft_printf("str: %s quotes: %d\n", &(*str)[n], quotes);
 		if ((*str)[n] == '$' && quotes != '\'')
 		{
 			++i[2];
@@ -63,11 +64,17 @@ int	obtain_expansion(char **str, t_data *data, int *i)
 				i[1] = 5;
 			if (i[2] == 2 && quotes)
 				i[1] = 1;
+			n -= 1;
 		}
 		else
+		{
+			n++;
 			if (!i[1])
 				i[1] = 2;
+		}
 	}
+	if (quotes)
+		is_quote((*str)[n - 1]);
 	return (1);
 }
 
@@ -96,3 +103,108 @@ char	*expander(char *str, t_data *data, int *i)
 	}
 	return (free_list(tab), ret);
 }
+
+
+// /* ************************************************************************** */
+// /*                                                                            */
+// /*                                                        :::      ::::::::   */
+// /*   expanser2.c                                        :+:      :+:    :+:   */
+// /*                                                    +:+ +:+         +:+     */
+// /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
+// /*                                                +#+#+#+#+#+   +#+           */
+// /*   Created: 2023/08/10 10:32:20 by nimai             #+#    #+#             */
+// /*   Updated: 2023/08/10 10:32:20 by nimai            ###   ########.fr       */
+// /*                                                                            */
+// /* ************************************************************************** */
+
+// #include "minishell.h"
+
+// char	*tilde_expansion(char *tilde, t_data *data)
+// {
+// 	char	*ret;
+
+// 	ret = get_env(data->env, "HOME");
+// 	if (!ret)
+// 		ret = obtain_pwd_home(data, 2);
+// 	my_free(tilde);
+// 	return (ret);
+// }
+
+// int	expand(char **str, int *pos, int quotes, t_data *data)
+// {
+// 	int		i[2];
+// 	char	*expanded_var;
+
+// 	expanded_var = NULL;
+// 	ft_bzero(i, 2 * sizeof(int));
+// 	i[0] = *pos;
+// 	i[0] = check_variable_len(&(*str)[*pos], i[0], quotes);
+// 	expanded_var = is_expand(&(*str)[*pos], i[0] - *pos, data);
+// 	*pos = compose_expanded(expanded_var, str, *pos, i[0]);
+// 	if (*str[0] == '\"' && (ft_strncmp(*str, "$\"", 2) || \
+// 	ft_strncmp(*str, "$ ", 2)))
+// 		*pos += 1;
+// 	if (*pos == -9)
+// 		return (1);
+// 	if (!(*str))
+// 		return (1);
+// 	return (0);
+// }
+
+// int	obtain_expansion(char **str, t_data *data, int *i)
+// {
+// 	int	n;
+// 	int	quotes;
+
+// 	n = 0;
+// 	quotes = 0;
+// 	while ((*str) && (*str)[n])
+// 	{
+// 		quotes = is_quote((*str)[n]);
+// 		if ((*str)[n] == '$' && quotes != '\'')
+// 		{
+// 			++i[2];
+// 			if (expand(str, &n, quotes, data))
+// 				return (i[1] = 99, 0);
+// 			if (i[2] == 1)
+// 				i[1] = 5;
+// 			if (i[2] == 2 && quotes)
+// 				i[1] = 1;
+// 			n -= 1;
+// 		}
+// 		else
+// 		{
+// 			n++;
+// 			if (!i[1])
+// 				i[1] = 2;
+// 		}
+// 	}
+// 	return (1);
+// }
+
+// char	*expander(char *str, t_data *data, int *i)
+// {
+// 	int		c;
+// 	char	**tab;
+// 	char	*ret;
+
+// 	ret = NULL;
+// 	ft_printf("str: %s\n", str);
+// 	tab = split_quotes(str);
+// 	c = -1;
+// 	while (*tab && tab[++c])
+// 	{
+// 		if (ft_strcmp(tab[c], "~"))
+// 		{
+// 			if (!obtain_expansion(&tab[c], data, i))
+// 			{
+// 				free_list(tab);
+// 				return (free (ret), NULL);
+// 			}
+// 		}
+// 		else
+// 			tab[c] = tilde_expansion(tab[c], data);
+// 		ret = arrange_str(tab, ret, c);
+// 	}
+// 	return (free_list(tab), ret);
+// }
