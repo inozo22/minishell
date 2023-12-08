@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 12:44:12 by nimai             #+#    #+#             */
-/*   Updated: 2023/10/12 11:20:30 by nimai            ###   ########.fr       */
+/*   Updated: 2023/12/08 13:53:22 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ int	output_export(char **env)
 	tmp_env = env;
 	list = NULL;
 	if (!tmp_env)
-		return (printf("Error: failure obtain env\n"), 0);
+		return (ft_printf("Error: failure obtain env\n"), 0);
 	list = fill_list(tmp_env, list);
 	if (!list)
 		return (0);

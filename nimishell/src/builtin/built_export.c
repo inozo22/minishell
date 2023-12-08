@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:18:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/12/07 15:40:12 by nimai            ###   ########.fr       */
+/*   Updated: 2023/12/08 13:53:40 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ int	built_export(char **input, t_data *data, int flag)
 	if (av_amount(input) == 1)
 	{
 		if (!output_export(data->env))
-			return (printf("Error: output_export\n"), 1);
+			return (ft_printf("Error: output_export\n"), 1);
 		return (0);
 	}
 	i = 0;
@@ -146,7 +146,7 @@ int	built_export(char **input, t_data *data, int flag)
 		{
 			new_envp = envp_strs_join(input[i], data);
 			if (!new_envp)
-				return (printf("ERROR: Line: %d\n", __LINE__), 1);
+				return (ft_printf("ERROR: Line: %d\n", __LINE__), 1);
 			data->env = new_envp;
 		}
 		else

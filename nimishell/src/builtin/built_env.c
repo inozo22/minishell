@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 09:50:16 by nimai             #+#    #+#             */
-/*   Updated: 2023/12/06 12:13:12 by nimai            ###   ########.fr       */
+/*   Updated: 2023/12/08 13:48:13 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	built_env(char **input, t_data *data)
 				"with no options or arguments are required"), 1);
 	tmp_env = data->env;
 	if (!tmp_env)
-		return (printf("ERROR: Line: %d\n", __LINE__), 0);
+		return (ft_printf("ERROR: Line: %d\n", __LINE__), 0);
 	i = 0;
 	len = av_amount((char **)tmp_env);
 	while (i < len)
