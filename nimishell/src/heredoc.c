@@ -102,8 +102,7 @@ int	heredoc_to_stdin(char *input)
 	close(fd[WRITE_END]);
 	dup2(fd[READ_END], STDIN_FILENO);
 	close(fd[READ_END]);
-	free(input);
-	return (0);
+	return (free(input), 0);
 }
 
 void	free_strings(char **list)
