@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 18:39:55 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/12/08 11:59:42 by nimai            ###   ########.fr       */
+/*   Updated: 2023/12/08 12:05:44 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ int	lexer(char *input, t_list **token_list, t_data *data)
 				i[2]++;
 			i[1] = get_node(input_tmp + i[0], token_list, data, i[2]);
 			if (i[1] == -1)
-				return (-1);
+				return (free(input_tmp), -1);
 			i[0] += i[1];
 		}
 		else
