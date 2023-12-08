@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:32:33 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/12/07 18:13:35 by nimai            ###   ########.fr       */
+/*   Updated: 2023/12/08 12:17:57 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,10 @@ int	check_single_builtin(t_list *cmd_list, t_data *data)
 	if (!cmd || !*cmd)
 		return (data->return_val = 0, -1);
 	if (!**cmd)
+	{
+		free_list(cmd);
 		return (error_msg("", 1), data->return_val = 127, 127);
+	}
 	return_val = check_builtin(cmd, data);
 	free_list(cmd);
 	if (return_val >= 0)
