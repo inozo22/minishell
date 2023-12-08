@@ -8,7 +8,6 @@ TODO: empty _ env variable whe there are pipes
 
 TODO: Check leaks in dquotes lexer
 TODO: SEGFAULT when non existing env variable is used in dquotes
-TODO: Fix different behavior of quotes execution when no existing single env variable beween quotes or not (No quotes, does nothing, but with quotes, it shows error message)
 
 ---------------------------------
 
@@ -30,6 +29,7 @@ DONE~~: make lexer and expanser works~~
 DONE: Fix expanser with 2 consecutive variables without space in the middle
 DONE: Fix expanding with not found variables to return null
 DONE: Add static variable home in built_cd to make the '~' expantion works
+DONE: Fix different behavior of quotes execution when no existing single env variable beween quotes or not (No quotes, does nothing, but with quotes, it shows error message)
 
 
 
