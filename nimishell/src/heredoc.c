@@ -147,9 +147,7 @@ char	*heredoc_read(char *eof, t_data *data)
 		input = ft_strjoin_many(3, input, "\n", strings[1]);
 		free_strings(strings);
 	}
-	free_strings(strings);
-	get_next_line(STDIN_FILENO, 1);
-	return (input);
+	return (free_strings(strings), get_next_line(STDIN_FILENO, 1), input);
 }
 
 int	get_heredoc_input(t_list *lst, int pos, t_data *data)
@@ -169,6 +167,7 @@ int	get_heredoc_input(t_list *lst, int pos, t_data *data)
 			dup2(data->process_fd[WRITE_END], STDOUT_FILENO);
 			close(data->process_fd[WRITE_END]);
 			free(input);
+			set_signal_handlers(1);
 			input = heredoc_read(lst->content, data);
 			if (!input)
 				return (1);
@@ -177,5 +176,6 @@ int	get_heredoc_input(t_list *lst, int pos, t_data *data)
 	}
 	if (input && heredoc_to_stdin(input))
 		return (1);
+	set_signal_handlers(0);
 	return (0);
 }
