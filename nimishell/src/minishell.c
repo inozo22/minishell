@@ -103,6 +103,8 @@ int	process_input(char *line_read, t_data *data)
 	ret = check_single_builtin(cmd_list, data);
 	if ((data->cmd_nb == 0 && ret == 0) || ret == 127 || ret == -1)
 		return (ft_lstclear(&cmd_list, free), 0);
+	if (set_fds(data, 0) == 1)
+		return (ft_lstclear(&cmd_list, free), 0);
 	executer(cmd_list, data);
 	ft_lstclear(&cmd_list, free);
 	return (0);

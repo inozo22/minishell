@@ -36,6 +36,11 @@ static int	redir_last(int *tmp_stdio_fd, int *process_fd, int *pipe_fd)
 {
 	if (close(pipe_fd[WRITE_END]) == -1)
 		return (-1);
+	if (process_fd[READ_END] == -1)
+	{
+		if (dup2(tmp_stdio_fd[READ_END], STDIN_FILENO) == -1)
+			return (-1);
+	}
 	if (process_fd[READ_END] != STDIN_FILENO)
 	{
 		if (dup2(process_fd[READ_END], STDIN_FILENO) == -1)
@@ -51,8 +56,13 @@ static int	redir_last(int *tmp_stdio_fd, int *process_fd, int *pipe_fd)
 	return (0);
 }
 
-static int	redir_middle(int *process_fd, int *pipe_fd)
+static int	redir_middle(int *tmp_stdio_fd, int *process_fd, int *pipe_fd)
 {
+	if (process_fd[READ_END] == -1)
+	{
+		if (dup2(tmp_stdio_fd[READ_END], STDIN_FILENO) == -1)
+			return (-1);
+	}
 	if (process_fd[READ_END] != STDIN_FILENO)
 	{
 		if (dup2(process_fd[READ_END], STDIN_FILENO) == -1)
@@ -86,7 +96,8 @@ int	redir_setup(int pos, int cmd_nb, t_data *data)
 						data->process_fd, data->pipe_fd) == -1)
 			return (-1);
 	}
-	else if (redir_middle(data->process_fd, data->pipe_fd) == -1)
+	else if (redir_middle(data->tmp_stdio_fd, \
+						data->process_fd, data->pipe_fd) == -1)
 		return (-1);
 	return (0);
 }

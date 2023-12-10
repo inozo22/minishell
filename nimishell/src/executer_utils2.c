@@ -13,17 +13,26 @@
 #include "minishell.h"
 #include <sys/stat.h>
 
-int	set_fds(t_data *data)
+int	set_fds(t_data *data, int mode)
 {
-	data->tmp_stdio_fd[0] = dup(STDIN_FILENO);
-	data->tmp_stdio_fd[1] = dup(STDOUT_FILENO);
-	if (data->tmp_stdio_fd[0] == -1 || data->tmp_stdio_fd[1] == -1)
+	if (!mode)
 	{
-		perror(SH_NAME);
-		return (1);
+		data->tmp_stdio_fd[0] = dup(STDIN_FILENO);
+		data->tmp_stdio_fd[1] = dup(STDOUT_FILENO);
+		if (data->tmp_stdio_fd[0] == -1 || data->tmp_stdio_fd[1] == -1)
+			return (perror(SH_NAME), 1);
 	}
-	data->process_fd[0] = STDIN_FILENO;
-	data->process_fd[1] = STDOUT_FILENO;
+	if (mode)
+	{
+		data->process_fd[0] = dup(data->tmp_stdio_fd[0]);
+		data->process_fd[1] = dup(data->tmp_stdio_fd[1]);
+		if (data->process_fd[0] == -1 || data->process_fd[1] == -1)
+			return (perror(SH_NAME), 1);
+		dup2(data->process_fd[WRITE_END], STDOUT_FILENO);
+		close(data->process_fd[WRITE_END]);
+		dup2(data->process_fd[READ_END], STDIN_FILENO);
+		close(data->process_fd[READ_END]);
+	}
 	return (0);
 }
 

@@ -14,7 +14,7 @@
 #include <sys/wait.h>
 #include <sys/types.h>//it's not necessary in POSIX.1
 
-int	child_execution(char **cmd, t_data *data, int pos, t_list *head)
+int	child_execution(char **cmd, t_data *data, t_list *head, int pos)
 {
 	char	*cmd_path;
 	int		return_val;
@@ -30,7 +30,8 @@ int	child_execution(char **cmd, t_data *data, int pos, t_list *head)
 		free_alloc(data);
 		exit(return_val);
 	}
-	redir_setup(pos, data->cmd_nb, data);
+//	redir_setup(pos, data->cmd_nb, data);
+	ft_printf("pid: %d in pos %d\n", getpid(), pos);
 	if (execve(cmd_path, cmd, data->env) == -1 && errno == ENOEXEC)
 		execute_script_without_shebang(cmd, data->env);
 	ft_printf(SH_NAME": %s: %s", cmd[0], strerror(errno));
@@ -40,7 +41,7 @@ int	child_execution(char **cmd, t_data *data, int pos, t_list *head)
 	exit(EXIT_FAILURE);
 }
 
-static int	child(char **cmd, t_data *data, int pos, t_list *head)
+static int	child(char **cmd, t_data *data, t_list *head, int pos)
 {
 	int		is_builtin;
 
@@ -54,39 +55,93 @@ static int	child(char **cmd, t_data *data, int pos, t_list *head)
 		free_list(cmd);
 		exit(is_builtin);
 	}
-	child_execution(cmd, data, pos, head);
+	child_execution(cmd, data, head, pos);
 	exit(EXIT_FAILURE);
 }
 
-static void	father(char **cmd, t_data *data)
+int	check_pipe_redir(t_list *head, int pos)
+{
+	while (head && head->cmd_pos <= pos + 1)
+	{
+		if (head->cmd_pos == pos + 1 && head->type == HERE_DOC)
+			return (1);
+		head = head->next;
+	}
+	return (0);
+}
+
+static void	father(char **cmd)
 {
 	free_list(cmd);
-	close(data->pipe_fd[WRITE_END]);
-	dup2(data->pipe_fd[READ_END], STDIN_FILENO);
+/* 	close(data->pipe_fd[WRITE_END]);
+	if (check_pipe_redir(head, data->cmd_nb) == 0)
+		dup2(data->pipe_fd[READ_END], STDIN_FILENO);
 	if (data->process_fd[READ_END] != STDIN_FILENO)
 		close(data->process_fd[READ_END]);
 	if (data->process_fd[WRITE_END] != STDOUT_FILENO)
-		close(data->process_fd[WRITE_END]);
+		close(data->process_fd[WRITE_END]); */
 }
 
-static int	fork_setup(char **cmd, t_data *data, int pos, t_list *head)
+static int	fork_setup(char **cmd, t_data *data, int pos, t_list *head, t_list *cmd_list)
 {
-	if (pipe(data->pipe_fd) == -1)
+	if (pos < data->cmd_nb && pipe(data->pipe_fd) == -1)
 		return (-1);
+/* 	if (set_fds(data, 1) == 1)
+		return (-1); */
 	data->return_val = 0;
+/* 	if (pos == 0)
+	{
+		data->process_fd[0] = dup(data->tmp_stdio_fd[0]);
+		dup2(data->process_fd[READ_END], STDIN_FILENO);
+		close(data->process_fd[READ_END]);
+	} */
+	if (pos == 0 && data->cmd_nb >= 1)
+	{
+		ft_printf("Initial with pipes\n");
+		dup2(data->pipe_fd[WRITE_END], STDOUT_FILENO);
+		close(data->pipe_fd[WRITE_END]);
+	}
+	else if (pos > 0 && pos < data->cmd_nb)
+	{
+/* 		dup2(data->pipe_fd[READ_END], STDIN_FILENO);
+		close(data->pipe_fd[READ_END]); */
+		dup2(data->pipe_fd[WRITE_END], STDOUT_FILENO);
+		close(data->pipe_fd[WRITE_END]);
+	}
+	else if (pos == data->cmd_nb)
+	{
+/* 		dup2(data->pipe_fd[READ_END], STDIN_FILENO);
+		close(data->pipe_fd[READ_END]); */
+		data->process_fd[1] = dup(data->tmp_stdio_fd[1]);
+		dup2(data->process_fd[WRITE_END], STDOUT_FILENO);
+		close(data->process_fd[WRITE_END]);
+	}
+	if (get_iofiles_fd(data->process_fd, cmd_list, pos, data) \
+		|| get_heredoc_input(cmd_list, pos, data))
+	{
+		data->return_val = 1;
+		return (-1);
+	}
 	data->max_pid = fork();
 	if (data->max_pid == -1)
 		return (-1);
 	if (data->max_pid == 0)
-		child(cmd, data, pos, head);
+		child(cmd, data, head, pos);
 	else
 	{
-		father(cmd, data);
-		if (pos == data->cmd_nb)
+		close(data->pipe_fd[WRITE_END]);
+		if (pos < data->cmd_nb)
+		{
+			dup2(data->pipe_fd[READ_END], STDIN_FILENO);
+			close(data->pipe_fd[READ_END]);
+		}
+		father(cmd);
+ 		if (pos == data->cmd_nb)
 		{
 			dup2(data->tmp_stdio_fd[0], STDIN_FILENO);
+			close(data->tmp_stdio_fd[0]);
 			dup2(data->tmp_stdio_fd[1], STDOUT_FILENO);
-			close(data->pipe_fd[READ_END]);
+			close(data->tmp_stdio_fd[1]);
 		}
 	}
 	return (0);
@@ -99,21 +154,16 @@ int	executer(t_list *cmd_list, t_data *data)
 	t_list	*head;
 
 	head = cmd_list;
-	if (set_fds(data) == 1)
-		return (-1);
+	set_fds(data, 1);
 	while (cmd_list)
 	{
 		pos = cmd_list->cmd_pos;
-		if (get_iofiles_fd(data->process_fd, cmd_list, pos, data) \
-			|| get_heredoc_input(cmd_list, pos, data))
-		{
-			data->return_val = 1;
-			return (-1);
-		}
 		set_signal_handlers(0);
 		cmd = fill_current_cmd(cmd_list, pos, data);
 		update_last_executed_cmd(data, cmd);
-		if (fork_setup(cmd, data, pos, head) == -1)
+		dup2(data->process_fd[READ_END], STDIN_FILENO);
+		close(data->process_fd[READ_END]);
+		if (fork_setup(cmd, data, pos, head, cmd_list) == -1)
 			return (-1);
 		while (cmd_list && cmd_list->cmd_pos == pos)
 			cmd_list = cmd_list->next;

@@ -10,6 +10,9 @@ TODO: Check leaks in dquotes lexer
 TODO: SEGFAULT when non existing env variable is used in dquotes
 TODO: Fix different behavior of quotes execution when no existing single env variable beween quotes or not (No quotes, does nothing, but with quotes, it shows error message)
 
+TODO: ls > out | <<eo cat
+TODO: ls | <<eo cat
+
 ---------------------------------
 
 TODO: In expansion, exclude NULLs in the cmd array and check nulls in redir to throw "ambiguous redirect" error

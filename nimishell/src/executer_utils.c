@@ -81,16 +81,22 @@ int	get_iofiles_fd(int *fd, t_list *lst, int pos, t_data *data)
 			return (error_msg(lst->content, 5));
 		if (lst->type == REDIR_IN)
 		{
-			if (fd[0] != STDIN_FILENO)
-				close(fd[0]);
+			close(fd[0]);
 			fd[0] = open(file_name, O_RDONLY);
+			dup2(fd[0], STDIN_FILENO);
 		}
-		if ((lst->type == REDIR_OUT || lst->type == APPEND) && fd[1] != 1)
+		if ((lst->type == REDIR_OUT || lst->type == APPEND))
 			close(fd[1]);
 		if (lst->type == REDIR_OUT)
+		{
 			fd[1] = open(file_name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+			dup2(fd[1], STDOUT_FILENO);
+		}
 		if (lst->type == APPEND)
+		{
 			fd[1] = open(file_name, O_WRONLY | O_CREAT | O_APPEND, 0644);
+			dup2(fd[1], STDOUT_FILENO);
+		}
 		if (fd[0] == -1 || fd[1] == -1)
 			return (close_files_if_error(fd, file_name));
 		lst = lst->next;

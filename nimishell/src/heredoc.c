@@ -162,6 +162,9 @@ int	get_heredoc_input(t_list *lst, int pos, t_data *data)
 	{
 		if (lst->type == HERE_DOC)
 		{
+			
+			data->process_fd[READ_END] = dup(data->tmp_stdio_fd[READ_END]);
+			dup2(data->process_fd[READ_END], STDIN_FILENO);
 			free(input);
 			input = heredoc_read(lst->content, data);
 			if (!input)

@@ -168,7 +168,7 @@ int		get_iofiles_fd(int *fd, t_list *lst, int pos, t_data *data);
 void	get_exit_status(t_data *data);
 int		check_is_directory(char *cmd);
 char	*get_cmd_path(char *cmd, char **path, int *return_val);
-int		set_fds(t_data *data);
+int		set_fds(t_data *data, int mode);
 
 // fill_cmd
 
