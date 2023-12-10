@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 18:24:57 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/12/06 15:46:20 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/12/08 11:56:43 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,25 +16,25 @@
  * @note 231115nimai: disuse? If not, we should change the return val
  * 
   */
-int	check_valid_input(char *input)
-{
-	int	i;
+// int	check_valid_input(char *input)
+// {
+// 	int	i;
 
-	i = -1;
-	while (input && input[++i])
-	{
-		if (ft_isspace(input[i]))
-			continue ;
-		if (input[i] == '|')
-		{
-			g_return_val = error_msg("|", 2);
-			return (1);
-		}
-		else
-			break ;
-	}
-	return (0);
-}
+// 	i = -1;
+// 	while (input && input[++i])
+// 	{
+// 		if (ft_isspace(input[i]))
+// 			continue ;
+// 		if (input[i] == '|')
+// 		{
+// 			g_return_val = error_msg("|", 2);
+// 			return (1);
+// 		}
+// 		else
+// 			break ;
+// 	}
+// 	return (0);
+// }
 
 int	check_literal_metacharacter(int c)
 {

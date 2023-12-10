@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:54:13 by nimai             #+#    #+#             */
-/*   Updated: 2023/12/06 12:13:40 by nimai            ###   ########.fr       */
+/*   Updated: 2023/12/08 13:47:40 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,6 @@ int	built_echo(char **input, t_data *data)
  * 	printf("str[ret]: %c\n", str[ret]);
  * 
  * 230614nimai: is there possibility to failure command echo?? 
- * 230626nimai: not found yet
- * 230626nimai: cannot print well with above
  * echo "%/()=?¿OP^*Ç¨ÑLK_:;M"
  * 
  */

@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 16:08:15 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/12/07 18:08:54 by nimai            ###   ########.fr       */
+/*   Updated: 2023/12/08 12:24:36 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ char	**empty_cmd(void)
 	if (!ret)
 		return (NULL);
 	ret[0] = ft_strdup("");
-	ret[1] = ft_strdup("\0");
+	ret[1] = NULL;
 	return (ret);
 }
 

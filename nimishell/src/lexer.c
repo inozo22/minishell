@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 18:39:55 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/12/07 14:30:08 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/12/08 12:07:25 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ int	lexer(char *input, t_list **token_list, t_data *data)
 	input_tmp = ft_strdup(input);
 	ft_bzero(i, 3 * sizeof(int));
 	if (input_tmp[i[0]] == PIPE)
-		return (data->return_val = error_msg("|", 2), -1);
+		return (free(input_tmp), data->return_val = error_msg("|", 2), -1);
 	input_tmp = dquote(input_tmp);
 	while (input_tmp[i[0]])
 	{
@@ -131,7 +131,7 @@ int	lexer(char *input, t_list **token_list, t_data *data)
 				i[2]++;
 			i[1] = get_node(input_tmp + i[0], token_list, data, i[2]);
 			if (i[1] == -1)
-				return (-1);
+				return (free(input_tmp), -1);
 			i[0] += i[1];
 		}
 		else
