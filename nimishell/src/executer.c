@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/12/10 17:46:50 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/12/10 19:16:16 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <sys/wait.h>
 #include <sys/types.h>//it's not necessary in POSIX.1
 
-int	child_execution(char **cmd, t_data *data, t_list *head)
+static int	child_execution(char **cmd, t_data *data, t_list *head)
 {
 	char	*cmd_path;
 	int		return_val;
@@ -68,53 +68,33 @@ static int	child(char **cmd, t_data *data, t_list *head)
 	return (0);
 } */
 
-static void	father(char **cmd)
+static void	father(char **cmd, int pos, t_data *data)
 {
 	free_list(cmd);
-/* 	close(data->pipe_fd[WRITE_END]);
-	if (check_pipe_redir(head, data->cmd_nb) == 0)
+	close(data->pipe_fd[WRITE_END]);
+	if (pos < data->cmd_nb)
+	{
 		dup2(data->pipe_fd[READ_END], STDIN_FILENO);
-	if (data->process_fd[READ_END] != STDIN_FILENO)
-		close(data->process_fd[READ_END]);
-	if (data->process_fd[WRITE_END] != STDOUT_FILENO)
-		close(data->process_fd[WRITE_END]); */
+		close(data->pipe_fd[READ_END]);
+	}
+	if (pos == data->cmd_nb)
+	{
+		dup2(data->tmp_stdio_fd[0], STDIN_FILENO);
+		close(data->tmp_stdio_fd[0]);
+		dup2(data->tmp_stdio_fd[1], STDOUT_FILENO);
+		close(data->tmp_stdio_fd[1]);
+	}
 }
 
 static int	fork_setup(char **cmd, t_data *data, int pos, t_list *head, t_list *cmd_list)
 {
 	if (pos < data->cmd_nb && pipe(data->pipe_fd) == -1)
 		return (-1);
-/* 	if (set_fds(data, 1) == 1)
-		return (-1); */
 	if (get_heredoc_input(cmd_list, pos, data))
 		return (data->return_val = 1, -1);
 	data->return_val = 0;
-/* 	if (pos == 0)
-	{
-		data->process_fd[0] = dup(data->tmp_stdio_fd[0]);
-		dup2(data->process_fd[READ_END], STDIN_FILENO);
-		close(data->process_fd[READ_END]);
-	} */
-	if (pos == 0 && data->cmd_nb >= 1)
-	{
-		dup2(data->pipe_fd[WRITE_END], STDOUT_FILENO);
-		close(data->pipe_fd[WRITE_END]);
-	}
-	else if (pos > 0 && pos < data->cmd_nb)
-	{
-/* 		dup2(data->pipe_fd[READ_END], STDIN_FILENO);
-		close(data->pipe_fd[READ_END]); */
-		dup2(data->pipe_fd[WRITE_END], STDOUT_FILENO);
-		close(data->pipe_fd[WRITE_END]);
-	}
-	else if (pos == data->cmd_nb)
-	{
-/* 		dup2(data->pipe_fd[READ_END], STDIN_FILENO);
-		close(data->pipe_fd[READ_END]); */
-		data->process_fd[1] = dup(data->tmp_stdio_fd[1]);
-		dup2(data->process_fd[WRITE_END], STDOUT_FILENO);
-		close(data->process_fd[WRITE_END]);
-	}
+	if (redir_setup(data, pos))
+		return (-1);
 	if (get_iofiles_fd(data->process_fd, cmd_list, pos, data))
 	{
 		data->return_val = 1;
@@ -127,22 +107,7 @@ static int	fork_setup(char **cmd, t_data *data, int pos, t_list *head, t_list *c
 	if (data->max_pid == 0)
 		child(cmd, data, head);
 	else
-	{
-		close(data->pipe_fd[WRITE_END]);
-		if (pos < data->cmd_nb)
-		{
-			dup2(data->pipe_fd[READ_END], STDIN_FILENO);
-			close(data->pipe_fd[READ_END]);
-		}
-		father(cmd);
- 		if (pos == data->cmd_nb)
-		{
-			dup2(data->tmp_stdio_fd[0], STDIN_FILENO);
-			close(data->tmp_stdio_fd[0]);
-			dup2(data->tmp_stdio_fd[1], STDOUT_FILENO);
-			close(data->tmp_stdio_fd[1]);
-		}
-	}
+		father(cmd, pos, data);
 	return (0);
 }
 
@@ -169,32 +134,3 @@ int	executer(t_list *cmd_list, t_data *data)
 	}
 	return (0);
 }
-
-/* int	executer(t_list *cmd_list, t_data *data)
-{
-	char	**cmd;
-	int		pos;
-
-	if (set_fds(data) == 1)
-		return (-1);
-	while (cmd_list)
-	{
-		pos = cmd_list->cmd_pos;
-		if (get_iofiles_fd(data->process_fd, cmd_list, pos, data) \
-			|| get_heredoc_input(cmd_list, pos, data))
-		{
-			data->return_val = 1;
-			return (-1);
-		}
-		set_signal_handlers(0);
-		cmd = fill_current_cmd(cmd_list, pos, data);
-		update_last_executed_cmd(data, cmd);
-		if ((!cmd || !(*cmd)) && data->cmd_nb > 0)
-			return (-1);
-		if (fork_setup(cmd, data, pos) == -1)
-			return (-1);
-		while (cmd_list && cmd_list->cmd_pos == pos)
-			cmd_list = cmd_list->next;
-	}
-	return (0);
-} */

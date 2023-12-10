@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 19:10:38 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/12/10 18:08:44 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/12/10 19:04:04 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,7 +176,7 @@ char	**fill_current_cmd(t_list *lst, int pos, t_data *data);
 
 // 	Redir_setup
 
-int		redir_setup(int pos, int cmd_number, t_data *data);
+int		redir_setup(t_data *data, int pos);
 
 //	Split
 

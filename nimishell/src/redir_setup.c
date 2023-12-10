@@ -6,13 +6,13 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 17:57:29 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/12/06 15:43:25 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/12/10 19:26:53 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	redir_pos_0(int *process_fd, int *pipe_fd, int cmd_nb)
+/* static int	redir_pos_0(int *process_fd, int *pipe_fd, int cmd_nb)
 {
 	if (process_fd[READ_END] != STDIN_FILENO)
 	{
@@ -76,14 +76,14 @@ static int	redir_middle(int *tmp_stdio_fd, int *process_fd, int *pipe_fd)
 	else if (dup2(pipe_fd[WRITE_END], STDOUT_FILENO) == -1)
 		return (-1);
 	return (0);
-}
+}*/
 
 /**
  * @param fd[0] tmp_stdio_fd
  * @param fd[2] process_fd
  * @param fd[4] pipe_fd
   */
-int	redir_setup(int pos, int cmd_nb, t_data *data)
+/* int	redir_setup(int pos, int cmd_nb, t_data *data)
 {
 	if (pos == 0)
 	{
@@ -99,5 +99,29 @@ int	redir_setup(int pos, int cmd_nb, t_data *data)
 	else if (redir_middle(data->tmp_stdio_fd, \
 						data->process_fd, data->pipe_fd) == -1)
 		return (-1);
+	return (0);
+}  */
+
+int	redir_setup(t_data *data, int pos)
+{
+	if (pos == 0 && data->cmd_nb >= 1)
+	{
+		if (dup2(data->pipe_fd[WRITE_END], STDOUT_FILENO) == -1 \
+			|| close(data->pipe_fd[WRITE_END]) == -1)
+			return (perror(SH_NAME), -1);
+	}
+	else if (pos > 0 && pos < data->cmd_nb)
+	{
+		if (dup2(data->pipe_fd[WRITE_END], STDOUT_FILENO) == -1 \
+			|| close(data->pipe_fd[WRITE_END]) == -1)
+			return (perror(SH_NAME), -1);
+	}
+	else if (pos == data->cmd_nb)
+	{
+		data->process_fd[1] = dup(data->tmp_stdio_fd[1]);
+		if (dup2(data->process_fd[WRITE_END], STDOUT_FILENO) == -1 \
+			|| close(data->process_fd[WRITE_END]) == -1)
+			return (perror(SH_NAME), -1);
+	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 18:24:57 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/12/10 18:14:48 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/12/10 18:15:59 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,14 @@ int	literal_metacharacters_used(char *str)
 {
 	char	meta_chars[12];
 	int		i;
-	
+
 	i = -1;
 	ft_bzero(meta_chars, 12);
 	while (*str)
 	{
 		if (check_literal_metacharacter(*str) && !ft_strchr(meta_chars, *str))
 		{
-			while(meta_chars[++i])
+			while (meta_chars[++i])
 				;
 			meta_chars[i] = *str;
 		}

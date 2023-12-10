@@ -3,22 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
+/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:32:33 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/12/08 12:17:57 by nimai            ###   ########.fr       */
+/*   Updated: 2023/12/10 19:25:37 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <readline/history.h>
-
-/* int	check_exit(char **input)
-{
-	if (input[1])
-		g_return_val = ft_atoi(input[1]);
-	return (INT_MAX);
-} */
 
 /**
  * @note modified to control any kind of letters for pwd, echo, env
