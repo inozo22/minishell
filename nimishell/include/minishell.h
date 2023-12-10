@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
+/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 19:10:38 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/12/07 16:44:34 by nimai            ###   ########.fr       */
+/*   Updated: 2023/12/10 18:08:44 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ int		is_quote(char c);
 
 //	Lexer_utils
 
-int		check_valid_input(char *input);
+int		literal_metacharacters_used(char *str);
 int		check_literal_metacharacter(int c);
 int		is_quote(char c);
 int		is_metacharacter(char *str);

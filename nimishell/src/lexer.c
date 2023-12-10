@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
+/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 18:39:55 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/12/08 12:07:25 by nimai            ###   ########.fr       */
+/*   Updated: 2023/12/10 18:08:56 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,7 @@ int	lexer(char *input, t_list **token_list, t_data *data)
 	if (input_tmp[i[0]] == PIPE)
 		return (free(input_tmp), data->return_val = error_msg("|", 2), -1);
 	input_tmp = dquote(input_tmp);
+	literal_metacharacters_used(input_tmp);
 	while (input_tmp[i[0]])
 	{
 		if (!ft_isspace(input_tmp[i[0]]))

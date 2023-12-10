@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 18:39:55 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/10/06 16:44:15 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/12/10 17:54:10 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static int	check_literal_metacharacter(int c)
 	{
 		ft_printf(COLOR_YELLOW"Used metacharacter: %c\n"COLOR_RESET, c);
 		ft_putstr_fd("Special characters like (), [], {}, *, \\, &, ``...", 1);
-		ft_putendl_fd(" will be treated as literal characters\n\n", 1);	
+		ft_putendl_fd(" will be treated as literal characters\n", 1);	
 		return (1);
 	}
 	return (0);

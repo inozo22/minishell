@@ -3,38 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
+/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 18:24:57 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/12/08 11:56:43 by nimai            ###   ########.fr       */
+/*   Updated: 2023/12/10 18:14:48 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/**
- * @note 231115nimai: disuse? If not, we should change the return val
- * 
-  */
-// int	check_valid_input(char *input)
-// {
-// 	int	i;
-
-// 	i = -1;
-// 	while (input && input[++i])
-// 	{
-// 		if (ft_isspace(input[i]))
-// 			continue ;
-// 		if (input[i] == '|')
-// 		{
-// 			g_return_val = error_msg("|", 2);
-// 			return (1);
-// 		}
-// 		else
-// 			break ;
-// 	}
-// 	return (0);
-// }
+int	literal_metacharacters_used(char *str)
+{
+	char	meta_chars[12];
+	int		i;
+	
+	i = -1;
+	ft_bzero(meta_chars, 12);
+	while (*str)
+	{
+		if (check_literal_metacharacter(*str) && !ft_strchr(meta_chars, *str))
+		{
+			while(meta_chars[++i])
+				;
+			meta_chars[i] = *str;
+		}
+		str++;
+	}
+	if (meta_chars[0])
+	{
+		ft_printf(COLOR_YELLOW"Used metachars: %s\n"COLOR_RESET, meta_chars);
+		ft_putstr_fd("Special characters like (), [], {}, *, \\, &, ``...", 1);
+		ft_putendl_fd(" will be treated as literal\n", 1);
+		return (1);
+	}
+	return (0);
+}
 
 int	check_literal_metacharacter(int c)
 {
@@ -42,9 +45,6 @@ int	check_literal_metacharacter(int c)
 	|| c == '*' || c == '&' || c == '`' || c == '[' \
 	|| c == ']' || c == '{' || c == '}')
 	{
-		ft_printf(COLOR_YELLOW"Used metacharacter: %c\n"COLOR_RESET, c);
-		ft_putstr_fd("Special characters like (), [], {}, *, \\, &, ``...", 1);
-		ft_putendl_fd(" will be treated as literal\n\n", 1);
 		return (1);
 	}
 	return (0);
