@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
+/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/12/07 16:44:43 by nimai            ###   ########.fr       */
+/*   Updated: 2023/12/10 15:33:44 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <sys/wait.h>
 #include <sys/types.h>//it's not necessary in POSIX.1
 
-int	child_execution(char **cmd, t_data *data, t_list *head, int pos)
+int	child_execution(char **cmd, t_data *data, t_list *head)
 {
 	char	*cmd_path;
 	int		return_val;
@@ -30,8 +30,6 @@ int	child_execution(char **cmd, t_data *data, t_list *head, int pos)
 		free_alloc(data);
 		exit(return_val);
 	}
-//	redir_setup(pos, data->cmd_nb, data);
-	ft_printf("pid: %d in pos %d\n", getpid(), pos);
 	if (execve(cmd_path, cmd, data->env) == -1 && errno == ENOEXEC)
 		execute_script_without_shebang(cmd, data->env);
 	ft_printf(SH_NAME": %s: %s", cmd[0], strerror(errno));
@@ -41,7 +39,7 @@ int	child_execution(char **cmd, t_data *data, t_list *head, int pos)
 	exit(EXIT_FAILURE);
 }
 
-static int	child(char **cmd, t_data *data, t_list *head, int pos)
+static int	child(char **cmd, t_data *data, t_list *head)
 {
 	int		is_builtin;
 
@@ -55,11 +53,11 @@ static int	child(char **cmd, t_data *data, t_list *head, int pos)
 		free_list(cmd);
 		exit(is_builtin);
 	}
-	child_execution(cmd, data, head, pos);
+	child_execution(cmd, data, head);
 	exit(EXIT_FAILURE);
 }
 
-int	check_pipe_redir(t_list *head, int pos)
+/* int	check_pipe_redir(t_list *head, int pos)
 {
 	while (head && head->cmd_pos <= pos + 1)
 	{
@@ -68,7 +66,7 @@ int	check_pipe_redir(t_list *head, int pos)
 		head = head->next;
 	}
 	return (0);
-}
+} */
 
 static void	father(char **cmd)
 {
@@ -88,6 +86,8 @@ static int	fork_setup(char **cmd, t_data *data, int pos, t_list *head, t_list *c
 		return (-1);
 /* 	if (set_fds(data, 1) == 1)
 		return (-1); */
+	if (get_heredoc_input(cmd_list, pos, data))
+		return (data->return_val = 1, -1);
 	data->return_val = 0;
 /* 	if (pos == 0)
 	{
@@ -97,7 +97,6 @@ static int	fork_setup(char **cmd, t_data *data, int pos, t_list *head, t_list *c
 	} */
 	if (pos == 0 && data->cmd_nb >= 1)
 	{
-		ft_printf("Initial with pipes\n");
 		dup2(data->pipe_fd[WRITE_END], STDOUT_FILENO);
 		close(data->pipe_fd[WRITE_END]);
 	}
@@ -116,8 +115,7 @@ static int	fork_setup(char **cmd, t_data *data, int pos, t_list *head, t_list *c
 		dup2(data->process_fd[WRITE_END], STDOUT_FILENO);
 		close(data->process_fd[WRITE_END]);
 	}
-	if (get_iofiles_fd(data->process_fd, cmd_list, pos, data) \
-		|| get_heredoc_input(cmd_list, pos, data))
+	if (get_iofiles_fd(data->process_fd, cmd_list, pos, data))
 	{
 		data->return_val = 1;
 		return (-1);
@@ -126,7 +124,7 @@ static int	fork_setup(char **cmd, t_data *data, int pos, t_list *head, t_list *c
 	if (data->max_pid == -1)
 		return (-1);
 	if (data->max_pid == 0)
-		child(cmd, data, head, pos);
+		child(cmd, data, head);
 	else
 	{
 		close(data->pipe_fd[WRITE_END]);
