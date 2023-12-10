@@ -12,6 +12,8 @@ TODO: SEGFAULT when non existing env variable is used in dquotes
 TODO: ls > out | <<eo cat
 TODO: ls | <<eo cat
 
+TODO: ¿?Set getiofiles with single builtins¿?
+
 ---------------------------------
 
 TODO: In expansion, exclude NULLs in the cmd array and check nulls in redir to throw "ambiguous redirect" error

@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/12/10 19:16:16 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/12/10 19:30:36 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,11 @@ static void	father(char **cmd, int pos, t_data *data)
 	}
 }
 
-static int	fork_setup(char **cmd, t_data *data, int pos, t_list *head, t_list *cmd_list)
+static int	fork_setup(char **cmd, t_data *data, t_list *head, t_list *cmd_list)
 {
+	int	pos;
+
+	pos = cmd_list->cmd_pos;
 	if (pos < data->cmd_nb && pipe(data->pipe_fd) == -1)
 		return (-1);
 	if (get_heredoc_input(cmd_list, pos, data))
@@ -127,7 +130,7 @@ int	executer(t_list *cmd_list, t_data *data)
 		update_last_executed_cmd(data, cmd);
 		dup2(data->process_fd[READ_END], STDIN_FILENO);
 		close(data->process_fd[READ_END]);
-		if (fork_setup(cmd, data, pos, head, cmd_list) == -1)
+		if (fork_setup(cmd, data, head, cmd_list) == -1)
 			return (-1);
 		while (cmd_list && cmd_list->cmd_pos == pos)
 			cmd_list = cmd_list->next;

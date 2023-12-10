@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 16:03:23 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/12/10 16:55:32 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/12/10 19:42:04 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,26 @@ int	check_is_directory(char *cmd)
 	return (0);
 }
 
+char	**set_path_list(t_data *data)
+{
+	int		i;
+	char	**path;
+
+	i = -1;
+	path = NULL;
+	while (data->env[++i])
+	{
+		if (!ft_strncmp(data->env[i], "PATH=", 5))
+		{
+			path = ft_split(data->env[i] + 5, ':');
+			if (!path)
+				errors(ENOMEM, data);
+			break ;
+		}
+	}
+	return (path);
+}
+
 /**
  * @author bde-mada
  * @param path[0] = tmp_path
@@ -82,7 +102,6 @@ char	*get_cmd_path(char *cmd, char **path, int *return_val)
 		*return_val = 1;
 	return (cmd_path[1]);
 }
-//	ft_printf("cmd_path: %s\n\n", cmd_path[1]);
 
 /**
  * @note 230811nimai: add g_return_val, check if there is another way to

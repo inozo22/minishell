@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 15:48:44 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/12/10 18:58:46 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/12/10 19:45:09 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,24 +35,27 @@ int	close_files_if_error(int fd[2], char *file_name)
 	return (1);
 }
 
-char	**set_path_list(t_data *data)
+static int	set_iofiles_redir(int type, int *fd, char *file_name)
 {
-	int		i;
-	char	**path;
-
-	i = -1;
-	path = NULL;
-	while (data->env[++i])
+	if (type == REDIR_IN)
 	{
-		if (!ft_strncmp(data->env[i], "PATH=", 5))
-		{
-			path = ft_split(data->env[i] + 5, ':');
-			if (!path)
-				errors(ENOMEM, data);
-			break ;
-		}
+		fd[0] = open(file_name, O_RDONLY);
+		if (dup2(fd[0], STDIN_FILENO) == -1)
+			return (1);
 	}
-	return (path);
+	if (type == REDIR_OUT)
+	{
+		fd[1] = open(file_name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		if (dup2(fd[1], STDOUT_FILENO) == -1)
+			return (1);
+	}
+	if (type == APPEND)
+	{
+		fd[1] = open(file_name, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		if (dup2(fd[1], STDOUT_FILENO) == -1)
+			return (1);
+	}
+	return (0);
 }
 
 static char	*expand_file(char *file, int type, t_data *data)
@@ -67,16 +70,33 @@ static char	*expand_file(char *file, int type, t_data *data)
 	return (string);
 }
 
-/**
- * @author bde-mada
- */
 int	get_iofiles_fd(int *fd, t_list *lst, int pos, t_data *data)
 {
 	char	*file_name;
 
 	while (lst && lst->cmd_pos == pos)
 	{
-		file_name = expand_file(lst->content, lst->type, data);
+		file_name = expand_file(ft_strdup(lst->content), lst->type, data);
+		if (!file_name || !*file_name)
+			return (error_msg(lst->content, 5));
+		if (set_iofiles_redir(lst->type, fd, file_name))
+			return (close_files_if_error(fd, file_name));
+		lst = lst->next;
+		free(file_name);
+	}
+	return (0);
+}
+
+/**
+ * @author bde-mada
+ */
+/* int	get_iofiles_fd(int *fd, t_list *lst, int pos, t_data *data)
+{
+	char	*file_name;
+
+	while (lst && lst->cmd_pos == pos)
+	{
+		file_name = expand_file(ft_strdup(lst->content), lst->type, data);
 		if (!file_name || !*file_name)
 			return (error_msg(lst->content, 5));
 		if (lst->type == REDIR_IN)
@@ -97,6 +117,7 @@ int	get_iofiles_fd(int *fd, t_list *lst, int pos, t_data *data)
 		if (fd[0] == -1 || fd[1] == -1)
 			return (close_files_if_error(fd, file_name));
 		lst = lst->next;
+		free(file_name);
 	}
 	return (0);
-}
+} */
