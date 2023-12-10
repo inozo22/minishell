@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 15:48:44 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/12/07 15:59:32 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/12/10 17:42:03 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,12 +81,12 @@ int	get_iofiles_fd(int *fd, t_list *lst, int pos, t_data *data)
 			return (error_msg(lst->content, 5));
 		if (lst->type == REDIR_IN)
 		{
-			close(fd[0]);
+//			close(fd[0]);
 			fd[0] = open(file_name, O_RDONLY);
 			dup2(fd[0], STDIN_FILENO);
 		}
-		if ((lst->type == REDIR_OUT || lst->type == APPEND))
-			close(fd[1]);
+/* 		if ((lst->type == REDIR_OUT || lst->type == APPEND))
+			close(fd[1]); */
 		if (lst->type == REDIR_OUT)
 		{
 			fd[1] = open(file_name, O_WRONLY | O_CREAT | O_TRUNC, 0644);

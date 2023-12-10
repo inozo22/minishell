@@ -13,69 +13,6 @@
 #include "minishell.h"
 #include <sys/wait.h>
 
-/* int	heredoc_to_stdin(char *input)
-{
-	pid_t	pid;
-	int		fd[2];
-
-	if (!input || pipe(fd) == -1)
-		return (1);
-	pid = fork();
-	if (pid == -1)
-		return (1);
-	if (pid == 0)
-	{
-		close(fd[READ_END]);
-		write(fd[WRITE_END], input, ft_strlen(input));
-		close(fd[WRITE_END]);
-		exit(0);
-	}
-	wait(NULL);
-	close(fd[WRITE_END]);
-	dup2(fd[READ_END], STDIN_FILENO);
-	close(fd[READ_END]);
-	free(input);
-	return (0);
-}
-*/
-/**
- * @note 231117nimai: I think it's accetable leave g_return_val 
- * 		here although with new correction.
- * @param strings[0] = gnl input
- * @param strings[1] = expanded
- * @param strings[2] = tmp input
- * @param strings[3] = NULL
-  */
-/*
-int	heredoc_read(char *eof, t_data *data)
-{
-	char	**strings;
-	char	*input;
-	int		i[3];
-
-	ft_bzero(i, 3 * sizeof(int));
-	input = NULL;
-	while (1)
-	{
-		strings = ft_calloc(4, sizeof(char *));
-		if (g_return_val == 1)
-			return (free_list(strings), 1);
-		write(1, "> ", 2);
-		strings[0] = get_next_line(STDIN_FILENO, 0);
-		if (strings[0])
-			strings[0][ft_strlen(strings[0]) - 1] = '\0';
-		if (!strings[0] || !ft_strcmp(eof, strings[0]))
-			break ;
-		strings[1] = expander(strings[0], data, i);
-		strings[2] = strings[3];
-		input = ft_strjoin_many(3, input, "\n", strings[1]);
-		free_list(strings);
-	}
-	free_list(strings);
-	get_next_line(STDIN_FILENO, 1);
-	return (heredoc_to_stdin(input));
-} */
-
 int	heredoc_to_stdin(char *input)
 {
 	pid_t	pid;
@@ -123,14 +60,12 @@ void	free_strings(char **list)
  * @param strings[1] = expanded
  * @param strings[2] = tmp input
   */
-char	*heredoc_read(char *eof, t_data *data)
+char	*heredoc_read(char *eof, t_data *data, char **input)
 {
 	char	**strings;
-	char	*input;
 	int		i[3];
 
 	ft_bzero(i, 3 * sizeof(int));
-	input = NULL;
 	while (1)
 	{
 		strings = ft_calloc(3, sizeof(char *));
@@ -143,11 +78,14 @@ char	*heredoc_read(char *eof, t_data *data)
 		if (!strings[0] || !ft_strcmp(eof, strings[0]))
 			break ;
 		strings[1] = expander(strings[0], data, i);
-		strings[2] = input;
-		input = ft_strjoin_many(3, input, "\n", strings[1]);
+		strings[2] = *input;
+		if (!(*input) && strings[1])
+			*input = ft_strdup(strings[1]);
+		else
+			*input = ft_strjoin_many(3, *input, "\n", strings[1]);
 		free_strings(strings);
 	}
-	return (free_strings(strings), get_next_line(STDIN_FILENO, 1), input);
+	return (free_strings(strings), get_next_line(STDIN_FILENO, 1), *input);
 }
 
 int	get_heredoc_input(t_list *lst, int pos, t_data *data)
@@ -159,7 +97,6 @@ int	get_heredoc_input(t_list *lst, int pos, t_data *data)
 	{
 		if (lst->type == HERE_DOC)
 		{
-			
 			data->process_fd[READ_END] = dup(data->tmp_stdio_fd[READ_END]);
 			dup2(data->process_fd[READ_END], STDIN_FILENO);
 			close(data->process_fd[READ_END]);
@@ -168,8 +105,7 @@ int	get_heredoc_input(t_list *lst, int pos, t_data *data)
 			close(data->process_fd[WRITE_END]);
 			free(input);
 			set_signal_handlers(1);
-			input = heredoc_read(lst->content, data);
-			if (!input)
+			if (!heredoc_read(lst->content, data, &input) || !input)
 				return (1);
 		}
 		lst = lst->next;

@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/12/10 16:41:46 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/12/10 17:46:50 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	child_execution(char **cmd, t_data *data, t_list *head)
 	}
 	if (execve(cmd_path, cmd, data->env) == -1 && errno == ENOEXEC)
 		execute_script_without_shebang(cmd, data->env);
-	ft_printf(SH_NAME": %s: %s", cmd[0], strerror(errno));
+	ft_printf(SH_NAME": %s: %s\n", cmd[0], strerror(errno));
 	ft_lstclear(&head, free);
 	free_list(cmd);
 	free_alloc(data);
@@ -118,6 +118,7 @@ static int	fork_setup(char **cmd, t_data *data, int pos, t_list *head, t_list *c
 	if (get_iofiles_fd(data->process_fd, cmd_list, pos, data))
 	{
 		data->return_val = 1;
+		dup2(data->tmp_stdio_fd[0], STDIN_FILENO);
 		return (-1);
 	}
 	data->max_pid = fork();

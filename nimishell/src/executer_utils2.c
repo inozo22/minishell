@@ -6,7 +6,7 @@
 /*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 16:03:23 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/12/06 18:25:31 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/12/10 16:55:32 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ char	*get_cmd_path(char *cmd, char **path, int *return_val)
 	*return_val = check_is_directory(cmd);
 	if (*return_val)
 		return (NULL);
-	if (!access(cmd, F_OK))
+	if (!access(cmd, F_OK) || cmd[0] == '/' || !ft_strncmp(cmd, "./", 2))
 		return (cmd);
 	while (path && path[++i])
 	{
