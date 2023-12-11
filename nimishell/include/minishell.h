@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
+/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 19:10:38 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/12/11 10:43:02 by nimai            ###   ########.fr       */
+/*   Updated: 2023/12/11 15:44:51 by bde-mada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,6 @@ char	*get_prompt(t_data *data);
 //	minishell
 
 int		minishell(t_data *data);
-int		check_builtin(char **input, t_data *data);
 int		process_input(char *line_read, t_data *data);
 
 //	Lexer
@@ -192,7 +191,11 @@ void	*del_triple_array(char ****ptr);
 int		update_last_executed_cmd(t_data *data, char **input);
 // int		update_last_executed_cmd(t_data *data, char *cmd);
 
-//Bultin
+//Bultin_exec
+
+int		check_single_builtin(t_list *cmd_list, t_data *data);
+int		check_builtin(char **input, t_data *data);
+
 //	errors
 
 void	heap_error(int flag);

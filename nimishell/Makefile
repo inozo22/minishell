@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+         #
+#    By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/30 13:14:38 by bde-mada          #+#    #+#              #
-#    Updated: 2023/12/11 10:41:27 by nimai            ###   ########.fr        #
+#    Updated: 2023/12/11 15:47:27 by bde-mada         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,9 +50,10 @@ SRC_FILES	:=  main.c minishell_init.c minishell.c terminate.c error_msgs.c \
 				utils.c heredoc.c expander.c lexer.c redir_setup.c \
 				lexer_utils.c expander_utils.c expand_utils.c \
 				executer.c executer_utils.c executer_utils2.c fill_cmd.c \
-				builtin/built_cd_path.c \
-				builtin/built_cd.c builtin/built_cd_utils.c \
-				builtin/built_echo.c builtin/built_env.c builtin/built_exit.c \
+				builtin_exec.c \
+				builtin/built_cd_path.c builtin/built_cd.c \
+				builtin/built_cd_utils.c builtin/built_echo.c \
+				builtin/built_env.c builtin/built_exit.c \
 				builtin/built_export.c builtin/built_export_output.c \
 				builtin/built_export_utils.c \
 				builtin/built_utils.c \
