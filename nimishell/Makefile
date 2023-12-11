@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+         #
+#    By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/30 13:14:38 by bde-mada          #+#    #+#              #
-#    Updated: 2023/12/11 15:57:07 by bde-mada         ###   ########.fr        #
+#    Updated: 2023/12/11 16:25:30 by nimai            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -104,7 +104,7 @@ $(NAME): $(OBJS) $(INCLUDES)
 		$(LDFLAGS) $(LDLIBS) $(LNK) \
 		-o $(NAME)
 	@echo $(ACCENT)"✅ $(NAME) compiled ✅"$(NONE)
-	@grep "TODO:" log.md
+#	@grep "TODO:" log.md
 
 $(LIBS): $(LIBS_DIR)
 	@echo $(CURSIVE)$(GRAY) "		- Compiling libs..." $(NONE)
