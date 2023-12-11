@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 15:48:44 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/12/10 19:45:09 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/12/11 12:18:22 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,10 @@ static char	*expand_file(char *file, int type, t_data *data)
 	string = file;
 	ft_bzero(i, 3 * sizeof(int));
 	if (type == REDIR_IN || type == REDIR_OUT || type == APPEND)
+	{
 		string = expander(file, data, i);
+		free (file);
+	}
 	return (string);
 }
 

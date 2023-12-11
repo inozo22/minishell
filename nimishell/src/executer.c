@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/12/10 19:30:36 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/12/11 12:14:59 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,10 @@ int	executer(t_list *cmd_list, t_data *data)
 		dup2(data->process_fd[READ_END], STDIN_FILENO);
 		close(data->process_fd[READ_END]);
 		if (fork_setup(cmd, data, head, cmd_list) == -1)
+		{
+			free_list(cmd);
 			return (-1);
+		}
 		while (cmd_list && cmd_list->cmd_pos == pos)
 			cmd_list = cmd_list->next;
 	}
