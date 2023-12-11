@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer_utils2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 16:03:23 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/12/10 19:42:04 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/12/11 10:43:29 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ char	*get_cmd_path(char *cmd, char **path, int *return_val)
 		return (WEXITSTATUS(e_status));
 	else if (g_return_val)
 		return (g_return_val); */
-void	get_exit_status(t_data *data)
+void	get_exit_status(t_data *data, int flag)
 {
 	int	wait_ret;
 	int	e_status;
@@ -124,6 +124,8 @@ void	get_exit_status(t_data *data)
 			data->return_val = g_return_val;
 			break ;
 		}
+		if (!flag)
+			break ;
 		wait_ret = waitpid(-1, &e_status, WUNTRACED);
 		if (wait_ret == data->max_pid)
 		{

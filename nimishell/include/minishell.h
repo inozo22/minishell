@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 19:10:38 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/12/10 19:04:04 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/12/11 10:43:02 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,7 @@ int		get_iofiles_fd(int *fd, t_list *lst, int pos, t_data *data);
 
 // Executer_utils2
 
-void	get_exit_status(t_data *data);
+void	get_exit_status(t_data *data, int flag);
 int		check_is_directory(char *cmd);
 char	*get_cmd_path(char *cmd, char **path, int *return_val);
 int		set_fds(t_data *data, int mode);

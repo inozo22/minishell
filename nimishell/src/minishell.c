@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:32:33 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/12/10 19:25:37 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/12/11 10:54:11 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ int	process_input(char *line_read, t_data *data)
 		return (ft_lstclear(&cmd_list, free), 0);
 	executer(cmd_list, data);
 	ft_lstclear(&cmd_list, free);
+	get_exit_status(data, 1);
 	return (0);
 }
 
@@ -142,7 +143,8 @@ int	minishell(t_data *data)
 				continue ;
 			process_input(line_read, data);
 		}
-		get_exit_status(data);
+		else
+			get_exit_status(data, 0);
 		line_read = my_free(line_read);
 		if (data->exit_status)
 			break ;

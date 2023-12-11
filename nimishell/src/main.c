@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bde-mada <bde-mada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 18:22:41 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/12/10 19:25:00 by bde-mada         ###   ########.fr       */
+/*   Updated: 2023/12/11 10:42:37 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ int	main(int argc, char *argv[], char *envp[])
 	{
 		if ((argc == 3 && !ft_strcmp(argv[1], "-c")))
 			return (process_input(argv[2], &data), \
-					get_exit_status(&data), data.return_val);
+					get_exit_status(&data, 1), data.return_val);
 		else
 			exit (error_file(argv[1]));
 	}
