@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:18:50 by bde-mada          #+#    #+#             */
-/*   Updated: 2023/12/11 12:14:59 by nimai            ###   ########.fr       */
+/*   Updated: 2023/12/11 15:29:42 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ static int	child(char **cmd, t_data *data, t_list *head)
 static void	father(char **cmd, int pos, t_data *data)
 {
 	free_list(cmd);
-	close(data->pipe_fd[WRITE_END]);
+	if (pos > 0)
+		close(data->pipe_fd[WRITE_END]);
 	if (pos < data->cmd_nb)
 	{
 		dup2(data->pipe_fd[READ_END], STDIN_FILENO);
