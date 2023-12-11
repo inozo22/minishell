@@ -65,7 +65,7 @@ static char	*expand_file(char *file, int type, t_data *data)
 
 	string = file;
 	ft_bzero(i, 3 * sizeof(int));
-	if (type == REDIR_IN || type == REDIR_OUT)
+	if (type == REDIR_IN || type == REDIR_OUT || type == APPEND)
 		string = expander(file, data, i);
 	return (string);
 }
@@ -73,17 +73,28 @@ static char	*expand_file(char *file, int type, t_data *data)
 int	get_iofiles_fd(int *fd, t_list *lst, int pos, t_data *data)
 {
 	char	*file_name;
+	int		ret;
 
 	while (lst && lst->cmd_pos == pos)
 	{
 		file_name = expand_file(ft_strdup(lst->content), lst->type, data);
 		if (!file_name || !*file_name)
-			return (error_msg(lst->content, 5));
+		{
+			ret = error_msg(lst->content, 5);
+			free(file_name);
+			return (ret);
+		}
 		if (set_iofiles_redir(lst->type, fd, file_name))
-			return (close_files_if_error(fd, file_name));
+		{
+			ret = close_files_if_error(fd, file_name);
+			free(file_name);
+			return (ret);
+		}
 		lst = lst->next;
 		free(file_name);
+		file_name = NULL;
 	}
+	free(file_name);
 	return (0);
 }
 
