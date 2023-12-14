@@ -61,7 +61,7 @@ int	check_valid(char *str, char *cmd, t_data *data)
 	}
 	if (!(ft_isalpha(str[i]) || str[i] == '_'))
 		return (data->return_val = 1, \
-		error_id_built(cmd, str, "not a valid identifier"), free(str), 0);
+	error_id_built(cmd, str, "not a valid identifier"), 0);//231214nimai:remove free after error message
 	while (str[++i] != '=' && str[i])
 	{
 		if ((!ft_isalnum(str[i]) && str[i] != '_') || \
