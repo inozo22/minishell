@@ -19,13 +19,13 @@ minishell is the 42 first team project to create a simple shell program in C. It
 Clone the repository:
 
 ```
-git clone s git@github.com:inozo22/minishell.git
+git clone git@github.com:inozo22/minishell.git
 ```
 
 To compile:
 
 ```shell
-cd minishell && make
+cd nimishell && make
 ```
 
 To run the program:
