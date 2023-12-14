@@ -37,4 +37,4 @@ minishell will be opened. You can put commands you want. Have fun!
 
 
 ---
-Made by bde-mada and inozo22(nimai)
+Made by bdemada(bde-mada) and inozo22(nimai)
