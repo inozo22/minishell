@@ -25,7 +25,7 @@ git clone git@github.com:inozo22/minishell.git
 To compile:
 
 ```shell
-cd nimishell && make
+make
 ```
 
 To run the program:
